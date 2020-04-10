@@ -29,7 +29,7 @@ public class EntityPickupFX extends EntityFX
     /**
      * Renders the particle
      */
-    public void renderParticle(WorldRenderer worldRendererIn, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+    public void renderParticle(WorldRenderer worldRendererIn, Entity entityIn, float partialTicks, float p_180434_4_, float p_180434_5_, float p_180434_6_, float p_180434_7_, float p_180434_8_)
     {
         float f = ((float)this.age + partialTicks) / (float)this.maxAge;
         f = f * f;

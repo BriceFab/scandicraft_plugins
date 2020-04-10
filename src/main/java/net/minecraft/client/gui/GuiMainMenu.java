@@ -224,7 +224,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             this.field_92019_w = this.field_92021_u + 24;
         }
 
-        this.mc.setConnectedToRealms(false);
+        this.mc.func_181537_a(false);
     }
 
     /**
@@ -300,7 +300,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 
             if (worldinfo != null)
             {
-                GuiYesNo guiyesno = GuiSelectWorld.makeDeleteWorldYesNo(this, worldinfo.getWorldName(), 12);
+                GuiYesNo guiyesno = GuiSelectWorld.func_152129_a(this, worldinfo.getWorldName(), 12);
                 this.mc.displayGuiScreen(guiyesno);
             }
         }

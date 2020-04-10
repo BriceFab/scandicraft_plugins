@@ -21,7 +21,7 @@ public class VertexBuffer
         OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, this.glBufferId);
     }
 
-    public void bufferData(ByteBuffer p_181722_1_)
+    public void func_181722_a(ByteBuffer p_181722_1_)
     {
         this.bindBuffer();
         OpenGlHelper.glBufferData(OpenGlHelper.GL_ARRAY_BUFFER, p_181722_1_, 35044);

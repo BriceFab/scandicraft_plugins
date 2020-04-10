@@ -25,9 +25,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
 
     /** The system's time represented in milliseconds. */
     private long systemTime = Minecraft.getSystemTime();
-
-    /** True if the loading ended with a success */
-    private boolean loadingSuccess;
+    private boolean field_73724_e;
     private ScaledResolution scaledResolution;
     private Framebuffer framebuffer;
 
@@ -45,7 +43,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
      */
     public void resetProgressAndMessage(String message)
     {
-        this.loadingSuccess = false;
+        this.field_73724_e = false;
         this.displayString(message);
     }
 
@@ -54,7 +52,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
      */
     public void displaySavingString(String message)
     {
-        this.loadingSuccess = true;
+        this.field_73724_e = true;
         this.displayString(message);
     }
 
@@ -64,7 +62,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
 
         if (!this.mc.running)
         {
-            if (!this.loadingSuccess)
+            if (!this.field_73724_e)
             {
                 throw new MinecraftError();
             }
@@ -99,7 +97,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
     {
         if (!this.mc.running)
         {
-            if (!this.loadingSuccess)
+            if (!this.field_73724_e)
             {
                 throw new MinecraftError();
             }
@@ -120,7 +118,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
     {
         if (!this.mc.running)
         {
-            if (!this.loadingSuccess)
+            if (!this.field_73724_e)
             {
                 throw new MinecraftError();
             }
