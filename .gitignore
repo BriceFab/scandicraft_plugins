@@ -4,5 +4,11 @@
 # Ignore Gradle build output directory
 build
 
-# ScandiCraft ignores
+#Ignore intelliji
 .idea
+
+#Ignore run useless
+run
+!run/libraries
+!run/assets
+!run/natives
