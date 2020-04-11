@@ -762,6 +762,18 @@ public class Item
         })).setUnlocalizedName("redSandStone"));
         registerItemBlock(Blocks.red_sandstone_stairs);
         registerItemBlock(Blocks.stone_slab2, (new ItemSlab(Blocks.stone_slab2, Blocks.stone_slab2, Blocks.double_stone_slab2)).setUnlocalizedName("stoneSlab2"));
+
+//================================================================== NEW BLOCKS ==========================================================================================
+        //ScandiCraft : UZApocalyps New Blocks
+        registerItemBlock(Blocks.scandium_ore);
+        registerItemBlock(Blocks.scandium_block);
+        registerItemBlock(Blocks.pyrite_ore);
+        registerItemBlock(Blocks.pyrite_block);
+        registerItemBlock(Blocks.lazurite_ore);
+        registerItemBlock(Blocks.lazurite_block);
+//============================================================================================================================================================
+
+
         registerItem(256, "iron_shovel", (new ItemSpade(Item.ToolMaterial.IRON)).setUnlocalizedName("shovelIron"));
         registerItem(257, "iron_pickaxe", (new ItemPickaxe(Item.ToolMaterial.IRON)).setUnlocalizedName("pickaxeIron"));
         registerItem(258, "iron_axe", (new ItemAxe(Item.ToolMaterial.IRON)).setUnlocalizedName("hatchetIron"));
@@ -950,6 +962,29 @@ public class Item
         registerItem(2265, "record_ward", (new ItemRecord("ward")).setUnlocalizedName("record"));
         registerItem(2266, "record_11", (new ItemRecord("11")).setUnlocalizedName("record"));
         registerItem(2267, "record_wait", (new ItemRecord("wait")).setUnlocalizedName("record"));
+
+
+//============================================================================================================================================================
+        //ScandiCraft : UZApocalyps New items
+        registerItem(3500, "scandium", (new Item()).setUnlocalizedName("scandium").setCreativeTab(CreativeTabs.tabMaterials));
+        registerItem(3501, "pyrite", (new Item()).setUnlocalizedName("pyrite").setCreativeTab(CreativeTabs.tabMaterials));
+        registerItem(3502, "lazurite", (new Item()).setUnlocalizedName("lazurite").setCreativeTab(CreativeTabs.tabMaterials));
+        registerItem(3503, "scandium_sword", (new ItemSword(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("swordScandium"));
+        registerItem(3504, "scandium_shovel", (new ItemSpade(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("shovelScandium"));
+        registerItem(3505, "scandium_pickaxe", (new ItemPickaxe(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("pickaxeScandium"));
+        registerItem(3506, "scandium_axe", (new ItemAxe(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("hatchetScandium"));
+        registerItem(3507, "scandium_hoe", (new ItemHoe(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("hoeScandium"));
+        registerItem(3508, "pyrite_sword", (new ItemSword(Item.ToolMaterial.PYRITE)).setUnlocalizedName("swordpyrite"));
+        registerItem(3509, "pyrite_shovel", (new ItemSpade(Item.ToolMaterial.PYRITE)).setUnlocalizedName("shovelpyrite"));
+        registerItem(3510, "pyrite_pickaxe", (new ItemPickaxe(Item.ToolMaterial.PYRITE)).setUnlocalizedName("pickaxepyrite"));
+        registerItem(3511, "pyrite_axe", (new ItemAxe(Item.ToolMaterial.PYRITE)).setUnlocalizedName("hatchetpyrite"));
+        registerItem(3512, "pyrite_hoe", (new ItemHoe(Item.ToolMaterial.PYRITE)).setUnlocalizedName("hoepyrite"));
+        registerItem(3513, "lazurite_sword", (new ItemSword(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("swordLazurite"));
+        registerItem(3514, "lazurite_shovel", (new ItemSpade(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("shovelLazurite"));
+        registerItem(3515, "lazurite_pickaxe", (new ItemPickaxe(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("pickaxeLazurite"));
+        registerItem(3516, "lazurite_axe", (new ItemAxe(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("hatchetLazurite"));
+        registerItem(3517, "lazurite_hoe", (new ItemHoe(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("hoeLazurite"));
+        //============================================================================================================================================================
     }
 
     /**
@@ -984,8 +1019,11 @@ public class Item
         WOOD(0, 59, 2.0F, 0.0F, 15),
         STONE(1, 131, 4.0F, 1.0F, 5),
         IRON(2, 250, 6.0F, 2.0F, 14),
-        EMERALD(3, 1561, 8.0F, 3.0F, 10),
-        GOLD(0, 32, 12.0F, 0.0F, 22);
+        EMERALD(3, 1561, 8.0F, 3.0F, 10),// = AUSSI DIAMANT
+        GOLD(0, 32, 12.0F, 0.0F, 22),
+        SCANDIUM(3, 2500, 14.0F, 6.0F, 10),
+        PYRITE(3, 2000, 13.0F, 5.0F, 10),
+        LAZURITE(3, 1750, 12.0F, 4.0F, 10);
 
         private final int harvestLevel;
         private final int maxUses;
@@ -1029,7 +1067,14 @@ public class Item
 
         public Item getRepairItem()
         {
-            return this == WOOD ? Item.getItemFromBlock(Blocks.planks) : (this == STONE ? Item.getItemFromBlock(Blocks.cobblestone) : (this == GOLD ? Items.gold_ingot : (this == IRON ? Items.iron_ingot : (this == EMERALD ? Items.diamond : null))));
+            return this == WOOD ? Item.getItemFromBlock(Blocks.planks) :
+                    (this == STONE ? Item.getItemFromBlock(Blocks.cobblestone) :
+                            (this == GOLD ? Items.gold_ingot :
+                                    (this == IRON ? Items.iron_ingot :
+                                            (this == EMERALD ? Items.diamond :
+                                                    (this == SCANDIUM ? Items.scandium :
+                                                            (this == PYRITE ? Items.pyrite :
+                                                                    (this == LAZURITE ? Items.lazurite : null)))))));
         }
     }
 }

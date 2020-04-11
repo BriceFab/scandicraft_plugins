@@ -202,6 +202,26 @@ public class Items
     public static final Item prismarine_crystals;
     public static final Item banner;
 
+    //ScandiCraft : UZApocalyps New Items
+    public static final Item scandium;
+    public static final Item pyrite;
+    public static final Item lazurite;
+    public static final Item scandium_sword;
+    public static final Item scandium_shovel;
+    public static final Item scandium_pickaxe;
+    public static final Item scandium_axe;
+    public static final Item scandium_hoe;
+    public static final Item pyrite_sword;
+    public static final Item pyrite_shovel;
+    public static final Item pyrite_pickaxe;
+    public static final Item pyrite_axe;
+    public static final Item pyrite_hoe;
+    public static final Item lazurite_sword;
+    public static final Item lazurite_shovel;
+    public static final Item lazurite_pickaxe;
+    public static final Item lazurite_axe;
+    public static final Item lazurite_hoe;
+
     private static Item getRegisteredItem(String name)
     {
         return (Item)Item.itemRegistry.getObject(new ResourceLocation(name));
@@ -402,6 +422,27 @@ public class Items
             prismarine_shard = getRegisteredItem("prismarine_shard");
             prismarine_crystals = getRegisteredItem("prismarine_crystals");
             banner = getRegisteredItem("banner");
+
+            //ScandiCraft : UZApocalyps
+
+            scandium = getRegisteredItem("scandium");
+            pyrite = getRegisteredItem("pyrite");
+            lazurite = getRegisteredItem("lazurite");
+            scandium_sword = getRegisteredItem("scandium_sword");
+            scandium_shovel = getRegisteredItem("scandium_shovel");
+            scandium_pickaxe = getRegisteredItem("scandium_pickaxe");
+            scandium_axe = getRegisteredItem("scandium_axe");
+            scandium_hoe = getRegisteredItem("scandium_hoe");
+            pyrite_sword = getRegisteredItem("pyrite_sword");
+            pyrite_shovel = getRegisteredItem("pyrite_shovel");
+            pyrite_pickaxe = getRegisteredItem("pyrite_pickaxe");
+            pyrite_axe = getRegisteredItem("pyrite_axe");
+            pyrite_hoe = getRegisteredItem("pyrite_hoe");
+            lazurite_sword = getRegisteredItem("lazurite_sword");
+            lazurite_shovel = getRegisteredItem("lazurite_shovel");
+            lazurite_pickaxe = getRegisteredItem("lazurite_pickaxe");
+            lazurite_axe = getRegisteredItem("lazurite_axe");
+            lazurite_hoe = getRegisteredItem("lazurite_hoe");
         }
     }
 }

@@ -917,6 +917,19 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerBlock(Blocks.chest, "chest");
         this.registerBlock(Blocks.trapped_chest, "trapped_chest");
         this.registerBlock(Blocks.ender_chest, "ender_chest");
+
+        //ScandiCraft : New Blocks
+        this.registerBlock(Blocks.scandium_ore, "scandium_ore");
+        this.registerBlock(Blocks.scandium_block, "scandium_block");
+        this.registerBlock(Blocks.pyrite_ore, "pyrite_ore");
+        this.registerBlock(Blocks.pyrite_block, "pyrite_block");
+        this.registerBlock(Blocks.lazurite_ore, "lazurite_ore");
+        this.registerBlock(Blocks.lazurite_block, "lazurite_block");
+
+
+
+
+
         this.registerItem(Items.iron_shovel, "iron_shovel");
         this.registerItem(Items.iron_pickaxe, "iron_pickaxe");
         this.registerItem(Items.iron_axe, "iron_axe");
@@ -1174,6 +1187,30 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerBlock(Blocks.brown_mushroom_block, BlockHugeMushroom.EnumType.ALL_INSIDE.getMetadata(), "brown_mushroom_block");
         this.registerBlock(Blocks.red_mushroom_block, BlockHugeMushroom.EnumType.ALL_INSIDE.getMetadata(), "red_mushroom_block");
         this.registerBlock(Blocks.dragon_egg, "dragon_egg");
+
+        //===========================================================================================================================================
+        //ScandiCraft : New Items
+
+        this.registerItem(Items.scandium, "scandium");
+        this.registerItem(Items.pyrite, "pyrite");
+        this.registerItem(Items.lazurite, "lazurite");
+        this.registerItem(Items.scandium_sword, "scandium_sword");
+        this.registerItem(Items.scandium_shovel, "scandium_shovel");
+        this.registerItem(Items.scandium_pickaxe, "scandium_pickaxe");
+        this.registerItem(Items.scandium_axe, "scandium_axe");
+        this.registerItem(Items.scandium_hoe, "scandium_hoe");
+        this.registerItem(Items.pyrite_sword, "pyrite_sword");
+        this.registerItem(Items.pyrite_shovel, "pyrite_shovel");
+        this.registerItem(Items.pyrite_pickaxe, "pyrite_pickaxe");
+        this.registerItem(Items.pyrite_axe, "pyrite_axe");
+        this.registerItem(Items.pyrite_hoe, "pyrite_hoe");
+        this.registerItem(Items.lazurite_sword, "lazurite_sword");
+        this.registerItem(Items.lazurite_shovel, "lazurite_shovel");
+        this.registerItem(Items.lazurite_pickaxe, "lazurite_pickaxe");
+        this.registerItem(Items.lazurite_axe, "lazurite_axe");
+        this.registerItem(Items.lazurite_hoe, "lazurite_hoe");
+        //===========================================================================================================================================
+
 
         if (Reflector.ModelLoader_onRegisterItems.exists())
         {

@@ -100,6 +100,16 @@ public class TextureUtils
     public static final String texGlassPaneTop = "glass_pane_top";
     public static final String texCompass = "compass";
     public static final String texClock = "clock";
+
+    //ScandiCraft :
+    public static final String texScandiumOre = "scandium_ore";
+    public static final String texScandiumBlock = "scandium_block";
+    public static final String texPyriteOre = "pyrite_ore";
+    public static final String texPyriteBlock = "pyrite_block";
+    public static final String texLazuriteOre = "lazurite_ore";
+    public static final String texLazuriteBlock = "Lazurite_block";
+
+
     public static TextureAtlasSprite iconGrassTop;
     public static TextureAtlasSprite iconGrassSide;
     public static TextureAtlasSprite iconGrassSideOverlay;

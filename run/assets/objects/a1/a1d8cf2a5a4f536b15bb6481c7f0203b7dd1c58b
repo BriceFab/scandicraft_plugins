@@ -1673,6 +1673,17 @@ item.wheat.name=Blé
 item.writingBook.name=Livre et plume
 item.writtenBook.name=Manuscrit
 item.yellowDust.name=Poudre lumineuse
+
+
+
+item.scandium.name=Scandium
+item.pyrite.name=Pyrite
+item.lazurite.name=Lazurite
+
+
+
+
+
 itemGroup.brewing=Potions
 itemGroup.buildingBlocks=Blocs de construction
 itemGroup.combat=Combat

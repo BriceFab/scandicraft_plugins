@@ -32,6 +32,12 @@ public class FurnaceRecipes
         this.addSmeltingRecipeForBlock(Blocks.gold_ore, new ItemStack(Items.gold_ingot), 1.0F);
         this.addSmeltingRecipeForBlock(Blocks.diamond_ore, new ItemStack(Items.diamond), 1.0F);
         this.addSmeltingRecipeForBlock(Blocks.sand, new ItemStack(Blocks.glass), 0.1F);
+        //ScandiCraft : UZApocalyps new blocks
+        this.addSmeltingRecipeForBlock(Blocks.scandium_ore, new ItemStack(Items.scandium), 3.0F);
+        this.addSmeltingRecipeForBlock(Blocks.pyrite_ore, new ItemStack(Items.pyrite), 2.0F);
+        this.addSmeltingRecipeForBlock(Blocks.lazurite_ore, new ItemStack(Items.lazurite), 1.5F);
+
+
         this.addSmelting(Items.porkchop, new ItemStack(Items.cooked_porkchop), 0.35F);
         this.addSmelting(Items.beef, new ItemStack(Items.cooked_beef), 0.35F);
         this.addSmelting(Items.chicken, new ItemStack(Items.cooked_chicken), 0.35F);

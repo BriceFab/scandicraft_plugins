@@ -1457,7 +1457,18 @@ public class Block
 
         // ScandiCraft : UZApocalyps
         //Start ID : 5000
-        
+        registerBlock(2500, "scandium_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreScandium"));
+        registerBlock(2501, "scandium_block", (new Block(Material.iron, MapColor.diamondColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockScandium").setCreativeTab(CreativeTabs.tabBlock));
+        registerBlock(2502, "pyrite_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("orePyrite"));
+        registerBlock(2503, "pyrite_block", (new Block(Material.iron, MapColor.diamondColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockPyrite").setCreativeTab(CreativeTabs.tabBlock));
+        registerBlock(2504, "lazurite_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreLazurite"));
+        registerBlock(2505, "lazurite_block", (new Block(Material.iron, MapColor.diamondColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockLazurite").setCreativeTab(CreativeTabs.tabBlock));
+
+
+
+
+
+
         blockRegistry.validateKey();
 
         for (Block block13 : blockRegistry)
