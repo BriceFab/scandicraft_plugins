@@ -221,6 +221,23 @@ public class Items
     public static final Item lazurite_pickaxe;
     public static final Item lazurite_axe;
     public static final Item lazurite_hoe;
+    public static final ItemArmor scandium_helmet;
+    public static final ItemArmor scandium_chestplate;
+    public static final ItemArmor scandium_leggings;
+    public static final ItemArmor scandium_boots;
+    public static final ItemArmor pyrite_helmet;
+    public static final ItemArmor pyrite_chestplate;
+    public static final ItemArmor pyrite_leggings;
+    public static final ItemArmor pyrite_boots;
+    public static final ItemArmor lazurite_helmet;
+    public static final ItemArmor lazurite_chestplate;
+    public static final ItemArmor lazurite_leggings;
+    public static final ItemArmor lazurite_boots;
+    public static final ItemArmor bloody_helmet;
+    public static final ItemArmor bloody_chestplate;
+    public static final ItemArmor bloody_leggings;
+    public static final ItemArmor bloody_boots;
+    public static final Item bloody_sword;
 
     private static Item getRegisteredItem(String name)
     {
@@ -443,6 +460,23 @@ public class Items
             lazurite_pickaxe = getRegisteredItem("lazurite_pickaxe");
             lazurite_axe = getRegisteredItem("lazurite_axe");
             lazurite_hoe = getRegisteredItem("lazurite_hoe");
+            scandium_helmet = (ItemArmor)getRegisteredItem("scandium_helmet");
+            scandium_chestplate = (ItemArmor)getRegisteredItem("scandium_chestplate");
+            scandium_leggings = (ItemArmor)getRegisteredItem("scandium_leggings");
+            scandium_boots = (ItemArmor)getRegisteredItem("scandium_boots");
+            pyrite_helmet = (ItemArmor)getRegisteredItem("pyrite_helmet");
+            pyrite_chestplate = (ItemArmor)getRegisteredItem("pyrite_chestplate");
+            pyrite_leggings = (ItemArmor)getRegisteredItem("pyrite_leggings");
+            pyrite_boots = (ItemArmor)getRegisteredItem("pyrite_boots");
+            lazurite_helmet = (ItemArmor)getRegisteredItem("lazurite_helmet");
+            lazurite_chestplate = (ItemArmor)getRegisteredItem("lazurite_chestplate");
+            lazurite_leggings = (ItemArmor)getRegisteredItem("lazurite_leggings");
+            lazurite_boots = (ItemArmor)getRegisteredItem("lazurite_boots");
+            bloody_helmet = (ItemArmor)getRegisteredItem("bloody_helmet");
+            bloody_chestplate = (ItemArmor)getRegisteredItem("bloody_chestplate");
+            bloody_leggings = (ItemArmor)getRegisteredItem("bloody_leggings");
+            bloody_boots = (ItemArmor)getRegisteredItem("bloody_boots");
+            bloody_sword = getRegisteredItem("bloody_sword");
         }
     }
 }

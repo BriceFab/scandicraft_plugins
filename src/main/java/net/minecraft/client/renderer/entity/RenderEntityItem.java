@@ -1,11 +1,16 @@
 package net.minecraft.client.renderer.entity;
 
+import java.awt.*;
 import java.util.Random;
+
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
@@ -28,6 +33,9 @@ public class RenderEntityItem extends Render<EntityItem>
     {
         ItemStack itemstack = itemIn.getEntityItem();
         Item item = itemstack.getItem();
+        Block block = Block.getBlockFromItem(item);
+        Random ran = new Random();
+        float ranF = ran.nextFloat() * (5 - 1) + 1;
 
         if (item == null)
         {
@@ -38,15 +46,45 @@ public class RenderEntityItem extends Render<EntityItem>
             boolean flag = p_177077_9_.isGui3d();
             int i = this.func_177078_a(itemstack);
             float f = 0.25F;
-            float f1 = MathHelper.sin(((float)itemIn.getAge() + p_177077_8_) / 10.0F + itemIn.hoverStart) * 0.1F + 0.1F;
-            float f2 = p_177077_9_.getItemCameraTransforms().getTransform(ItemCameraTransforms.TransformType.GROUND).scale.y;
-            GlStateManager.translate((float)p_177077_2_, (float)p_177077_4_ + f1 + 0.25F * f2, (float)p_177077_6_);
+           // float f1 = MathHelper.sin(((float)itemIn.getAge() + p_177077_8_) / 10.0F + itemIn.hoverStart) * 0.1F + 0.1F;
+           // float f2 = p_177077_9_.getItemCameraTransforms().getTransform(ItemCameraTransforms.TransformType.GROUND).scale.y;
+           if(block != null && (block != Blocks.torch || block != Blocks.redstone_torch))
+           {
+               GlStateManager.translate((float)p_177077_2_, (float)p_177077_4_  + 0.15F, (float)p_177077_6_);
+           }
+           else
+           {
+               GlStateManager.translate((float)p_177077_2_, (float)p_177077_4_  + 0.02F, (float)p_177077_6_);
+               GlStateManager.rotate(-90F, 1f,0f,0f);
+               GlStateManager.rotate(-90F, 0f,0f,1f);
+               GlStateManager.scale(1.5f,1.5f,1.5f);
+           }
+           if (item == Items.scandium)
+           {
 
-            if (flag || this.renderManager.options != null)
+               GlStateManager.scale(0.5f,0.5f,0.5f);
+           }
+           if(item == Items.enchanted_book)
+           {
+               GlStateManager.scale(0.7f,0.7f,0.7f);
+           }
+            if(item == Items.book)
+            {
+                GlStateManager.scale(0.7f,0.7f,0.7f);
+            }
+           if (item== Items.bloody_sword || item == Items.scandium_sword || item == Items.pyrite_sword || item == Items.lazurite_sword || item == Items.wooden_sword || item == Items.stone_sword || item == Items.iron_sword|| item == Items.golden_sword || item == Items.diamond_sword)
+           {
+                GlStateManager.translate(0f,0f,0.15f);
+                GlStateManager.rotate(-90f,1.0f,0.0f,0.0f);
+                GlStateManager.rotate(45f,0.0f,1.0f,0.0f);
+           }
+
+
+           /* if (flag || this.renderManager.options != null)
             {
                 float f3 = (((float)itemIn.getAge() + p_177077_8_) / 20.0F + itemIn.hoverStart) * (180F / (float)Math.PI);
                 GlStateManager.rotate(f3, 0.0F, 1.0F, 0.0F);
-            }
+            }*/
 
             if (!flag)
             {
@@ -56,6 +94,11 @@ public class RenderEntityItem extends Render<EntityItem>
                 GlStateManager.translate(f6, f4, f5);
             }
 
+            if (!itemIn.onGround)
+            {
+                float angle = System.currentTimeMillis() % (360*20) / 2F;
+                GlStateManager.rotate(angle,1F,1F,1F);
+            }
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             return i;
         }

@@ -238,7 +238,11 @@ public class ItemArmor extends Item
         CHAIN("chainmail", 15, new int[]{2, 5, 4, 1}, 12),
         IRON("iron", 15, new int[]{2, 6, 5, 2}, 9),
         GOLD("gold", 7, new int[]{2, 5, 3, 1}, 25),
-        DIAMOND("diamond", 33, new int[]{3, 8, 6, 3}, 10);
+        DIAMOND("diamond", 33, new int[]{3, 8, 6, 3}, 10),
+        BLOODY("bloody", 40, new int[]{8, 13, 11, 8}, 10),
+        SCANDIUM("scandium", 33, new int[]{6, 11, 9, 6}, 10),
+        PYRITE("pyrite", 33, new int[]{5, 10, 8, 5}, 10),
+        LAZURITE("lazurite", 33, new int[]{4, 9, 7, 4}, 10);
 
         private final String name;
         private final int maxDamageFactor;

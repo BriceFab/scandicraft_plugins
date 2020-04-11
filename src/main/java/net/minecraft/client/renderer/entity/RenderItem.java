@@ -1209,6 +1209,24 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerItem(Items.lazurite_pickaxe, "lazurite_pickaxe");
         this.registerItem(Items.lazurite_axe, "lazurite_axe");
         this.registerItem(Items.lazurite_hoe, "lazurite_hoe");
+        this.registerItem(Items.scandium_helmet, "scandium_helmet");
+        this.registerItem(Items.scandium_chestplate, "scandium_chestplate");
+        this.registerItem(Items.scandium_leggings, "scandium_leggings");
+        this.registerItem(Items.scandium_boots, "scandium_boots");
+        this.registerItem(Items.pyrite_helmet, "pyrite_helmet");
+        this.registerItem(Items.pyrite_chestplate, "pyrite_chestplate");
+        this.registerItem(Items.pyrite_leggings, "pyrite_leggings");
+        this.registerItem(Items.pyrite_boots, "pyrite_boots");
+        this.registerItem(Items.lazurite_helmet, "lazurite_helmet");
+        this.registerItem(Items.lazurite_chestplate, "lazurite_chestplate");
+        this.registerItem(Items.lazurite_leggings, "lazurite_leggings");
+        this.registerItem(Items.lazurite_boots, "lazurite_boots");
+        this.registerItem(Items.bloody_helmet, "bloody_helmet");
+        this.registerItem(Items.bloody_chestplate, "bloody_chestplate");
+        this.registerItem(Items.bloody_leggings, "bloody_leggings");
+        this.registerItem(Items.bloody_boots, "bloody_boots");
+        this.registerItem(Items.bloody_sword, "bloody_sword");
+
         //===========================================================================================================================================
 
 

@@ -984,6 +984,30 @@ public class Item
         registerItem(3515, "lazurite_pickaxe", (new ItemPickaxe(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("pickaxeLazurite"));
         registerItem(3516, "lazurite_axe", (new ItemAxe(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("hatchetLazurite"));
         registerItem(3517, "lazurite_hoe", (new ItemHoe(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("hoeLazurite"));
+        registerItem(3518, "pyrite_pie", (new ItemAppleGold(4, 1.2F, false)).setAlwaysEdible().setPotionEffect(Potion.nightVision.id, 120, 1, 1.0F).setUnlocalizedName("piePyrite"));
+        registerItem(3519, "scandium_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.SCANDIUM, 3, 0)).setUnlocalizedName("helmetScandium"));
+        registerItem(3520, "scandium_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.SCANDIUM, 3, 1)).setUnlocalizedName("chestplateScandium"));
+        registerItem(3521, "scandium_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.SCANDIUM, 3, 2)).setUnlocalizedName("leggingsScandium"));
+        registerItem(3522, "scandium_boots", (new ItemArmor(ItemArmor.ArmorMaterial.SCANDIUM, 3, 3)).setUnlocalizedName("bootsScandium"));
+        registerItem(3523, "pyrite_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.PYRITE, 3, 0)).setUnlocalizedName("helmetPyrite"));
+        registerItem(3524, "pyrite_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.PYRITE, 3, 1)).setUnlocalizedName("chestplatePyrite"));
+        registerItem(3525, "pyrite_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.PYRITE, 3, 2)).setUnlocalizedName("leggingsPyrite"));
+        registerItem(3526, "pyrite_boots", (new ItemArmor(ItemArmor.ArmorMaterial.PYRITE, 3, 3)).setUnlocalizedName("bootsPyrite"));
+        registerItem(3527, "lazurite_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.LAZURITE, 3, 0)).setUnlocalizedName("helmetLazurite"));
+        registerItem(3528, "lazurite_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.LAZURITE, 3, 1)).setUnlocalizedName("chestplateLazurite"));
+        registerItem(3529, "lazurite_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.LAZURITE, 3, 2)).setUnlocalizedName("leggingsLazurite"));
+        registerItem(3530, "lazurite_boots", (new ItemArmor(ItemArmor.ArmorMaterial.LAZURITE, 3, 3)).setUnlocalizedName("bootsLazurite"));
+        registerItem(3531, "bloody_sword", (new ItemSword(Item.ToolMaterial.BLOODY)).setUnlocalizedName("swordBloody"));
+        registerItem(3532, "bloody_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 3, 0)).setUnlocalizedName("helmetBloody"));
+        registerItem(3533, "bloody_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 3, 1)).setUnlocalizedName("chestplateBloody"));
+        registerItem(3534, "bloody_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 3, 2)).setUnlocalizedName("leggingsBloody"));
+        registerItem(3535, "bloody_boots", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 3, 3)).setUnlocalizedName("bootsBloody"));
+
+
+
+
+
+
         //============================================================================================================================================================
     }
 
@@ -1023,7 +1047,8 @@ public class Item
         GOLD(0, 32, 12.0F, 0.0F, 22),
         SCANDIUM(3, 2500, 14.0F, 6.0F, 10),
         PYRITE(3, 2000, 13.0F, 5.0F, 10),
-        LAZURITE(3, 1750, 12.0F, 4.0F, 10);
+        LAZURITE(3, 1750, 12.0F, 4.0F, 10),
+        BLOODY(3, 3500, 15.0F, 8.0F, 10);
 
         private final int harvestLevel;
         private final int maxUses;
