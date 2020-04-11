@@ -8,7 +8,13 @@ build
 .idea
 
 #Ignore run useless
-run
-!run/libraries
-!run/assets
-!run/natives
+run/options.txt
+run/optionsof.txt
+run/usercache.json
+run/shaderpacks
+run/saves
+run/resourcepacks
+run/logs
+*.txt
+*.gz
+*.log

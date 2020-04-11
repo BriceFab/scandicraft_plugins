@@ -28,6 +28,12 @@ dependencies {
     // Use all .jar files in lib dir as libraries
     compile fileTree(dir: 'run/libraries', include: ['*.jar'])
 }
+
+application {
+    // Define the main class for the application.
+    mainClassName = 'Start'
+}
+
 task runclient(type: JavaExec) {
     group = "ScandiCraft"
     description = "Run ScandiCraft client"
