@@ -1,56 +1,102 @@
 package net.scandicraft.anti_cheat;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
-import net.scandicraft.Config;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AntiTransparency {
-    static List<String> allow = new ArrayList<>();
-
-    static void init() {
-        allow.add("textures/blocks/stone.png");
-        allow.add("textures/blocks/cobblestone.png");
-        allow.add("textures/blocks/snow.png");
-        allow.add("textures/blocks/gravel.png");
-        allow.add("textures/blocks/sand.png");
-        allow.add("textures/blocks/obsidian.png");
-        allow.add("textures/blocks/furnace_top.png");
-        allow.add("textures/blocks/furnace_side.png");
-        allow.add("textures/blocks/stonebrick.png");
-        allow.add("textures/blocks/brick.png");
-        allow.add("textures/blocks/dirt.png");
-        allow.add("textures/blocks/grass_side.png");
-        allow.add("textures/blocks/grass_side_snowed.png");
-        allow.add("textures/blocks/netherrack.png");
-        allow.add("textures/blocks/bedrock.png");
-    }
+    private final static String BLOCKS_PATH = "textures/blocks/";
+    private static List<String> texturesCheck = new ArrayList<>(Arrays.asList(
+            BLOCKS_PATH + "stone.png",
+            BLOCKS_PATH + "cobblestone.png",
+            BLOCKS_PATH + "snow.png",
+            BLOCKS_PATH + "gravel.png",
+            BLOCKS_PATH + "sand.png",
+            BLOCKS_PATH + "furnace_top.png",
+            BLOCKS_PATH + "furnace_side.png",
+            BLOCKS_PATH + "stonebrick.png",
+            BLOCKS_PATH + "brick.png",
+            BLOCKS_PATH + "dirt.png",
+            BLOCKS_PATH + "grass_side.png",
+            BLOCKS_PATH + "grass_side_snowed.png",
+            BLOCKS_PATH + "netherrack.png",
+            BLOCKS_PATH + "red_sand.png",
+            BLOCKS_PATH + "bedrock.png"
+    ));
+    private final static String MODELS_PATH = "models/block/";
+    private static List<String> modelsCheck = new ArrayList<>(Arrays.asList(
+            MODELS_PATH + "cube.json",
+            MODELS_PATH + "grass.json"
+    ));
+    private final static IResourceManager resourceManager = Minecraft.getMinecraft().getResourceManager();
 
     /**
+     * Check des resources packs (textures et json)
      * True = hasIllegalTexture
+     *
      * @return boolean
      */
     public static boolean checkTexturePack() {
-        IResourceManager par1ResourceManager = Minecraft.getMinecraft().getResourceManager();
-        init();
+        return checkTextures() || checkModels();
+    }
 
-        for (String texture : allow) {
+    /**
+     * On peut aussi modifier le transparence depuis le dossier models d'un resource pack (json)
+     *
+     * @return true == hasIllegalModels
+     */
+    private static boolean checkModels() {
+        for (String texture : modelsCheck) {
             try {
-                IResource e = par1ResourceManager.getResource(new ResourceLocation(texture));
-                InputStream var7 = e.getInputStream();
-                BufferedImage var9 = ImageIO.read(var7);
-                int pixnb = countTransparentPixels(var9);
-                Config.print_debug("debug transparency " + pixnb);
+                IResource resource = resourceManager.getResource(new ResourceLocation(texture));
+                InputStream inputStream = resource.getInputStream();
+                JsonObject jsonModel;
+                JsonElement jsonElement = new JsonParser().parse(
+                        new InputStreamReader(inputStream)
+                );
+                jsonModel = jsonElement.getAsJsonObject();
+                for (JsonElement element : jsonModel.getAsJsonArray("elements")) {
+                    for (JsonElement to : element.getAsJsonObject().getAsJsonArray("to")) {
+                        int toValue = to.getAsInt();
+                        if (toValue < 16) {
+                            return true;
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-                if (pixnb > 0) {
+        return false;
+    }
+
+    /**
+     * Check textures
+     *
+     * @return true = hasIllegalTexture
+     */
+    private static boolean checkTextures() {
+        for (String texture : texturesCheck) {
+            try {
+                IResource resource = resourceManager.getResource(new ResourceLocation(texture));
+                InputStream inputStream = resource.getInputStream();
+                BufferedImage bufferedImage = ImageIO.read(inputStream);
+
+                if (countTransparentPixels(bufferedImage) > 0) {
                     return true;
                 }
             } catch (IOException e) {
@@ -63,6 +109,7 @@ public class AntiTransparency {
 
     /**
      * Compte le nombre de pixels transparent dans une image
+     *
      * @param par1BufferedImage image
      * @return nombre de pixels
      */

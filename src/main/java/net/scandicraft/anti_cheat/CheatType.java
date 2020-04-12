@@ -1,7 +1,7 @@
 package net.scandicraft.anti_cheat;
 
 public enum CheatType {
-    XRAY("La triche est interdite sur ScandiCraft. Veuillez supprimer votre ressource pack X-RAY !"),
+    XRAY("La triche est interdite sur ScandiCraft. Veuillez supprimer votre resource pack X-RAY !"),
     AUTOCLICK;
 
     private String message;
