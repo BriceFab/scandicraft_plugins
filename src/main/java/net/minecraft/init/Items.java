@@ -11,6 +11,7 @@ import net.minecraft.item.ItemMap;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemShears;
 import net.minecraft.util.ResourceLocation;
+import net.fr.scandicraft.ItemSpawnScepter;
 
 public class Items
 {
@@ -238,6 +239,7 @@ public class Items
     public static final ItemArmor bloody_leggings;
     public static final ItemArmor bloody_boots;
     public static final Item bloody_sword;
+    public static final ItemSpawnScepter scepter_creeper;
 
     private static Item getRegisteredItem(String name)
     {
@@ -477,6 +479,7 @@ public class Items
             bloody_leggings = (ItemArmor)getRegisteredItem("bloody_leggings");
             bloody_boots = (ItemArmor)getRegisteredItem("bloody_boots");
             bloody_sword = getRegisteredItem("bloody_sword");
+            scepter_creeper =(ItemSpawnScepter) getRegisteredItem("scepter_sword");
         }
     }
 }

@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
+
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +17,7 @@ import net.minecraft.block.BlockWall;
 import net.minecraft.block.material.Material;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -63,6 +66,7 @@ import net.minecraft.network.play.server.S3FPacketCustomPayload;
 import net.minecraft.network.play.server.S42PacketCombatEvent;
 import net.minecraft.network.play.server.S43PacketCamera;
 import net.minecraft.network.play.server.S48PacketResourcePackSend;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.scoreboard.IScoreObjectiveCriteria;
 import net.minecraft.scoreboard.Score;
@@ -425,6 +429,70 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
             if (this.ticksExisted % 20 * 5 == 0 && !this.getStatFile().hasAchievementUnlocked(AchievementList.exploreAllBiomes))
             {
                 this.updateBiomesExplored();
+            }
+
+            if (this.ticksExisted % 60 >= 0 )
+            {
+                EntityPlayer player = (EntityPlayer)this;
+                ItemStack helmet = player.getEquipmentInSlot(4);
+                ItemStack chestplate = player.getEquipmentInSlot(3);
+                ItemStack leggings = player.getEquipmentInSlot(2);
+                ItemStack boots = player.getEquipmentInSlot(1);
+                if (chestplate == null)
+                {
+                    if (player.getHealth() > 20)
+                    {
+                        player.setHealth(20.0f);
+                    }
+                }
+                else
+                {
+                    if(chestplate.getItem().equals(Items.bloody_chestplate) )
+                    {
+                        if (player.getHealth() >= 24)
+                        {
+                            player.setHealth(24.0f);
+                        }
+
+                    }
+                    else
+                    {
+                        if (player.getHealth() > 20)
+                        {
+                            player.setHealth(20.0f);
+                        }
+                    }
+                }
+               /* if (player.getHealth() >= 24.0D && chestplate.getItem().equals(Items.bloody_chestplate))
+                {
+                    player.setHealth(24.0f);
+                }
+                else if(player.getHealth() > 20 && !chestplate.getItem().equals(Items.bloody_chestplate))
+                {
+
+                }*/
+                //ScandiCraft : UZApocalyps effet sur les armures de sang
+                if (helmet != null && helmet.getItem().equals(Items.bloody_helmet))
+                {
+                    player.setAir(280);
+
+                }
+                if(chestplate != null && chestplate.getItem().equals(Items.bloody_chestplate))
+                {
+                    if (player.getHealth() == 20.0 && player.shouldHeal() && this.ticksExisted % 60 == 0 )
+                    {
+                        player.setHealth(player.getHealth()+1);
+
+                    }
+                }
+                if(leggings != null && leggings.getItem().equals(Items.bloody_leggings))
+                {
+                    player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id,80,1));
+                }
+                if (boots != null && boots.getItem().equals(Items.bloody_boots) )
+                {
+                    player.fallDistance = 0;
+                }
             }
         }
         catch (Throwable throwable)

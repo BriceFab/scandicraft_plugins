@@ -2,6 +2,7 @@ package net.minecraft.client.renderer.entity.layers;
 
 import com.google.common.collect.Maps;
 import java.util.Map;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
@@ -13,11 +14,14 @@ import net.minecraft.util.ResourceLocation;
 import optifine.Config;
 import optifine.CustomItems;
 import optifine.Reflector;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import shadersmod.client.Shaders;
 import shadersmod.client.ShadersRender;
 
 public abstract class LayerArmorBase<T extends ModelBase> implements LayerRenderer<EntityLivingBase>
 {
+    private static final Logger logger = LogManager.getLogger();
     protected static final ResourceLocation ENCHANTED_ITEM_GLINT_RES = new ResourceLocation("textures/misc/enchanted_item_glint.png");
     protected ModelBase field_177189_c;
     protected ModelBase field_177186_d;
@@ -108,10 +112,11 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
 
                 return;
             }
-
-            switch (LayerArmorBase.LayerArmorBase$1.field_178747_a[itemarmor.getArmorMaterial().ordinal()])
+            //ScandiCraft : Changement du switch
+            switch (itemarmor.getArmorMaterial())
             {
-                case 1:
+
+                case LEATHER:
                     int i = itemarmor.getColor(itemstack);
                     float f = (float)(i >> 16 & 255) / 255.0F;
                     float f1 = (float)(i >> 8 & 255) / 255.0F;
@@ -124,14 +129,18 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
                         this.renderer.bindTexture(this.getArmorResource(itemarmor, flag, "overlay"));
                     }
 
-                case 2:
-                case 3:
-                case 4:
-                case 5:
+                case CHAIN:
+                case IRON:
+                case GOLD:
+                case DIAMOND:
+                case BLOODY:
+                case SCANDIUM:
+                case PYRITE:
+                case LAZURITE:
+
                     GlStateManager.color(this.colorR, this.colorG, this.colorB, this.alpha);
                     modelbase.render(entitylivingbaseIn, p_177182_2_, p_177182_3_, p_177182_5_, p_177182_6_, p_177182_7_, p_177182_8_);
             }
-
             if (!this.field_177193_i && itemstack.isItemEnchanted() && (!Config.isCustomItems() || !CustomItems.renderCustomArmorEffect(entitylivingbaseIn, itemstack, modelbase, p_177182_2_, p_177182_3_, p_177182_4_, p_177182_5_, p_177182_6_, p_177182_7_, p_177182_8_)))
             {
                 this.func_177183_a(entitylivingbaseIn, modelbase, p_177182_2_, p_177182_3_, p_177182_4_, p_177182_5_, p_177182_6_, p_177182_7_, p_177182_8_);

@@ -971,6 +971,22 @@ public abstract class EntityLiving extends EntityLivingBase
                 {
                     return Items.diamond_helmet;
                 }
+                else if (itemTier == 6)
+                {
+                    return Items.bloody_helmet;
+                }
+                else if (itemTier == 7)
+                {
+                    return Items.scandium_helmet;
+                }
+                else if (itemTier == 8)
+                {
+                    return Items.pyrite_helmet;
+                }
+                else if (itemTier == 9)
+                {
+                    return Items.lazurite_helmet;
+                }
 
             case 3:
                 if (itemTier == 0)
@@ -992,6 +1008,22 @@ public abstract class EntityLiving extends EntityLivingBase
                 else if (itemTier == 4)
                 {
                     return Items.diamond_chestplate;
+                }
+                else if (itemTier == 6)
+                {
+                    return Items.bloody_chestplate;
+                }
+                else if (itemTier == 7)
+                {
+                    return Items.scandium_chestplate;
+                }
+                else if (itemTier == 8)
+                {
+                    return Items.pyrite_chestplate;
+                }
+                else if (itemTier == 9)
+                {
+                    return Items.lazurite_chestplate;
                 }
 
             case 2:
@@ -1015,6 +1047,22 @@ public abstract class EntityLiving extends EntityLivingBase
                 {
                     return Items.diamond_leggings;
                 }
+                else if (itemTier == 6)
+                {
+                    return Items.bloody_leggings;
+                }
+                else if (itemTier == 7)
+                {
+                    return Items.scandium_leggings;
+                }
+                else if (itemTier == 8)
+                {
+                    return Items.pyrite_leggings;
+                }
+                else if (itemTier == 9)
+                {
+                    return Items.lazurite_leggings;
+                }
 
             case 1:
                 if (itemTier == 0)
@@ -1036,6 +1084,22 @@ public abstract class EntityLiving extends EntityLivingBase
                 else if (itemTier == 4)
                 {
                     return Items.diamond_boots;
+                }
+                else if (itemTier == 6)
+                {
+                    return Items.bloody_boots;
+                }
+                else if (itemTier == 7)
+                {
+                    return Items.scandium_boots;
+                }
+                else if (itemTier == 8)
+                {
+                    return Items.pyrite_boots;
+                }
+                else if (itemTier == 9)
+                {
+                    return Items.lazurite_boots;
                 }
 
             default:
