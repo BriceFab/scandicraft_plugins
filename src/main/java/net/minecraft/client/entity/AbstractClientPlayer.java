@@ -17,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
+import net.scandicraft.skins.CustomSkin;
 import optifine.CapeUtils;
 import optifine.Config;
 import optifine.PlayerConfigurations;
@@ -84,8 +85,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer
      */
     public ResourceLocation getLocationSkin()
     {
-        NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
-        return networkplayerinfo == null ? DefaultPlayerSkin.getDefaultSkin(this.getUniqueID()) : networkplayerinfo.getLocationSkin();
+        return CustomSkin.getSkin(this.getName());
     }
 
     public ResourceLocation getLocationCape()

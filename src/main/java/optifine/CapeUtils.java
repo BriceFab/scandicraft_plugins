@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.ThreadDownloadImageData;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
+import net.scandicraft.Config;
 import org.apache.commons.io.FilenameUtils;
 
 public class CapeUtils
@@ -22,7 +23,7 @@ public class CapeUtils
 
         if (s != null && !s.isEmpty())
         {
-            String s1 = "http://s.optifine.net/capes/" + s + ".png";
+            String s1 = Config.CAPES_PATH + s + ".png";
             String s2 = FilenameUtils.getBaseName(s1);
             final ResourceLocation resourcelocation = new ResourceLocation("capeof/" + s2);
             TextureManager texturemanager = Minecraft.getMinecraft().getTextureManager();

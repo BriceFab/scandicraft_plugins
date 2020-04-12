@@ -43,7 +43,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.scandicraft.ItemSpawnScepter;
+import net.scandicraft.items.ItemSpawnScepter;
 
 public class Item
 {

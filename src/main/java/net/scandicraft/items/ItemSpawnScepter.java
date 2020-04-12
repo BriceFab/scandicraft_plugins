@@ -1,4 +1,4 @@
-package net.scandicraft;
+package net.scandicraft.items;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
