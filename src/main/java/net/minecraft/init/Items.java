@@ -11,7 +11,7 @@ import net.minecraft.item.ItemMap;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemShears;
 import net.minecraft.util.ResourceLocation;
-import net.fr.scandicraft.ItemSpawnScepter;
+import net.scandicraft.ItemSpawnScepter;
 
 public class Items
 {

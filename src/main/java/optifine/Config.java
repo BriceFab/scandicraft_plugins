@@ -2083,11 +2083,11 @@ public class Config
         }
     }
 
-    public static DynamicTexture getMojangLogoTexture(DynamicTexture p_getMojangLogoTexture_0_)
+    public static DynamicTexture getScandiCraftLogoTexture(DynamicTexture p_getMojangLogoTexture_0_)
     {
         try
         {
-            ResourceLocation resourcelocation = new ResourceLocation("textures/gui/title/mojang.png");
+            ResourceLocation resourcelocation = new ResourceLocation("textures/gui/title/loading_scandicraft.png");
             InputStream inputstream = getResourceStream(resourcelocation);
 
             if (inputstream == null)
