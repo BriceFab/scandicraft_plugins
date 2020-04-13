@@ -2707,11 +2707,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
             }
         }
 
-        if (this.mc.currentScreen instanceof GuiMainMenu)
-        {
-            this.updateMainMenu((GuiMainMenu)this.mc.currentScreen);
-        }
-
         if (this.updatedWorld != world)
         {
             RandomMobs.worldChanged(this.updatedWorld, world);
@@ -2745,49 +2740,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
                     this.mc.ingameGUI.getChatGUI().printChatMessage(chatcomponenttext);
                 }
             }
-        }
-    }
-
-    private void updateMainMenu(GuiMainMenu p_updateMainMenu_1_)
-    {
-        try
-        {
-            String s = null;
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(new Date());
-            int i = calendar.get(5);
-            int j = calendar.get(2) + 1;
-
-            if (i == 8 && j == 4)
-            {
-                s = "Happy birthday, OptiFine!";
-            }
-
-            if (i == 14 && j == 8)
-            {
-                s = "Happy birthday, sp614x!";
-            }
-
-            if (s == null)
-            {
-                return;
-            }
-
-            Field[] afield = GuiMainMenu.class.getDeclaredFields();
-
-            for (int k = 0; k < afield.length; ++k)
-            {
-                if (afield[k].getType() == String.class)
-                {
-                    afield[k].setAccessible(true);
-                    afield[k].set(p_updateMainMenu_1_, s);
-                    break;
-                }
-            }
-        }
-        catch (Throwable var8)
-        {
-            ;
         }
     }
 
