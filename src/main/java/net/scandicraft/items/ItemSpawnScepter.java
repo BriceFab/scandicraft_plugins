@@ -17,8 +17,13 @@ public class ItemSpawnScepter extends Item {
 
     public ItemSpawnScepter(int max_uses) {
         this.setCreativeTab(CreativeTabs.tabCombat);
-        this.setMaxDamage(max_uses);
+        this.setMaxDamage(max_uses - 1); //car 0 est pris en compte
         this.setMaxStackSize(1);
+    }
+
+    @Override
+    public boolean isFull3D() {
+        return true;
     }
 
     /**
@@ -46,6 +51,8 @@ public class ItemSpawnScepter extends Item {
                     entity.setCustomNameTag(stack.getDisplayName());
                 }
             }
+
+            stack.damageItem(1, playerIn);
 
             return true;
         }
