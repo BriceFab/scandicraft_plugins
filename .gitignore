@@ -3,6 +3,7 @@
 
 # Ignore Gradle build output directory
 build
+out
 
 #Ignore intelliji
 .idea
@@ -16,6 +17,7 @@ run/saves
 run/resourcepacks
 run/logs
 run/tmp
+*.dat
 *.txt
 *.gz
 *.log

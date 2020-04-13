@@ -6,6 +6,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.EnumChatFormatting;
+import net.scandicraft.Config;
 import org.apache.commons.lang3.ArrayUtils;
 
 public class GuiKeyBindingList extends GuiListExtended
@@ -21,7 +22,7 @@ public class GuiKeyBindingList extends GuiListExtended
         this.field_148191_k = controls;
         this.mc = mcIn;
         KeyBinding[] akeybinding = (KeyBinding[])ArrayUtils.clone(mcIn.gameSettings.keyBindings);
-        this.listEntries = new GuiListExtended.IGuiListEntry[akeybinding.length + KeyBinding.getKeybinds().size()];
+        this.listEntries = new GuiListExtended.IGuiListEntry[akeybinding.length + KeyBinding.getKeybindsMinecraft().size()];
         Arrays.sort((Object[])akeybinding);
         int i = 0;
         String s = null;
