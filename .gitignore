@@ -17,6 +17,7 @@ run/saves
 run/resourcepacks
 run/logs
 run/tmp
+*.dat
 *.txt
 *.gz
 *.log

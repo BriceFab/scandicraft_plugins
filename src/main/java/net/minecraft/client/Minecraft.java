@@ -89,6 +89,7 @@ import net.scandicraft.Config;
 import net.scandicraft.anti_cheat.AntiTransparency;
 import net.scandicraft.anti_cheat.CheatScreen;
 import net.scandicraft.anti_cheat.CheatType;
+import net.scandicraft.settings.ScandiCraftSettings;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
@@ -223,6 +224,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * The game settings that currently hold effect.
      */
     public GameSettings gameSettings;
+
+    /**
+     * The scandiCraft settings that currently hold effect.
+     */
+    public ScandiCraftSettings scandiCraftSettings;
 
     /**
      * Mouse helper instance.
@@ -413,6 +419,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      */
     private void startGame() throws LWJGLException, IOException {
         this.gameSettings = new GameSettings(this, this.mcDataDir);
+        this.scandiCraftSettings = new ScandiCraftSettings(this, this.mcDataDir);
         this.defaultResourcePacks.add(this.mcDefaultResourcePack);
         this.startTimerHackThread();
 
@@ -694,6 +701,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             this.gameSettings.resourcePacks.clear();
             this.gameSettings.field_183018_l.clear();
             this.gameSettings.saveOptions();
+            this.scandiCraftSettings.saveOptions();
         }
 
         this.mcLanguageManager.parseLanguageMetadata(list);
