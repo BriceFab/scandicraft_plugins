@@ -15,6 +15,7 @@ run/shaderpacks
 run/saves
 run/resourcepacks
 run/logs
+run/tmp
 *.txt
 *.gz
 *.log

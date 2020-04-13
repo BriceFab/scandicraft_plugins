@@ -3,7 +3,6 @@ package net.scandicraft.anti_cheat;
 import net.scandicraft.Config;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class CheatScreen {
 
