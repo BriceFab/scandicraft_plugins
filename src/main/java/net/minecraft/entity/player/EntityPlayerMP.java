@@ -22,6 +22,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IMerchant;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
@@ -97,12 +98,13 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
+import net.scandicraft.Config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class EntityPlayerMP extends EntityPlayer implements ICrafting
 {
-    private static final Logger logger = LogManager.getLogger();
+
     private String translator = "en_US";
 
     /**
@@ -166,7 +168,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
      * and XP
      */
     public boolean playerConqueredTheEnd;
-
+    public EntityPlayer actualPlayer;
     public EntityPlayerMP(MinecraftServer server, WorldServer worldIn, GameProfile profile, ItemInWorldManager interactionManager)
     {
         super(worldIn, profile);
@@ -438,31 +440,6 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
                 ItemStack chestplate = player.getEquipmentInSlot(3);
                 ItemStack leggings = player.getEquipmentInSlot(2);
                 ItemStack boots = player.getEquipmentInSlot(1);
-                if (chestplate == null)
-                {
-                    if (player.getHealth() > 20)
-                    {
-                        player.setHealth(20.0f);
-                    }
-                }
-                else
-                {
-                    if(chestplate.getItem().equals(Items.bloody_chestplate) )
-                    {
-                        if (player.getHealth() >= 24)
-                        {
-                            player.setHealth(24.0f);
-                        }
-
-                    }
-                    else
-                    {
-                        if (player.getHealth() > 20)
-                        {
-                            player.setHealth(20.0f);
-                        }
-                    }
-                }
                /* if (player.getHealth() >= 24.0D && chestplate.getItem().equals(Items.bloody_chestplate))
                 {
                     player.setHealth(24.0f);
@@ -556,6 +533,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
      */
     public void onDeath(DamageSource cause)
     {
+        Config.print_debug("OnDeath : " + this);
         if (this.worldObj.getGameRules().getBoolean("showDeathMessages"))
         {
             Team team = this.getTeam();
@@ -600,6 +578,31 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
             }
 
             entitylivingbase.addToPlayerScore(this, this.scoreValue);
+            Config.print_debug("EntityPlayer : " + this);
+            Config.print_debug("cause :"  + cause.getEntity());
+
+
+            if (this instanceof EntityPlayer && cause.getEntity() instanceof EntityPlayer)
+            {
+
+                actualPlayer = (EntityPlayer) cause.getEntity();
+                ItemStack chestplate = actualPlayer.getEquipmentInSlot(3);
+
+                if(chestplate.getItem().equals(Items.bloody_chestplate) )
+                {
+                    if (actualPlayer.getHealth() + 10 > actualPlayer.getMaxHealth())
+                    {
+                        actualPlayer.setHealth(actualPlayer.getMaxHealth());
+                    }
+                    else
+                    {
+                        actualPlayer.setHealth(actualPlayer.getHealth() + 10);
+                    }
+
+                }
+
+
+            }
         }
 
         this.triggerAchievement(StatList.deathsStat);
