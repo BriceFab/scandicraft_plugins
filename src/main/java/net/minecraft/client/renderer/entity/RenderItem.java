@@ -1227,7 +1227,7 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerItem(Items.bloody_boots, "bloody_boots");
         this.registerItem(Items.bloody_sword, "bloody_sword");
         this.registerItem(Items.scepter_creeper,"scepter_creeper");
-
+        this.registerItem(Items.scepter_repair,"scepter_repair");
         //===========================================================================================================================================
 
 
