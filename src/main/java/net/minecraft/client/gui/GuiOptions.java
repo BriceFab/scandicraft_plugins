@@ -15,6 +15,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.EnumDifficulty;
 import net.scandicraft.Config;
+import net.scandicraft.settings.GuiMainSettings;
 import net.scandicraft.settings.ScandiCraftGuiSettings;
 import net.scandicraft.settings.ScandiCraftSettings;
 
@@ -237,7 +238,7 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
             {
                 Config.print_debug("Open settings gui");
                 this.mc.scandiCraftSettings.saveOptions();
-                this.mc.displayGuiScreen(new ScandiCraftGuiSettings(this, this.scandiCraftSettings));
+                this.mc.displayGuiScreen(new GuiMainSettings(this, this.scandiCraftSettings));
             }
         }
     }

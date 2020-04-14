@@ -5,7 +5,6 @@ import java.util.Map;
 public class I18n
 {
     private static Locale i18nLocale;
-    private static final String __OBFID = "CL_00001094";
 
     static void setLocale(Locale i18nLocaleIn)
     {
@@ -18,6 +17,11 @@ public class I18n
     public static String format(String translateKey, Object... parameters)
     {
         return i18nLocale.formatMessage(translateKey, parameters);
+    }
+
+    public static String format(String translateKey)
+    {
+        return format(translateKey, new Object[0]);
     }
 
     public static Map getLocaleProperties()

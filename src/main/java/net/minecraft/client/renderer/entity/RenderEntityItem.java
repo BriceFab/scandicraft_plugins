@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.scandicraft.Config;
+import net.scandicraft.settings.ScandiCraftSettings;
 
 import java.util.Random;
 
@@ -40,9 +41,7 @@ public class RenderEntityItem extends Render<EntityItem> {
         } else {
             boolean flag = p_177077_9_.isGui3d();
             int i = this.getModelCount(itemstack);
-            boolean hasPhysics = Minecraft.getMinecraft().scandiCraftSettings.hasItemsPhysics;
-
-            Config.print_debug("test activeItemsPhysics " + hasPhysics);
+            boolean hasPhysics = (Boolean) ScandiCraftSettings.Options.ITEMS_PHYSICS.getValue();
 
             if (hasPhysics) {
                 if (block != null) {

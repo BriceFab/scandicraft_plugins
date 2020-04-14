@@ -21,8 +21,6 @@ public class ScandiCraftSettings {
     private File optionsFile;
     public String language;
 
-    public boolean hasItemsPhysics = false;
-
     public KeyBinding keyBindTest1 = new KeyBinding("test1", 0, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
     public KeyBinding keyBindTest2 = new KeyBinding("test2", 0, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
 
@@ -79,9 +77,54 @@ public class ScandiCraftSettings {
     /**
      * Represents a key or mouse button as a string. Args: key
      */
-    public static String getKeyDisplayString(int p_74298_0_)
-    {
-        return p_74298_0_ < 0 ? I18n.format("key.mouseButton", new Object[] {Integer.valueOf(p_74298_0_ + 101)}): (p_74298_0_ < 256 ? Keyboard.getKeyName(p_74298_0_) : String.format("%c", new Object[] {Character.valueOf((char)(p_74298_0_ - 256))}).toUpperCase());
+    public static String getKeyDisplayString(int p_74298_0_) {
+        return p_74298_0_ < 0 ? I18n.format("key.mouseButton", new Object[]{Integer.valueOf(p_74298_0_ + 101)}) : (p_74298_0_ < 256 ? Keyboard.getKeyName(p_74298_0_) : String.format("%c", new Object[]{Character.valueOf((char) (p_74298_0_ - 256))}).toUpperCase());
+    }
+
+    /**
+     * Gets a key binding.
+     */
+    public String getKeyBinding(ScandiCraftSettings.Options options) {
+        String name = options.getName() + ": ";
+
+        if (options.isBoolean()) {
+            boolean flag = (boolean) options.getValue();
+            return flag ? name + I18n.format("options.on") : name + I18n.format("options.off");
+        } else {
+            return name;
+        }
+    }
+
+    public enum Options {
+        ITEMS_PHYSICS("scandicraft.options.items_physics", true);
+
+        private final String key;
+        private Object value;
+
+        Options(String key, Object value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public void setOptionValue(Object value) {
+            this.value = value;
+        }
+
+        public String getName() {
+            return I18n.format(key);
+        }
+
+        public Object getValue() {
+            return value;
+        }
+
+        public boolean isBoolean() {
+            return value.getClass().toString().toLowerCase().contains("boolean");
+        }
+
+        public int returnEnumOrdinal() {
+            return this.ordinal();
+        }
     }
 
 }

@@ -23,7 +23,6 @@ public class GuiVideoSettings extends GuiScreen
 
     /** An array of all of GameSettings.Options's video options. */
     private static GameSettings.Options[] videoOptions = new GameSettings.Options[] {GameSettings.Options.GRAPHICS, GameSettings.Options.RENDER_DISTANCE, GameSettings.Options.AMBIENT_OCCLUSION, GameSettings.Options.FRAMERATE_LIMIT, GameSettings.Options.AO_LEVEL, GameSettings.Options.VIEW_BOBBING, GameSettings.Options.GUI_SCALE, GameSettings.Options.USE_VBO, GameSettings.Options.GAMMA, GameSettings.Options.BLOCK_ALTERNATIVES, GameSettings.Options.FOG_FANCY, GameSettings.Options.FOG_START};
-    private static final String __OBFID = "CL_00000718";
     private TooltipManager tooltipManager = new TooltipManager(this);
 
     public GuiVideoSettings(GuiScreen parentScreenIn, GameSettings gameSettingsIn)
@@ -179,27 +178,7 @@ public class GuiVideoSettings extends GuiScreen
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRendererObj, this.screenTitle, this.width / 2, 15, 16777215);
-        String s = Config.getVersion();
-        String s1 = "HD_U";
 
-        if (s1.equals("HD"))
-        {
-            s = "OptiFine HD H8";
-        }
-
-        if (s1.equals("HD_U"))
-        {
-            s = "OptiFine HD H8 Ultra";
-        }
-
-        if (s1.equals("L"))
-        {
-            s = "OptiFine H8 Light";
-        }
-
-        this.drawString(this.fontRendererObj, s, 2, this.height - 10, 8421504);
-        int i = this.fontRendererObj.getStringWidth(net.scandicraft.Config.TITLE);
-        this.drawString(this.fontRendererObj, net.scandicraft.Config.TITLE, this.width - i - 2, this.height - 10, 8421504);
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.tooltipManager.drawTooltips(mouseX, mouseY, this.buttonList);
     }
