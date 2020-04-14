@@ -21,14 +21,14 @@ public class ScandiCraftSettings {
     private File optionsFile;
     public String language;
 
-    public KeyBinding keyBindForward = new KeyBinding("test1", 17, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
-    public KeyBinding keyBindLeft = new KeyBinding("test2", 30, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
+    public KeyBinding keyBindTest1 = new KeyBinding("test1", 0, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
+    public KeyBinding keyBindTest2 = new KeyBinding("test2", 0, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
 
     public ScandiCraftSettings(Minecraft mcIn, File file) {
         this.language = "en_US";
         this.mc = mcIn;
         this.optionsFile = new File(file, "scandicraft_options.txt");
-        this.keyBindings = ArrayUtils.addAll(new KeyBinding[]{this.keyBindForward, this.keyBindLeft});
+        this.keyBindings = ArrayUtils.addAll(new KeyBinding[]{this.keyBindTest1, this.keyBindTest2});
         this.loadOptions();
     }
 
