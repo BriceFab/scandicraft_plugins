@@ -1005,7 +1005,7 @@ public class Item
         registerItem(3534, "bloody_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 6, 2)).setUnlocalizedName("leggingsBloody"));
         registerItem(3535, "bloody_boots", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 6, 3)).setUnlocalizedName("bootsBloody"));
         registerItem(3536,"scepter_creeper", (new ItemSpawnScepter(3).setUnlocalizedName("scepterCreeper")));
-        registerItem(3537,"scepter_repair", (new ItemRepairScepter(1).setUnlocalizedName("scepterRepair")));
+        registerItem(3537,"scepter_repair", (new ItemRepairScepter().setUnlocalizedName("scepterRepair")));
 
 
 

@@ -11,6 +11,14 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ScandiCraftSettings {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -18,8 +26,8 @@ public class ScandiCraftSettings {
     public KeyBinding[] keyBindings;
 
     protected Minecraft mc;
-    private File optionsFile;
     public String language;
+    private String optionsFileName = "sc_options.json";
 
     public KeyBinding keyBindTest1 = new KeyBinding("test1", 0, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
     public KeyBinding keyBindTest2 = new KeyBinding("test2", 0, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
@@ -27,7 +35,6 @@ public class ScandiCraftSettings {
     public ScandiCraftSettings(Minecraft mcIn, File file) {
         this.language = "en_US";
         this.mc = mcIn;
-        this.optionsFile = new File(file, "scandicraft_options.txt");
         this.keyBindings = ArrayUtils.addAll(new KeyBinding[]{this.keyBindTest1, this.keyBindTest2});
         this.loadOptions();
     }
@@ -36,14 +43,27 @@ public class ScandiCraftSettings {
         Config.print_debug("Load scandicraft options");
 
         try {
-            if (!this.optionsFile.exists()) {
+            Path path = Paths.get(this.optionsFileName);
+
+            if (!Files.exists(path) || Files.notExists(path)) {
+                Config.print_debug("set default options");
                 return;
             }
 
-            //TODO !
+            Map<?, ?> options = GSON.fromJson(new FileReader(this.optionsFileName), Map.class);
+
+            for (Map.Entry<?, ?> entry : options.entrySet()) {
+                Config.print_debug("test " + entry.getKey() + " " + entry.getValue() + " " + entry.getKey().getClass());
+                if (entry.getKey() instanceof String) {
+                    ScandiCraftSettings.Options actOption = ScandiCraftSettings.Options.getOptionByKey((String) entry.getKey());
+                    if (actOption != null) {
+                        actOption.setOptionValue(entry.getValue());
+                    }
+                }
+            }
 
         } catch (Exception exception1) {
-            LOGGER.error((String) "Failed to load scandicraft options", (Throwable) exception1);
+            LOGGER.error("Failed to load scandicraft options", exception1);
         }
 
     }
@@ -52,9 +72,17 @@ public class ScandiCraftSettings {
         Config.print_debug("Save scandicraft options");
 
         try {
-            //TODO
+            Map<String, Object> map = new HashMap<>();
+
+            for (Options actOption : Options.getAllOptions()) {
+                map.put(actOption.getKey(), actOption.getValue());
+            }
+
+            Writer writer = new FileWriter(this.optionsFileName);
+            GSON.toJson(map, writer);
+            writer.close();
         } catch (Exception exception) {
-            LOGGER.error((String) "Failed to save scandicraft options", (Throwable) exception);
+            LOGGER.error("Failed to save scandicraft options", exception);
         }
 
         // this.sendSettingsToServer();
@@ -108,6 +136,23 @@ public class ScandiCraftSettings {
 
         public void setOptionValue(Object value) {
             this.value = value;
+        }
+
+        public static ScandiCraftSettings.Options getOptionByKey(String key) {
+            for (ScandiCraftSettings.Options options : values()) {
+                if (options.getKey().equals(key)) {
+                    return options;
+                }
+            }
+            return null;
+        }
+
+        public static ScandiCraftSettings.Options[] getAllOptions() {
+            return values();
+        }
+
+        public String getKey() {
+            return key;
         }
 
         public String getName() {

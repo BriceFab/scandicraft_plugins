@@ -17,7 +17,7 @@ public class ItemSpawnScepter extends Item {
 
     public ItemSpawnScepter(int max_uses) {
         this.setCreativeTab(CreativeTabs.tabCombat);
-        this.setMaxDamage(max_uses); //car 0 est pris en compte
+        this.setMaxDamage(max_uses - 1); //car 0 est pris en compte
         this.setMaxStackSize(1);
     }
 

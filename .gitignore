@@ -12,6 +12,7 @@ out
 run/options.txt
 run/optionsof.txt
 run/usercache.json
+run/sc_options.json
 run/shaderpacks
 run/saves
 run/resourcepacks

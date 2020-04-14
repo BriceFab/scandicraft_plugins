@@ -41,8 +41,6 @@ public class GuiMainSettings extends GuiScreen {
 
                 if (i == 0) y += 10; //espace du haut
 
-                Config.print_debug("add button " + actOption + " " + x + " " + y);
-
                 this.buttonList.add(new BooleanButton(actOption.returnEnumOrdinal(), x, y, actOption, this.scandicraftSettings.getKeyBinding(actOption)));
             }
         }
