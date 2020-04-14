@@ -11,6 +11,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.scandicraft.Config;
 
 import java.util.Random;
 
@@ -40,8 +41,14 @@ public class RenderEntityItem extends Render<EntityItem> {
             float f = 0.25F;
             // float f1 = MathHelper.sin(((float)itemIn.getAge() + p_177077_8_) / 10.0F + itemIn.hoverStart) * 0.1F + 0.1F;
             // float f2 = p_177077_9_.getItemCameraTransforms().getTransform(ItemCameraTransforms.TransformType.GROUND).scale.y;
-            if (block != null && (block != Blocks.torch || block != Blocks.redstone_torch)) {
-                GlStateManager.translate((float) p_177077_2_, (float) p_177077_4_ + 0.15F, (float) p_177077_6_);
+            if (block != null) {
+                if (block == Blocks.torch || block == Blocks.redstone_torch) {
+                    GlStateManager.translate((float) p_177077_2_, (float) p_177077_4_ + 0.05F, (float) p_177077_6_);
+                    GlStateManager.rotate(-90F, 0f, 0f, 1f);
+                    GlStateManager.scale(1.5f, 1.5f, 1.5f);
+                } else {
+                    GlStateManager.translate((float) p_177077_2_, (float) p_177077_4_ + 0.15F, (float) p_177077_6_);
+                }
             } else {
                 GlStateManager.translate((float) p_177077_2_, (float) p_177077_4_ + 0.02F, (float) p_177077_6_);
                 GlStateManager.rotate(-90F, 1f, 0f, 0f);
