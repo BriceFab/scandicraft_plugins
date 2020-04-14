@@ -21,6 +21,8 @@ public class ScandiCraftSettings {
     private File optionsFile;
     public String language;
 
+    public boolean hasItemsPhysics = false;
+
     public KeyBinding keyBindTest1 = new KeyBinding("test1", 0, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
     public KeyBinding keyBindTest2 = new KeyBinding("test2", 0, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
 
