@@ -27,20 +27,20 @@ public class GuiConnecting extends GuiScreen
     private boolean cancel;
     private final GuiScreen previousGuiScreen;
 
-    public GuiConnecting(GuiScreen p_i1181_1_, Minecraft mcIn, ServerData p_i1181_3_)
+    public GuiConnecting(GuiScreen parent, Minecraft mcIn, ServerData serverDataIn)
     {
         this.mc = mcIn;
-        this.previousGuiScreen = p_i1181_1_;
-        ServerAddress serveraddress = ServerAddress.func_78860_a(p_i1181_3_.serverIP);
+        this.previousGuiScreen = parent;
+        ServerAddress serveraddress = ServerAddress.fromString(serverDataIn.serverIP);
         mcIn.loadWorld((WorldClient)null);
-        mcIn.setServerData(p_i1181_3_);
+        mcIn.setServerData(serverDataIn);
         this.connect(serveraddress.getIP(), serveraddress.getPort());
     }
 
-    public GuiConnecting(GuiScreen p_i1182_1_, Minecraft mcIn, String hostName, int port)
+    public GuiConnecting(GuiScreen parent, Minecraft mcIn, String hostName, int port)
     {
         this.mc = mcIn;
-        this.previousGuiScreen = p_i1182_1_;
+        this.previousGuiScreen = parent;
         mcIn.loadWorld((WorldClient)null);
         this.connect(hostName, port);
     }
@@ -62,7 +62,7 @@ public class GuiConnecting extends GuiScreen
                     }
 
                     inetaddress = InetAddress.getByName(ip);
-                    GuiConnecting.this.networkManager = NetworkManager.func_181124_a(inetaddress, port, GuiConnecting.this.mc.gameSettings.func_181148_f());
+                    GuiConnecting.this.networkManager = NetworkManager.createNetworkManagerAndConnect(inetaddress, port, GuiConnecting.this.mc.gameSettings.isUsingNativeTransport());
                     GuiConnecting.this.networkManager.setNetHandler(new NetHandlerLoginClient(GuiConnecting.this.networkManager, GuiConnecting.this.mc, GuiConnecting.this.previousGuiScreen));
                     GuiConnecting.this.networkManager.sendPacket(new C00Handshake(47, ip, port, EnumConnectionState.LOGIN));
                     GuiConnecting.this.networkManager.sendPacket(new C00PacketLoginStart(GuiConnecting.this.mc.getSession().getProfile()));

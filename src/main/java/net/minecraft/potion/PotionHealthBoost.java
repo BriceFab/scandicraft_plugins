@@ -11,9 +11,9 @@ public class PotionHealthBoost extends Potion
         super(potionID, location, badEffect, potionColor);
     }
 
-    public void removeAttributesModifiersFromEntity(EntityLivingBase entityLivingBaseIn, BaseAttributeMap p_111187_2_, int amplifier)
+    public void removeAttributesModifiersFromEntity(EntityLivingBase entityLivingBaseIn, BaseAttributeMap attributeMapIn, int amplifier)
     {
-        super.removeAttributesModifiersFromEntity(entityLivingBaseIn, p_111187_2_, amplifier);
+        super.removeAttributesModifiersFromEntity(entityLivingBaseIn, attributeMapIn, amplifier);
 
         if (entityLivingBaseIn.getHealth() > entityLivingBaseIn.getMaxHealth())
         {

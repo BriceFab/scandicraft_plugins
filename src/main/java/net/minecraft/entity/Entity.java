@@ -224,9 +224,9 @@ public abstract class Entity implements ICommandSender
 
     /** Which dimension the player is in (-1 = the Nether, 0 = normal world) */
     public int dimension;
-    protected BlockPos field_181016_an;
-    protected Vec3 field_181017_ao;
-    protected EnumFacing field_181018_ap;
+    protected BlockPos lastPortalPos;
+    protected Vec3 lastPortalVec;
+    protected EnumFacing teleportDirection;
     private boolean invulnerable;
     protected UUID entityUniqueID;
 
@@ -1675,7 +1675,7 @@ public abstract class Entity implements ICommandSender
             this.prevRotationYaw = this.rotationYaw = nbttaglist2.getFloatAt(0);
             this.prevRotationPitch = this.rotationPitch = nbttaglist2.getFloatAt(1);
             this.setRotationYawHead(this.rotationYaw);
-            this.func_181013_g(this.rotationYaw);
+            this.setRenderYawOffset(this.rotationYaw);
             this.fallDistance = tagCompund.getFloat("FallDistance");
             this.fire = tagCompund.getShort("Fire");
             this.setAir(tagCompund.getShort("Air"));
@@ -1834,7 +1834,7 @@ public abstract class Entity implements ICommandSender
 
                 if (blockpos$mutableblockpos.getX() != k || blockpos$mutableblockpos.getY() != j || blockpos$mutableblockpos.getZ() != l)
                 {
-                    blockpos$mutableblockpos.func_181079_c(k, j, l);
+                    blockpos$mutableblockpos.setPos(k, j, l);
 
                     if (this.worldObj.getBlockState(blockpos$mutableblockpos).getBlock().isVisuallyOpaque())
                     {
@@ -2000,7 +2000,7 @@ public abstract class Entity implements ICommandSender
         }
     }
 
-    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean p_180426_10_)
+    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
     {
         this.setPosition(x, y, z);
         this.setRotation(yaw, pitch);
@@ -2036,7 +2036,7 @@ public abstract class Entity implements ICommandSender
         return null;
     }
 
-    public void func_181015_d(BlockPos p_181015_1_)
+    public void setPortal(BlockPos pos)
     {
         if (this.timeUntilPortal > 0)
         {
@@ -2044,16 +2044,16 @@ public abstract class Entity implements ICommandSender
         }
         else
         {
-            if (!this.worldObj.isRemote && !p_181015_1_.equals(this.field_181016_an))
+            if (!this.worldObj.isRemote && !pos.equals(this.lastPortalPos))
             {
-                this.field_181016_an = p_181015_1_;
-                BlockPattern.PatternHelper blockpattern$patternhelper = Blocks.portal.func_181089_f(this.worldObj, p_181015_1_);
-                double d0 = blockpattern$patternhelper.getFinger().getAxis() == EnumFacing.Axis.X ? (double)blockpattern$patternhelper.func_181117_a().getZ() : (double)blockpattern$patternhelper.func_181117_a().getX();
+                this.lastPortalPos = pos;
+                BlockPattern.PatternHelper blockpattern$patternhelper = Blocks.portal.createPatternHelper(this.worldObj, pos);
+                double d0 = blockpattern$patternhelper.getFinger().getAxis() == EnumFacing.Axis.X ? (double)blockpattern$patternhelper.getFrontTopLeft().getZ() : (double)blockpattern$patternhelper.getFrontTopLeft().getX();
                 double d1 = blockpattern$patternhelper.getFinger().getAxis() == EnumFacing.Axis.X ? this.posZ : this.posX;
-                d1 = Math.abs(MathHelper.func_181160_c(d1 - (double)(blockpattern$patternhelper.getFinger().rotateY().getAxisDirection() == EnumFacing.AxisDirection.NEGATIVE ? 1 : 0), d0, d0 - (double)blockpattern$patternhelper.func_181118_d()));
-                double d2 = MathHelper.func_181160_c(this.posY - 1.0D, (double)blockpattern$patternhelper.func_181117_a().getY(), (double)(blockpattern$patternhelper.func_181117_a().getY() - blockpattern$patternhelper.func_181119_e()));
-                this.field_181017_ao = new Vec3(d1, d2, 0.0D);
-                this.field_181018_ap = blockpattern$patternhelper.getFinger();
+                d1 = Math.abs(MathHelper.pct(d1 - (double)(blockpattern$patternhelper.getFinger().rotateY().getAxisDirection() == EnumFacing.AxisDirection.NEGATIVE ? 1 : 0), d0, d0 - (double)blockpattern$patternhelper.getWidth()));
+                double d2 = MathHelper.pct(this.posY - 1.0D, (double)blockpattern$patternhelper.getFrontTopLeft().getY(), (double)(blockpattern$patternhelper.getFrontTopLeft().getY() - blockpattern$patternhelper.getHeight()));
+                this.lastPortalVec = new Vec3(d1, d2, 0.0D);
+                this.teleportDirection = blockpattern$patternhelper.getFinger();
             }
 
             this.inPortal = true;
@@ -2378,7 +2378,7 @@ public abstract class Entity implements ICommandSender
     {
     }
 
-    public void func_181013_g(float p_181013_1_)
+    public void setRenderYawOffset(float offset)
     {
     }
 
@@ -2425,9 +2425,9 @@ public abstract class Entity implements ICommandSender
         entityIn.writeToNBT(nbttagcompound);
         this.readFromNBT(nbttagcompound);
         this.timeUntilPortal = entityIn.timeUntilPortal;
-        this.field_181016_an = entityIn.field_181016_an;
-        this.field_181017_ao = entityIn.field_181017_ao;
-        this.field_181018_ap = entityIn.field_181018_ap;
+        this.lastPortalPos = entityIn.lastPortalPos;
+        this.lastPortalVec = entityIn.lastPortalVec;
+        this.teleportDirection = entityIn.teleportDirection;
     }
 
     /**
@@ -2499,14 +2499,14 @@ public abstract class Entity implements ICommandSender
         return 3;
     }
 
-    public Vec3 func_181014_aG()
+    public Vec3 getLastPortalVec()
     {
-        return this.field_181017_ao;
+        return this.lastPortalVec;
     }
 
-    public EnumFacing func_181012_aH()
+    public EnumFacing getTeleportDirection()
     {
-        return this.field_181018_ap;
+        return this.teleportDirection;
     }
 
     /**

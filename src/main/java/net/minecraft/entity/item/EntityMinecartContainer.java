@@ -31,13 +31,13 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
         super(worldIn, p_i1717_2_, p_i1717_4_, p_i1717_6_);
     }
 
-    public void killMinecart(DamageSource p_94095_1_)
+    public void killMinecart(DamageSource source)
     {
-        super.killMinecart(p_94095_1_);
+        super.killMinecart(source);
 
         if (this.worldObj.getGameRules().getBoolean("doEntityDrops"))
         {
-            InventoryHelper.func_180176_a(this.worldObj, this, this);
+            InventoryHelper.dropInventoryItems(this.worldObj, this, this);
         }
     }
 
@@ -174,7 +174,7 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
     {
         if (this.dropContentsWhenDead)
         {
-            InventoryHelper.func_180176_a(this.worldObj, this, this);
+            InventoryHelper.dropInventoryItems(this.worldObj, this, this);
         }
 
         super.setDead();

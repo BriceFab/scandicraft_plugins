@@ -237,7 +237,7 @@ public class EntitySlime extends EntityLiving implements IMob
 
         if (entityIn instanceof EntityIronGolem && this.canDamagePlayer())
         {
-            this.func_175451_e((EntityLivingBase)entityIn);
+            this.dealDamage((EntityLivingBase)entityIn);
         }
     }
 
@@ -248,18 +248,18 @@ public class EntitySlime extends EntityLiving implements IMob
     {
         if (this.canDamagePlayer())
         {
-            this.func_175451_e(entityIn);
+            this.dealDamage(entityIn);
         }
     }
 
-    protected void func_175451_e(EntityLivingBase p_175451_1_)
+    protected void dealDamage(EntityLivingBase entityIn)
     {
         int i = this.getSlimeSize();
 
-        if (this.canEntityBeSeen(p_175451_1_) && this.getDistanceSqToEntity(p_175451_1_) < 0.6D * (double)i * 0.6D * (double)i && p_175451_1_.attackEntityFrom(DamageSource.causeMobDamage(this), (float)this.getAttackStrength()))
+        if (this.canEntityBeSeen(entityIn) && this.getDistanceSqToEntity(entityIn) < 0.6D * (double)i * 0.6D * (double)i && entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)this.getAttackStrength()))
         {
             this.playSound("mob.attack", 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-            this.applyEnchantments(this, p_175451_1_);
+            this.applyEnchantments(this, entityIn);
         }
     }
 
@@ -401,11 +401,11 @@ public class EntitySlime extends EntityLiving implements IMob
     static class AISlimeAttack extends EntityAIBase
     {
         private EntitySlime slime;
-        private int field_179465_b;
+        private int growTieredTimer;
 
-        public AISlimeAttack(EntitySlime p_i45824_1_)
+        public AISlimeAttack(EntitySlime slimeIn)
         {
-            this.slime = p_i45824_1_;
+            this.slime = slimeIn;
             this.setMutexBits(2);
         }
 
@@ -417,32 +417,32 @@ public class EntitySlime extends EntityLiving implements IMob
 
         public void startExecuting()
         {
-            this.field_179465_b = 300;
+            this.growTieredTimer = 300;
             super.startExecuting();
         }
 
         public boolean continueExecuting()
         {
             EntityLivingBase entitylivingbase = this.slime.getAttackTarget();
-            return entitylivingbase == null ? false : (!entitylivingbase.isEntityAlive() ? false : (entitylivingbase instanceof EntityPlayer && ((EntityPlayer)entitylivingbase).capabilities.disableDamage ? false : --this.field_179465_b > 0));
+            return entitylivingbase == null ? false : (!entitylivingbase.isEntityAlive() ? false : (entitylivingbase instanceof EntityPlayer && ((EntityPlayer)entitylivingbase).capabilities.disableDamage ? false : --this.growTieredTimer > 0));
         }
 
         public void updateTask()
         {
             this.slime.faceEntity(this.slime.getAttackTarget(), 10.0F, 10.0F);
-            ((EntitySlime.SlimeMoveHelper)this.slime.getMoveHelper()).func_179920_a(this.slime.rotationYaw, this.slime.canDamagePlayer());
+            ((EntitySlime.SlimeMoveHelper)this.slime.getMoveHelper()).setDirection(this.slime.rotationYaw, this.slime.canDamagePlayer());
         }
     }
 
     static class AISlimeFaceRandom extends EntityAIBase
     {
         private EntitySlime slime;
-        private float field_179459_b;
-        private int field_179460_c;
+        private float chosenDegrees;
+        private int nextRandomizeTime;
 
-        public AISlimeFaceRandom(EntitySlime p_i45820_1_)
+        public AISlimeFaceRandom(EntitySlime slimeIn)
         {
-            this.slime = p_i45820_1_;
+            this.slime = slimeIn;
             this.setMutexBits(2);
         }
 
@@ -453,13 +453,13 @@ public class EntitySlime extends EntityLiving implements IMob
 
         public void updateTask()
         {
-            if (--this.field_179460_c <= 0)
+            if (--this.nextRandomizeTime <= 0)
             {
-                this.field_179460_c = 40 + this.slime.getRNG().nextInt(60);
-                this.field_179459_b = (float)this.slime.getRNG().nextInt(360);
+                this.nextRandomizeTime = 40 + this.slime.getRNG().nextInt(60);
+                this.chosenDegrees = (float)this.slime.getRNG().nextInt(360);
             }
 
-            ((EntitySlime.SlimeMoveHelper)this.slime.getMoveHelper()).func_179920_a(this.field_179459_b, false);
+            ((EntitySlime.SlimeMoveHelper)this.slime.getMoveHelper()).setDirection(this.chosenDegrees, false);
         }
     }
 
@@ -467,11 +467,11 @@ public class EntitySlime extends EntityLiving implements IMob
     {
         private EntitySlime slime;
 
-        public AISlimeFloat(EntitySlime p_i45823_1_)
+        public AISlimeFloat(EntitySlime slimeIn)
         {
-            this.slime = p_i45823_1_;
+            this.slime = slimeIn;
             this.setMutexBits(5);
-            ((PathNavigateGround)p_i45823_1_.getNavigator()).setCanSwim(true);
+            ((PathNavigateGround)slimeIn.getNavigator()).setCanSwim(true);
         }
 
         public boolean shouldExecute()
@@ -494,9 +494,9 @@ public class EntitySlime extends EntityLiving implements IMob
     {
         private EntitySlime slime;
 
-        public AISlimeHop(EntitySlime p_i45822_1_)
+        public AISlimeHop(EntitySlime slimeIn)
         {
-            this.slime = p_i45822_1_;
+            this.slime = slimeIn;
             this.setMutexBits(5);
         }
 
@@ -513,21 +513,21 @@ public class EntitySlime extends EntityLiving implements IMob
 
     static class SlimeMoveHelper extends EntityMoveHelper
     {
-        private float field_179922_g;
-        private int field_179924_h;
+        private float yRot;
+        private int jumpDelay;
         private EntitySlime slime;
-        private boolean field_179923_j;
+        private boolean isAggressive;
 
-        public SlimeMoveHelper(EntitySlime p_i45821_1_)
+        public SlimeMoveHelper(EntitySlime slimeIn)
         {
-            super(p_i45821_1_);
-            this.slime = p_i45821_1_;
+            super(slimeIn);
+            this.slime = slimeIn;
         }
 
-        public void func_179920_a(float p_179920_1_, boolean p_179920_2_)
+        public void setDirection(float yRotIn, boolean aggressive)
         {
-            this.field_179922_g = p_179920_1_;
-            this.field_179923_j = p_179920_2_;
+            this.yRot = yRotIn;
+            this.isAggressive = aggressive;
         }
 
         public void setSpeed(double speedIn)
@@ -538,7 +538,7 @@ public class EntitySlime extends EntityLiving implements IMob
 
         public void onUpdateMoveHelper()
         {
-            this.entity.rotationYaw = this.limitAngle(this.entity.rotationYaw, this.field_179922_g, 30.0F);
+            this.entity.rotationYaw = this.limitAngle(this.entity.rotationYaw, this.yRot, 30.0F);
             this.entity.rotationYawHead = this.entity.rotationYaw;
             this.entity.renderYawOffset = this.entity.rotationYaw;
 
@@ -554,13 +554,13 @@ public class EntitySlime extends EntityLiving implements IMob
                 {
                     this.entity.setAIMoveSpeed((float)(this.speed * this.entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue()));
 
-                    if (this.field_179924_h-- <= 0)
+                    if (this.jumpDelay-- <= 0)
                     {
-                        this.field_179924_h = this.slime.getJumpDelay();
+                        this.jumpDelay = this.slime.getJumpDelay();
 
-                        if (this.field_179923_j)
+                        if (this.isAggressive)
                         {
-                            this.field_179924_h /= 3;
+                            this.jumpDelay /= 3;
                         }
 
                         this.slime.getJumpHelper().setJumping();

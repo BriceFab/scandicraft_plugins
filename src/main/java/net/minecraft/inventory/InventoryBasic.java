@@ -13,7 +13,7 @@ public class InventoryBasic implements IInventory
     private String inventoryTitle;
     private int slotsCount;
     private ItemStack[] inventoryContents;
-    private List<IInvBasic> field_70480_d;
+    private List<IInvBasic> listeners;
     private boolean hasCustomName;
 
     public InventoryBasic(String title, boolean customName, int slotCount)
@@ -29,19 +29,19 @@ public class InventoryBasic implements IInventory
         this(title.getUnformattedText(), true, slotCount);
     }
 
-    public void func_110134_a(IInvBasic p_110134_1_)
+    public void addListener(IInvBasic listener)
     {
-        if (this.field_70480_d == null)
+        if (this.listeners == null)
         {
-            this.field_70480_d = Lists.<IInvBasic>newArrayList();
+            this.listeners = Lists.<IInvBasic>newArrayList();
         }
 
-        this.field_70480_d.add(p_110134_1_);
+        this.listeners.add(listener);
     }
 
-    public void func_110132_b(IInvBasic p_110132_1_)
+    public void removeListener(IInvBasic listener)
     {
-        this.field_70480_d.remove(p_110132_1_);
+        this.listeners.remove(listener);
     }
 
     /**
@@ -85,7 +85,7 @@ public class InventoryBasic implements IInventory
         }
     }
 
-    public ItemStack func_174894_a(ItemStack stack)
+    public ItemStack addItem(ItemStack stack)
     {
         ItemStack itemstack = stack.copy();
 
@@ -214,11 +214,11 @@ public class InventoryBasic implements IInventory
      */
     public void markDirty()
     {
-        if (this.field_70480_d != null)
+        if (this.listeners != null)
         {
-            for (int i = 0; i < this.field_70480_d.size(); ++i)
+            for (int i = 0; i < this.listeners.size(); ++i)
             {
-                ((IInvBasic)this.field_70480_d.get(i)).onInventoryChanged(this);
+                ((IInvBasic)this.listeners.get(i)).onInventoryChanged(this);
             }
         }
     }

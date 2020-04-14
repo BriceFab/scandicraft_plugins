@@ -27,18 +27,18 @@ public class EntitySnowball extends EntityThrowable
     /**
      * Called when this EntityThrowable hits a block or entity.
      */
-    protected void onImpact(MovingObjectPosition p_70184_1_)
+    protected void onImpact(MovingObjectPosition result)
     {
-        if (p_70184_1_.entityHit != null)
+        if (result.entityHit != null)
         {
             int i = 0;
 
-            if (p_70184_1_.entityHit instanceof EntityBlaze)
+            if (result.entityHit instanceof EntityBlaze)
             {
                 i = 3;
             }
 
-            p_70184_1_.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float)i);
+            result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float)i);
         }
 
         for (int j = 0; j < 8; ++j)

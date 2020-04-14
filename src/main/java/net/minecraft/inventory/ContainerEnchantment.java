@@ -213,7 +213,7 @@ public class ContainerEnchantment extends Container
                     {
                         if (this.enchantLevels[j1] > 0)
                         {
-                            List<EnchantmentData> list = this.func_178148_a(itemstack, j1, this.enchantLevels[j1]);
+                            List<EnchantmentData> list = this.getEnchantmentList(itemstack, j1, this.enchantLevels[j1]);
 
                             if (list != null && !list.isEmpty())
                             {
@@ -254,7 +254,7 @@ public class ContainerEnchantment extends Container
         {
             if (!this.worldPointer.isRemote)
             {
-                List<EnchantmentData> list = this.func_178148_a(itemstack, id, this.enchantLevels[id]);
+                List<EnchantmentData> list = this.getEnchantmentList(itemstack, id, this.enchantLevels[id]);
                 boolean flag = itemstack.getItem() == Items.book;
 
                 if (list != null)
@@ -305,10 +305,10 @@ public class ContainerEnchantment extends Container
         }
     }
 
-    private List<EnchantmentData> func_178148_a(ItemStack stack, int p_178148_2_, int p_178148_3_)
+    private List<EnchantmentData> getEnchantmentList(ItemStack stack, int enchantSlot, int level)
     {
-        this.rand.setSeed((long)(this.xpSeed + p_178148_2_));
-        List<EnchantmentData> list = EnchantmentHelper.buildEnchantmentList(this.rand, stack, p_178148_3_);
+        this.rand.setSeed((long)(this.xpSeed + enchantSlot));
+        List<EnchantmentData> list = EnchantmentHelper.buildEnchantmentList(this.rand, stack, level);
 
         if (stack.getItem() == Items.book && list != null && list.size() > 1)
         {

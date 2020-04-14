@@ -65,7 +65,7 @@ public class WorldType
         return "generator." + this.worldType;
     }
 
-    public String func_151359_c()
+    public String getInfoTranslationKey()
     {
         return this.getTranslateName() + ".info";
     }

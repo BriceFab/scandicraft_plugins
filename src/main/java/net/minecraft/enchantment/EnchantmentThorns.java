@@ -57,11 +57,11 @@ public class EnchantmentThorns extends Enchantment
         Random random = user.getRNG();
         ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Enchantment.thorns, user);
 
-        if (func_92094_a(level, random))
+        if (shouldHit(level, random))
         {
             if (attacker != null)
             {
-                attacker.attackEntityFrom(DamageSource.causeThornsDamage(user), (float)func_92095_b(level, random));
+                attacker.attackEntityFrom(DamageSource.causeThornsDamage(user), (float)getDamage(level, random));
                 attacker.playSound("damage.thorns", 0.5F, 1.0F);
             }
 
@@ -76,13 +76,13 @@ public class EnchantmentThorns extends Enchantment
         }
     }
 
-    public static boolean func_92094_a(int p_92094_0_, Random p_92094_1_)
+    public static boolean shouldHit(int level, Random rnd)
     {
-        return p_92094_0_ <= 0 ? false : p_92094_1_.nextFloat() < 0.15F * (float)p_92094_0_;
+        return level <= 0 ? false : rnd.nextFloat() < 0.15F * (float)level;
     }
 
-    public static int func_92095_b(int p_92095_0_, Random p_92095_1_)
+    public static int getDamage(int level, Random rnd)
     {
-        return p_92095_0_ > 10 ? p_92095_0_ - 10 : 1 + p_92095_1_.nextInt(4);
+        return level > 10 ? level - 10 : 1 + rnd.nextInt(4);
     }
 }

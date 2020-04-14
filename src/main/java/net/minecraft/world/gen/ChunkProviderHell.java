@@ -92,7 +92,7 @@ public class ChunkProviderHell implements IChunkProvider
     public void func_180515_a(int p_180515_1_, int p_180515_2_, ChunkPrimer p_180515_3_)
     {
         int i = 4;
-        int j = this.worldObj.func_181545_F() / 2 + 1;
+        int j = this.worldObj.getSeaLevel() / 2 + 1;
         int k = i + 1;
         int l = 17;
         int i1 = i + 1;
@@ -165,7 +165,7 @@ public class ChunkProviderHell implements IChunkProvider
 
     public void func_180516_b(int p_180516_1_, int p_180516_2_, ChunkPrimer p_180516_3_)
     {
-        int i = this.worldObj.func_181545_F() + 1;
+        int i = this.worldObj.getSeaLevel() + 1;
         double d0 = 0.03125D;
         this.slowsandNoise = this.slowsandGravelNoiseGen.generateNoiseOctaves(this.slowsandNoise, p_180516_1_ * 16, p_180516_2_ * 16, 0, 16, 16, 1, d0, d0, 1.0D);
         this.gravelNoise = this.slowsandGravelNoiseGen.generateNoiseOctaves(this.gravelNoise, p_180516_1_ * 16, 109, p_180516_2_ * 16, 16, 1, 16, d0, 1.0D, d0);
@@ -489,7 +489,7 @@ public class ChunkProviderHell implements IChunkProvider
                 return this.genNetherBridge.getSpawnList();
             }
 
-            if (this.genNetherBridge.func_175796_a(this.worldObj, pos) && this.worldObj.getBlockState(pos.down()).getBlock() == Blocks.nether_brick)
+            if (this.genNetherBridge.isPositionInStructure(this.worldObj, pos) && this.worldObj.getBlockState(pos.down()).getBlock() == Blocks.nether_brick)
             {
                 return this.genNetherBridge.getSpawnList();
             }

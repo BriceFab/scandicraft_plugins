@@ -25,9 +25,9 @@ public class EntityMinecartFurnace extends EntityMinecart
         super(worldIn);
     }
 
-    public EntityMinecartFurnace(World worldIn, double p_i1719_2_, double p_i1719_4_, double p_i1719_6_)
+    public EntityMinecartFurnace(World worldIn, double x, double y, double z)
     {
-        super(worldIn, p_i1719_2_, p_i1719_4_, p_i1719_6_);
+        super(worldIn, x, y, z);
     }
 
     public EntityMinecart.EnumMinecartType getMinecartType()
@@ -74,19 +74,19 @@ public class EntityMinecartFurnace extends EntityMinecart
         return 0.2D;
     }
 
-    public void killMinecart(DamageSource p_94095_1_)
+    public void killMinecart(DamageSource source)
     {
-        super.killMinecart(p_94095_1_);
+        super.killMinecart(source);
 
-        if (!p_94095_1_.isExplosion() && this.worldObj.getGameRules().getBoolean("doEntityDrops"))
+        if (!source.isExplosion() && this.worldObj.getGameRules().getBoolean("doEntityDrops"))
         {
             this.entityDropItem(new ItemStack(Blocks.furnace, 1), 0.0F);
         }
     }
 
-    protected void func_180460_a(BlockPos p_180460_1_, IBlockState p_180460_2_)
+    protected void moveAlongTrack(BlockPos pos, IBlockState state)
     {
-        super.func_180460_a(p_180460_1_, p_180460_2_);
+        super.moveAlongTrack(pos, state);
         double d0 = this.pushX * this.pushX + this.pushZ * this.pushZ;
 
         if (d0 > 1.0E-4D && this.motionX * this.motionX + this.motionZ * this.motionZ > 0.001D)

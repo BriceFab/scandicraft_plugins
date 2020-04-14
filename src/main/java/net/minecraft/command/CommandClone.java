@@ -56,7 +56,7 @@ public class CommandClone extends CommandBase
             BlockPos blockpos1 = parseBlockPos(sender, args, 3, false);
             BlockPos blockpos2 = parseBlockPos(sender, args, 6, false);
             StructureBoundingBox structureboundingbox = new StructureBoundingBox(blockpos, blockpos1);
-            StructureBoundingBox structureboundingbox1 = new StructureBoundingBox(blockpos2, blockpos2.add(structureboundingbox.func_175896_b()));
+            StructureBoundingBox structureboundingbox1 = new StructureBoundingBox(blockpos2, blockpos2.add(structureboundingbox.getLength()));
             int i = structureboundingbox.getXSize() * structureboundingbox.getYSize() * structureboundingbox.getZSize();
 
             if (i > 32768)

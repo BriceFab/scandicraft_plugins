@@ -175,11 +175,11 @@ public class EntitySpider extends EntityMob
      * Updates the WatchableObject (Byte) created in entityInit(), setting it to 0x01 if par1 is true or 0x00 if it is
      * false.
      */
-    public void setBesideClimbableBlock(boolean p_70839_1_)
+    public void setBesideClimbableBlock(boolean climbing)
     {
         byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 
-        if (p_70839_1_)
+        if (climbing)
         {
             b0 = (byte)(b0 | 1);
         }
@@ -214,7 +214,7 @@ public class EntitySpider extends EntityMob
 
             if (this.worldObj.getDifficulty() == EnumDifficulty.HARD && this.worldObj.rand.nextFloat() < 0.1F * difficulty.getClampedAdditionalDifficulty())
             {
-                ((EntitySpider.GroupData)livingdata).func_111104_a(this.worldObj.rand);
+                ((EntitySpider.GroupData)livingdata).setRandomEffect(this.worldObj.rand);
             }
         }
 
@@ -258,7 +258,7 @@ public class EntitySpider extends EntityMob
             }
         }
 
-        protected double func_179512_a(EntityLivingBase attackTarget)
+        protected double getAttackReachSqr(EntityLivingBase attackTarget)
         {
             return (double)(4.0F + attackTarget.width);
         }
@@ -266,9 +266,9 @@ public class EntitySpider extends EntityMob
 
     static class AISpiderTarget<T extends EntityLivingBase> extends EntityAINearestAttackableTarget
     {
-        public AISpiderTarget(EntitySpider p_i45818_1_, Class<T> classTarget)
+        public AISpiderTarget(EntitySpider spider, Class<T> classTarget)
         {
-            super(p_i45818_1_, classTarget, true);
+            super(spider, classTarget, true);
         }
 
         public boolean shouldExecute()
@@ -282,7 +282,7 @@ public class EntitySpider extends EntityMob
     {
         public int potionEffectId;
 
-        public void func_111104_a(Random rand)
+        public void setRandomEffect(Random rand)
         {
             int i = rand.nextInt(5);
 

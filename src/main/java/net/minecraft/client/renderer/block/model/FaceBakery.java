@@ -17,8 +17,8 @@ import shadersmod.client.Shaders;
 
 public class FaceBakery
 {
-    private static final float field_178418_a = 1.0F / (float)Math.cos(0.39269909262657166D) - 1.0F;
-    private static final float field_178417_b = 1.0F / (float)Math.cos((Math.PI / 4D)) - 1.0F;
+    private static final float SCALE_ROTATION_22_5 = 1.0F / (float)Math.cos(0.39269909262657166D) - 1.0F;
+    private static final float SCALE_ROTATION_GENERAL = 1.0F / (float)Math.cos((Math.PI / 4D)) - 1.0F;
     private static final String __OBFID = "CL_00002490";
 
     public BakedQuad makeBakedQuad(Vector3f posFrom, Vector3f posTo, BlockPartFace face, TextureAtlasSprite sprite, EnumFacing facing, ModelRotation modelRotationIn, BlockPartRotation partRotation, boolean uvLocked, boolean shade)
@@ -142,8 +142,8 @@ public class FaceBakery
     {
         EnumFacing enumfacing = p_fillVertexData_7_.rotate(p_fillVertexData_3_);
         int i = p_fillVertexData_10_ ? this.getFaceShadeColor(enumfacing) : -1;
-        EnumFaceDirection.VertexInformation enumfacedirection$vertexinformation = EnumFaceDirection.getFacing(p_fillVertexData_3_).func_179025_a(p_fillVertexData_2_);
-        Vector3f vector3f = new Vector3f(p_fillVertexData_5_[enumfacedirection$vertexinformation.field_179184_a], p_fillVertexData_5_[enumfacedirection$vertexinformation.field_179182_b], p_fillVertexData_5_[enumfacedirection$vertexinformation.field_179183_c]);
+        EnumFaceDirection.VertexInformation enumfacedirection$vertexinformation = EnumFaceDirection.getFacing(p_fillVertexData_3_).getVertexInformation(p_fillVertexData_2_);
+        Vector3f vector3f = new Vector3f(p_fillVertexData_5_[enumfacedirection$vertexinformation.xIndex], p_fillVertexData_5_[enumfacedirection$vertexinformation.yIndex], p_fillVertexData_5_[enumfacedirection$vertexinformation.zIndex]);
         this.func_178407_a(vector3f, p_fillVertexData_8_);
         int j = this.rotateVertex(vector3f, p_fillVertexData_3_, p_fillVertexData_2_, p_fillVertexData_7_, p_fillVertexData_9_);
         this.storeVertexData(p_fillVertexData_1_, j, p_fillVertexData_2_, vector3f, i, p_fillVertexData_6_, p_fillVertexData_4_.blockFaceUV);
@@ -157,8 +157,8 @@ public class FaceBakery
         faceData[j + 1] = Float.floatToRawIntBits(position.y);
         faceData[j + 2] = Float.floatToRawIntBits(position.z);
         faceData[j + 3] = shadeColor;
-        faceData[j + 4] = Float.floatToRawIntBits(sprite.getInterpolatedU((double)faceUV.func_178348_a(vertexIndex)));
-        faceData[j + 4 + 1] = Float.floatToRawIntBits(sprite.getInterpolatedV((double)faceUV.func_178346_b(vertexIndex)));
+        faceData[j + 4] = Float.floatToRawIntBits(sprite.getInterpolatedU((double)faceUV.getVertexU(vertexIndex)));
+        faceData[j + 4 + 1] = Float.floatToRawIntBits(sprite.getInterpolatedV((double)faceUV.getVertexV(vertexIndex)));
     }
 
     private void func_178407_a(Vector3f p_178407_1_, BlockPartRotation partRotation)
@@ -189,11 +189,11 @@ public class FaceBakery
             {
                 if (Math.abs(partRotation.angle) == 22.5F)
                 {
-                    vector3f.scale(field_178418_a);
+                    vector3f.scale(SCALE_ROTATION_22_5);
                 }
                 else
                 {
-                    vector3f.scale(field_178417_b);
+                    vector3f.scale(SCALE_ROTATION_GENERAL);
                 }
 
                 Vector3f.add(vector3f, new Vector3f(1.0F, 1.0F, 1.0F), vector3f);
@@ -363,10 +363,10 @@ public class FaceBakery
         for (int j1 = 0; j1 < 4; ++j1)
         {
             int k1 = j * j1;
-            EnumFaceDirection.VertexInformation enumfacedirection$vertexinformation = enumfacedirection.func_179025_a(j1);
-            float f8 = afloat[enumfacedirection$vertexinformation.field_179184_a];
-            float f3 = afloat[enumfacedirection$vertexinformation.field_179182_b];
-            float f4 = afloat[enumfacedirection$vertexinformation.field_179183_c];
+            EnumFaceDirection.VertexInformation enumfacedirection$vertexinformation = enumfacedirection.getVertexInformation(j1);
+            float f8 = afloat[enumfacedirection$vertexinformation.xIndex];
+            float f3 = afloat[enumfacedirection$vertexinformation.yIndex];
+            float f4 = afloat[enumfacedirection$vertexinformation.zIndex];
             p_applyFacing_1_[k1] = Float.floatToRawIntBits(f8);
             p_applyFacing_1_[k1 + 1] = Float.floatToRawIntBits(f3);
             p_applyFacing_1_[k1 + 2] = Float.floatToRawIntBits(f4);
@@ -445,7 +445,7 @@ public class FaceBakery
                 f4 = (1.0F - f1) * 16.0F;
         }
 
-        int k = p_178401_4_.func_178345_c(p_178401_1_) * i;
+        int k = p_178401_4_.getVertexRotatedRev(p_178401_1_) * i;
         p_178401_2_[k + 4] = Float.floatToRawIntBits(p_178401_5_.getInterpolatedU((double)f3));
         p_178401_2_[k + 4 + 1] = Float.floatToRawIntBits(p_178401_5_.getInterpolatedV((double)f4));
     }

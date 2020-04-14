@@ -23,8 +23,8 @@ public class TileEntityComparator extends TileEntity
         return this.outputSignal;
     }
 
-    public void setOutputSignal(int p_145995_1_)
+    public void setOutputSignal(int outputSignalIn)
     {
-        this.outputSignal = p_145995_1_;
+        this.outputSignal = outputSignalIn;
     }
 }

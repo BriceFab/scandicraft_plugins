@@ -137,7 +137,7 @@ public class Block
     public Block.SoundType stepSound;
     public float blockParticleGravity;
     protected final Material blockMaterial;
-    protected final MapColor field_181083_K;
+    protected final MapColor materialColor;
 
     /**
      * Determines how much velocity is maintained while moving on top of this block
@@ -246,7 +246,7 @@ public class Block
      */
     public MapColor getMapColor(IBlockState state)
     {
-        return this.field_181083_K;
+        return this.materialColor;
     }
 
     /**
@@ -288,7 +288,7 @@ public class Block
         this.blockParticleGravity = 1.0F;
         this.slipperiness = 0.6F;
         this.blockMaterial = p_i46399_1_;
-        this.field_181083_K = p_i46399_2_;
+        this.materialColor = p_i46399_2_;
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
         this.fullBlock = this.isOpaqueCube();
         this.lightOpacity = this.isOpaqueCube() ? 255 : 0;
@@ -1034,7 +1034,7 @@ public class Block
     {
     }
 
-    public boolean func_181623_g()
+    public boolean canSpawnInBlock()
     {
         return !this.blockMaterial.isSolid() && !this.blockMaterial.isLiquid();
     }

@@ -491,11 +491,11 @@ public class RenderManager
         this.worldObj = worldIn;
     }
 
-    public double getDistanceToCamera(double p_78714_1_, double p_78714_3_, double p_78714_5_)
+    public double getDistanceToCamera(double x, double y, double z)
     {
-        double d0 = p_78714_1_ - this.viewerPosX;
-        double d1 = p_78714_3_ - this.viewerPosY;
-        double d2 = p_78714_5_ - this.viewerPosZ;
+        double d0 = x - this.viewerPosX;
+        double d1 = y - this.viewerPosY;
+        double d2 = z - this.viewerPosZ;
         return d0 * d0 + d1 * d1 + d2 * d2;
     }
 

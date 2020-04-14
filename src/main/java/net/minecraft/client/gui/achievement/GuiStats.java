@@ -36,16 +36,16 @@ public class GuiStats extends GuiScreen implements IProgressMeter
     private GuiStats.StatsItem itemStats;
     private GuiStats.StatsBlock blockStats;
     private GuiStats.StatsMobsList mobStats;
-    private StatFileWriter field_146546_t;
+    private StatFileWriter stats;
     private GuiSlot displaySlot;
 
     /** When true, the game will be paused when the gui is shown */
     private boolean doesGuiPauseGame = true;
 
-    public GuiStats(GuiScreen p_i1071_1_, StatFileWriter p_i1071_2_)
+    public GuiStats(GuiScreen parent, StatFileWriter manager)
     {
-        this.parentScreen = p_i1071_1_;
-        this.field_146546_t = p_i1071_2_;
+        this.parentScreen = parent;
+        this.stats = manager;
     }
 
     /**
@@ -183,12 +183,12 @@ public class GuiStats extends GuiScreen implements IProgressMeter
         return !this.doesGuiPauseGame;
     }
 
-    private void drawStatsScreen(int p_146521_1_, int p_146521_2_, Item p_146521_3_)
+    private void drawStatsScreen(int x, int y, Item itemIn)
     {
-        this.drawButtonBackground(p_146521_1_ + 1, p_146521_2_ + 1);
+        this.drawButtonBackground(x + 1, y + 1);
         GlStateManager.enableRescaleNormal();
         RenderHelper.enableGUIStandardItemLighting();
-        this.itemRender.renderItemIntoGUI(new ItemStack(p_146521_3_, 1, 0), p_146521_1_ + 2, p_146521_2_ + 2);
+        this.itemRender.renderItemIntoGUI(new ItemStack(itemIn, 1, 0), x + 2, y + 2);
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableRescaleNormal();
     }
@@ -204,7 +204,7 @@ public class GuiStats extends GuiScreen implements IProgressMeter
     /**
      * Draws a sprite from assets/textures/gui/container/stats_icons.png
      */
-    private void drawSprite(int p_146527_1_, int p_146527_2_, int p_146527_3_, int p_146527_4_)
+    private void drawSprite(int x, int y, int u, int v)
     {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(statIcons);
@@ -215,10 +215,10 @@ public class GuiStats extends GuiScreen implements IProgressMeter
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        worldrenderer.pos((double)(p_146527_1_ + 0), (double)(p_146527_2_ + 18), (double)this.zLevel).tex((double)((float)(p_146527_3_ + 0) * 0.0078125F), (double)((float)(p_146527_4_ + 18) * 0.0078125F)).endVertex();
-        worldrenderer.pos((double)(p_146527_1_ + 18), (double)(p_146527_2_ + 18), (double)this.zLevel).tex((double)((float)(p_146527_3_ + 18) * 0.0078125F), (double)((float)(p_146527_4_ + 18) * 0.0078125F)).endVertex();
-        worldrenderer.pos((double)(p_146527_1_ + 18), (double)(p_146527_2_ + 0), (double)this.zLevel).tex((double)((float)(p_146527_3_ + 18) * 0.0078125F), (double)((float)(p_146527_4_ + 0) * 0.0078125F)).endVertex();
-        worldrenderer.pos((double)(p_146527_1_ + 0), (double)(p_146527_2_ + 0), (double)this.zLevel).tex((double)((float)(p_146527_3_ + 0) * 0.0078125F), (double)((float)(p_146527_4_ + 0) * 0.0078125F)).endVertex();
+        worldrenderer.pos((double)(x + 0), (double)(y + 18), (double)this.zLevel).tex((double)((float)(u + 0) * 0.0078125F), (double)((float)(v + 18) * 0.0078125F)).endVertex();
+        worldrenderer.pos((double)(x + 18), (double)(y + 18), (double)this.zLevel).tex((double)((float)(u + 18) * 0.0078125F), (double)((float)(v + 18) * 0.0078125F)).endVertex();
+        worldrenderer.pos((double)(x + 18), (double)(y + 0), (double)this.zLevel).tex((double)((float)(u + 18) * 0.0078125F), (double)((float)(v + 0) * 0.0078125F)).endVertex();
+        worldrenderer.pos((double)(x + 0), (double)(y + 0), (double)this.zLevel).tex((double)((float)(u + 0) * 0.0078125F), (double)((float)(v + 0) * 0.0078125F)).endVertex();
         tessellator.draw();
     }
 
@@ -348,7 +348,7 @@ public class GuiStats extends GuiScreen implements IProgressMeter
         {
             if (p_148209_1_ != null)
             {
-                String s = p_148209_1_.format(GuiStats.this.field_146546_t.readStat(p_148209_1_));
+                String s = p_148209_1_.format(GuiStats.this.stats.readStat(p_148209_1_));
                 GuiStats.this.drawString(GuiStats.this.fontRendererObj, s, p_148209_2_ - GuiStats.this.fontRendererObj.getStringWidth(s), p_148209_3_ + 5, p_148209_4_ ? 16777215 : 9474192);
             }
             else
@@ -464,15 +464,15 @@ public class GuiStats extends GuiScreen implements IProgressMeter
                 boolean flag = false;
                 int i = Item.getIdFromItem(statcrafting.func_150959_a());
 
-                if (GuiStats.this.field_146546_t.readStat(statcrafting) > 0)
+                if (GuiStats.this.stats.readStat(statcrafting) > 0)
                 {
                     flag = true;
                 }
-                else if (StatList.objectUseStats[i] != null && GuiStats.this.field_146546_t.readStat(StatList.objectUseStats[i]) > 0)
+                else if (StatList.objectUseStats[i] != null && GuiStats.this.stats.readStat(StatList.objectUseStats[i]) > 0)
                 {
                     flag = true;
                 }
-                else if (StatList.objectCraftStats[i] != null && GuiStats.this.field_146546_t.readStat(StatList.objectCraftStats[i]) > 0)
+                else if (StatList.objectCraftStats[i] != null && GuiStats.this.stats.readStat(StatList.objectCraftStats[i]) > 0)
                 {
                     flag = true;
                 }
@@ -520,8 +520,8 @@ public class GuiStats extends GuiScreen implements IProgressMeter
                             return -1;
                         }
 
-                        int l = GuiStats.this.field_146546_t.readStat(statbase);
-                        int i1 = GuiStats.this.field_146546_t.readStat(statbase1);
+                        int l = GuiStats.this.stats.readStat(statbase);
+                        int i1 = GuiStats.this.stats.readStat(statbase1);
 
                         if (l != i1)
                         {
@@ -619,7 +619,7 @@ public class GuiStats extends GuiScreen implements IProgressMeter
         {
             StatBase statbase = (StatBase)StatList.generalStats.get(entryID);
             GuiStats.this.drawString(GuiStats.this.fontRendererObj, statbase.getStatName().getUnformattedText(), p_180791_2_ + 2, p_180791_3_ + 1, entryID % 2 == 0 ? 16777215 : 9474192);
-            String s = statbase.format(GuiStats.this.field_146546_t.readStat(statbase));
+            String s = statbase.format(GuiStats.this.stats.readStat(statbase));
             GuiStats.this.drawString(GuiStats.this.fontRendererObj, s, p_180791_2_ + 2 + 213 - GuiStats.this.fontRendererObj.getStringWidth(s), p_180791_3_ + 1, entryID % 2 == 0 ? 16777215 : 9474192);
         }
     }
@@ -636,15 +636,15 @@ public class GuiStats extends GuiScreen implements IProgressMeter
                 boolean flag = false;
                 int i = Item.getIdFromItem(statcrafting.func_150959_a());
 
-                if (GuiStats.this.field_146546_t.readStat(statcrafting) > 0)
+                if (GuiStats.this.stats.readStat(statcrafting) > 0)
                 {
                     flag = true;
                 }
-                else if (StatList.objectBreakStats[i] != null && GuiStats.this.field_146546_t.readStat(StatList.objectBreakStats[i]) > 0)
+                else if (StatList.objectBreakStats[i] != null && GuiStats.this.stats.readStat(StatList.objectBreakStats[i]) > 0)
                 {
                     flag = true;
                 }
-                else if (StatList.objectCraftStats[i] != null && GuiStats.this.field_146546_t.readStat(StatList.objectCraftStats[i]) > 0)
+                else if (StatList.objectCraftStats[i] != null && GuiStats.this.stats.readStat(StatList.objectCraftStats[i]) > 0)
                 {
                     flag = true;
                 }
@@ -692,8 +692,8 @@ public class GuiStats extends GuiScreen implements IProgressMeter
                             return -1;
                         }
 
-                        int l = GuiStats.this.field_146546_t.readStat(statbase);
-                        int i1 = GuiStats.this.field_146546_t.readStat(statbase1);
+                        int l = GuiStats.this.stats.readStat(statbase);
+                        int i1 = GuiStats.this.stats.readStat(statbase1);
 
                         if (l != i1)
                         {
@@ -766,7 +766,7 @@ public class GuiStats extends GuiScreen implements IProgressMeter
 
             for (EntityList.EntityEggInfo entitylist$entityegginfo : EntityList.entityEggs.values())
             {
-                if (GuiStats.this.field_146546_t.readStat(entitylist$entityegginfo.field_151512_d) > 0 || GuiStats.this.field_146546_t.readStat(entitylist$entityegginfo.field_151513_e) > 0)
+                if (GuiStats.this.stats.readStat(entitylist$entityegginfo.field_151512_d) > 0 || GuiStats.this.stats.readStat(entitylist$entityegginfo.field_151513_e) > 0)
                 {
                     this.field_148222_l.add(entitylist$entityegginfo);
                 }
@@ -801,8 +801,8 @@ public class GuiStats extends GuiScreen implements IProgressMeter
         {
             EntityList.EntityEggInfo entitylist$entityegginfo = (EntityList.EntityEggInfo)this.field_148222_l.get(entryID);
             String s = I18n.format("entity." + EntityList.getStringFromID(entitylist$entityegginfo.spawnedID) + ".name", new Object[0]);
-            int i = GuiStats.this.field_146546_t.readStat(entitylist$entityegginfo.field_151512_d);
-            int j = GuiStats.this.field_146546_t.readStat(entitylist$entityegginfo.field_151513_e);
+            int i = GuiStats.this.stats.readStat(entitylist$entityegginfo.field_151512_d);
+            int j = GuiStats.this.stats.readStat(entitylist$entityegginfo.field_151513_e);
             String s1 = I18n.format("stat.entityKills", new Object[] {Integer.valueOf(i), s});
             String s2 = I18n.format("stat.entityKilledBy", new Object[] {s, Integer.valueOf(j)});
 

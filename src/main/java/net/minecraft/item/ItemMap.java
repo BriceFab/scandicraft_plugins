@@ -79,12 +79,12 @@ public class ItemMap extends ItemMapBase
             }
 
             MapData.MapInfo mapdata$mapinfo = data.getMapInfo((EntityPlayer)viewer);
-            ++mapdata$mapinfo.field_82569_d;
+            ++mapdata$mapinfo.step;
             boolean flag = false;
 
             for (int k1 = l - j1 + 1; k1 < l + j1; ++k1)
             {
-                if ((k1 & 15) == (mapdata$mapinfo.field_82569_d & 15) || flag)
+                if ((k1 & 15) == (mapdata$mapinfo.step & 15) || flag)
                 {
                     flag = false;
                     double d0 = 0.0D;
@@ -142,7 +142,7 @@ public class ItemMap extends ItemMapBase
                                                     while (true)
                                                     {
                                                         --k4;
-                                                        iblockstate = chunk.getBlockState(blockpos$mutableblockpos.func_181079_c(i4 + i3, k4, j4 + j3));
+                                                        iblockstate = chunk.getBlockState(blockpos$mutableblockpos.setPos(i4 + i3, k4, j4 + j3));
 
                                                         if (iblockstate.getBlock().getMapColor(iblockstate) != MapColor.airColor || k4 <= 0)
                                                         {

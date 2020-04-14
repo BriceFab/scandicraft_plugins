@@ -14,7 +14,7 @@ public class WorldVertexBufferUploader
 {
     private static final String __OBFID = "CL_00002567";
 
-    public void func_181679_a(WorldRenderer p_181679_1_)
+    public void draw(WorldRenderer p_181679_1_)
     {
         if (p_181679_1_.getVertexCount() > 0)
         {

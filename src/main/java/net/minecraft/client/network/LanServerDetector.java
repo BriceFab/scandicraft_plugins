@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 public class LanServerDetector
 {
-    private static final AtomicInteger field_148551_a = new AtomicInteger(0);
+    private static final AtomicInteger ATOMIC_COUNTER = new AtomicInteger(0);
     private static final Logger logger = LogManager.getLogger();
 
     public static class LanServer
@@ -68,14 +68,14 @@ public class LanServerDetector
             return Collections.<LanServerDetector.LanServer>unmodifiableList(this.listOfLanServers);
         }
 
-        public synchronized void func_77551_a(String p_77551_1_, InetAddress p_77551_2_)
+        public synchronized void addServer(String pingResponse, InetAddress ipAddress)
         {
-            String s = ThreadLanServerPing.getMotdFromPingResponse(p_77551_1_);
-            String s1 = ThreadLanServerPing.getAdFromPingResponse(p_77551_1_);
+            String s = ThreadLanServerPing.getMotdFromPingResponse(pingResponse);
+            String s1 = ThreadLanServerPing.getAdFromPingResponse(pingResponse);
 
             if (s1 != null)
             {
-                s1 = p_77551_2_.getHostAddress() + ":" + s1;
+                s1 = ipAddress.getHostAddress() + ":" + s1;
                 boolean flag = false;
 
                 for (LanServerDetector.LanServer lanserverdetector$lanserver : this.listOfLanServers)
@@ -103,10 +103,10 @@ public class LanServerDetector
         private final InetAddress broadcastAddress;
         private final MulticastSocket socket;
 
-        public ThreadLanServerFind(LanServerDetector.LanServerList p_i1320_1_) throws IOException
+        public ThreadLanServerFind(LanServerDetector.LanServerList list) throws IOException
         {
-            super("LanServerDetector #" + LanServerDetector.field_148551_a.incrementAndGet());
-            this.localServerList = p_i1320_1_;
+            super("LanServerDetector #" + LanServerDetector.ATOMIC_COUNTER.incrementAndGet());
+            this.localServerList = list;
             this.setDaemon(true);
             this.socket = new MulticastSocket(4445);
             this.broadcastAddress = InetAddress.getByName("224.0.2.60");
@@ -138,7 +138,7 @@ public class LanServerDetector
 
                 String s = new String(datagrampacket.getData(), datagrampacket.getOffset(), datagrampacket.getLength());
                 LanServerDetector.logger.debug(datagrampacket.getAddress() + ": " + s);
-                this.localServerList.func_77551_a(s, datagrampacket.getAddress());
+                this.localServerList.addServer(s, datagrampacket.getAddress());
             }
 
             try

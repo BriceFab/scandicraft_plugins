@@ -226,10 +226,10 @@ public class GuiOverlayDebug extends Gui
     private void func_181554_e()
     {
         GlStateManager.disableDepth();
-        FrameTimer frametimer = this.mc.func_181539_aj();
-        int i = frametimer.func_181749_a();
-        int j = frametimer.func_181750_b();
-        long[] along = frametimer.func_181746_c();
+        FrameTimer frametimer = this.mc.getFrameTimer();
+        int i = frametimer.getLastIndex();
+        int j = frametimer.getIndex();
+        long[] along = frametimer.getFrames();
         ScaledResolution scaledresolution = new ScaledResolution(this.mc);
         int k = i;
         int l = 0;
@@ -238,10 +238,10 @@ public class GuiOverlayDebug extends Gui
         while (k != j)
         {
             int i1 = frametimer.func_181748_a(along[k], 30);
-            int j1 = this.func_181552_c(MathHelper.clamp_int(i1, 0, 60), 0, 30, 60);
+            int j1 = this.getFrameColor(MathHelper.clamp_int(i1, 0, 60), 0, 30, 60);
             this.drawVerticalLine(l, scaledresolution.getScaledHeight(), scaledresolution.getScaledHeight() - i1, j1);
             ++l;
-            k = frametimer.func_181751_b(k + 1);
+            k = frametimer.parseIndex(k + 1);
         }
 
         drawRect(1, scaledresolution.getScaledHeight() - 30 + 1, 14, scaledresolution.getScaledHeight() - 30 + 10, -1873784752);
@@ -262,25 +262,25 @@ public class GuiOverlayDebug extends Gui
         GlStateManager.enableDepth();
     }
 
-    private int func_181552_c(int p_181552_1_, int p_181552_2_, int p_181552_3_, int p_181552_4_)
+    private int getFrameColor(int height, int heightMin, int heightMid, int heightMax)
     {
-        return p_181552_1_ < p_181552_3_ ? this.func_181553_a(-16711936, -256, (float)p_181552_1_ / (float)p_181552_3_) : this.func_181553_a(-256, -65536, (float)(p_181552_1_ - p_181552_3_) / (float)(p_181552_4_ - p_181552_3_));
+        return height < heightMid ? this.blendColors(-16711936, -256, (float)height / (float)heightMid) : this.blendColors(-256, -65536, (float)(height - heightMid) / (float)(heightMax - heightMid));
     }
 
-    private int func_181553_a(int p_181553_1_, int p_181553_2_, float p_181553_3_)
+    private int blendColors(int col1, int col2, float factor)
     {
-        int i = p_181553_1_ >> 24 & 255;
-        int j = p_181553_1_ >> 16 & 255;
-        int k = p_181553_1_ >> 8 & 255;
-        int l = p_181553_1_ & 255;
-        int i1 = p_181553_2_ >> 24 & 255;
-        int j1 = p_181553_2_ >> 16 & 255;
-        int k1 = p_181553_2_ >> 8 & 255;
-        int l1 = p_181553_2_ & 255;
-        int i2 = MathHelper.clamp_int((int)((float)i + (float)(i1 - i) * p_181553_3_), 0, 255);
-        int j2 = MathHelper.clamp_int((int)((float)j + (float)(j1 - j) * p_181553_3_), 0, 255);
-        int k2 = MathHelper.clamp_int((int)((float)k + (float)(k1 - k) * p_181553_3_), 0, 255);
-        int l2 = MathHelper.clamp_int((int)((float)l + (float)(l1 - l) * p_181553_3_), 0, 255);
+        int i = col1 >> 24 & 255;
+        int j = col1 >> 16 & 255;
+        int k = col1 >> 8 & 255;
+        int l = col1 & 255;
+        int i1 = col2 >> 24 & 255;
+        int j1 = col2 >> 16 & 255;
+        int k1 = col2 >> 8 & 255;
+        int l1 = col2 & 255;
+        int i2 = MathHelper.clamp_int((int)((float)i + (float)(i1 - i) * factor), 0, 255);
+        int j2 = MathHelper.clamp_int((int)((float)j + (float)(j1 - j) * factor), 0, 255);
+        int k2 = MathHelper.clamp_int((int)((float)k + (float)(k1 - k) * factor), 0, 255);
+        int l2 = MathHelper.clamp_int((int)((float)l + (float)(l1 - l) * factor), 0, 255);
         return i2 << 24 | j2 << 16 | k2 << 8 | l2;
     }
 

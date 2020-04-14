@@ -36,7 +36,7 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
         return true;
     }
 
-    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean p_180426_10_)
+    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
     {
         this.otherPlayerMPX = x;
         this.otherPlayerMPY = y;

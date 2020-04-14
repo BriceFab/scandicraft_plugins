@@ -48,16 +48,16 @@ public class ChunkProviderClient implements IChunkProvider
      * Unload chunk from ChunkProviderClient's hashmap. Called in response to a Packet50PreChunk with its mode field set
      * to false
      */
-    public void unloadChunk(int p_73234_1_, int p_73234_2_)
+    public void unloadChunk(int x, int z)
     {
-        Chunk chunk = this.provideChunk(p_73234_1_, p_73234_2_);
+        Chunk chunk = this.provideChunk(x, z);
 
         if (!chunk.isEmpty())
         {
             chunk.onChunkUnload();
         }
 
-        this.chunkMapping.remove(ChunkCoordIntPair.chunkXZ2Int(p_73234_1_, p_73234_2_));
+        this.chunkMapping.remove(ChunkCoordIntPair.chunkXZ2Int(x, z));
         this.chunkListing.remove(chunk);
     }
 

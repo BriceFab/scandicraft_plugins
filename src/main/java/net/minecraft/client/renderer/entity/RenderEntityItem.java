@@ -19,12 +19,12 @@ import net.minecraft.util.ResourceLocation;
 public class RenderEntityItem extends Render<EntityItem>
 {
     private final RenderItem itemRenderer;
-    private Random field_177079_e = new Random();
+    private Random random = new Random();
 
-    public RenderEntityItem(RenderManager renderManagerIn, RenderItem p_i46167_2_)
+    public RenderEntityItem(RenderManager renderManagerIn, RenderItem itemRendererIn)
     {
         super(renderManagerIn);
-        this.itemRenderer = p_i46167_2_;
+        this.itemRenderer = itemRendererIn;
         this.shadowSize = 0.15F;
         this.shadowOpaque = 0.75F;
     }
@@ -44,7 +44,7 @@ public class RenderEntityItem extends Render<EntityItem>
         else
         {
             boolean flag = p_177077_9_.isGui3d();
-            int i = this.func_177078_a(itemstack);
+            int i = this.getModelCount(itemstack);
             float f = 0.25F;
            // float f1 = MathHelper.sin(((float)itemIn.getAge() + p_177077_8_) / 10.0F + itemIn.hoverStart) * 0.1F + 0.1F;
            // float f2 = p_177077_9_.getItemCameraTransforms().getTransform(ItemCameraTransforms.TransformType.GROUND).scale.y;
@@ -104,7 +104,7 @@ public class RenderEntityItem extends Render<EntityItem>
         }
     }
 
-    private int func_177078_a(ItemStack stack)
+    private int getModelCount(ItemStack stack)
     {
         int i = 1;
 
@@ -137,7 +137,7 @@ public class RenderEntityItem extends Render<EntityItem>
     public void doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
         ItemStack itemstack = entity.getEntityItem();
-        this.field_177079_e.setSeed(187L);
+        this.random.setSeed(187L);
         boolean flag = false;
 
         if (this.bindEntityTexture(entity))
@@ -162,9 +162,9 @@ public class RenderEntityItem extends Render<EntityItem>
 
                 if (j > 0)
                 {
-                    float f = (this.field_177079_e.nextFloat() * 2.0F - 1.0F) * 0.15F;
-                    float f1 = (this.field_177079_e.nextFloat() * 2.0F - 1.0F) * 0.15F;
-                    float f2 = (this.field_177079_e.nextFloat() * 2.0F - 1.0F) * 0.15F;
+                    float f = (this.random.nextFloat() * 2.0F - 1.0F) * 0.15F;
+                    float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * 0.15F;
+                    float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * 0.15F;
                     GlStateManager.translate(f, f1, f2);
                 }
 

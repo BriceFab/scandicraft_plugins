@@ -550,7 +550,7 @@ public class CommandScoreboard extends CommandBase
                 }
                 else if (s.equalsIgnoreCase("nametagVisibility"))
                 {
-                    Team.EnumVisible team$enumvisible = Team.EnumVisible.func_178824_a(s1);
+                    Team.EnumVisible team$enumvisible = Team.EnumVisible.getByName(s1);
 
                     if (team$enumvisible == null)
                     {
@@ -561,7 +561,7 @@ public class CommandScoreboard extends CommandBase
                 }
                 else if (s.equalsIgnoreCase("deathMessageVisibility"))
                 {
-                    Team.EnumVisible team$enumvisible1 = Team.EnumVisible.func_178824_a(s1);
+                    Team.EnumVisible team$enumvisible1 = Team.EnumVisible.getByName(s1);
 
                     if (team$enumvisible1 == null)
                     {
@@ -927,7 +927,7 @@ public class CommandScoreboard extends CommandBase
                     NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                     entity.writeToNBT(nbttagcompound1);
 
-                    if (!NBTUtil.func_181123_a(nbttagcompound, nbttagcompound1, true))
+                    if (!NBTUtil.areNBTEquals(nbttagcompound, nbttagcompound1, true))
                     {
                         throw new CommandException("commands.scoreboard.players.set.tagMismatch", new Object[] {s1});
                     }

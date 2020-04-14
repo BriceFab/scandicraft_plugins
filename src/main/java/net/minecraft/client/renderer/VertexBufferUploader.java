@@ -6,7 +6,7 @@ public class VertexBufferUploader extends WorldVertexBufferUploader
 {
     private VertexBuffer vertexBuffer = null;
 
-    public void func_181679_a(WorldRenderer p_181679_1_)
+    public void draw(WorldRenderer p_181679_1_)
     {
         p_181679_1_.reset();
         this.vertexBuffer.func_181722_a(p_181679_1_.getByteBuffer());

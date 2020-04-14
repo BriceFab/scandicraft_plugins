@@ -39,14 +39,14 @@ import net.minecraft.world.World;
 
 public class EntityGuardian extends EntityMob
 {
-    private float field_175482_b;
-    private float field_175484_c;
-    private float field_175483_bk;
-    private float field_175485_bl;
-    private float field_175486_bm;
+    private float clientSideTailAnimation;
+    private float clientSideTailAnimationO;
+    private float clientSideTailAnimationSpeed;
+    private float clientSideSpikesAnimation;
+    private float clientSideSpikesAnimationO;
     private EntityLivingBase targetedEntity;
-    private int field_175479_bo;
-    private boolean field_175480_bp;
+    private int clientSideAttackTime;
+    private boolean clientSideTouchedGround;
     private EntityAIWander wander;
 
     public EntityGuardian(World worldIn)
@@ -65,7 +65,7 @@ public class EntityGuardian extends EntityMob
         entityaimovetowardsrestriction.setMutexBits(3);
         this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 10, true, false, new EntityGuardian.GuardianTargetSelector(this)));
         this.moveHelper = new EntityGuardian.GuardianMoveHelper(this);
-        this.field_175484_c = this.field_175482_b = this.rand.nextFloat();
+        this.clientSideTailAnimationO = this.clientSideTailAnimation = this.rand.nextFloat();
     }
 
     protected void applyEntityAttributes()
@@ -135,17 +135,17 @@ public class EntityGuardian extends EntityMob
         }
     }
 
-    public boolean func_175472_n()
+    public boolean isMoving()
     {
         return this.isSyncedFlagSet(2);
     }
 
-    private void func_175476_l(boolean p_175476_1_)
+    private void setMoving(boolean moving)
     {
-        this.setSyncedFlag(2, p_175476_1_);
+        this.setSyncedFlag(2, moving);
     }
 
-    public int func_175464_ck()
+    public int getAttackDuration()
     {
         return this.isElder() ? 60 : 80;
     }
@@ -176,7 +176,7 @@ public class EntityGuardian extends EntityMob
     public void setElder()
     {
         this.setElder(true);
-        this.field_175486_bm = this.field_175485_bl = 1.0F;
+        this.clientSideSpikesAnimationO = this.clientSideSpikesAnimation = 1.0F;
     }
 
     private void setTargetedEntity(int entityId)
@@ -235,7 +235,7 @@ public class EntityGuardian extends EntityMob
         }
         else if (dataID == 17)
         {
-            this.field_175479_bo = 0;
+            this.clientSideAttackTime = 0;
             this.targetedEntity = null;
         }
     }
@@ -299,52 +299,52 @@ public class EntityGuardian extends EntityMob
     {
         if (this.worldObj.isRemote)
         {
-            this.field_175484_c = this.field_175482_b;
+            this.clientSideTailAnimationO = this.clientSideTailAnimation;
 
             if (!this.isInWater())
             {
-                this.field_175483_bk = 2.0F;
+                this.clientSideTailAnimationSpeed = 2.0F;
 
-                if (this.motionY > 0.0D && this.field_175480_bp && !this.isSilent())
+                if (this.motionY > 0.0D && this.clientSideTouchedGround && !this.isSilent())
                 {
                     this.worldObj.playSound(this.posX, this.posY, this.posZ, "mob.guardian.flop", 1.0F, 1.0F, false);
                 }
 
-                this.field_175480_bp = this.motionY < 0.0D && this.worldObj.isBlockNormalCube((new BlockPos(this)).down(), false);
+                this.clientSideTouchedGround = this.motionY < 0.0D && this.worldObj.isBlockNormalCube((new BlockPos(this)).down(), false);
             }
-            else if (this.func_175472_n())
+            else if (this.isMoving())
             {
-                if (this.field_175483_bk < 0.5F)
+                if (this.clientSideTailAnimationSpeed < 0.5F)
                 {
-                    this.field_175483_bk = 4.0F;
+                    this.clientSideTailAnimationSpeed = 4.0F;
                 }
                 else
                 {
-                    this.field_175483_bk += (0.5F - this.field_175483_bk) * 0.1F;
+                    this.clientSideTailAnimationSpeed += (0.5F - this.clientSideTailAnimationSpeed) * 0.1F;
                 }
             }
             else
             {
-                this.field_175483_bk += (0.125F - this.field_175483_bk) * 0.2F;
+                this.clientSideTailAnimationSpeed += (0.125F - this.clientSideTailAnimationSpeed) * 0.2F;
             }
 
-            this.field_175482_b += this.field_175483_bk;
-            this.field_175486_bm = this.field_175485_bl;
+            this.clientSideTailAnimation += this.clientSideTailAnimationSpeed;
+            this.clientSideSpikesAnimationO = this.clientSideSpikesAnimation;
 
             if (!this.isInWater())
             {
-                this.field_175485_bl = this.rand.nextFloat();
+                this.clientSideSpikesAnimation = this.rand.nextFloat();
             }
-            else if (this.func_175472_n())
+            else if (this.isMoving())
             {
-                this.field_175485_bl += (0.0F - this.field_175485_bl) * 0.25F;
+                this.clientSideSpikesAnimation += (0.0F - this.clientSideSpikesAnimation) * 0.25F;
             }
             else
             {
-                this.field_175485_bl += (1.0F - this.field_175485_bl) * 0.06F;
+                this.clientSideSpikesAnimation += (1.0F - this.clientSideSpikesAnimation) * 0.06F;
             }
 
-            if (this.func_175472_n() && this.isInWater())
+            if (this.isMoving() && this.isInWater())
             {
                 Vec3 vec3 = this.getLook(0.0F);
 
@@ -356,9 +356,9 @@ public class EntityGuardian extends EntityMob
 
             if (this.hasTargetedEntity())
             {
-                if (this.field_175479_bo < this.func_175464_ck())
+                if (this.clientSideAttackTime < this.getAttackDuration())
                 {
-                    ++this.field_175479_bo;
+                    ++this.clientSideAttackTime;
                 }
 
                 EntityLivingBase entitylivingbase = this.getTargetedEntity();
@@ -367,7 +367,7 @@ public class EntityGuardian extends EntityMob
                 {
                     this.getLookHelper().setLookPositionWithEntity(entitylivingbase, 90.0F, 90.0F);
                     this.getLookHelper().onUpdateLook();
-                    double d5 = (double)this.func_175477_p(0.0F);
+                    double d5 = (double)this.getAttackAnimationScale(0.0F);
                     double d0 = entitylivingbase.posX - this.posX;
                     double d1 = entitylivingbase.posY + (double)(entitylivingbase.height * 0.5F) - (this.posY + (double)this.getEyeHeight());
                     double d2 = entitylivingbase.posZ - this.posZ;
@@ -408,19 +408,19 @@ public class EntityGuardian extends EntityMob
         super.onLivingUpdate();
     }
 
-    public float func_175471_a(float p_175471_1_)
+    public float getTailAnimation(float p_175471_1_)
     {
-        return this.field_175484_c + (this.field_175482_b - this.field_175484_c) * p_175471_1_;
+        return this.clientSideTailAnimationO + (this.clientSideTailAnimation - this.clientSideTailAnimationO) * p_175471_1_;
     }
 
-    public float func_175469_o(float p_175469_1_)
+    public float getSpikesAnimation(float p_175469_1_)
     {
-        return this.field_175486_bm + (this.field_175485_bl - this.field_175486_bm) * p_175469_1_;
+        return this.clientSideSpikesAnimationO + (this.clientSideSpikesAnimation - this.clientSideSpikesAnimationO) * p_175469_1_;
     }
 
-    public float func_175477_p(float p_175477_1_)
+    public float getAttackAnimationScale(float p_175477_1_)
     {
-        return ((float)this.field_175479_bo + p_175477_1_) / (float)this.func_175464_ck();
+        return ((float)this.clientSideAttackTime + p_175477_1_) / (float)this.getAttackDuration();
     }
 
     protected void updateAITasks()
@@ -526,7 +526,7 @@ public class EntityGuardian extends EntityMob
      */
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
-        if (!this.func_175472_n() && !source.isMagicDamage() && source.getSourceOfDamage() instanceof EntityLivingBase)
+        if (!this.isMoving() && !source.isMagicDamage() && source.getSourceOfDamage() instanceof EntityLivingBase)
         {
             EntityLivingBase entitylivingbase = (EntityLivingBase)source.getSourceOfDamage();
 
@@ -565,7 +565,7 @@ public class EntityGuardian extends EntityMob
                 this.motionY *= 0.8999999761581421D;
                 this.motionZ *= 0.8999999761581421D;
 
-                if (!this.func_175472_n() && this.getAttackTarget() == null)
+                if (!this.isMoving() && this.getAttackTarget() == null)
                 {
                     this.motionY -= 0.005D;
                 }
@@ -586,9 +586,9 @@ public class EntityGuardian extends EntityMob
         private EntityGuardian theEntity;
         private int tickCounter;
 
-        public AIGuardianAttack(EntityGuardian p_i45833_1_)
+        public AIGuardianAttack(EntityGuardian guardian)
         {
-            this.theEntity = p_i45833_1_;
+            this.theEntity = guardian;
             this.setMutexBits(3);
         }
 
@@ -637,7 +637,7 @@ public class EntityGuardian extends EntityMob
                     this.theEntity.setTargetedEntity(this.theEntity.getAttackTarget().getEntityId());
                     this.theEntity.worldObj.setEntityState(this.theEntity, (byte)21);
                 }
-                else if (this.tickCounter >= this.theEntity.func_175464_ck())
+                else if (this.tickCounter >= this.theEntity.getAttackDuration())
                 {
                     float f = 1.0F;
 
@@ -669,10 +669,10 @@ public class EntityGuardian extends EntityMob
     {
         private EntityGuardian entityGuardian;
 
-        public GuardianMoveHelper(EntityGuardian p_i45831_1_)
+        public GuardianMoveHelper(EntityGuardian guardian)
         {
-            super(p_i45831_1_);
-            this.entityGuardian = p_i45831_1_;
+            super(guardian);
+            this.entityGuardian = guardian;
         }
 
         public void onUpdateMoveHelper()
@@ -685,7 +685,7 @@ public class EntityGuardian extends EntityMob
                 double d3 = d0 * d0 + d1 * d1 + d2 * d2;
                 d3 = (double)MathHelper.sqrt_double(d3);
                 d1 = d1 / d3;
-                float f = (float)(MathHelper.func_181159_b(d2, d0) * 180.0D / Math.PI) - 90.0F;
+                float f = (float)(MathHelper.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
                 this.entityGuardian.rotationYaw = this.limitAngle(this.entityGuardian.rotationYaw, f, 30.0F);
                 this.entityGuardian.renderYawOffset = this.entityGuardian.rotationYaw;
                 float f1 = (float)(this.speed * this.entityGuardian.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue());
@@ -714,12 +714,12 @@ public class EntityGuardian extends EntityMob
                 }
 
                 this.entityGuardian.getLookHelper().setLookPosition(d10 + (d7 - d10) * 0.125D, d11 + (d8 - d11) * 0.125D, d12 + (d9 - d12) * 0.125D, 10.0F, 40.0F);
-                this.entityGuardian.func_175476_l(true);
+                this.entityGuardian.setMoving(true);
             }
             else
             {
                 this.entityGuardian.setAIMoveSpeed(0.0F);
-                this.entityGuardian.func_175476_l(false);
+                this.entityGuardian.setMoving(false);
             }
         }
     }
@@ -728,9 +728,9 @@ public class EntityGuardian extends EntityMob
     {
         private EntityGuardian parentEntity;
 
-        public GuardianTargetSelector(EntityGuardian p_i45832_1_)
+        public GuardianTargetSelector(EntityGuardian guardian)
         {
-            this.parentEntity = p_i45832_1_;
+            this.parentEntity = guardian;
         }
 
         public boolean apply(EntityLivingBase p_apply_1_)

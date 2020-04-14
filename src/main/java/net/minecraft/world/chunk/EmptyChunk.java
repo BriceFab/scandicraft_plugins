@@ -95,7 +95,7 @@ public class EmptyChunk extends Chunk
     /**
      * Removes entity at the specified index from the entity array.
      */
-    public void removeEntityAtIndex(Entity entityIn, int p_76608_2_)
+    public void removeEntityAtIndex(Entity entityIn, int index)
     {
     }
 
@@ -104,7 +104,7 @@ public class EmptyChunk extends Chunk
         return false;
     }
 
-    public TileEntity getTileEntity(BlockPos pos, Chunk.EnumCreateEntityType p_177424_2_)
+    public TileEntity getTileEntity(BlockPos pos, Chunk.EnumCreateEntityType creationMode)
     {
         return null;
     }
@@ -145,11 +145,11 @@ public class EmptyChunk extends Chunk
     /**
      * Fills the given list of all entities that intersect within the given bounding box that aren't the passed entity.
      */
-    public void getEntitiesWithinAABBForEntity(Entity entityIn, AxisAlignedBB aabb, List<Entity> listToFill, Predicate <? super Entity > p_177414_4_)
+    public void getEntitiesWithinAABBForEntity(Entity entityIn, AxisAlignedBB aabb, List<Entity> listToFill, Predicate <? super Entity > filter)
     {
     }
 
-    public <T extends Entity> void getEntitiesOfTypeWithinAAAB(Class <? extends T > entityClass, AxisAlignedBB aabb, List<T> listToFill, Predicate <? super T > p_177430_4_)
+    public <T extends Entity> void getEntitiesOfTypeWithinAAAB(Class <? extends T > entityClass, AxisAlignedBB aabb, List<T> listToFill, Predicate <? super T > filter)
     {
     }
 

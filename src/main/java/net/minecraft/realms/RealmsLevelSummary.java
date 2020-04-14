@@ -6,9 +6,9 @@ public class RealmsLevelSummary implements Comparable<RealmsLevelSummary>
 {
     private SaveFormatComparator levelSummary;
 
-    public RealmsLevelSummary(SaveFormatComparator p_i1109_1_)
+    public RealmsLevelSummary(SaveFormatComparator levelSummaryIn)
     {
-        this.levelSummary = p_i1109_1_;
+        this.levelSummary = levelSummaryIn;
     }
 
     public int getGameMode()

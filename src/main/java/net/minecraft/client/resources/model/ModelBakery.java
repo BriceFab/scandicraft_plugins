@@ -198,9 +198,9 @@ public class ModelBakery
         }
     }
 
-    private ModelBlock loadModel(ResourceLocation p_177594_1_) throws IOException
+    private ModelBlock loadModel(ResourceLocation location) throws IOException
     {
-        String s = p_177594_1_.getResourcePath();
+        String s = location.getResourcePath();
 
         if ("builtin/generated".equals(s))
         {
@@ -229,14 +229,14 @@ public class ModelBakery
 
                 if (s2 == null)
                 {
-                    throw new FileNotFoundException(p_177594_1_.toString());
+                    throw new FileNotFoundException(location.toString());
                 }
 
                 reader = new StringReader(s2);
             }
             else
             {
-                IResource iresource = this.resourceManager.getResource(this.getModelLocation(p_177594_1_));
+                IResource iresource = this.resourceManager.getResource(this.getModelLocation(location));
                 reader = new InputStreamReader(iresource.getInputStream(), Charsets.UTF_8);
             }
 
@@ -245,7 +245,7 @@ public class ModelBakery
             try
             {
                 ModelBlock modelblock = ModelBlock.deserialize(reader);
-                modelblock.name = p_177594_1_.toString();
+                modelblock.name = location.toString();
                 modelblock1 = modelblock;
             }
             finally
@@ -399,7 +399,7 @@ public class ModelBakery
             {
                 if (this.isCustomRenderer(modelblock1))
                 {
-                    this.bakedRegistry.putObject(modelresourcelocation1, new BuiltInModel(modelblock1.func_181682_g()));
+                    this.bakedRegistry.putObject(modelresourcelocation1, new BuiltInModel(modelblock1.getAllTransforms()));
                 }
                 else
                 {

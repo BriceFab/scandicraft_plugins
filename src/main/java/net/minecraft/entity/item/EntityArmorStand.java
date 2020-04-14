@@ -188,9 +188,9 @@ public class EntityArmorStand extends EntityLivingBase
         tagCompound.setBoolean("NoGravity", this.hasNoGravity());
         tagCompound.setBoolean("NoBasePlate", this.hasNoBasePlate());
 
-        if (this.func_181026_s())
+        if (this.hasMarker())
         {
-            tagCompound.setBoolean("Marker", this.func_181026_s());
+            tagCompound.setBoolean("Marker", this.hasMarker());
         }
 
         tagCompound.setTag("Pose", this.readPoseFromNBT());
@@ -219,8 +219,8 @@ public class EntityArmorStand extends EntityLivingBase
         this.disabledSlots = tagCompund.getInteger("DisabledSlots");
         this.setNoGravity(tagCompund.getBoolean("NoGravity"));
         this.setNoBasePlate(tagCompund.getBoolean("NoBasePlate"));
-        this.func_181027_m(tagCompund.getBoolean("Marker"));
-        this.field_181028_bj = !this.func_181026_s();
+        this.setMarker(tagCompund.getBoolean("Marker"));
+        this.field_181028_bj = !this.hasMarker();
         this.noClip = this.hasNoGravity();
         NBTTagCompound nbttagcompound = tagCompund.getCompoundTag("Pose");
         this.writePoseToNBT(nbttagcompound);
@@ -343,7 +343,7 @@ public class EntityArmorStand extends EntityLivingBase
         return false;
     }
 
-    protected void collideWithEntity(Entity p_82167_1_)
+    protected void collideWithEntity(Entity entityIn)
     {
     }
 
@@ -370,7 +370,7 @@ public class EntityArmorStand extends EntityLivingBase
      */
     public boolean interactAt(EntityPlayer player, Vec3 targetVec3)
     {
-        if (this.func_181026_s())
+        if (this.hasMarker())
         {
             return false;
         }
@@ -523,7 +523,7 @@ public class EntityArmorStand extends EntityLivingBase
             this.setDead();
             return false;
         }
-        else if (!this.isEntityInvulnerable(source) && !this.canInteract && !this.func_181026_s())
+        else if (!this.isEntityInvulnerable(source) && !this.canInteract && !this.hasMarker())
         {
             if (source.isExplosion())
             {
@@ -664,7 +664,7 @@ public class EntityArmorStand extends EntityLivingBase
         }
     }
 
-    protected float func_110146_f(float p_110146_1_, float p_110146_2_)
+    protected float updateDistance(float p_110146_1_, float p_110146_2_)
     {
         this.prevRenderYawOffset = this.prevRotationYaw;
         this.renderYawOffset = this.rotationYaw;
@@ -735,7 +735,7 @@ public class EntityArmorStand extends EntityLivingBase
             this.setRightLegRotation(rotations5);
         }
 
-        boolean flag = this.func_181026_s();
+        boolean flag = this.hasMarker();
 
         if (!this.field_181028_bj && flag)
         {
@@ -808,11 +808,11 @@ public class EntityArmorStand extends EntityLivingBase
         return this.isInvisible();
     }
 
-    private void setSmall(boolean p_175420_1_)
+    private void setSmall(boolean small)
     {
         byte b0 = this.dataWatcher.getWatchableObjectByte(10);
 
-        if (p_175420_1_)
+        if (small)
         {
             b0 = (byte)(b0 | 1);
         }
@@ -850,11 +850,11 @@ public class EntityArmorStand extends EntityLivingBase
         return (this.dataWatcher.getWatchableObjectByte(10) & 2) != 0;
     }
 
-    private void setShowArms(boolean p_175413_1_)
+    private void setShowArms(boolean showArms)
     {
         byte b0 = this.dataWatcher.getWatchableObjectByte(10);
 
-        if (p_175413_1_)
+        if (showArms)
         {
             b0 = (byte)(b0 | 4);
         }
@@ -871,11 +871,11 @@ public class EntityArmorStand extends EntityLivingBase
         return (this.dataWatcher.getWatchableObjectByte(10) & 4) != 0;
     }
 
-    private void setNoBasePlate(boolean p_175426_1_)
+    private void setNoBasePlate(boolean noBasePlate)
     {
         byte b0 = this.dataWatcher.getWatchableObjectByte(10);
 
-        if (p_175426_1_)
+        if (noBasePlate)
         {
             b0 = (byte)(b0 | 8);
         }
@@ -892,11 +892,11 @@ public class EntityArmorStand extends EntityLivingBase
         return (this.dataWatcher.getWatchableObjectByte(10) & 8) != 0;
     }
 
-    private void func_181027_m(boolean p_181027_1_)
+    private void setMarker(boolean marker)
     {
         byte b0 = this.dataWatcher.getWatchableObjectByte(10);
 
-        if (p_181027_1_)
+        if (marker)
         {
             b0 = (byte)(b0 | 16);
         }
@@ -908,45 +908,45 @@ public class EntityArmorStand extends EntityLivingBase
         this.dataWatcher.updateObject(10, Byte.valueOf(b0));
     }
 
-    public boolean func_181026_s()
+    public boolean hasMarker()
     {
         return (this.dataWatcher.getWatchableObjectByte(10) & 16) != 0;
     }
 
-    public void setHeadRotation(Rotations p_175415_1_)
+    public void setHeadRotation(Rotations vec)
     {
-        this.headRotation = p_175415_1_;
-        this.dataWatcher.updateObject(11, p_175415_1_);
+        this.headRotation = vec;
+        this.dataWatcher.updateObject(11, vec);
     }
 
-    public void setBodyRotation(Rotations p_175424_1_)
+    public void setBodyRotation(Rotations vec)
     {
-        this.bodyRotation = p_175424_1_;
-        this.dataWatcher.updateObject(12, p_175424_1_);
+        this.bodyRotation = vec;
+        this.dataWatcher.updateObject(12, vec);
     }
 
-    public void setLeftArmRotation(Rotations p_175405_1_)
+    public void setLeftArmRotation(Rotations vec)
     {
-        this.leftArmRotation = p_175405_1_;
-        this.dataWatcher.updateObject(13, p_175405_1_);
+        this.leftArmRotation = vec;
+        this.dataWatcher.updateObject(13, vec);
     }
 
-    public void setRightArmRotation(Rotations p_175428_1_)
+    public void setRightArmRotation(Rotations vec)
     {
-        this.rightArmRotation = p_175428_1_;
-        this.dataWatcher.updateObject(14, p_175428_1_);
+        this.rightArmRotation = vec;
+        this.dataWatcher.updateObject(14, vec);
     }
 
-    public void setLeftLegRotation(Rotations p_175417_1_)
+    public void setLeftLegRotation(Rotations vec)
     {
-        this.leftLegRotation = p_175417_1_;
-        this.dataWatcher.updateObject(15, p_175417_1_);
+        this.leftLegRotation = vec;
+        this.dataWatcher.updateObject(15, vec);
     }
 
-    public void setRightLegRotation(Rotations p_175427_1_)
+    public void setRightLegRotation(Rotations vec)
     {
-        this.rightLegRotation = p_175427_1_;
-        this.dataWatcher.updateObject(16, p_175427_1_);
+        this.rightLegRotation = vec;
+        this.dataWatcher.updateObject(16, vec);
     }
 
     public Rotations getHeadRotation()
@@ -984,6 +984,6 @@ public class EntityArmorStand extends EntityLivingBase
      */
     public boolean canBeCollidedWith()
     {
-        return super.canBeCollidedWith() && !this.func_181026_s();
+        return super.canBeCollidedWith() && !this.hasMarker();
     }
 }

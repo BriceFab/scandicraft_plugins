@@ -211,23 +211,23 @@ public class EffectRenderer
         p_178925_1_.removeAll(arraylist);
     }
 
-    private void tickParticle(final EntityFX p_178923_1_)
+    private void tickParticle(final EntityFX particle)
     {
         try
         {
-            p_178923_1_.onUpdate();
+            particle.onUpdate();
         }
         catch (Throwable throwable)
         {
             CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Ticking Particle");
             CrashReportCategory crashreportcategory = crashreport.makeCategory("Particle being ticked");
-            final int i = p_178923_1_.getFXLayer();
+            final int i = particle.getFXLayer();
             crashreportcategory.addCrashSectionCallable("Particle", new Callable()
             {
                 private static final String __OBFID = "CL_00000916";
                 public String call() throws Exception
                 {
-                    return p_178923_1_.toString();
+                    return particle.toString();
                 }
             });
             crashreportcategory.addCrashSectionCallable("Particle Type", new Callable()
@@ -406,7 +406,7 @@ public class EffectRenderer
                         double d0 = (double)pos.getX() + ((double)i + 0.5D) / (double)b0;
                         double d1 = (double)pos.getY() + ((double)j + 0.5D) / (double)b0;
                         double d2 = (double)pos.getZ() + ((double)k + 0.5D) / (double)b0;
-                        this.addEffect((new EntityDiggingFX(this.worldObj, d0, d1, d2, d0 - (double)pos.getX() - 0.5D, d1 - (double)pos.getY() - 0.5D, d2 - (double)pos.getZ() - 0.5D, state)).func_174846_a(pos));
+                        this.addEffect((new EntityDiggingFX(this.worldObj, d0, d1, d2, d0 - (double)pos.getX() - 0.5D, d1 - (double)pos.getY() - 0.5D, d2 - (double)pos.getZ() - 0.5D, state)).setBlockPos(pos));
                     }
                 }
             }
@@ -461,7 +461,7 @@ public class EffectRenderer
                 d0 = (double)i + block.getBlockBoundsMaxX() + (double)f;
             }
 
-            this.addEffect((new EntityDiggingFX(this.worldObj, d0, d1, d2, 0.0D, 0.0D, 0.0D, iblockstate)).func_174846_a(pos).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
+            this.addEffect((new EntityDiggingFX(this.worldObj, d0, d1, d2, 0.0D, 0.0D, 0.0D, iblockstate)).setBlockPos(pos).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
         }
     }
 

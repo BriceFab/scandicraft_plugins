@@ -13,14 +13,14 @@ public class EntityExpBottle extends EntityThrowable
         super(worldIn);
     }
 
-    public EntityExpBottle(World worldIn, EntityLivingBase p_i1786_2_)
+    public EntityExpBottle(World worldIn, EntityLivingBase throwerIn)
     {
-        super(worldIn, p_i1786_2_);
+        super(worldIn, throwerIn);
     }
 
-    public EntityExpBottle(World worldIn, double p_i1787_2_, double p_i1787_4_, double p_i1787_6_)
+    public EntityExpBottle(World worldIn, double x, double y, double z)
     {
-        super(worldIn, p_i1787_2_, p_i1787_4_, p_i1787_6_);
+        super(worldIn, x, y, z);
     }
 
     /**
@@ -44,7 +44,7 @@ public class EntityExpBottle extends EntityThrowable
     /**
      * Called when this EntityThrowable hits a block or entity.
      */
-    protected void onImpact(MovingObjectPosition p_70184_1_)
+    protected void onImpact(MovingObjectPosition result)
     {
         if (!this.worldObj.isRemote)
         {

@@ -24,7 +24,7 @@ public class Tessellator
     public void draw()
     {
         this.worldRenderer.finishDrawing();
-        this.vboUploader.func_181679_a(this.worldRenderer);
+        this.vboUploader.draw(this.worldRenderer);
     }
 
     public WorldRenderer getWorldRenderer()

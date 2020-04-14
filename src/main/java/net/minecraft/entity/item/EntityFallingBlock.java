@@ -292,9 +292,9 @@ public class EntityFallingBlock extends Entity
         return this.worldObj;
     }
 
-    public void setHurtEntities(boolean p_145806_1_)
+    public void setHurtEntities(boolean hurtEntitiesIn)
     {
-        this.hurtEntities = p_145806_1_;
+        this.hurtEntities = hurtEntitiesIn;
     }
 
     /**

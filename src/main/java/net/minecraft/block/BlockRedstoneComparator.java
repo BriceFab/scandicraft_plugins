@@ -141,7 +141,7 @@ public class BlockRedstoneComparator extends BlockRedstoneDiode implements ITile
 
                 if (entityitemframe != null)
                 {
-                    i = entityitemframe.func_174866_q();
+                    i = entityitemframe.getAnalogOutput();
                 }
             }
         }

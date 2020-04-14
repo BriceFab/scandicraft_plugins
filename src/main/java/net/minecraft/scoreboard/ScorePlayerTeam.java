@@ -137,19 +137,19 @@ public class ScorePlayerTeam extends Team
         return this.deathMessageVisibility;
     }
 
-    public void setNameTagVisibility(Team.EnumVisible p_178772_1_)
+    public void setNameTagVisibility(Team.EnumVisible visibility)
     {
-        this.nameTagVisibility = p_178772_1_;
+        this.nameTagVisibility = visibility;
         this.theScoreboard.sendTeamUpdate(this);
     }
 
-    public void setDeathMessageVisibility(Team.EnumVisible p_178773_1_)
+    public void setDeathMessageVisibility(Team.EnumVisible visibility)
     {
-        this.deathMessageVisibility = p_178773_1_;
+        this.deathMessageVisibility = visibility;
         this.theScoreboard.sendTeamUpdate(this);
     }
 
-    public int func_98299_i()
+    public int getFriendlyFlags()
     {
         int i = 0;
 
@@ -166,15 +166,15 @@ public class ScorePlayerTeam extends Team
         return i;
     }
 
-    public void func_98298_a(int p_98298_1_)
+    public void setFriendlyFlags(int flags)
     {
-        this.setAllowFriendlyFire((p_98298_1_ & 1) > 0);
-        this.setSeeFriendlyInvisiblesEnabled((p_98298_1_ & 2) > 0);
+        this.setAllowFriendlyFire((flags & 1) > 0);
+        this.setSeeFriendlyInvisiblesEnabled((flags & 2) > 0);
     }
 
-    public void setChatFormat(EnumChatFormatting p_178774_1_)
+    public void setChatFormat(EnumChatFormatting color)
     {
-        this.chatFormat = p_178774_1_;
+        this.chatFormat = color;
     }
 
     public EnumChatFormatting getChatFormat()

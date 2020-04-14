@@ -25,7 +25,7 @@ public class ShaderDefault extends ShaderUniform
     {
     }
 
-    public void func_148092_b(float p_148092_1_, float p_148092_2_, float p_148092_3_, float p_148092_4_)
+    public void setSafe(float p_148092_1_, float p_148092_2_, float p_148092_3_, float p_148092_4_)
     {
     }
 

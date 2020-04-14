@@ -31,7 +31,7 @@ public interface ISaveFormat
      * @args: Takes one argument - the name of the directory of the world to delete. @desc: Delete the world by deleting
      * the associated directory recursively.
      */
-    boolean deleteWorldDirectory(String p_75802_1_);
+    boolean deleteWorldDirectory(String saveName);
 
     /**
      * Renames the world by storing the new name in level.dat. It does *not* rename the directory containing the world
@@ -54,5 +54,5 @@ public interface ISaveFormat
     /**
      * Return whether the given world can be loaded.
      */
-    boolean canLoadWorld(String p_90033_1_);
+    boolean canLoadWorld(String saveName);
 }

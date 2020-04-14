@@ -23,11 +23,11 @@ public class Shader
     private final List<Integer> listAuxHeights = Lists.<Integer>newArrayList();
     private Matrix4f projectionMatrix;
 
-    public Shader(IResourceManager p_i45089_1_, String p_i45089_2_, Framebuffer p_i45089_3_, Framebuffer p_i45089_4_) throws JsonException, IOException
+    public Shader(IResourceManager resourceManager, String programName, Framebuffer framebufferInIn, Framebuffer framebufferOutIn) throws JsonException, IOException
     {
-        this.manager = new ShaderManager(p_i45089_1_, p_i45089_2_);
-        this.framebufferIn = p_i45089_3_;
-        this.framebufferOut = p_i45089_4_;
+        this.manager = new ShaderManager(resourceManager, programName);
+        this.framebufferIn = framebufferInIn;
+        this.framebufferOut = framebufferOutIn;
     }
 
     public void deleteShader()
@@ -35,12 +35,12 @@ public class Shader
         this.manager.deleteShader();
     }
 
-    public void addAuxFramebuffer(String p_148041_1_, Object p_148041_2_, int p_148041_3_, int p_148041_4_)
+    public void addAuxFramebuffer(String auxName, Object auxFramebufferIn, int width, int height)
     {
-        this.listAuxNames.add(this.listAuxNames.size(), p_148041_1_);
-        this.listAuxFramebuffers.add(this.listAuxFramebuffers.size(), p_148041_2_);
-        this.listAuxWidths.add(this.listAuxWidths.size(), Integer.valueOf(p_148041_3_));
-        this.listAuxHeights.add(this.listAuxHeights.size(), Integer.valueOf(p_148041_4_));
+        this.listAuxNames.add(this.listAuxNames.size(), auxName);
+        this.listAuxFramebuffers.add(this.listAuxFramebuffers.size(), auxFramebufferIn);
+        this.listAuxWidths.add(this.listAuxWidths.size(), Integer.valueOf(width));
+        this.listAuxHeights.add(this.listAuxHeights.size(), Integer.valueOf(height));
     }
 
     private void preLoadShader()
@@ -61,7 +61,7 @@ public class Shader
         this.projectionMatrix = p_148045_1_;
     }
 
-    public void loadShader(float p_148042_1_)
+    public void loadShader(float partialTicks)
     {
         this.preLoadShader();
         this.framebufferIn.unbindFramebuffer();
@@ -79,7 +79,7 @@ public class Shader
         this.manager.getShaderUniformOrDefault("ProjMat").set(this.projectionMatrix);
         this.manager.getShaderUniformOrDefault("InSize").set((float)this.framebufferIn.framebufferTextureWidth, (float)this.framebufferIn.framebufferTextureHeight);
         this.manager.getShaderUniformOrDefault("OutSize").set(f, f1);
-        this.manager.getShaderUniformOrDefault("Time").set(p_148042_1_);
+        this.manager.getShaderUniformOrDefault("Time").set(partialTicks);
         Minecraft minecraft = Minecraft.getMinecraft();
         this.manager.getShaderUniformOrDefault("ScreenSize").set((float)minecraft.displayWidth, (float)minecraft.displayHeight);
         this.manager.useShader();

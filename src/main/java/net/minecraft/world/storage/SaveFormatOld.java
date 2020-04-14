@@ -167,9 +167,9 @@ public class SaveFormatOld implements ISaveFormat
      * @args: Takes one argument - the name of the directory of the world to delete. @desc: Delete the world by deleting
      * the associated directory recursively.
      */
-    public boolean deleteWorldDirectory(String p_75802_1_)
+    public boolean deleteWorldDirectory(String saveName)
     {
-        File file1 = new File(this.savesDirectory, p_75802_1_);
+        File file1 = new File(this.savesDirectory, saveName);
 
         if (!file1.exists())
         {
@@ -177,7 +177,7 @@ public class SaveFormatOld implements ISaveFormat
         }
         else
         {
-            logger.info("Deleting level " + p_75802_1_);
+            logger.info("Deleting level " + saveName);
 
             for (int i = 1; i <= 5; ++i)
             {
@@ -266,9 +266,9 @@ public class SaveFormatOld implements ISaveFormat
     /**
      * Return whether the given world can be loaded.
      */
-    public boolean canLoadWorld(String p_90033_1_)
+    public boolean canLoadWorld(String saveName)
     {
-        File file1 = new File(this.savesDirectory, p_90033_1_);
+        File file1 = new File(this.savesDirectory, saveName);
         return file1.isDirectory();
     }
 }

@@ -55,7 +55,7 @@ public class S22PacketMultiBlockChange implements Packet<INetHandlerPlayClient>
 
         for (S22PacketMultiBlockChange.BlockUpdateData s22packetmultiblockchange$blockupdatedata : this.changedBlocks)
         {
-            buf.writeShort(s22packetmultiblockchange$blockupdatedata.func_180089_b());
+            buf.writeShort(s22packetmultiblockchange$blockupdatedata.getOffset());
             buf.writeVarIntToBuffer(Block.BLOCK_STATE_IDS.get(s22packetmultiblockchange$blockupdatedata.getBlockState()));
         }
     }
@@ -95,7 +95,7 @@ public class S22PacketMultiBlockChange implements Packet<INetHandlerPlayClient>
             return new BlockPos(S22PacketMultiBlockChange.this.chunkPosCoord.getBlock(this.chunkPosCrammed >> 12 & 15, this.chunkPosCrammed & 255, this.chunkPosCrammed >> 8 & 15));
         }
 
-        public short func_180089_b()
+        public short getOffset()
         {
             return this.chunkPosCrammed;
         }

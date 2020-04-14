@@ -35,17 +35,17 @@ public class ShaderGroup
     private Matrix4f projectionMatrix;
     private int mainFramebufferWidth;
     private int mainFramebufferHeight;
-    private float field_148036_j;
-    private float field_148037_k;
+    private float time;
+    private float lastStamp;
 
-    public ShaderGroup(TextureManager p_i1050_1_, IResourceManager p_i1050_2_, Framebuffer p_i1050_3_, ResourceLocation p_i1050_4_) throws JsonException, IOException, JsonSyntaxException
+    public ShaderGroup(TextureManager p_i1050_1_, IResourceManager resourceManagerIn, Framebuffer mainFramebufferIn, ResourceLocation p_i1050_4_) throws JsonException, IOException, JsonSyntaxException
     {
-        this.resourceManager = p_i1050_2_;
-        this.mainFramebuffer = p_i1050_3_;
-        this.field_148036_j = 0.0F;
-        this.field_148037_k = 0.0F;
-        this.mainFramebufferWidth = p_i1050_3_.framebufferWidth;
-        this.mainFramebufferHeight = p_i1050_3_.framebufferHeight;
+        this.resourceManager = resourceManagerIn;
+        this.mainFramebuffer = mainFramebufferIn;
+        this.time = 0.0F;
+        this.lastStamp = 0.0F;
+        this.mainFramebufferWidth = mainFramebufferIn.framebufferWidth;
+        this.mainFramebufferHeight = mainFramebufferIn.framebufferHeight;
         this.shaderGroupName = p_i1050_4_.toString();
         this.resetProjectionMatrix();
         this.parseGroup(p_i1050_1_, p_i1050_4_);
@@ -75,8 +75,8 @@ public class ShaderGroup
                     }
                     catch (Exception exception1)
                     {
-                        JsonException jsonexception1 = JsonException.func_151379_a(exception1);
-                        jsonexception1.func_151380_a("targets[" + i + "]");
+                        JsonException jsonexception1 = JsonException.forException(exception1);
+                        jsonexception1.prependJsonKey("targets[" + i + "]");
                         throw jsonexception1;
                     }
 
@@ -97,8 +97,8 @@ public class ShaderGroup
                     }
                     catch (Exception exception)
                     {
-                        JsonException jsonexception2 = JsonException.func_151379_a(exception);
-                        jsonexception2.func_151380_a("passes[" + j + "]");
+                        JsonException jsonexception2 = JsonException.forException(exception);
+                        jsonexception2.prependJsonKey("passes[" + j + "]");
                         throw jsonexception2;
                     }
 
@@ -108,8 +108,8 @@ public class ShaderGroup
         }
         catch (Exception exception2)
         {
-            JsonException jsonexception = JsonException.func_151379_a(exception2);
-            jsonexception.func_151381_b(p_152765_2_.getResourcePath());
+            JsonException jsonexception = JsonException.forException(exception2);
+            jsonexception.setFilenameAndFlush(p_152765_2_.getResourcePath());
             throw jsonexception;
         }
         finally
@@ -140,9 +140,9 @@ public class ShaderGroup
         }
     }
 
-    private void parsePass(TextureManager p_152764_1_, JsonElement p_152764_2_) throws JsonException, IOException
+    private void parsePass(TextureManager p_152764_1_, JsonElement json) throws JsonException, IOException
     {
-        JsonObject jsonobject = JsonUtils.getJsonObject(p_152764_2_, "pass");
+        JsonObject jsonobject = JsonUtils.getJsonObject(json, "pass");
         String s = JsonUtils.getString(jsonobject, "name");
         String s1 = JsonUtils.getString(jsonobject, "intarget");
         String s2 = JsonUtils.getString(jsonobject, "outtarget");
@@ -214,8 +214,8 @@ public class ShaderGroup
                     }
                     catch (Exception exception1)
                     {
-                        JsonException jsonexception = JsonException.func_151379_a(exception1);
-                        jsonexception.func_151380_a("auxtargets[" + i + "]");
+                        JsonException jsonexception = JsonException.forException(exception1);
+                        jsonexception.prependJsonKey("auxtargets[" + i + "]");
                         throw jsonexception;
                     }
 
@@ -237,8 +237,8 @@ public class ShaderGroup
                     }
                     catch (Exception exception)
                     {
-                        JsonException jsonexception1 = JsonException.func_151379_a(exception);
-                        jsonexception1.func_151380_a("uniforms[" + l + "]");
+                        JsonException jsonexception1 = JsonException.forException(exception);
+                        jsonexception1.prependJsonKey("uniforms[" + l + "]");
                         throw jsonexception1;
                     }
 
@@ -248,9 +248,9 @@ public class ShaderGroup
         }
     }
 
-    private void initUniform(JsonElement p_148028_1_) throws JsonException
+    private void initUniform(JsonElement json) throws JsonException
     {
-        JsonObject jsonobject = JsonUtils.getJsonObject(p_148028_1_, "uniform");
+        JsonObject jsonobject = JsonUtils.getJsonObject(json, "uniform");
         String s = JsonUtils.getString(jsonobject, "name");
         ShaderUniform shaderuniform = ((Shader)this.listShaders.get(this.listShaders.size() - 1)).getShaderManager().getShaderUniform(s);
 
@@ -271,8 +271,8 @@ public class ShaderGroup
                 }
                 catch (Exception exception)
                 {
-                    JsonException jsonexception = JsonException.func_151379_a(exception);
-                    jsonexception.func_151380_a("values[" + i + "]");
+                    JsonException jsonexception = JsonException.forException(exception);
+                    jsonexception.prependJsonKey("values[" + i + "]");
                     throw jsonexception;
                 }
 
@@ -303,18 +303,18 @@ public class ShaderGroup
         }
     }
 
-    public Framebuffer getFramebufferRaw(String p_177066_1_)
+    public Framebuffer getFramebufferRaw(String attributeName)
     {
-        return (Framebuffer)this.mapFramebuffers.get(p_177066_1_);
+        return (Framebuffer)this.mapFramebuffers.get(attributeName);
     }
 
-    public void addFramebuffer(String p_148020_1_, int p_148020_2_, int p_148020_3_)
+    public void addFramebuffer(String name, int width, int height)
     {
-        Framebuffer framebuffer = new Framebuffer(p_148020_2_, p_148020_3_, true);
+        Framebuffer framebuffer = new Framebuffer(width, height, true);
         framebuffer.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
-        this.mapFramebuffers.put(p_148020_1_, framebuffer);
+        this.mapFramebuffers.put(name, framebuffer);
 
-        if (p_148020_2_ == this.mainFramebufferWidth && p_148020_3_ == this.mainFramebufferHeight)
+        if (width == this.mainFramebufferWidth && height == this.mainFramebufferHeight)
         {
             this.listFramebuffers.add(framebuffer);
         }
@@ -335,9 +335,9 @@ public class ShaderGroup
         this.listShaders.clear();
     }
 
-    public Shader addShader(String p_148023_1_, Framebuffer p_148023_2_, Framebuffer p_148023_3_) throws JsonException, IOException
+    public Shader addShader(String programName, Framebuffer framebufferIn, Framebuffer framebufferOut) throws JsonException, IOException
     {
-        Shader shader = new Shader(this.resourceManager, p_148023_1_, p_148023_2_, p_148023_3_);
+        Shader shader = new Shader(this.resourceManager, programName, framebufferIn, framebufferOut);
         this.listShaders.add(this.listShaders.size(), shader);
         return shader;
     }
@@ -374,24 +374,24 @@ public class ShaderGroup
 
     public void loadShaderGroup(float partialTicks)
     {
-        if (partialTicks < this.field_148037_k)
+        if (partialTicks < this.lastStamp)
         {
-            this.field_148036_j += 1.0F - this.field_148037_k;
-            this.field_148036_j += partialTicks;
+            this.time += 1.0F - this.lastStamp;
+            this.time += partialTicks;
         }
         else
         {
-            this.field_148036_j += partialTicks - this.field_148037_k;
+            this.time += partialTicks - this.lastStamp;
         }
 
-        for (this.field_148037_k = partialTicks; this.field_148036_j > 20.0F; this.field_148036_j -= 20.0F)
+        for (this.lastStamp = partialTicks; this.time > 20.0F; this.time -= 20.0F)
         {
             ;
         }
 
         for (Shader shader : this.listShaders)
         {
-            shader.loadShader(this.field_148036_j / 20.0F);
+            shader.loadShader(this.time / 20.0F);
         }
     }
 

@@ -15,23 +15,23 @@ public abstract class AbstractTexture implements ITextureObject
     private static final String __OBFID = "CL_00001047";
     public MultiTexID multiTex;
 
-    public void setBlurMipmapDirect(boolean p_174937_1_, boolean p_174937_2_)
+    public void setBlurMipmapDirect(boolean blurIn, boolean mipmapIn)
     {
-        this.blur = p_174937_1_;
-        this.mipmap = p_174937_2_;
+        this.blur = blurIn;
+        this.mipmap = mipmapIn;
         boolean flag = true;
         boolean flag1 = true;
         int i;
         short short1;
 
-        if (p_174937_1_)
+        if (blurIn)
         {
-            i = p_174937_2_ ? 9987 : 9729;
+            i = mipmapIn ? 9987 : 9729;
             short1 = 9729;
         }
         else
         {
-            i = p_174937_2_ ? 9986 : 9728;
+            i = mipmapIn ? 9986 : 9728;
             short1 = 9728;
         }
 

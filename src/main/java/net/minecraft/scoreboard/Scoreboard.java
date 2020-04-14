@@ -20,7 +20,7 @@ public class Scoreboard
     private final ScoreObjective[] objectiveDisplaySlots = new ScoreObjective[19];
     private final Map<String, ScorePlayerTeam> teams = Maps.<String, ScorePlayerTeam>newHashMap();
     private final Map<String, ScorePlayerTeam> teamMemberships = Maps.<String, ScorePlayerTeam>newHashMap();
-    private static String[] field_178823_g = null;
+    private static String[] displaySlots = null;
 
     /**
      * Returns a ScoreObjective for the objective name
@@ -75,7 +75,7 @@ public class Scoreboard
     /**
      * Returns if the entity has the given ScoreObjective
      */
-    public boolean entityHasObjective(String name, ScoreObjective p_178819_2_)
+    public boolean entityHasObjective(String name, ScoreObjective objective)
     {
         Map<ScoreObjective, Score> map = (Map)this.entitiesScoreObjectives.get(name);
 
@@ -85,7 +85,7 @@ public class Scoreboard
         }
         else
         {
-            Score score = (Score)map.get(p_178819_2_);
+            Score score = (Score)map.get(objective);
             return score != null;
         }
     }
@@ -160,7 +160,7 @@ public class Scoreboard
 
             if (map != null)
             {
-                this.func_96516_a(name);
+                this.onPlayerRemoved(name);
             }
         }
         else
@@ -177,12 +177,12 @@ public class Scoreboard
 
                     if (map1 != null)
                     {
-                        this.func_96516_a(name);
+                        this.onPlayerRemoved(name);
                     }
                 }
                 else if (score != null)
                 {
-                    this.func_178820_a(name, objective);
+                    this.onPlayerScoreRemoved(name, objective);
                 }
             }
         }
@@ -213,75 +213,75 @@ public class Scoreboard
         return map;
     }
 
-    public void removeObjective(ScoreObjective p_96519_1_)
+    public void removeObjective(ScoreObjective objective)
     {
-        this.scoreObjectives.remove(p_96519_1_.getName());
+        this.scoreObjectives.remove(objective.getName());
 
         for (int i = 0; i < 19; ++i)
         {
-            if (this.getObjectiveInDisplaySlot(i) == p_96519_1_)
+            if (this.getObjectiveInDisplaySlot(i) == objective)
             {
                 this.setObjectiveInDisplaySlot(i, (ScoreObjective)null);
             }
         }
 
-        List<ScoreObjective> list = (List)this.scoreObjectiveCriterias.get(p_96519_1_.getCriteria());
+        List<ScoreObjective> list = (List)this.scoreObjectiveCriterias.get(objective.getCriteria());
 
         if (list != null)
         {
-            list.remove(p_96519_1_);
+            list.remove(objective);
         }
 
         for (Map<ScoreObjective, Score> map : this.entitiesScoreObjectives.values())
         {
-            map.remove(p_96519_1_);
+            map.remove(objective);
         }
 
-        this.func_96533_c(p_96519_1_);
+        this.onObjectiveRemoved(objective);
     }
 
     /**
      * 0 is tab menu, 1 is sidebar, 2 is below name
      */
-    public void setObjectiveInDisplaySlot(int p_96530_1_, ScoreObjective p_96530_2_)
+    public void setObjectiveInDisplaySlot(int objectiveSlot, ScoreObjective objective)
     {
-        this.objectiveDisplaySlots[p_96530_1_] = p_96530_2_;
+        this.objectiveDisplaySlots[objectiveSlot] = objective;
     }
 
     /**
      * 0 is tab menu, 1 is sidebar, 2 is below name
      */
-    public ScoreObjective getObjectiveInDisplaySlot(int p_96539_1_)
+    public ScoreObjective getObjectiveInDisplaySlot(int slotIn)
     {
-        return this.objectiveDisplaySlots[p_96539_1_];
+        return this.objectiveDisplaySlots[slotIn];
     }
 
     /**
      * Retrieve the ScorePlayerTeam instance identified by the passed team name
      */
-    public ScorePlayerTeam getTeam(String p_96508_1_)
+    public ScorePlayerTeam getTeam(String teamName)
     {
-        return (ScorePlayerTeam)this.teams.get(p_96508_1_);
+        return (ScorePlayerTeam)this.teams.get(teamName);
     }
 
-    public ScorePlayerTeam createTeam(String p_96527_1_)
+    public ScorePlayerTeam createTeam(String name)
     {
-        if (p_96527_1_.length() > 16)
+        if (name.length() > 16)
         {
-            throw new IllegalArgumentException("The team name \'" + p_96527_1_ + "\' is too long!");
+            throw new IllegalArgumentException("The team name \'" + name + "\' is too long!");
         }
         else
         {
-            ScorePlayerTeam scoreplayerteam = this.getTeam(p_96527_1_);
+            ScorePlayerTeam scoreplayerteam = this.getTeam(name);
 
             if (scoreplayerteam != null)
             {
-                throw new IllegalArgumentException("A team with the name \'" + p_96527_1_ + "\' already exists!");
+                throw new IllegalArgumentException("A team with the name \'" + name + "\' already exists!");
             }
             else
             {
-                scoreplayerteam = new ScorePlayerTeam(this, p_96527_1_);
-                this.teams.put(p_96527_1_, scoreplayerteam);
+                scoreplayerteam = new ScorePlayerTeam(this, name);
+                this.teams.put(name, scoreplayerteam);
                 this.broadcastTeamCreated(scoreplayerteam);
                 return scoreplayerteam;
             }
@@ -291,16 +291,16 @@ public class Scoreboard
     /**
      * Removes the team from the scoreboard, updates all player memberships and broadcasts the deletion to all players
      */
-    public void removeTeam(ScorePlayerTeam p_96511_1_)
+    public void removeTeam(ScorePlayerTeam playerTeam)
     {
-        this.teams.remove(p_96511_1_.getRegisteredName());
+        this.teams.remove(playerTeam.getRegisteredName());
 
-        for (String s : p_96511_1_.getMembershipCollection())
+        for (String s : playerTeam.getMembershipCollection())
         {
             this.teamMemberships.remove(s);
         }
 
-        this.func_96513_c(p_96511_1_);
+        this.onTeamRemoved(playerTeam);
     }
 
     /**
@@ -331,13 +331,13 @@ public class Scoreboard
         }
     }
 
-    public boolean removePlayerFromTeams(String p_96524_1_)
+    public boolean removePlayerFromTeams(String playerName)
     {
-        ScorePlayerTeam scoreplayerteam = this.getPlayersTeam(p_96524_1_);
+        ScorePlayerTeam scoreplayerteam = this.getPlayersTeam(playerName);
 
         if (scoreplayerteam != null)
         {
-            this.removePlayerFromTeam(p_96524_1_, scoreplayerteam);
+            this.removePlayerFromTeam(playerName, scoreplayerteam);
             return true;
         }
         else
@@ -350,16 +350,16 @@ public class Scoreboard
      * Removes the given username from the given ScorePlayerTeam. If the player is not on the team then an
      * IllegalStateException is thrown.
      */
-    public void removePlayerFromTeam(String p_96512_1_, ScorePlayerTeam p_96512_2_)
+    public void removePlayerFromTeam(String username, ScorePlayerTeam playerTeam)
     {
-        if (this.getPlayersTeam(p_96512_1_) != p_96512_2_)
+        if (this.getPlayersTeam(username) != playerTeam)
         {
-            throw new IllegalStateException("Player is either on another team or not on any team. Cannot remove from team \'" + p_96512_2_.getRegisteredName() + "\'.");
+            throw new IllegalStateException("Player is either on another team or not on any team. Cannot remove from team \'" + playerTeam.getRegisteredName() + "\'.");
         }
         else
         {
-            this.teamMemberships.remove(p_96512_1_);
-            p_96512_2_.getMembershipCollection().remove(p_96512_1_);
+            this.teamMemberships.remove(username);
+            playerTeam.getMembershipCollection().remove(username);
         }
     }
 
@@ -376,9 +376,9 @@ public class Scoreboard
     /**
      * Gets the ScorePlayerTeam object for the given username.
      */
-    public ScorePlayerTeam getPlayersTeam(String p_96509_1_)
+    public ScorePlayerTeam getPlayersTeam(String username)
     {
-        return (ScorePlayerTeam)this.teamMemberships.get(p_96509_1_);
+        return (ScorePlayerTeam)this.teamMemberships.get(username);
     }
 
     /**
@@ -392,19 +392,19 @@ public class Scoreboard
     {
     }
 
-    public void func_96533_c(ScoreObjective p_96533_1_)
+    public void onObjectiveRemoved(ScoreObjective objective)
     {
     }
 
-    public void func_96536_a(Score p_96536_1_)
+    public void onScoreChanged(Score scoreIn)
     {
     }
 
-    public void func_96516_a(String p_96516_1_)
+    public void onPlayerRemoved(String scoreName)
     {
     }
 
-    public void func_178820_a(String p_178820_1_, ScoreObjective p_178820_2_)
+    public void onPlayerScoreRemoved(String scoreName, ScoreObjective objective)
     {
     }
 
@@ -422,16 +422,16 @@ public class Scoreboard
     {
     }
 
-    public void func_96513_c(ScorePlayerTeam playerTeam)
+    public void onTeamRemoved(ScorePlayerTeam playerTeam)
     {
     }
 
     /**
      * Returns 'list' for 0, 'sidebar' for 1, 'belowName for 2, otherwise null.
      */
-    public static String getObjectiveDisplaySlot(int p_96517_0_)
+    public static String getObjectiveDisplaySlot(int id)
     {
-        switch (p_96517_0_)
+        switch (id)
         {
             case 0:
                 return "list";
@@ -443,9 +443,9 @@ public class Scoreboard
                 return "belowName";
 
             default:
-                if (p_96517_0_ >= 3 && p_96517_0_ <= 18)
+                if (id >= 3 && id <= 18)
                 {
-                    EnumChatFormatting enumchatformatting = EnumChatFormatting.func_175744_a(p_96517_0_ - 3);
+                    EnumChatFormatting enumchatformatting = EnumChatFormatting.fromColorIndex(id - 3);
 
                     if (enumchatformatting != null && enumchatformatting != EnumChatFormatting.RESET)
                     {
@@ -460,25 +460,25 @@ public class Scoreboard
     /**
      * Returns 0 for (case-insensitive) 'list', 1 for 'sidebar', 2 for 'belowName', otherwise -1.
      */
-    public static int getObjectiveDisplaySlotNumber(String p_96537_0_)
+    public static int getObjectiveDisplaySlotNumber(String name)
     {
-        if (p_96537_0_.equalsIgnoreCase("list"))
+        if (name.equalsIgnoreCase("list"))
         {
             return 0;
         }
-        else if (p_96537_0_.equalsIgnoreCase("sidebar"))
+        else if (name.equalsIgnoreCase("sidebar"))
         {
             return 1;
         }
-        else if (p_96537_0_.equalsIgnoreCase("belowName"))
+        else if (name.equalsIgnoreCase("belowName"))
         {
             return 2;
         }
         else
         {
-            if (p_96537_0_.startsWith("sidebar.team."))
+            if (name.startsWith("sidebar.team."))
             {
-                String s = p_96537_0_.substring("sidebar.team.".length());
+                String s = name.substring("sidebar.team.".length());
                 EnumChatFormatting enumchatformatting = EnumChatFormatting.getValueByName(s);
 
                 if (enumchatformatting != null && enumchatformatting.getColorIndex() >= 0)
@@ -493,24 +493,24 @@ public class Scoreboard
 
     public static String[] getDisplaySlotStrings()
     {
-        if (field_178823_g == null)
+        if (displaySlots == null)
         {
-            field_178823_g = new String[19];
+            displaySlots = new String[19];
 
             for (int i = 0; i < 19; ++i)
             {
-                field_178823_g[i] = getObjectiveDisplaySlot(i);
+                displaySlots[i] = getObjectiveDisplaySlot(i);
             }
         }
 
-        return field_178823_g;
+        return displaySlots;
     }
 
-    public void func_181140_a(Entity p_181140_1_)
+    public void removeEntity(Entity entityIn)
     {
-        if (p_181140_1_ != null && !(p_181140_1_ instanceof EntityPlayer) && !p_181140_1_.isEntityAlive())
+        if (entityIn != null && !(entityIn instanceof EntityPlayer) && !entityIn.isEntityAlive())
         {
-            String s = p_181140_1_.getUniqueID().toString();
+            String s = entityIn.getUniqueID().toString();
             this.removeObjectiveFromEntity(s, (ScoreObjective)null);
             this.removePlayerFromTeams(s);
         }

@@ -23,8 +23,8 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
 {
     private static final Logger logger = LogManager.getLogger();
     protected static final ResourceLocation ENCHANTED_ITEM_GLINT_RES = new ResourceLocation("textures/misc/enchanted_item_glint.png");
-    protected ModelBase field_177189_c;
-    protected ModelBase field_177186_d;
+    protected ModelBase modelLeggings;
+    protected ModelBase modelArmor;
     private final RendererLivingEntity renderer;
     private float alpha = 1.0F;
     private float colorR = 1.0F;
@@ -155,7 +155,7 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
 
     public ModelBase func_177175_a(int p_177175_1_)
     {
-        return this.isSlotForLeggings(p_177175_1_) ? this.field_177189_c : this.field_177186_d;
+        return this.isSlotForLeggings(p_177175_1_) ? this.modelLeggings : this.modelArmor;
     }
 
     private boolean isSlotForLeggings(int armorSlot)
@@ -220,9 +220,9 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
         return this.getArmorResource(p_177181_1_, p_177181_2_, (String)null);
     }
 
-    private ResourceLocation getArmorResource(ItemArmor p_177178_1_, boolean p_177178_2_, String p_177178_3_)
+    private ResourceLocation getArmorResource(ItemArmor armor, boolean legSlotIn, String suffixOverlayIn)
     {
-        String s = String.format("textures/models/armor/%s_layer_%d%s.png", new Object[] {p_177178_1_.getArmorMaterial().getName(), Integer.valueOf(p_177178_2_ ? 2 : 1), p_177178_3_ == null ? "" : String.format("_%s", new Object[]{p_177178_3_})});
+        String s = String.format("textures/models/armor/%s_layer_%d%s.png", new Object[] {armor.getArmorMaterial().getName(), Integer.valueOf(legSlotIn ? 2 : 1), suffixOverlayIn == null ? "" : String.format("_%s", new Object[]{suffixOverlayIn})});
         ResourceLocation resourcelocation = (ResourceLocation)ARMOR_TEXTURE_RES_MAP.get(s);
 
         if (resourcelocation == null)

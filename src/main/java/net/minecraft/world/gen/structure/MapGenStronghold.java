@@ -151,7 +151,7 @@ public class MapGenStronghold extends MapGenStructure
             StructureStrongholdPieces.Stairs2 structurestrongholdpieces$stairs2 = new StructureStrongholdPieces.Stairs2(0, p_i2067_2_, (p_i2067_3_ << 4) + 2, (p_i2067_4_ << 4) + 2);
             this.components.add(structurestrongholdpieces$stairs2);
             structurestrongholdpieces$stairs2.buildComponent(structurestrongholdpieces$stairs2, this.components, p_i2067_2_);
-            List<StructureComponent> list = structurestrongholdpieces$stairs2.field_75026_c;
+            List<StructureComponent> list = structurestrongholdpieces$stairs2.pendingChildren;
 
             while (!list.isEmpty())
             {

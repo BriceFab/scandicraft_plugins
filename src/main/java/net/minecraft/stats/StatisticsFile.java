@@ -28,8 +28,8 @@ public class StatisticsFile extends StatFileWriter
     private static final Logger logger = LogManager.getLogger();
     private final MinecraftServer mcServer;
     private final File statsFile;
-    private final Set<StatBase> field_150888_e = Sets.<StatBase>newHashSet();
-    private int field_150885_f = -300;
+    private final Set<StatBase> dirty = Sets.<StatBase>newHashSet();
+    private int lastStatRequest = -300;
     private boolean field_150886_g = false;
 
     public StatisticsFile(MinecraftServer serverIn, File statsFileIn)
@@ -77,7 +77,7 @@ public class StatisticsFile extends StatFileWriter
     {
         int i = statIn.isAchievement() ? this.readStat(statIn) : 0;
         super.unlockAchievement(playerIn, statIn, p_150873_3_);
-        this.field_150888_e.add(statIn);
+        this.dirty.add(statIn);
 
         if (statIn.isAchievement() && i == 0 && p_150873_3_ > 0)
         {
@@ -100,10 +100,10 @@ public class StatisticsFile extends StatFileWriter
         }
     }
 
-    public Set<StatBase> func_150878_c()
+    public Set<StatBase> getDirty()
     {
-        Set<StatBase> set = Sets.newHashSet(this.field_150888_e);
-        this.field_150888_e.clear();
+        Set<StatBase> set = Sets.newHashSet(this.dirty);
+        this.dirty.clear();
         this.field_150886_g = false;
         return set;
     }
@@ -201,30 +201,30 @@ public class StatisticsFile extends StatFileWriter
         return jsonobject.toString();
     }
 
-    public void func_150877_d()
+    public void markAllDirty()
     {
         for (StatBase statbase : this.statsData.keySet())
         {
-            this.field_150888_e.add(statbase);
+            this.dirty.add(statbase);
         }
     }
 
-    public void func_150876_a(EntityPlayerMP p_150876_1_)
+    public void sendStats(EntityPlayerMP player)
     {
         int i = this.mcServer.getTickCounter();
         Map<StatBase, Integer> map = Maps.<StatBase, Integer>newHashMap();
 
-        if (this.field_150886_g || i - this.field_150885_f > 300)
+        if (this.field_150886_g || i - this.lastStatRequest > 300)
         {
-            this.field_150885_f = i;
+            this.lastStatRequest = i;
 
-            for (StatBase statbase : this.func_150878_c())
+            for (StatBase statbase : this.getDirty())
             {
                 map.put(statbase, Integer.valueOf(this.readStat(statbase)));
             }
         }
 
-        p_150876_1_.playerNetServerHandler.sendPacket(new S37PacketStatistics(map));
+        player.playerNetServerHandler.sendPacket(new S37PacketStatistics(map));
     }
 
     public void sendAchievements(EntityPlayerMP player)
@@ -236,7 +236,7 @@ public class StatisticsFile extends StatFileWriter
             if (this.hasAchievementUnlocked(achievement))
             {
                 map.put(achievement, Integer.valueOf(this.readStat(achievement)));
-                this.field_150888_e.remove(achievement);
+                this.dirty.remove(achievement);
             }
         }
 

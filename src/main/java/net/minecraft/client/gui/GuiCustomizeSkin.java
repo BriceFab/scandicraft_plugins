@@ -56,7 +56,7 @@ public class GuiCustomizeSkin extends GuiScreen
             {
                 EnumPlayerModelParts enumplayermodelparts = ((GuiCustomizeSkin.ButtonPart)button).playerModelParts;
                 this.mc.gameSettings.switchModelPartEnabled(enumplayermodelparts);
-                button.displayString = this.func_175358_a(enumplayermodelparts);
+                button.displayString = this.getMessage(enumplayermodelparts);
             }
         }
     }
@@ -71,7 +71,7 @@ public class GuiCustomizeSkin extends GuiScreen
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    private String func_175358_a(EnumPlayerModelParts playerModelParts)
+    private String getMessage(EnumPlayerModelParts playerModelParts)
     {
         String s;
 
@@ -84,7 +84,7 @@ public class GuiCustomizeSkin extends GuiScreen
             s = I18n.format("options.off", new Object[0]);
         }
 
-        return playerModelParts.func_179326_d().getFormattedText() + ": " + s;
+        return playerModelParts.getName().getFormattedText() + ": " + s;
     }
 
     class ButtonPart extends GuiButton
@@ -93,7 +93,7 @@ public class GuiCustomizeSkin extends GuiScreen
 
         private ButtonPart(int p_i45514_2_, int p_i45514_3_, int p_i45514_4_, int p_i45514_5_, int p_i45514_6_, EnumPlayerModelParts playerModelParts)
         {
-            super(p_i45514_2_, p_i45514_3_, p_i45514_4_, p_i45514_5_, p_i45514_6_, GuiCustomizeSkin.this.func_175358_a(playerModelParts));
+            super(p_i45514_2_, p_i45514_3_, p_i45514_4_, p_i45514_5_, p_i45514_6_, GuiCustomizeSkin.this.getMessage(playerModelParts));
             this.playerModelParts = playerModelParts;
         }
     }

@@ -44,9 +44,9 @@ public class EntityGhast extends EntityFlying implements IMob
         return this.dataWatcher.getWatchableObjectByte(16) != 0;
     }
 
-    public void setAttacking(boolean p_175454_1_)
+    public void setAttacking(boolean attacking)
     {
-        this.dataWatcher.updateObject(16, Byte.valueOf((byte)(p_175454_1_ ? 1 : 0)));
+        this.dataWatcher.updateObject(16, Byte.valueOf((byte)(attacking ? 1 : 0)));
     }
 
     public int getFireballStrength()
@@ -206,9 +206,9 @@ public class EntityGhast extends EntityFlying implements IMob
         private EntityGhast parentEntity;
         public int attackTimer;
 
-        public AIFireballAttack(EntityGhast p_i45837_1_)
+        public AIFireballAttack(EntityGhast ghast)
         {
-            this.parentEntity = p_i45837_1_;
+            this.parentEntity = ghast;
         }
 
         public boolean shouldExecute()
@@ -271,9 +271,9 @@ public class EntityGhast extends EntityFlying implements IMob
     {
         private EntityGhast parentEntity;
 
-        public AILookAround(EntityGhast p_i45839_1_)
+        public AILookAround(EntityGhast ghast)
         {
-            this.parentEntity = p_i45839_1_;
+            this.parentEntity = ghast;
             this.setMutexBits(2);
         }
 
@@ -286,7 +286,7 @@ public class EntityGhast extends EntityFlying implements IMob
         {
             if (this.parentEntity.getAttackTarget() == null)
             {
-                this.parentEntity.renderYawOffset = this.parentEntity.rotationYaw = -((float)MathHelper.func_181159_b(this.parentEntity.motionX, this.parentEntity.motionZ)) * 180.0F / (float)Math.PI;
+                this.parentEntity.renderYawOffset = this.parentEntity.rotationYaw = -((float)MathHelper.atan2(this.parentEntity.motionX, this.parentEntity.motionZ)) * 180.0F / (float)Math.PI;
             }
             else
             {
@@ -297,7 +297,7 @@ public class EntityGhast extends EntityFlying implements IMob
                 {
                     double d1 = entitylivingbase.posX - this.parentEntity.posX;
                     double d2 = entitylivingbase.posZ - this.parentEntity.posZ;
-                    this.parentEntity.renderYawOffset = this.parentEntity.rotationYaw = -((float)MathHelper.func_181159_b(d1, d2)) * 180.0F / (float)Math.PI;
+                    this.parentEntity.renderYawOffset = this.parentEntity.rotationYaw = -((float)MathHelper.atan2(d1, d2)) * 180.0F / (float)Math.PI;
                 }
             }
         }
@@ -307,9 +307,9 @@ public class EntityGhast extends EntityFlying implements IMob
     {
         private EntityGhast parentEntity;
 
-        public AIRandomFly(EntityGhast p_i45836_1_)
+        public AIRandomFly(EntityGhast ghast)
         {
-            this.parentEntity = p_i45836_1_;
+            this.parentEntity = ghast;
             this.setMutexBits(1);
         }
 
@@ -351,10 +351,10 @@ public class EntityGhast extends EntityFlying implements IMob
         private EntityGhast parentEntity;
         private int courseChangeCooldown;
 
-        public GhastMoveHelper(EntityGhast p_i45838_1_)
+        public GhastMoveHelper(EntityGhast ghast)
         {
-            super(p_i45838_1_);
-            this.parentEntity = p_i45838_1_;
+            super(ghast);
+            this.parentEntity = ghast;
         }
 
         public void onUpdateMoveHelper()

@@ -51,7 +51,7 @@ public class CommandCompare extends CommandBase
             BlockPos blockpos1 = parseBlockPos(sender, args, 3, false);
             BlockPos blockpos2 = parseBlockPos(sender, args, 6, false);
             StructureBoundingBox structureboundingbox = new StructureBoundingBox(blockpos, blockpos1);
-            StructureBoundingBox structureboundingbox1 = new StructureBoundingBox(blockpos2, blockpos2.add(structureboundingbox.func_175896_b()));
+            StructureBoundingBox structureboundingbox1 = new StructureBoundingBox(blockpos2, blockpos2.add(structureboundingbox.getLength()));
             int i = structureboundingbox.getXSize() * structureboundingbox.getYSize() * structureboundingbox.getZSize();
 
             if (i > 524288)
@@ -82,8 +82,8 @@ public class CommandCompare extends CommandBase
                         {
                             for (int l = structureboundingbox.minX; l <= structureboundingbox.maxX; ++l)
                             {
-                                blockpos$mutableblockpos.func_181079_c(l, k, j);
-                                blockpos$mutableblockpos1.func_181079_c(l + blockpos3.getX(), k + blockpos3.getY(), j + blockpos3.getZ());
+                                blockpos$mutableblockpos.setPos(l, k, j);
+                                blockpos$mutableblockpos1.setPos(l + blockpos3.getX(), k + blockpos3.getY(), j + blockpos3.getZ());
                                 boolean flag1 = false;
                                 IBlockState iblockstate = world.getBlockState(blockpos$mutableblockpos);
 

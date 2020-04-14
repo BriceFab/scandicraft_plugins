@@ -21,16 +21,16 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
     /** Whether this hopper minecart is being blocked by an activator rail. */
     private boolean isBlocked = true;
     private int transferTicker = -1;
-    private BlockPos field_174900_c = BlockPos.ORIGIN;
+    private BlockPos lastPosition = BlockPos.ORIGIN;
 
     public EntityMinecartHopper(World worldIn)
     {
         super(worldIn);
     }
 
-    public EntityMinecartHopper(World worldIn, double p_i1721_2_, double p_i1721_4_, double p_i1721_6_)
+    public EntityMinecartHopper(World worldIn, double x, double y, double z)
     {
-        super(worldIn, p_i1721_2_, p_i1721_4_, p_i1721_6_);
+        super(worldIn, x, y, z);
     }
 
     public EntityMinecart.EnumMinecartType getMinecartType()
@@ -141,7 +141,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
         {
             BlockPos blockpos = new BlockPos(this);
 
-            if (blockpos.equals(this.field_174900_c))
+            if (blockpos.equals(this.lastPosition))
             {
                 --this.transferTicker;
             }
@@ -154,7 +154,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
             {
                 this.setTransferTicker(0);
 
-                if (this.func_96112_aD())
+                if (this.captureDroppedItems())
                 {
                     this.setTransferTicker(4);
                     this.markDirty();
@@ -163,7 +163,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
         }
     }
 
-    public boolean func_96112_aD()
+    public boolean captureDroppedItems()
     {
         if (TileEntityHopper.captureDroppedItems(this))
         {
@@ -182,9 +182,9 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
         }
     }
 
-    public void killMinecart(DamageSource p_94095_1_)
+    public void killMinecart(DamageSource source)
     {
-        super.killMinecart(p_94095_1_);
+        super.killMinecart(source);
 
         if (this.worldObj.getGameRules().getBoolean("doEntityDrops"))
         {

@@ -312,7 +312,7 @@ public class WorldClient extends World
         return this.mc.gameSettings.renderDistanceChunks;
     }
 
-    public void doVoidFogParticles(int p_73029_1_, int p_73029_2_, int p_73029_3_)
+    public void doVoidFogParticles(int posX, int posY, int posZ)
     {
         byte b0 = 16;
         Random random = new Random();
@@ -322,9 +322,9 @@ public class WorldClient extends World
 
         for (int i = 0; i < 1000; ++i)
         {
-            int j = p_73029_1_ + this.rand.nextInt(b0) - this.rand.nextInt(b0);
-            int k = p_73029_2_ + this.rand.nextInt(b0) - this.rand.nextInt(b0);
-            int l = p_73029_3_ + this.rand.nextInt(b0) - this.rand.nextInt(b0);
+            int j = posX + this.rand.nextInt(b0) - this.rand.nextInt(b0);
+            int k = posY + this.rand.nextInt(b0) - this.rand.nextInt(b0);
+            int l = posZ + this.rand.nextInt(b0) - this.rand.nextInt(b0);
             blockposm.setXyz(j, k, l);
             IBlockState iblockstate = this.getBlockState(blockposm);
             iblockstate.getBlock().randomDisplayTick(this, blockposm, iblockstate, random);
@@ -466,9 +466,9 @@ public class WorldClient extends World
         this.mc.effectRenderer.addEffect(new EntityFirework.StarterFX(this, x, y, z, motionX, motionY, motionZ, this.mc.effectRenderer, compund));
     }
 
-    public void setWorldScoreboard(Scoreboard p_96443_1_)
+    public void setWorldScoreboard(Scoreboard scoreboardIn)
     {
-        this.worldScoreboard = p_96443_1_;
+        this.worldScoreboard = scoreboardIn;
     }
 
     /**

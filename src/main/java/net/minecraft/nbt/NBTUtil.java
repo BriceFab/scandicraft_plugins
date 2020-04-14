@@ -118,34 +118,34 @@ public final class NBTUtil
         return tagCompound;
     }
 
-    public static boolean func_181123_a(NBTBase p_181123_0_, NBTBase p_181123_1_, boolean p_181123_2_)
+    public static boolean areNBTEquals(NBTBase nbt1, NBTBase nbt2, boolean compareTagList)
     {
-        if (p_181123_0_ == p_181123_1_)
+        if (nbt1 == nbt2)
         {
             return true;
         }
-        else if (p_181123_0_ == null)
+        else if (nbt1 == null)
         {
             return true;
         }
-        else if (p_181123_1_ == null)
+        else if (nbt2 == null)
         {
             return false;
         }
-        else if (!p_181123_0_.getClass().equals(p_181123_1_.getClass()))
+        else if (!nbt1.getClass().equals(nbt2.getClass()))
         {
             return false;
         }
-        else if (p_181123_0_ instanceof NBTTagCompound)
+        else if (nbt1 instanceof NBTTagCompound)
         {
-            NBTTagCompound nbttagcompound = (NBTTagCompound)p_181123_0_;
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound)p_181123_1_;
+            NBTTagCompound nbttagcompound = (NBTTagCompound)nbt1;
+            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbt2;
 
             for (String s : nbttagcompound.getKeySet())
             {
                 NBTBase nbtbase1 = nbttagcompound.getTag(s);
 
-                if (!func_181123_a(nbtbase1, nbttagcompound1.getTag(s), p_181123_2_))
+                if (!areNBTEquals(nbtbase1, nbttagcompound1.getTag(s), compareTagList))
                 {
                     return false;
                 }
@@ -153,10 +153,10 @@ public final class NBTUtil
 
             return true;
         }
-        else if (p_181123_0_ instanceof NBTTagList && p_181123_2_)
+        else if (nbt1 instanceof NBTTagList && compareTagList)
         {
-            NBTTagList nbttaglist = (NBTTagList)p_181123_0_;
-            NBTTagList nbttaglist1 = (NBTTagList)p_181123_1_;
+            NBTTagList nbttaglist = (NBTTagList)nbt1;
+            NBTTagList nbttaglist1 = (NBTTagList)nbt2;
 
             if (nbttaglist.tagCount() == 0)
             {
@@ -171,7 +171,7 @@ public final class NBTUtil
 
                     for (int j = 0; j < nbttaglist1.tagCount(); ++j)
                     {
-                        if (func_181123_a(nbtbase, nbttaglist1.get(j), p_181123_2_))
+                        if (areNBTEquals(nbtbase, nbttaglist1.get(j), compareTagList))
                         {
                             flag = true;
                             break;
@@ -189,7 +189,7 @@ public final class NBTUtil
         }
         else
         {
-            return p_181123_0_.equals(p_181123_1_);
+            return nbt1.equals(nbt2);
         }
     }
 }

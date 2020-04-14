@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 public class GuiScreenDemo extends GuiScreen
 {
     private static final Logger logger = LogManager.getLogger();
-    private static final ResourceLocation field_146348_f = new ResourceLocation("textures/gui/demo_background.png");
+    private static final ResourceLocation DEMO_BACKGROUND_LOCATION = new ResourceLocation("textures/gui/demo_background.png");
 
     /**
      * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
@@ -70,7 +70,7 @@ public class GuiScreenDemo extends GuiScreen
     {
         super.drawDefaultBackground();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(field_146348_f);
+        this.mc.getTextureManager().bindTexture(DEMO_BACKGROUND_LOCATION);
         int i = (this.width - 248) / 2;
         int j = (this.height - 166) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, 248, 166);

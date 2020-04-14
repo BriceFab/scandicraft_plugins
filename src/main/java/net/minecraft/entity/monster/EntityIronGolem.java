@@ -97,19 +97,19 @@ public class EntityIronGolem extends EntityGolem
     /**
      * Decrements the entity's air supply when underwater
      */
-    protected int decreaseAirSupply(int p_70682_1_)
+    protected int decreaseAirSupply(int air)
     {
-        return p_70682_1_;
+        return air;
     }
 
-    protected void collideWithEntity(Entity p_82167_1_)
+    protected void collideWithEntity(Entity entityIn)
     {
-        if (p_82167_1_ instanceof IMob && !(p_82167_1_ instanceof EntityCreeper) && this.getRNG().nextInt(20) == 0)
+        if (entityIn instanceof IMob && !(entityIn instanceof EntityCreeper) && this.getRNG().nextInt(20) == 0)
         {
-            this.setAttackTarget((EntityLivingBase)p_82167_1_);
+            this.setAttackTarget((EntityLivingBase)entityIn);
         }
 
-        super.collideWithEntity(p_82167_1_);
+        super.collideWithEntity(entityIn);
     }
 
     /**
@@ -214,9 +214,9 @@ public class EntityIronGolem extends EntityGolem
         return this.attackTimer;
     }
 
-    public void setHoldingRose(boolean p_70851_1_)
+    public void setHoldingRose(boolean holdingRose)
     {
-        this.holdRoseTick = p_70851_1_ ? 400 : 0;
+        this.holdRoseTick = holdingRose ? 400 : 0;
         this.worldObj.setEntityState(this, (byte)11);
     }
 
@@ -271,11 +271,11 @@ public class EntityIronGolem extends EntityGolem
         return (this.dataWatcher.getWatchableObjectByte(16) & 1) != 0;
     }
 
-    public void setPlayerCreated(boolean p_70849_1_)
+    public void setPlayerCreated(boolean playerCreated)
     {
         byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 
-        if (p_70849_1_)
+        if (playerCreated)
         {
             this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 | 1)));
         }

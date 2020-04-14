@@ -128,9 +128,9 @@ public class ItemRenderer
         GlStateManager.rotate((entityplayerspIn.rotationYaw - f1) * 0.1F, 0.0F, 1.0F, 0.0F);
     }
 
-    private float func_178100_c(float p_178100_1_)
+    private float getMapAngleFromPitch(float pitch)
     {
-        float f = 1.0F - p_178100_1_ / 45.0F + 0.1F;
+        float f = 1.0F - pitch / 45.0F + 0.1F;
         f = MathHelper.clamp_float(f, 0.0F, 1.0F);
         f = -MathHelper.cos(f * (float)Math.PI) * 0.5F + 0.5F;
         return f;
@@ -179,7 +179,7 @@ public class ItemRenderer
         float f1 = 0.2F * MathHelper.sin(MathHelper.sqrt_float(p_178097_4_) * (float)Math.PI * 2.0F);
         float f2 = -0.2F * MathHelper.sin(p_178097_4_ * (float)Math.PI);
         GlStateManager.translate(f, f1, f2);
-        float f3 = this.func_178100_c(p_178097_2_);
+        float f3 = this.getMapAngleFromPitch(p_178097_2_);
         GlStateManager.translate(0.0F, 0.04F, -0.72F);
         GlStateManager.translate(0.0F, p_178097_3_ * -1.2F, 0.0F);
         GlStateManager.translate(0.0F, f3 * -0.5F, 0.0F);

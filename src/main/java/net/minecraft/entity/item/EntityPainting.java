@@ -133,7 +133,7 @@ public class EntityPainting extends EntityHanging
         this.setPosition((double)blockpos.getX(), (double)blockpos.getY(), (double)blockpos.getZ());
     }
 
-    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean p_180426_10_)
+    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
     {
         BlockPos blockpos = this.hangingPosition.add(x - this.posX, y - this.posY, z - this.posZ);
         this.setPosition((double)blockpos.getX(), (double)blockpos.getY(), (double)blockpos.getZ());

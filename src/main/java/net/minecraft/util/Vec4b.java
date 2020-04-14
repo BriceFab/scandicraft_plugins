@@ -3,44 +3,44 @@ package net.minecraft.util;
 public class Vec4b
 {
     private byte field_176117_a;
-    private byte field_176115_b;
-    private byte field_176116_c;
-    private byte field_176114_d;
+    private byte x;
+    private byte y;
+    private byte rotation;
 
     public Vec4b(byte p_i45555_1_, byte p_i45555_2_, byte p_i45555_3_, byte p_i45555_4_)
     {
         this.field_176117_a = p_i45555_1_;
-        this.field_176115_b = p_i45555_2_;
-        this.field_176116_c = p_i45555_3_;
-        this.field_176114_d = p_i45555_4_;
+        this.x = p_i45555_2_;
+        this.y = p_i45555_3_;
+        this.rotation = p_i45555_4_;
     }
 
     public Vec4b(Vec4b p_i45556_1_)
     {
         this.field_176117_a = p_i45556_1_.field_176117_a;
-        this.field_176115_b = p_i45556_1_.field_176115_b;
-        this.field_176116_c = p_i45556_1_.field_176116_c;
-        this.field_176114_d = p_i45556_1_.field_176114_d;
+        this.x = p_i45556_1_.x;
+        this.y = p_i45556_1_.y;
+        this.rotation = p_i45556_1_.rotation;
     }
 
-    public byte func_176110_a()
+    public byte getImage()
     {
         return this.field_176117_a;
     }
 
-    public byte func_176112_b()
+    public byte getX()
     {
-        return this.field_176115_b;
+        return this.x;
     }
 
-    public byte func_176113_c()
+    public byte getY()
     {
-        return this.field_176116_c;
+        return this.y;
     }
 
-    public byte func_176111_d()
+    public byte getRotation()
     {
-        return this.field_176114_d;
+        return this.rotation;
     }
 
     public boolean equals(Object p_equals_1_)
@@ -56,16 +56,16 @@ public class Vec4b
         else
         {
             Vec4b vec4b = (Vec4b)p_equals_1_;
-            return this.field_176117_a != vec4b.field_176117_a ? false : (this.field_176114_d != vec4b.field_176114_d ? false : (this.field_176115_b != vec4b.field_176115_b ? false : this.field_176116_c == vec4b.field_176116_c));
+            return this.field_176117_a != vec4b.field_176117_a ? false : (this.rotation != vec4b.rotation ? false : (this.x != vec4b.x ? false : this.y == vec4b.y));
         }
     }
 
     public int hashCode()
     {
         int i = this.field_176117_a;
-        i = 31 * i + this.field_176115_b;
-        i = 31 * i + this.field_176116_c;
-        i = 31 * i + this.field_176114_d;
+        i = 31 * i + this.x;
+        i = 31 * i + this.y;
+        i = 31 * i + this.rotation;
         return i;
     }
 }

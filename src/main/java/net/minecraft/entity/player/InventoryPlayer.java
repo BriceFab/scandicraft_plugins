@@ -198,7 +198,7 @@ public class InventoryPlayer implements IInventory
         {
             ItemStack itemstack = this.mainInventory[j];
 
-            if (itemstack != null && (itemIn == null || itemstack.getItem() == itemIn) && (metadataIn <= -1 || itemstack.getMetadata() == metadataIn) && (itemNBT == null || NBTUtil.func_181123_a(itemNBT, itemstack.getTagCompound(), true)))
+            if (itemstack != null && (itemIn == null || itemstack.getItem() == itemIn) && (metadataIn <= -1 || itemstack.getMetadata() == metadataIn) && (itemNBT == null || NBTUtil.areNBTEquals(itemNBT, itemstack.getTagCompound(), true)))
             {
                 int k = removeCount <= 0 ? itemstack.stackSize : Math.min(removeCount - i, itemstack.stackSize);
                 i += k;
@@ -224,7 +224,7 @@ public class InventoryPlayer implements IInventory
         {
             ItemStack itemstack1 = this.armorInventory[l];
 
-            if (itemstack1 != null && (itemIn == null || itemstack1.getItem() == itemIn) && (metadataIn <= -1 || itemstack1.getMetadata() == metadataIn) && (itemNBT == null || NBTUtil.func_181123_a(itemNBT, itemstack1.getTagCompound(), false)))
+            if (itemstack1 != null && (itemIn == null || itemstack1.getItem() == itemIn) && (metadataIn <= -1 || itemstack1.getMetadata() == metadataIn) && (itemNBT == null || NBTUtil.areNBTEquals(itemNBT, itemstack1.getTagCompound(), false)))
             {
                 int j1 = removeCount <= 0 ? itemstack1.stackSize : Math.min(removeCount - i, itemstack1.stackSize);
                 i += j1;
@@ -258,7 +258,7 @@ public class InventoryPlayer implements IInventory
                 return i;
             }
 
-            if (itemNBT != null && !NBTUtil.func_181123_a(itemNBT, this.itemStack.getTagCompound(), false))
+            if (itemNBT != null && !NBTUtil.areNBTEquals(itemNBT, this.itemStack.getTagCompound(), false))
             {
                 return i;
             }
@@ -562,7 +562,7 @@ public class InventoryPlayer implements IInventory
      * Writes the inventory out as a list of compound tags. This is where the slot indices are used (+100 for armor, +80
      * for crafting).
      */
-    public NBTTagList writeToNBT(NBTTagList p_70442_1_)
+    public NBTTagList writeToNBT(NBTTagList nbtTagListIn)
     {
         for (int i = 0; i < this.mainInventory.length; ++i)
         {
@@ -571,7 +571,7 @@ public class InventoryPlayer implements IInventory
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
                 nbttagcompound.setByte("Slot", (byte)i);
                 this.mainInventory[i].writeToNBT(nbttagcompound);
-                p_70442_1_.appendTag(nbttagcompound);
+                nbtTagListIn.appendTag(nbttagcompound);
             }
         }
 
@@ -582,24 +582,24 @@ public class InventoryPlayer implements IInventory
                 NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                 nbttagcompound1.setByte("Slot", (byte)(j + 100));
                 this.armorInventory[j].writeToNBT(nbttagcompound1);
-                p_70442_1_.appendTag(nbttagcompound1);
+                nbtTagListIn.appendTag(nbttagcompound1);
             }
         }
 
-        return p_70442_1_;
+        return nbtTagListIn;
     }
 
     /**
      * Reads from the given tag list and fills the slots in the inventory with the correct items.
      */
-    public void readFromNBT(NBTTagList p_70443_1_)
+    public void readFromNBT(NBTTagList nbtTagListIn)
     {
         this.mainInventory = new ItemStack[36];
         this.armorInventory = new ItemStack[4];
 
-        for (int i = 0; i < p_70443_1_.tagCount(); ++i)
+        for (int i = 0; i < nbtTagListIn.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound = p_70443_1_.getCompoundTagAt(i);
+            NBTTagCompound nbttagcompound = nbtTagListIn.getCompoundTagAt(i);
             int j = nbttagcompound.getByte("Slot") & 255;
             ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound);
 
@@ -690,9 +690,9 @@ public class InventoryPlayer implements IInventory
     /**
      * returns a player armor item (as itemstack) contained in specified armor slot.
      */
-    public ItemStack armorItemInSlot(int p_70440_1_)
+    public ItemStack armorItemInSlot(int slotIn)
     {
-        return this.armorInventory[p_70440_1_];
+        return this.armorInventory[slotIn];
     }
 
     /**

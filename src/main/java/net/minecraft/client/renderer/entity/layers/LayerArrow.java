@@ -15,9 +15,9 @@ public class LayerArrow implements LayerRenderer<EntityLivingBase>
 {
     private final RendererLivingEntity field_177168_a;
 
-    public LayerArrow(RendererLivingEntity p_i46124_1_)
+    public LayerArrow(RendererLivingEntity rendererIn)
     {
-        this.field_177168_a = p_i46124_1_;
+        this.field_177168_a = rendererIn;
     }
 
     public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale)

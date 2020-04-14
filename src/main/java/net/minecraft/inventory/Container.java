@@ -497,7 +497,7 @@ public abstract class Container
      * Called to determine if the current slot is valid for the stack merging (double-click) code. The stack passed in
      * is null for the initial slot that was double-clicked.
      */
-    public boolean canMergeSlot(ItemStack stack, Slot p_94530_2_)
+    public boolean canMergeSlot(ItemStack stack, Slot slotIn)
     {
         return true;
     }
@@ -558,7 +558,7 @@ public abstract class Container
     /**
      * Gets a unique transaction ID. Parameter is unused.
      */
-    public short getNextTransactionID(InventoryPlayer p_75136_1_)
+    public short getNextTransactionID(InventoryPlayer invPlayer)
     {
         ++this.transactionID;
         return this.transactionID;
@@ -567,23 +567,23 @@ public abstract class Container
     /**
      * gets whether or not the player can craft in this inventory or not
      */
-    public boolean getCanCraft(EntityPlayer p_75129_1_)
+    public boolean getCanCraft(EntityPlayer player)
     {
-        return !this.playerList.contains(p_75129_1_);
+        return !this.playerList.contains(player);
     }
 
     /**
      * sets whether the player can craft in this inventory or not
      */
-    public void setCanCraft(EntityPlayer p_75128_1_, boolean p_75128_2_)
+    public void setCanCraft(EntityPlayer player, boolean canCraft)
     {
-        if (p_75128_2_)
+        if (canCraft)
         {
-            this.playerList.remove(p_75128_1_);
+            this.playerList.remove(player);
         }
         else
         {
-            this.playerList.add(p_75128_1_);
+            this.playerList.add(player);
         }
     }
 
@@ -684,20 +684,20 @@ public abstract class Container
     /**
      * Extracts the drag mode. Args : eventButton. Return (0 : evenly split, 1 : one item by slot, 2 : not used ?)
      */
-    public static int extractDragMode(int p_94529_0_)
+    public static int extractDragMode(int eventButton)
     {
-        return p_94529_0_ >> 2 & 3;
+        return eventButton >> 2 & 3;
     }
 
     /**
      * Args : clickedButton, Returns (0 : start drag, 1 : add slot, 2 : end drag)
      */
-    public static int getDragEvent(int p_94532_0_)
+    public static int getDragEvent(int clickedButton)
     {
-        return p_94532_0_ & 3;
+        return clickedButton & 3;
     }
 
-    public static int func_94534_d(int p_94534_0_, int p_94534_1_)
+    public static int getQuickcraftMask(int p_94534_0_, int p_94534_1_)
     {
         return p_94534_0_ & 3 | (p_94534_1_ & 3) << 2;
     }
@@ -735,30 +735,30 @@ public abstract class Container
      * Compute the new stack size, Returns the stack with the new size. Args : dragSlots, dragMode, dragStack,
      * slotStackSize
      */
-    public static void computeStackSize(Set<Slot> p_94525_0_, int p_94525_1_, ItemStack p_94525_2_, int p_94525_3_)
+    public static void computeStackSize(Set<Slot> dragSlotsIn, int dragModeIn, ItemStack stack, int slotStackSize)
     {
-        switch (p_94525_1_)
+        switch (dragModeIn)
         {
             case 0:
-                p_94525_2_.stackSize = MathHelper.floor_float((float)p_94525_2_.stackSize / (float)p_94525_0_.size());
+                stack.stackSize = MathHelper.floor_float((float)stack.stackSize / (float)dragSlotsIn.size());
                 break;
 
             case 1:
-                p_94525_2_.stackSize = 1;
+                stack.stackSize = 1;
                 break;
 
             case 2:
-                p_94525_2_.stackSize = p_94525_2_.getItem().getItemStackLimit();
+                stack.stackSize = stack.getItem().getItemStackLimit();
         }
 
-        p_94525_2_.stackSize += p_94525_3_;
+        stack.stackSize += slotStackSize;
     }
 
     /**
      * Returns true if the player can "drag-spilt" items into this slot,. returns true by default. Called to check if
      * the slot can be added to a list of Slots to split the held ItemStack across.
      */
-    public boolean canDragIntoSlot(Slot p_94531_1_)
+    public boolean canDragIntoSlot(Slot slotIn)
     {
         return true;
     }

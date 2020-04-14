@@ -379,7 +379,7 @@ public class ModelHorse extends ModelBase
         float f6 = entityhorse.getRearingAmount(partialTickTime);
         float f7 = 1.0F - f6;
         float f8 = entityhorse.getMouthOpennessAngle(partialTickTime);
-        boolean flag = entityhorse.field_110278_bp != 0;
+        boolean flag = entityhorse.tailCounter != 0;
         boolean flag1 = entityhorse.isHorseSaddled();
         boolean flag2 = entityhorse.riddenByEntity != null;
         float f9 = (float)entitylivingbaseIn.ticksExisted + partialTickTime;

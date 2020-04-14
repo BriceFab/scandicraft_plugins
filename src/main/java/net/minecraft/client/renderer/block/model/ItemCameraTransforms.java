@@ -32,14 +32,14 @@ public class ItemCameraTransforms
         this(ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT);
     }
 
-    public ItemCameraTransforms(ItemCameraTransforms p_i46443_1_)
+    public ItemCameraTransforms(ItemCameraTransforms transforms)
     {
-        this.thirdPerson = p_i46443_1_.thirdPerson;
-        this.firstPerson = p_i46443_1_.firstPerson;
-        this.head = p_i46443_1_.head;
-        this.gui = p_i46443_1_.gui;
-        this.ground = p_i46443_1_.ground;
-        this.fixed = p_i46443_1_.fixed;
+        this.thirdPerson = transforms.thirdPerson;
+        this.firstPerson = transforms.firstPerson;
+        this.head = transforms.head;
+        this.gui = transforms.gui;
+        this.ground = transforms.ground;
+        this.fixed = transforms.fixed;
     }
 
     public ItemCameraTransforms(ItemTransformVec3f p_i46444_1_, ItemTransformVec3f p_i46444_2_, ItemTransformVec3f p_i46444_3_, ItemTransformVec3f p_i46444_4_, ItemTransformVec3f p_i46444_5_, ItemTransformVec3f p_i46444_6_)
@@ -66,9 +66,9 @@ public class ItemCameraTransforms
         }
     }
 
-    public ItemTransformVec3f getTransform(ItemCameraTransforms.TransformType p_181688_1_)
+    public ItemTransformVec3f getTransform(ItemCameraTransforms.TransformType type)
     {
-        switch (p_181688_1_)
+        switch (type)
         {
             case THIRD_PERSON:
                 return this.thirdPerson;
@@ -93,9 +93,9 @@ public class ItemCameraTransforms
         }
     }
 
-    public boolean func_181687_c(ItemCameraTransforms.TransformType p_181687_1_)
+    public boolean hasCustomTransform(ItemCameraTransforms.TransformType type)
     {
-        return !this.getTransform(p_181687_1_).equals(ItemTransformVec3f.DEFAULT);
+        return !this.getTransform(type).equals(ItemTransformVec3f.DEFAULT);
     }
 
     static class Deserializer implements JsonDeserializer<ItemCameraTransforms>
@@ -103,16 +103,16 @@ public class ItemCameraTransforms
         public ItemCameraTransforms deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException
         {
             JsonObject jsonobject = p_deserialize_1_.getAsJsonObject();
-            ItemTransformVec3f itemtransformvec3f = this.func_181683_a(p_deserialize_3_, jsonobject, "thirdperson");
-            ItemTransformVec3f itemtransformvec3f1 = this.func_181683_a(p_deserialize_3_, jsonobject, "firstperson");
-            ItemTransformVec3f itemtransformvec3f2 = this.func_181683_a(p_deserialize_3_, jsonobject, "head");
-            ItemTransformVec3f itemtransformvec3f3 = this.func_181683_a(p_deserialize_3_, jsonobject, "gui");
-            ItemTransformVec3f itemtransformvec3f4 = this.func_181683_a(p_deserialize_3_, jsonobject, "ground");
-            ItemTransformVec3f itemtransformvec3f5 = this.func_181683_a(p_deserialize_3_, jsonobject, "fixed");
+            ItemTransformVec3f itemtransformvec3f = this.getTransform(p_deserialize_3_, jsonobject, "thirdperson");
+            ItemTransformVec3f itemtransformvec3f1 = this.getTransform(p_deserialize_3_, jsonobject, "firstperson");
+            ItemTransformVec3f itemtransformvec3f2 = this.getTransform(p_deserialize_3_, jsonobject, "head");
+            ItemTransformVec3f itemtransformvec3f3 = this.getTransform(p_deserialize_3_, jsonobject, "gui");
+            ItemTransformVec3f itemtransformvec3f4 = this.getTransform(p_deserialize_3_, jsonobject, "ground");
+            ItemTransformVec3f itemtransformvec3f5 = this.getTransform(p_deserialize_3_, jsonobject, "fixed");
             return new ItemCameraTransforms(itemtransformvec3f, itemtransformvec3f1, itemtransformvec3f2, itemtransformvec3f3, itemtransformvec3f4, itemtransformvec3f5);
         }
 
-        private ItemTransformVec3f func_181683_a(JsonDeserializationContext p_181683_1_, JsonObject p_181683_2_, String p_181683_3_)
+        private ItemTransformVec3f getTransform(JsonDeserializationContext p_181683_1_, JsonObject p_181683_2_, String p_181683_3_)
         {
             return p_181683_2_.has(p_181683_3_) ? (ItemTransformVec3f)p_181683_1_.deserialize(p_181683_2_.get(p_181683_3_), ItemTransformVec3f.class) : ItemTransformVec3f.DEFAULT;
         }

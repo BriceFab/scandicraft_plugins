@@ -193,7 +193,7 @@ public abstract class EntityTameable extends EntityAnimal implements IEntityOwna
         return this.aiSit;
     }
 
-    public boolean shouldAttackEntity(EntityLivingBase p_142018_1_, EntityLivingBase p_142018_2_)
+    public boolean shouldAttackEntity(EntityLivingBase target, EntityLivingBase owner)
     {
         return true;
     }

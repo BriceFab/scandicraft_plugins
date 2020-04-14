@@ -73,8 +73,8 @@ public class ShaderManager
                     }
                     catch (Exception exception2)
                     {
-                        JsonException jsonexception1 = JsonException.func_151379_a(exception2);
-                        jsonexception1.func_151380_a("samplers[" + i + "]");
+                        JsonException jsonexception1 = JsonException.forException(exception2);
+                        jsonexception1.prependJsonKey("samplers[" + i + "]");
                         throw jsonexception1;
                     }
 
@@ -98,8 +98,8 @@ public class ShaderManager
                     }
                     catch (Exception exception1)
                     {
-                        JsonException jsonexception2 = JsonException.func_151379_a(exception1);
-                        jsonexception2.func_151380_a("attributes[" + j + "]");
+                        JsonException jsonexception2 = JsonException.forException(exception1);
+                        jsonexception2.prependJsonKey("attributes[" + j + "]");
                         throw jsonexception2;
                     }
 
@@ -126,8 +126,8 @@ public class ShaderManager
                     }
                     catch (Exception exception)
                     {
-                        JsonException jsonexception3 = JsonException.func_151379_a(exception);
-                        jsonexception3.func_151380_a("uniforms[" + k + "]");
+                        JsonException jsonexception3 = JsonException.forException(exception);
+                        jsonexception3.prependJsonKey("uniforms[" + k + "]");
                         throw jsonexception3;
                     }
 
@@ -154,8 +154,8 @@ public class ShaderManager
         }
         catch (Exception exception3)
         {
-            JsonException jsonexception = JsonException.func_151379_a(exception3);
-            jsonexception.func_151381_b(resourcelocation.getResourcePath());
+            JsonException jsonexception = JsonException.forException(exception3);
+            jsonexception.setFilenameAndFlush(resourcelocation.getResourcePath());
             throw jsonexception;
         }
         finally
@@ -192,7 +192,7 @@ public class ShaderManager
     {
         this.isDirty = false;
         staticShaderManager = this;
-        this.field_148016_p.func_148109_a();
+        this.field_148016_p.apply();
 
         if (this.program != currentProgram)
         {
@@ -366,8 +366,8 @@ public class ShaderManager
                 }
                 catch (Exception exception)
                 {
-                    JsonException jsonexception = JsonException.func_151379_a(exception);
-                    jsonexception.func_151380_a("values[" + k + "]");
+                    JsonException jsonexception = JsonException.forException(exception);
+                    jsonexception.prependJsonKey("values[" + k + "]");
                     throw jsonexception;
                 }
 
@@ -392,7 +392,7 @@ public class ShaderManager
             }
             else if (i <= 7)
             {
-                shaderuniform.func_148092_b(afloat[0], afloat[1], afloat[2], afloat[3]);
+                shaderuniform.setSafe(afloat[0], afloat[1], afloat[2], afloat[3]);
             }
             else
             {

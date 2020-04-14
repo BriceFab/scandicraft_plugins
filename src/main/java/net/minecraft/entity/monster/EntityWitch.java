@@ -246,27 +246,27 @@ public class EntityWitch extends EntityMob implements IRangedAttackMob
     /**
      * Attack the specified entity using a ranged attack.
      */
-    public void attackEntityWithRangedAttack(EntityLivingBase p_82196_1_, float p_82196_2_)
+    public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor)
     {
         if (!this.getAggressive())
         {
             EntityPotion entitypotion = new EntityPotion(this.worldObj, this, 32732);
-            double d0 = p_82196_1_.posY + (double)p_82196_1_.getEyeHeight() - 1.100000023841858D;
+            double d0 = target.posY + (double)target.getEyeHeight() - 1.100000023841858D;
             entitypotion.rotationPitch -= -20.0F;
-            double d1 = p_82196_1_.posX + p_82196_1_.motionX - this.posX;
+            double d1 = target.posX + target.motionX - this.posX;
             double d2 = d0 - this.posY;
-            double d3 = p_82196_1_.posZ + p_82196_1_.motionZ - this.posZ;
+            double d3 = target.posZ + target.motionZ - this.posZ;
             float f = MathHelper.sqrt_double(d1 * d1 + d3 * d3);
 
-            if (f >= 8.0F && !p_82196_1_.isPotionActive(Potion.moveSlowdown))
+            if (f >= 8.0F && !target.isPotionActive(Potion.moveSlowdown))
             {
                 entitypotion.setPotionDamage(32698);
             }
-            else if (p_82196_1_.getHealth() >= 8.0F && !p_82196_1_.isPotionActive(Potion.poison))
+            else if (target.getHealth() >= 8.0F && !target.isPotionActive(Potion.poison))
             {
                 entitypotion.setPotionDamage(32660);
             }
-            else if (f <= 3.0F && !p_82196_1_.isPotionActive(Potion.weakness) && this.rand.nextFloat() < 0.25F)
+            else if (f <= 3.0F && !target.isPotionActive(Potion.weakness) && this.rand.nextFloat() < 0.25F)
             {
                 entitypotion.setPotionDamage(32696);
             }

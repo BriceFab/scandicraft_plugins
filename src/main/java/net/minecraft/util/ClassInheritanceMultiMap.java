@@ -16,13 +16,13 @@ public class ClassInheritanceMultiMap<T> extends AbstractSet<T>
     private final Map < Class<?>, List<T >> map = Maps. < Class<?>, List<T >> newHashMap();
     private final Set < Class<? >> knownKeys = Sets. < Class<? >> newIdentityHashSet();
     private final Class<T> baseClass;
-    private final List<T> field_181745_e = Lists.<T>newArrayList();
+    private final List<T> values = Lists.<T>newArrayList();
 
     public ClassInheritanceMultiMap(Class<T> baseClassIn)
     {
         this.baseClass = baseClassIn;
         this.knownKeys.add(baseClassIn);
-        this.map.put(baseClassIn, this.field_181745_e);
+        this.map.put(baseClassIn, this.values);
 
         for (Class<?> oclass : field_181158_a)
         {
@@ -34,7 +34,7 @@ public class ClassInheritanceMultiMap<T> extends AbstractSet<T>
     {
         field_181158_a.add(clazz);
 
-        for (T t : this.field_181745_e)
+        for (T t : this.values)
         {
             if (clazz.isAssignableFrom(t.getClass()))
             {
@@ -138,11 +138,11 @@ public class ClassInheritanceMultiMap<T> extends AbstractSet<T>
 
     public Iterator<T> iterator()
     {
-        return this.field_181745_e.isEmpty() ? Iterators.<T>emptyIterator() : Iterators.unmodifiableIterator(this.field_181745_e.iterator());
+        return this.values.isEmpty() ? Iterators.<T>emptyIterator() : Iterators.unmodifiableIterator(this.values.iterator());
     }
 
     public int size()
     {
-        return this.field_181745_e.size();
+        return this.values.size();
     }
 }

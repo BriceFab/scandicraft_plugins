@@ -67,15 +67,15 @@ public class AnimationMetadataSectionSerializer extends BaseMetadataSectionSeria
         return new AnimationMetadataSection(list, k, l, i, flag);
     }
 
-    private AnimationFrame parseAnimationFrame(int p_110492_1_, JsonElement p_110492_2_)
+    private AnimationFrame parseAnimationFrame(int frame, JsonElement element)
     {
-        if (p_110492_2_.isJsonPrimitive())
+        if (element.isJsonPrimitive())
         {
-            return new AnimationFrame(JsonUtils.getInt(p_110492_2_, "frames[" + p_110492_1_ + "]"));
+            return new AnimationFrame(JsonUtils.getInt(element, "frames[" + frame + "]"));
         }
-        else if (p_110492_2_.isJsonObject())
+        else if (element.isJsonObject())
         {
-            JsonObject jsonobject = JsonUtils.getJsonObject(p_110492_2_, "frames[" + p_110492_1_ + "]");
+            JsonObject jsonobject = JsonUtils.getJsonObject(element, "frames[" + frame + "]");
             int i = JsonUtils.getInt(jsonobject, "time", -1);
 
             if (jsonobject.has("time"))

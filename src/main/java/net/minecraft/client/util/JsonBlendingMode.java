@@ -7,24 +7,24 @@ import org.lwjgl.opengl.GL14;
 
 public class JsonBlendingMode
 {
-    private static JsonBlendingMode field_148118_a = null;
-    private final int field_148116_b;
-    private final int field_148117_c;
-    private final int field_148114_d;
-    private final int field_148115_e;
-    private final int field_148112_f;
-    private final boolean field_148113_g;
-    private final boolean field_148119_h;
+    private static JsonBlendingMode lastApplied = null;
+    private final int srcColorFactor;
+    private final int srcAlphaFactor;
+    private final int destColorFactor;
+    private final int destAlphaFactor;
+    private final int blendFunction;
+    private final boolean separateBlend;
+    private final boolean opaque;
 
-    private JsonBlendingMode(boolean p_i45084_1_, boolean p_i45084_2_, int p_i45084_3_, int p_i45084_4_, int p_i45084_5_, int p_i45084_6_, int p_i45084_7_)
+    private JsonBlendingMode(boolean separateBlendIn, boolean opaqueIn, int srcColorFactorIn, int destColorFactorIn, int srcAlphaFactorIn, int destAlphaFactorIn, int blendFunctionIn)
     {
-        this.field_148113_g = p_i45084_1_;
-        this.field_148116_b = p_i45084_3_;
-        this.field_148114_d = p_i45084_4_;
-        this.field_148117_c = p_i45084_5_;
-        this.field_148115_e = p_i45084_6_;
-        this.field_148119_h = p_i45084_2_;
-        this.field_148112_f = p_i45084_7_;
+        this.separateBlend = separateBlendIn;
+        this.srcColorFactor = srcColorFactorIn;
+        this.destColorFactor = destColorFactorIn;
+        this.srcAlphaFactor = srcAlphaFactorIn;
+        this.destAlphaFactor = destAlphaFactorIn;
+        this.opaque = opaqueIn;
+        this.blendFunction = blendFunctionIn;
     }
 
     public JsonBlendingMode()
@@ -32,25 +32,25 @@ public class JsonBlendingMode
         this(false, true, 1, 0, 1, 0, 32774);
     }
 
-    public JsonBlendingMode(int p_i45085_1_, int p_i45085_2_, int p_i45085_3_)
+    public JsonBlendingMode(int srcFactor, int dstFactor, int blendFunctionIn)
     {
-        this(false, false, p_i45085_1_, p_i45085_2_, p_i45085_1_, p_i45085_2_, p_i45085_3_);
+        this(false, false, srcFactor, dstFactor, srcFactor, dstFactor, blendFunctionIn);
     }
 
-    public JsonBlendingMode(int p_i45086_1_, int p_i45086_2_, int p_i45086_3_, int p_i45086_4_, int p_i45086_5_)
+    public JsonBlendingMode(int srcColorFactorIn, int destColorFactorIn, int srcAlphaFactorIn, int destAlphaFactorIn, int blendFunctionIn)
     {
-        this(true, false, p_i45086_1_, p_i45086_2_, p_i45086_3_, p_i45086_4_, p_i45086_5_);
+        this(true, false, srcColorFactorIn, destColorFactorIn, srcAlphaFactorIn, destAlphaFactorIn, blendFunctionIn);
     }
 
-    public void func_148109_a()
+    public void apply()
     {
-        if (!this.equals(field_148118_a))
+        if (!this.equals(lastApplied))
         {
-            if (field_148118_a == null || this.field_148119_h != field_148118_a.func_148111_b())
+            if (lastApplied == null || this.opaque != lastApplied.isOpaque())
             {
-                field_148118_a = this;
+                lastApplied = this;
 
-                if (this.field_148119_h)
+                if (this.opaque)
                 {
                     GlStateManager.disableBlend();
                     return;
@@ -59,15 +59,15 @@ public class JsonBlendingMode
                 GlStateManager.enableBlend();
             }
 
-            GL14.glBlendEquation(this.field_148112_f);
+            GL14.glBlendEquation(this.blendFunction);
 
-            if (this.field_148113_g)
+            if (this.separateBlend)
             {
-                GlStateManager.tryBlendFuncSeparate(this.field_148116_b, this.field_148114_d, this.field_148117_c, this.field_148115_e);
+                GlStateManager.tryBlendFuncSeparate(this.srcColorFactor, this.destColorFactor, this.srcAlphaFactor, this.destAlphaFactor);
             }
             else
             {
-                GlStateManager.blendFunc(this.field_148116_b, this.field_148114_d);
+                GlStateManager.blendFunc(this.srcColorFactor, this.destColorFactor);
             }
         }
     }
@@ -85,25 +85,25 @@ public class JsonBlendingMode
         else
         {
             JsonBlendingMode jsonblendingmode = (JsonBlendingMode)p_equals_1_;
-            return this.field_148112_f != jsonblendingmode.field_148112_f ? false : (this.field_148115_e != jsonblendingmode.field_148115_e ? false : (this.field_148114_d != jsonblendingmode.field_148114_d ? false : (this.field_148119_h != jsonblendingmode.field_148119_h ? false : (this.field_148113_g != jsonblendingmode.field_148113_g ? false : (this.field_148117_c != jsonblendingmode.field_148117_c ? false : this.field_148116_b == jsonblendingmode.field_148116_b)))));
+            return this.blendFunction != jsonblendingmode.blendFunction ? false : (this.destAlphaFactor != jsonblendingmode.destAlphaFactor ? false : (this.destColorFactor != jsonblendingmode.destColorFactor ? false : (this.opaque != jsonblendingmode.opaque ? false : (this.separateBlend != jsonblendingmode.separateBlend ? false : (this.srcAlphaFactor != jsonblendingmode.srcAlphaFactor ? false : this.srcColorFactor == jsonblendingmode.srcColorFactor)))));
         }
     }
 
     public int hashCode()
     {
-        int i = this.field_148116_b;
-        i = 31 * i + this.field_148117_c;
-        i = 31 * i + this.field_148114_d;
-        i = 31 * i + this.field_148115_e;
-        i = 31 * i + this.field_148112_f;
-        i = 31 * i + (this.field_148113_g ? 1 : 0);
-        i = 31 * i + (this.field_148119_h ? 1 : 0);
+        int i = this.srcColorFactor;
+        i = 31 * i + this.srcAlphaFactor;
+        i = 31 * i + this.destColorFactor;
+        i = 31 * i + this.destAlphaFactor;
+        i = 31 * i + this.blendFunction;
+        i = 31 * i + (this.separateBlend ? 1 : 0);
+        i = 31 * i + (this.opaque ? 1 : 0);
         return i;
     }
 
-    public boolean func_148111_b()
+    public boolean isOpaque()
     {
-        return this.field_148119_h;
+        return this.opaque;
     }
 
     public static JsonBlendingMode func_148110_a(JsonObject p_148110_0_)
@@ -124,7 +124,7 @@ public class JsonBlendingMode
 
             if (JsonUtils.isString(p_148110_0_, "func"))
             {
-                i = func_148108_a(p_148110_0_.get("func").getAsString());
+                i = stringToBlendFunction(p_148110_0_.get("func").getAsString());
 
                 if (i != 32774)
                 {
@@ -134,7 +134,7 @@ public class JsonBlendingMode
 
             if (JsonUtils.isString(p_148110_0_, "srcrgb"))
             {
-                j = func_148107_b(p_148110_0_.get("srcrgb").getAsString());
+                j = stringToBlendFactor(p_148110_0_.get("srcrgb").getAsString());
 
                 if (j != 1)
                 {
@@ -144,7 +144,7 @@ public class JsonBlendingMode
 
             if (JsonUtils.isString(p_148110_0_, "dstrgb"))
             {
-                k = func_148107_b(p_148110_0_.get("dstrgb").getAsString());
+                k = stringToBlendFactor(p_148110_0_.get("dstrgb").getAsString());
 
                 if (k != 0)
                 {
@@ -154,7 +154,7 @@ public class JsonBlendingMode
 
             if (JsonUtils.isString(p_148110_0_, "srcalpha"))
             {
-                l = func_148107_b(p_148110_0_.get("srcalpha").getAsString());
+                l = stringToBlendFactor(p_148110_0_.get("srcalpha").getAsString());
 
                 if (l != 1)
                 {
@@ -166,7 +166,7 @@ public class JsonBlendingMode
 
             if (JsonUtils.isString(p_148110_0_, "dstalpha"))
             {
-                i1 = func_148107_b(p_148110_0_.get("dstalpha").getAsString());
+                i1 = stringToBlendFactor(p_148110_0_.get("dstalpha").getAsString());
 
                 if (i1 != 0)
                 {
@@ -180,15 +180,15 @@ public class JsonBlendingMode
         }
     }
 
-    private static int func_148108_a(String p_148108_0_)
+    private static int stringToBlendFunction(String funcName)
     {
-        String s = p_148108_0_.trim().toLowerCase();
+        String s = funcName.trim().toLowerCase();
         return s.equals("add") ? 32774 : (s.equals("subtract") ? 32778 : (s.equals("reversesubtract") ? 32779 : (s.equals("reverse_subtract") ? 32779 : (s.equals("min") ? 32775 : (s.equals("max") ? 32776 : 32774)))));
     }
 
-    private static int func_148107_b(String p_148107_0_)
+    private static int stringToBlendFactor(String factorName)
     {
-        String s = p_148107_0_.trim().toLowerCase();
+        String s = factorName.trim().toLowerCase();
         s = s.replaceAll("_", "");
         s = s.replaceAll("one", "1");
         s = s.replaceAll("zero", "0");

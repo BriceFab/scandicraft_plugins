@@ -23,7 +23,7 @@ public class StructureOceanMonument extends MapGenStructure
     private int field_175800_f;
     private int field_175801_g;
     public static final List<BiomeGenBase> field_175802_d = Arrays.<BiomeGenBase>asList(new BiomeGenBase[] {BiomeGenBase.ocean, BiomeGenBase.deepOcean, BiomeGenBase.river, BiomeGenBase.frozenOcean, BiomeGenBase.frozenRiver});
-    private static final List<BiomeGenBase.SpawnListEntry> field_175803_h = Lists.<BiomeGenBase.SpawnListEntry>newArrayList();
+    private static final List<BiomeGenBase.SpawnListEntry> MONUMENT_ENEMIES = Lists.<BiomeGenBase.SpawnListEntry>newArrayList();
 
     public StructureOceanMonument()
     {
@@ -101,18 +101,18 @@ public class StructureOceanMonument extends MapGenStructure
 
     public List<BiomeGenBase.SpawnListEntry> func_175799_b()
     {
-        return field_175803_h;
+        return MONUMENT_ENEMIES;
     }
 
     static
     {
-        field_175803_h.add(new BiomeGenBase.SpawnListEntry(EntityGuardian.class, 1, 2, 4));
+        MONUMENT_ENEMIES.add(new BiomeGenBase.SpawnListEntry(EntityGuardian.class, 1, 2, 4));
     }
 
     public static class StartMonument extends StructureStart
     {
         private Set<ChunkCoordIntPair> field_175791_c = Sets.<ChunkCoordIntPair>newHashSet();
-        private boolean field_175790_d;
+        private boolean wasCreated;
 
         public StartMonument()
         {
@@ -137,12 +137,12 @@ public class StructureOceanMonument extends MapGenStructure
             EnumFacing enumfacing = EnumFacing.Plane.HORIZONTAL.random(p_175789_2_);
             this.components.add(new StructureOceanMonumentPieces.MonumentBuilding(p_175789_2_, i1, j1, enumfacing));
             this.updateBoundingBox();
-            this.field_175790_d = true;
+            this.wasCreated = true;
         }
 
         public void generateStructure(World worldIn, Random rand, StructureBoundingBox structurebb)
         {
-            if (!this.field_175790_d)
+            if (!this.wasCreated)
             {
                 this.components.clear();
                 this.func_175789_b(worldIn, rand, this.getChunkPosX(), this.getChunkPosZ());

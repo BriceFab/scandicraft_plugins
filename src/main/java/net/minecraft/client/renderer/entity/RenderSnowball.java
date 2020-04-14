@@ -11,13 +11,13 @@ import net.minecraft.util.ResourceLocation;
 public class RenderSnowball<T extends Entity> extends Render<T>
 {
     protected final Item field_177084_a;
-    private final RenderItem field_177083_e;
+    private final RenderItem itemRenderer;
 
     public RenderSnowball(RenderManager renderManagerIn, Item p_i46137_2_, RenderItem p_i46137_3_)
     {
         super(renderManagerIn);
         this.field_177084_a = p_i46137_2_;
-        this.field_177083_e = p_i46137_3_;
+        this.itemRenderer = p_i46137_3_;
     }
 
     /**
@@ -35,7 +35,7 @@ public class RenderSnowball<T extends Entity> extends Render<T>
         GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
         this.bindTexture(TextureMap.locationBlocksTexture);
-        this.field_177083_e.func_181564_a(this.func_177082_d(entity), ItemCameraTransforms.TransformType.GROUND);
+        this.itemRenderer.func_181564_a(this.func_177082_d(entity), ItemCameraTransforms.TransformType.GROUND);
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

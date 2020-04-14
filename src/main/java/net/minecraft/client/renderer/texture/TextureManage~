@@ -29,39 +29,39 @@ import org.apache.logging.log4j.Logger;
 import shadersmod.client.ShadersTex;
 
 public class TextureManager implements ITickable, IResourceManagerReloadListener {
-   private static final Logger field_147646_a = LogManager.getLogger();
-   private final Map field_110585_a = Maps.newHashMap();
-   private final List field_110583_b = Lists.newArrayList();
-   private final Map field_110584_c = Maps.newHashMap();
-   private IResourceManager field_110582_d;
+   private static final Logger LOGGER = LogManager.getLogger();
+   private final Map mapTextureObjects = Maps.newHashMap();
+   private final List listTickables = Lists.newArrayList();
+   private final Map mapTextureCounters = Maps.newHashMap();
+   private IResourceManager resourceManager;
    private static final String __OBFID = "CL_00001064";
 
-   public TextureManager(IResourceManager p_i1284_1_) {
-      this.field_110582_d = p_i1284_1_;
+   public TextureManager(IResourceManager resourceManager) {
+      this.resourceManager = resourceManager;
    }
 
-   public void func_110577_a(ResourceLocation p_110577_1_) {
+   public void bindTexture(ResourceLocation resource) {
       if(Config.isRandomMobs()) {
-         p_110577_1_ = RandomMobs.getTextureLocation(p_110577_1_);
+         resource = RandomMobs.getTextureLocation(resource);
       }
 
-      Object object = (ITextureObject)this.field_110585_a.get(p_110577_1_);
+      Object object = (ITextureObject)this.mapTextureObjects.get(resource);
       if(object == null) {
-         object = new SimpleTexture(p_110577_1_);
-         this.func_110579_a(p_110577_1_, (ITextureObject)object);
+         object = new SimpleTexture(resource);
+         this.func_110579_a(resource, (ITextureObject)object);
       }
 
       if(Config.isShaders()) {
          ShadersTex.bindTexture((ITextureObject)object);
       } else {
-         TextureUtil.func_94277_a(((ITextureObject)object).func_110552_b());
+         TextureUtil.func_94277_a(((ITextureObject)object).getGlTextureId());
       }
 
    }
 
    public boolean func_110580_a(ResourceLocation p_110580_1_, ITickableTextureObject p_110580_2_) {
       if(this.func_110579_a(p_110580_1_, p_110580_2_)) {
-         this.field_110583_b.add(p_110580_2_);
+         this.listTickables.add(p_110580_2_);
          return true;
       } else {
          return false;
@@ -73,16 +73,16 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
       ITextureObject itextureobject = p_110579_2_;
 
       try {
-         p_110579_2_.func_110551_a(this.field_110582_d);
+         p_110579_2_.func_110551_a(this.resourceManager);
       } catch (IOException ioexception) {
-         field_147646_a.warn((String)("Failed to load texture: " + p_110579_1_), (Throwable)ioexception);
+         LOGGER.warn((String)("Failed to load texture: " + p_110579_1_), (Throwable)ioexception);
          itextureobject = TextureUtil.field_111001_a;
-         this.field_110585_a.put(p_110579_1_, itextureobject);
+         this.mapTextureObjects.put(p_110579_1_, itextureobject);
          flag = false;
       } catch (Throwable throwable) {
-         CrashReport crashreport = CrashReport.func_85055_a(throwable, "Registering texture");
-         CrashReportCategory crashreportcategory = crashreport.func_85058_a("Resource location being registered");
-         crashreportcategory.func_71507_a("Resource location", p_110579_1_);
+         CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Registering texture");
+         CrashReportCategory crashreportcategory = crashreport.makeCategory("Resource location being registered");
+         crashreportcategory.addDetail("Resource location", p_110579_1_);
          crashreportcategory.func_71500_a("Texture object class", new Callable() {
             private static final String __OBFID = "CL_00001065";
 
@@ -93,44 +93,44 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
          throw new ReportedException(crashreport);
       }
 
-      this.field_110585_a.put(p_110579_1_, itextureobject);
+      this.mapTextureObjects.put(p_110579_1_, itextureobject);
       return flag;
    }
 
    public ITextureObject func_110581_b(ResourceLocation p_110581_1_) {
-      return (ITextureObject)this.field_110585_a.get(p_110581_1_);
+      return (ITextureObject)this.mapTextureObjects.get(p_110581_1_);
    }
 
-   public ResourceLocation func_110578_a(String p_110578_1_, DynamicTexture p_110578_2_) {
-      if(p_110578_1_.equals("logo")) {
-         p_110578_2_ = Config.getMojangLogoTexture(p_110578_2_);
+   public ResourceLocation getDynamicTextureLocation(String name, DynamicTexture texture) {
+      if(name.equals("logo")) {
+         texture = Config.getMojangLogoTexture(texture);
       }
 
-      Integer integer = (Integer)this.field_110584_c.get(p_110578_1_);
+      Integer integer = (Integer)this.mapTextureCounters.get(name);
       if(integer == null) {
          integer = Integer.valueOf(1);
       } else {
          integer = Integer.valueOf(integer.intValue() + 1);
       }
 
-      this.field_110584_c.put(p_110578_1_, integer);
-      ResourceLocation resourcelocation = new ResourceLocation(String.format("dynamic/%s_%d", new Object[]{p_110578_1_, integer}));
-      this.func_110579_a(resourcelocation, p_110578_2_);
+      this.mapTextureCounters.put(name, integer);
+      ResourceLocation resourcelocation = new ResourceLocation(String.format("dynamic/%s_%d", new Object[]{name, integer}));
+      this.func_110579_a(resourcelocation, texture);
       return resourcelocation;
    }
 
-   public void func_110550_d() {
-      for(ITickable itickable : this.field_110583_b) {
-         itickable.func_110550_d();
+   public void tick() {
+      for(ITickable itickable : this.listTickables) {
+         itickable.tick();
       }
 
    }
 
-   public void func_147645_c(ResourceLocation p_147645_1_) {
-      ITextureObject itextureobject = this.func_110581_b(p_147645_1_);
+   public void deleteTexture(ResourceLocation textureLocation) {
+      ITextureObject itextureobject = this.func_110581_b(textureLocation);
       if(itextureobject != null) {
-         this.field_110585_a.remove(p_147645_1_);
-         TextureUtil.func_147942_a(itextureobject.func_110552_b());
+         this.mapTextureObjects.remove(textureLocation);
+         TextureUtil.func_147942_a(itextureobject.getGlTextureId());
       }
 
    }
@@ -138,30 +138,30 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
    public void func_110549_a(IResourceManager p_110549_1_) {
       Config.dbg("*** Reloading textures ***");
       Config.log("Resource packs: " + Config.getResourcePackNames());
-      Iterator iterator = this.field_110585_a.keySet().iterator();
+      Iterator iterator = this.mapTextureObjects.keySet().iterator();
 
       while(iterator.hasNext()) {
          ResourceLocation resourcelocation = (ResourceLocation)iterator.next();
-         String s = resourcelocation.func_110623_a();
+         String s = resourcelocation.getPath();
          if(s.startsWith("mcpatcher/") || s.startsWith("optifine/")) {
-            ITextureObject itextureobject = (ITextureObject)this.field_110585_a.get(resourcelocation);
+            ITextureObject itextureobject = (ITextureObject)this.mapTextureObjects.get(resourcelocation);
             if(itextureobject instanceof AbstractTexture) {
                AbstractTexture abstracttexture = (AbstractTexture)itextureobject;
-               abstracttexture.func_147631_c();
+               abstracttexture.deleteGlTexture();
             }
 
             iterator.remove();
          }
       }
 
-      for(Entry entry : this.field_110585_a.entrySet()) {
+      for(Entry entry : this.mapTextureObjects.entrySet()) {
          this.func_110579_a((ResourceLocation)entry.getKey(), (ITextureObject)entry.getValue());
       }
 
    }
 
    public void reloadBannerTextures() {
-      for(Entry entry : this.field_110585_a.entrySet()) {
+      for(Entry entry : this.mapTextureObjects.entrySet()) {
          ResourceLocation resourcelocation = (ResourceLocation)entry.getKey();
          ITextureObject itextureobject = (ITextureObject)entry.getValue();
          if(itextureobject instanceof LayeredColorMaskTexture) {

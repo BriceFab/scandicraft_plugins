@@ -12,7 +12,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable
 {
     private final MobSpawnerBaseLogic spawnerLogic = new MobSpawnerBaseLogic()
     {
-        public void func_98267_a(int id)
+        public void broadcastEvent(int id)
         {
             TileEntityMobSpawner.this.worldObj.addBlockEvent(TileEntityMobSpawner.this.pos, Blocks.mob_spawner, id, 0);
         }
@@ -72,7 +72,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable
         return this.spawnerLogic.setDelayToMin(id) ? true : super.receiveClientEvent(id, type);
     }
 
-    public boolean func_183000_F()
+    public boolean onlyOpsCanSetNbt()
     {
         return true;
     }

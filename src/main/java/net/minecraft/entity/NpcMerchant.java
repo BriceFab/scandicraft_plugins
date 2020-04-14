@@ -32,7 +32,7 @@ public class NpcMerchant implements IMerchant
         return this.customer;
     }
 
-    public void setCustomer(EntityPlayer p_70932_1_)
+    public void setCustomer(EntityPlayer player)
     {
     }
 

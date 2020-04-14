@@ -80,7 +80,7 @@ public class BlockPattern
      */
     public BlockPattern.PatternHelper match(World worldIn, BlockPos pos)
     {
-        LoadingCache<BlockPos, BlockWorldState> loadingcache = func_181627_a(worldIn, false);
+        LoadingCache<BlockPos, BlockWorldState> loadingcache = createLoadingCache(worldIn, false);
         int i = Math.max(Math.max(this.palmLength, this.thumbLength), this.fingerLength);
 
         for (BlockPos blockpos : BlockPos.getAllInBox(pos, pos.add(i - 1, i - 1, i - 1)))
@@ -105,9 +105,9 @@ public class BlockPattern
         return null;
     }
 
-    public static LoadingCache<BlockPos, BlockWorldState> func_181627_a(World p_181627_0_, boolean p_181627_1_)
+    public static LoadingCache<BlockPos, BlockWorldState> createLoadingCache(World worldIn, boolean forceLoadIn)
     {
-        return CacheBuilder.newBuilder().<BlockPos, BlockWorldState>build(new BlockPattern.CacheLoader(p_181627_0_, p_181627_1_));
+        return CacheBuilder.newBuilder().<BlockPos, BlockWorldState>build(new BlockPattern.CacheLoader(worldIn, forceLoadIn));
     }
 
     /**
@@ -132,17 +132,17 @@ public class BlockPattern
     static class CacheLoader extends com.google.common.cache.CacheLoader<BlockPos, BlockWorldState>
     {
         private final World world;
-        private final boolean field_181626_b;
+        private final boolean forceLoad;
 
         public CacheLoader(World p_i46460_1_, boolean p_i46460_2_)
         {
             this.world = p_i46460_1_;
-            this.field_181626_b = p_i46460_2_;
+            this.forceLoad = p_i46460_2_;
         }
 
         public BlockWorldState load(BlockPos p_load_1_) throws Exception
         {
-            return new BlockWorldState(this.world, p_load_1_, this.field_181626_b);
+            return new BlockWorldState(this.world, p_load_1_, this.forceLoad);
         }
     }
 
@@ -152,22 +152,22 @@ public class BlockPattern
         private final EnumFacing finger;
         private final EnumFacing thumb;
         private final LoadingCache<BlockPos, BlockWorldState> lcache;
-        private final int field_181120_e;
-        private final int field_181121_f;
-        private final int field_181122_g;
+        private final int width;
+        private final int height;
+        private final int depth;
 
-        public PatternHelper(BlockPos p_i46378_1_, EnumFacing p_i46378_2_, EnumFacing p_i46378_3_, LoadingCache<BlockPos, BlockWorldState> p_i46378_4_, int p_i46378_5_, int p_i46378_6_, int p_i46378_7_)
+        public PatternHelper(BlockPos posIn, EnumFacing fingerIn, EnumFacing thumbIn, LoadingCache<BlockPos, BlockWorldState> lcacheIn, int widthIn, int heightIn, int depthIn)
         {
-            this.pos = p_i46378_1_;
-            this.finger = p_i46378_2_;
-            this.thumb = p_i46378_3_;
-            this.lcache = p_i46378_4_;
-            this.field_181120_e = p_i46378_5_;
-            this.field_181121_f = p_i46378_6_;
-            this.field_181122_g = p_i46378_7_;
+            this.pos = posIn;
+            this.finger = fingerIn;
+            this.thumb = thumbIn;
+            this.lcache = lcacheIn;
+            this.width = widthIn;
+            this.height = heightIn;
+            this.depth = depthIn;
         }
 
-        public BlockPos func_181117_a()
+        public BlockPos getFrontTopLeft()
         {
             return this.pos;
         }
@@ -182,14 +182,14 @@ public class BlockPattern
             return this.thumb;
         }
 
-        public int func_181118_d()
+        public int getWidth()
         {
-            return this.field_181120_e;
+            return this.width;
         }
 
-        public int func_181119_e()
+        public int getHeight()
         {
-            return this.field_181121_f;
+            return this.height;
         }
 
         public BlockWorldState translateOffset(int palmOffset, int thumbOffset, int fingerOffset)

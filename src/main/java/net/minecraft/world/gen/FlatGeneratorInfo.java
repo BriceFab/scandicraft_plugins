@@ -27,9 +27,9 @@ public class FlatGeneratorInfo
     /**
      * Set the biome used on this preset.
      */
-    public void setBiome(int p_82647_1_)
+    public void setBiome(int biome)
     {
-        this.biomeToUse = p_82647_1_;
+        this.biomeToUse = biome;
     }
 
     public Map<String, Map<String, String>> getWorldFeatures()
@@ -42,7 +42,7 @@ public class FlatGeneratorInfo
         return this.flatLayers;
     }
 
-    public void func_82645_d()
+    public void updateLayers()
     {
         int i = 0;
 
@@ -235,15 +235,15 @@ public class FlatGeneratorInfo
         }
     }
 
-    public static FlatGeneratorInfo createFlatGeneratorFromString(String p_82651_0_)
+    public static FlatGeneratorInfo createFlatGeneratorFromString(String flatGeneratorSettings)
     {
-        if (p_82651_0_ == null)
+        if (flatGeneratorSettings == null)
         {
             return getDefaultFlatGenerator();
         }
         else
         {
-            String[] astring = p_82651_0_.split(";", -1);
+            String[] astring = flatGeneratorSettings.split(";", -1);
             int i = astring.length == 1 ? 0 : MathHelper.parseIntWithDefault(astring[0], 0);
 
             if (i >= 0 && i <= 3)
@@ -255,7 +255,7 @@ public class FlatGeneratorInfo
                 if (list != null && !list.isEmpty())
                 {
                     flatgeneratorinfo.getFlatLayers().addAll(list);
-                    flatgeneratorinfo.func_82645_d();
+                    flatgeneratorinfo.updateLayers();
                     int k = BiomeGenBase.plains.biomeID;
 
                     if (i > 0 && astring.length > j)
@@ -321,7 +321,7 @@ public class FlatGeneratorInfo
         flatgeneratorinfo.getFlatLayers().add(new FlatLayerInfo(1, Blocks.bedrock));
         flatgeneratorinfo.getFlatLayers().add(new FlatLayerInfo(2, Blocks.dirt));
         flatgeneratorinfo.getFlatLayers().add(new FlatLayerInfo(1, Blocks.grass));
-        flatgeneratorinfo.func_82645_d();
+        flatgeneratorinfo.updateLayers();
         flatgeneratorinfo.getWorldFeatures().put("village", Maps.<String, String>newHashMap());
         return flatgeneratorinfo;
     }

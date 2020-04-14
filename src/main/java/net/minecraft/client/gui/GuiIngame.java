@@ -78,12 +78,12 @@ public class GuiIngame extends Gui
     /** The spectator GUI for this in-game GUI instance */
     private final GuiSpectator spectatorGui;
     private final GuiPlayerTabOverlay overlayPlayerList;
-    private int field_175195_w;
-    private String field_175201_x = "";
-    private String field_175200_y = "";
-    private int field_175199_z;
-    private int field_175192_A;
-    private int field_175193_B;
+    private int titlesTimer;
+    private String displayedTitle = "";
+    private String displayedSubTitle = "";
+    private int titleFadeIn;
+    private int titleDisplayTime;
+    private int titleFadeOut;
     private int playerHealth = 0;
     private int lastPlayerHealth = 0;
 
@@ -103,14 +103,14 @@ public class GuiIngame extends Gui
         this.persistantChatGUI = new GuiNewChat(mcIn);
         this.streamIndicator = new GuiStreamIndicator(mcIn);
         this.overlayPlayerList = new GuiPlayerTabOverlay(mcIn, this);
-        this.func_175177_a();
+        this.setDefaultTitlesTimes();
     }
 
-    public void func_175177_a()
+    public void setDefaultTitlesTimes()
     {
-        this.field_175199_z = 10;
-        this.field_175192_A = 70;
-        this.field_175193_B = 20;
+        this.titleFadeIn = 10;
+        this.titleDisplayTime = 70;
+        this.titleFadeOut = 20;
     }
 
     public void renderGameOverlay(float partialTicks)
@@ -252,7 +252,7 @@ public class GuiIngame extends Gui
 
                 if (this.recordIsPlaying)
                 {
-                    i1 = MathHelper.func_181758_c(f3 / 50.0F, 0.7F, 0.6F) & 16777215;
+                    i1 = MathHelper.hsvToRGB(f3 / 50.0F, 0.7F, 0.6F) & 16777215;
                 }
 
                 this.getFontRenderer().drawString(this.recordPlaying, -this.getFontRenderer().getStringWidth(this.recordPlaying) / 2, -4, i1 + (k1 << 24 & -16777216));
@@ -263,21 +263,21 @@ public class GuiIngame extends Gui
             this.mc.mcProfiler.endSection();
         }
 
-        if (this.field_175195_w > 0)
+        if (this.titlesTimer > 0)
         {
             this.mc.mcProfiler.startSection("titleAndSubtitle");
-            float f4 = (float)this.field_175195_w - partialTicks;
+            float f4 = (float)this.titlesTimer - partialTicks;
             int l1 = 255;
 
-            if (this.field_175195_w > this.field_175193_B + this.field_175192_A)
+            if (this.titlesTimer > this.titleFadeOut + this.titleDisplayTime)
             {
-                float f1 = (float)(this.field_175199_z + this.field_175192_A + this.field_175193_B) - f4;
-                l1 = (int)(f1 * 255.0F / (float)this.field_175199_z);
+                float f1 = (float)(this.titleFadeIn + this.titleDisplayTime + this.titleFadeOut) - f4;
+                l1 = (int)(f1 * 255.0F / (float)this.titleFadeIn);
             }
 
-            if (this.field_175195_w <= this.field_175193_B)
+            if (this.titlesTimer <= this.titleFadeOut)
             {
-                l1 = (int)(f4 * 255.0F / (float)this.field_175193_B);
+                l1 = (int)(f4 * 255.0F / (float)this.titleFadeOut);
             }
 
             l1 = MathHelper.clamp_int(l1, 0, 255);
@@ -291,11 +291,11 @@ public class GuiIngame extends Gui
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(4.0F, 4.0F, 4.0F);
                 int j2 = l1 << 24 & -16777216;
-                this.getFontRenderer().drawString(this.field_175201_x, (float)(-this.getFontRenderer().getStringWidth(this.field_175201_x) / 2), -10.0F, 16777215 | j2, true);
+                this.getFontRenderer().drawString(this.displayedTitle, (float)(-this.getFontRenderer().getStringWidth(this.displayedTitle) / 2), -10.0F, 16777215 | j2, true);
                 GlStateManager.popMatrix();
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(2.0F, 2.0F, 2.0F);
-                this.getFontRenderer().drawString(this.field_175200_y, (float)(-this.getFontRenderer().getStringWidth(this.field_175200_y) / 2), 5.0F, 16777215 | j2, true);
+                this.getFontRenderer().drawString(this.displayedSubTitle, (float)(-this.getFontRenderer().getStringWidth(this.displayedSubTitle) / 2), 5.0F, 16777215 | j2, true);
                 GlStateManager.popMatrix();
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();
@@ -1085,14 +1085,14 @@ public class GuiIngame extends Gui
             --this.recordPlayingUpFor;
         }
 
-        if (this.field_175195_w > 0)
+        if (this.titlesTimer > 0)
         {
-            --this.field_175195_w;
+            --this.titlesTimer;
 
-            if (this.field_175195_w <= 0)
+            if (this.titlesTimer <= 0)
             {
-                this.field_175201_x = "";
-                this.field_175200_y = "";
+                this.displayedTitle = "";
+                this.displayedSubTitle = "";
             }
         }
 
@@ -1123,62 +1123,62 @@ public class GuiIngame extends Gui
         }
     }
 
-    public void setRecordPlayingMessage(String p_73833_1_)
+    public void setRecordPlayingMessage(String recordName)
     {
-        this.setRecordPlaying(I18n.format("record.nowPlaying", new Object[] {p_73833_1_}), true);
+        this.setRecordPlaying(I18n.format("record.nowPlaying", new Object[] {recordName}), true);
     }
 
-    public void setRecordPlaying(String p_110326_1_, boolean p_110326_2_)
+    public void setRecordPlaying(String message, boolean animateColor)
     {
-        this.recordPlaying = p_110326_1_;
+        this.recordPlaying = message;
         this.recordPlayingUpFor = 60;
-        this.recordIsPlaying = p_110326_2_;
+        this.recordIsPlaying = animateColor;
     }
 
-    public void displayTitle(String p_175178_1_, String p_175178_2_, int p_175178_3_, int p_175178_4_, int p_175178_5_)
+    public void displayTitle(String title, String subTitle, int timeFadeIn, int displayTime, int timeFadeOut)
     {
-        if (p_175178_1_ == null && p_175178_2_ == null && p_175178_3_ < 0 && p_175178_4_ < 0 && p_175178_5_ < 0)
+        if (title == null && subTitle == null && timeFadeIn < 0 && displayTime < 0 && timeFadeOut < 0)
         {
-            this.field_175201_x = "";
-            this.field_175200_y = "";
-            this.field_175195_w = 0;
+            this.displayedTitle = "";
+            this.displayedSubTitle = "";
+            this.titlesTimer = 0;
         }
-        else if (p_175178_1_ != null)
+        else if (title != null)
         {
-            this.field_175201_x = p_175178_1_;
-            this.field_175195_w = this.field_175199_z + this.field_175192_A + this.field_175193_B;
+            this.displayedTitle = title;
+            this.titlesTimer = this.titleFadeIn + this.titleDisplayTime + this.titleFadeOut;
         }
-        else if (p_175178_2_ != null)
+        else if (subTitle != null)
         {
-            this.field_175200_y = p_175178_2_;
+            this.displayedSubTitle = subTitle;
         }
         else
         {
-            if (p_175178_3_ >= 0)
+            if (timeFadeIn >= 0)
             {
-                this.field_175199_z = p_175178_3_;
+                this.titleFadeIn = timeFadeIn;
             }
 
-            if (p_175178_4_ >= 0)
+            if (displayTime >= 0)
             {
-                this.field_175192_A = p_175178_4_;
+                this.titleDisplayTime = displayTime;
             }
 
-            if (p_175178_5_ >= 0)
+            if (timeFadeOut >= 0)
             {
-                this.field_175193_B = p_175178_5_;
+                this.titleFadeOut = timeFadeOut;
             }
 
-            if (this.field_175195_w > 0)
+            if (this.titlesTimer > 0)
             {
-                this.field_175195_w = this.field_175199_z + this.field_175192_A + this.field_175193_B;
+                this.titlesTimer = this.titleFadeIn + this.titleDisplayTime + this.titleFadeOut;
             }
         }
     }
 
-    public void setRecordPlaying(IChatComponent p_175188_1_, boolean p_175188_2_)
+    public void setRecordPlaying(IChatComponent component, boolean animateColor)
     {
-        this.setRecordPlaying(p_175188_1_.getUnformattedText(), p_175188_2_);
+        this.setRecordPlaying(component.getUnformattedText(), animateColor);
     }
 
     /**
@@ -1209,8 +1209,8 @@ public class GuiIngame extends Gui
         return this.overlayPlayerList;
     }
 
-    public void func_181029_i()
+    public void resetPlayersOverlayFooterHeader()
     {
-        this.overlayPlayerList.func_181030_a();
+        this.overlayPlayerList.resetFooterHeader();
     }
 }

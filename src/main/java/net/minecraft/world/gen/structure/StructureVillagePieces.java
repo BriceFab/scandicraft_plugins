@@ -1424,7 +1424,7 @@ public class StructureVillagePieces
             this.worldChunkMngr = chunkManagerIn;
             this.structureVillageWeightedPieceList = p_i2104_6_;
             this.terrainType = p_i2104_7_;
-            BiomeGenBase biomegenbase = chunkManagerIn.getBiomeGenerator(new BlockPos(p_i2104_4_, 0, p_i2104_5_), BiomeGenBase.field_180279_ad);
+            BiomeGenBase biomegenbase = chunkManagerIn.getBiomeGenerator(new BlockPos(p_i2104_4_, 0, p_i2104_5_), BiomeGenBase.DEFAULT);
             this.inDesert = biomegenbase == BiomeGenBase.desert || biomegenbase == BiomeGenBase.desertHills;
             this.func_175846_a(this.inDesert);
         }
@@ -1572,7 +1572,7 @@ public class StructureVillagePieces
             {
                 for (int l = this.boundingBox.minX; l <= this.boundingBox.maxX; ++l)
                 {
-                    blockpos$mutableblockpos.func_181079_c(l, 64, k);
+                    blockpos$mutableblockpos.setPos(l, 64, k);
 
                     if (p_74889_2_.isVecInside(blockpos$mutableblockpos))
                     {

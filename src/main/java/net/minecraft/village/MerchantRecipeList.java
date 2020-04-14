@@ -47,7 +47,7 @@ public class MerchantRecipeList extends ArrayList<MerchantRecipe>
 
     private boolean func_181078_a(ItemStack p_181078_1_, ItemStack p_181078_2_)
     {
-        return ItemStack.areItemsEqual(p_181078_1_, p_181078_2_) && (!p_181078_2_.hasTagCompound() || p_181078_1_.hasTagCompound() && NBTUtil.func_181123_a(p_181078_2_.getTagCompound(), p_181078_1_.getTagCompound(), false));
+        return ItemStack.areItemsEqual(p_181078_1_, p_181078_2_) && (!p_181078_2_.hasTagCompound() || p_181078_1_.hasTagCompound() && NBTUtil.areNBTEquals(p_181078_2_.getTagCompound(), p_181078_1_.getTagCompound(), false));
     }
 
     public void writeToBuf(PacketBuffer buffer)

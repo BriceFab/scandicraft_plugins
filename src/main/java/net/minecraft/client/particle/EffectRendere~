@@ -66,30 +66,30 @@ import net.minecraft.world.World;
 
 public class EffectRenderer {
    private static final ResourceLocation field_110737_b = new ResourceLocation("textures/particle/particles.png");
-   protected World field_78878_a;
-   private List[][] field_78876_b = new List[4][];
-   private List field_178933_d = Lists.newArrayList();
-   private TextureManager field_78877_c;
-   private Random field_78875_d = new Random();
-   private Map field_178932_g = Maps.newHashMap();
+   protected World world;
+   private List[][] byType = new List[4][];
+   private List particleEmitters = Lists.newArrayList();
+   private TextureManager renderer;
+   private Random rand = new Random();
+   private Map factories = Maps.newHashMap();
    private static final String __OBFID = "CL_00000915";
 
-   public EffectRenderer(World p_i1220_1_, TextureManager p_i1220_2_) {
-      this.field_78878_a = p_i1220_1_;
-      this.field_78877_c = p_i1220_2_;
+   public EffectRenderer(World worldIn, TextureManager rendererIn) {
+      this.world = worldIn;
+      this.renderer = rendererIn;
 
       for(int i = 0; i < 4; ++i) {
-         this.field_78876_b[i] = new List[2];
+         this.byType[i] = new List[2];
 
          for(int j = 0; j < 2; ++j) {
-            this.field_78876_b[i][j] = Lists.newArrayList();
+            this.byType[i][j] = Lists.newArrayList();
          }
       }
 
-      this.func_178930_c();
+      this.registerFactories();
    }
 
-   private void func_178930_c() {
+   private void registerFactories() {
       this.func_178929_a(EnumParticleTypes.EXPLOSION_NORMAL.func_179348_c(), new EntityExplodeFX.Factory());
       this.func_178929_a(EnumParticleTypes.WATER_BUBBLE.func_179348_c(), new EntityBubbleFX.Factory());
       this.func_178929_a(EnumParticleTypes.WATER_SPLASH.func_179348_c(), new EntitySplashFX.Factory());
@@ -134,19 +134,19 @@ public class EffectRenderer {
    }
 
    public void func_178929_a(int p_178929_1_, IParticleFactory p_178929_2_) {
-      this.field_178932_g.put(Integer.valueOf(p_178929_1_), p_178929_2_);
+      this.factories.put(Integer.valueOf(p_178929_1_), p_178929_2_);
    }
 
    public void func_178926_a(Entity p_178926_1_, EnumParticleTypes p_178926_2_) {
-      this.field_178933_d.add(new EntityParticleEmitter(this.field_78878_a, p_178926_1_, p_178926_2_));
+      this.particleEmitters.add(new EntityParticleEmitter(this.world, p_178926_1_, p_178926_2_));
    }
 
    public EntityFX func_178927_a(int p_178927_1_, double p_178927_2_, double p_178927_4_, double p_178927_6_, double p_178927_8_, double p_178927_10_, double p_178927_12_, int... p_178927_14_) {
-      IParticleFactory iparticlefactory = (IParticleFactory)this.field_178932_g.get(Integer.valueOf(p_178927_1_));
+      IParticleFactory iparticlefactory = (IParticleFactory)this.factories.get(Integer.valueOf(p_178927_1_));
       if(iparticlefactory != null) {
-         EntityFX entityfx = iparticlefactory.func_178902_a(p_178927_1_, this.field_78878_a, p_178927_2_, p_178927_4_, p_178927_6_, p_178927_8_, p_178927_10_, p_178927_12_, p_178927_14_);
+         EntityFX entityfx = iparticlefactory.func_178902_a(p_178927_1_, this.world, p_178927_2_, p_178927_4_, p_178927_6_, p_178927_8_, p_178927_10_, p_178927_12_, p_178927_14_);
          if(entityfx != null) {
-            this.func_78873_a(entityfx);
+            this.addEffect(entityfx);
             return entityfx;
          }
       }
@@ -154,42 +154,42 @@ public class EffectRenderer {
       return null;
    }
 
-   public void func_78873_a(EntityFX p_78873_1_) {
-      if(p_78873_1_ != null) {
-         if(!(p_78873_1_ instanceof EntityFirework.SparkFX) || Config.isFireworkParticles()) {
-            int i = p_78873_1_.func_70537_b();
-            int j = p_78873_1_.func_174838_j() != 1.0F?0:1;
-            if(this.field_78876_b[i][j].size() >= 4000) {
-               this.field_78876_b[i][j].remove(0);
+   public void addEffect(EntityFX effect) {
+      if(effect != null) {
+         if(!(effect instanceof EntityFirework.SparkFX) || Config.isFireworkParticles()) {
+            int i = effect.func_70537_b();
+            int j = effect.func_174838_j() != 1.0F?0:1;
+            if(this.byType[i][j].size() >= 4000) {
+               this.byType[i][j].remove(0);
             }
 
-            if(!(p_78873_1_ instanceof Barrier) || !this.reuseBarrierParticle(p_78873_1_, this.field_78876_b[i][j])) {
-               this.field_78876_b[i][j].add(p_78873_1_);
+            if(!(effect instanceof Barrier) || !this.reuseBarrierParticle(effect, this.byType[i][j])) {
+               this.byType[i][j].add(effect);
             }
          }
       }
    }
 
-   public void func_78868_a() {
+   public void tick() {
       for(int i = 0; i < 4; ++i) {
          this.func_178922_a(i);
       }
 
       ArrayList arraylist = Lists.newArrayList();
 
-      for(EntityParticleEmitter entityparticleemitter : this.field_178933_d) {
-         entityparticleemitter.func_70071_h_();
-         if(entityparticleemitter.field_70128_L) {
+      for(EntityParticleEmitter entityparticleemitter : this.particleEmitters) {
+         entityparticleemitter.tick();
+         if(entityparticleemitter.removed) {
             arraylist.add(entityparticleemitter);
          }
       }
 
-      this.field_178933_d.removeAll(arraylist);
+      this.particleEmitters.removeAll(arraylist);
    }
 
    private void func_178922_a(int p_178922_1_) {
       for(int i = 0; i < 2; ++i) {
-         this.func_178925_a(this.field_78876_b[p_178922_1_][i]);
+         this.func_178925_a(this.byType[p_178922_1_][i]);
       }
 
    }
@@ -199,8 +199,8 @@ public class EffectRenderer {
 
       for(int i = 0; i < p_178925_1_.size(); ++i) {
          EntityFX entityfx = (EntityFX)p_178925_1_.get(i);
-         this.func_178923_d(entityfx);
-         if(entityfx.field_70128_L) {
+         this.tickParticle(entityfx);
+         if(entityfx.removed) {
             arraylist.add(entityfx);
          }
       }
@@ -208,18 +208,18 @@ public class EffectRenderer {
       p_178925_1_.removeAll(arraylist);
    }
 
-   private void func_178923_d(final EntityFX p_178923_1_) {
+   private void tickParticle(final EntityFX particle) {
       try {
-         p_178923_1_.func_70071_h_();
+         particle.tick();
       } catch (Throwable throwable) {
-         CrashReport crashreport = CrashReport.func_85055_a(throwable, "Ticking Particle");
-         CrashReportCategory crashreportcategory = crashreport.func_85058_a("Particle being ticked");
-         final int i = p_178923_1_.func_70537_b();
+         CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Ticking Particle");
+         CrashReportCategory crashreportcategory = crashreport.makeCategory("Particle being ticked");
+         final int i = particle.func_70537_b();
          crashreportcategory.func_71500_a("Particle", new Callable() {
             private static final String __OBFID = "CL_00000916";
 
             public String call() throws Exception {
-               return p_178923_1_.toString();
+               return particle.toString();
             }
          });
          crashreportcategory.func_71500_a("Particle Type", new Callable() {
@@ -239,9 +239,9 @@ public class EffectRenderer {
       float f2 = ActiveRenderInfo.func_178805_e();
       float f3 = ActiveRenderInfo.func_178807_f();
       float f4 = ActiveRenderInfo.func_178809_c();
-      EntityFX.field_70556_an = p_78874_1_.field_70142_S + (p_78874_1_.field_70165_t - p_78874_1_.field_70142_S) * (double)p_78874_2_;
-      EntityFX.field_70554_ao = p_78874_1_.field_70137_T + (p_78874_1_.field_70163_u - p_78874_1_.field_70137_T) * (double)p_78874_2_;
-      EntityFX.field_70555_ap = p_78874_1_.field_70136_U + (p_78874_1_.field_70161_v - p_78874_1_.field_70136_U) * (double)p_78874_2_;
+      EntityFX.field_70556_an = p_78874_1_.lastTickPosX + (p_78874_1_.posX - p_78874_1_.lastTickPosX) * (double)p_78874_2_;
+      EntityFX.field_70554_ao = p_78874_1_.lastTickPosY + (p_78874_1_.posY - p_78874_1_.lastTickPosY) * (double)p_78874_2_;
+      EntityFX.field_70555_ap = p_78874_1_.lastTickPosZ + (p_78874_1_.posZ - p_78874_1_.lastTickPosZ) * (double)p_78874_2_;
       GlStateManager.func_179147_l();
       GlStateManager.func_179112_b(770, 771);
       GlStateManager.func_179092_a(516, 0.003921569F);
@@ -250,7 +250,7 @@ public class EffectRenderer {
          final int j = i;
 
          for(int k = 0; k < 2; ++k) {
-            if(!this.field_78876_b[j][k].isEmpty()) {
+            if(!this.byType[j][k].isEmpty()) {
                switch(k) {
                case 0:
                   GlStateManager.func_179132_a(false);
@@ -262,25 +262,25 @@ public class EffectRenderer {
                switch(j) {
                case 0:
                default:
-                  this.field_78877_c.func_110577_a(field_110737_b);
+                  this.renderer.bindTexture(field_110737_b);
                   break;
                case 1:
-                  this.field_78877_c.func_110577_a(TextureMap.field_110575_b);
+                  this.renderer.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
                }
 
                GlStateManager.func_179131_c(1.0F, 1.0F, 1.0F, 1.0F);
-               Tessellator tessellator = Tessellator.func_178181_a();
-               WorldRenderer worldrenderer = tessellator.func_178180_c();
-               worldrenderer.func_181668_a(7, DefaultVertexFormats.field_181704_d);
+               Tessellator tessellator = Tessellator.getInstance();
+               WorldRenderer worldrenderer = tessellator.getBuffer();
+               worldrenderer.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
-               for(int l = 0; l < this.field_78876_b[j][k].size(); ++l) {
-                  final EntityFX entityfx = (EntityFX)this.field_78876_b[j][k].get(l);
+               for(int l = 0; l < this.byType[j][k].size(); ++l) {
+                  final EntityFX entityfx = (EntityFX)this.byType[j][k].get(l);
 
                   try {
                      entityfx.func_180434_a(worldrenderer, p_78874_1_, p_78874_2_, f, f4, f1, f2, f3);
                   } catch (Throwable throwable) {
-                     CrashReport crashreport = CrashReport.func_85055_a(throwable, "Rendering Particle");
-                     CrashReportCategory crashreportcategory = crashreport.func_85058_a("Particle being rendered");
+                     CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Rendering Particle");
+                     CrashReportCategory crashreportcategory = crashreport.makeCategory("Particle being rendered");
                      crashreportcategory.func_71500_a("Particle", new Callable() {
                         private static final String __OBFID = "CL_00000918";
 
@@ -299,7 +299,7 @@ public class EffectRenderer {
                   }
                }
 
-               tessellator.func_78381_a();
+               tessellator.draw();
             }
          }
       }
@@ -311,17 +311,17 @@ public class EffectRenderer {
 
    public void func_78872_b(Entity p_78872_1_, float p_78872_2_) {
       float f = 0.017453292F;
-      float f1 = MathHelper.func_76134_b(p_78872_1_.field_70177_z * 0.017453292F);
-      float f2 = MathHelper.func_76126_a(p_78872_1_.field_70177_z * 0.017453292F);
-      float f3 = -f2 * MathHelper.func_76126_a(p_78872_1_.field_70125_A * 0.017453292F);
-      float f4 = f1 * MathHelper.func_76126_a(p_78872_1_.field_70125_A * 0.017453292F);
-      float f5 = MathHelper.func_76134_b(p_78872_1_.field_70125_A * 0.017453292F);
+      float f1 = MathHelper.cos(p_78872_1_.rotationYaw * 0.017453292F);
+      float f2 = MathHelper.sin(p_78872_1_.rotationYaw * 0.017453292F);
+      float f3 = -f2 * MathHelper.sin(p_78872_1_.rotationPitch * 0.017453292F);
+      float f4 = f1 * MathHelper.sin(p_78872_1_.rotationPitch * 0.017453292F);
+      float f5 = MathHelper.cos(p_78872_1_.rotationPitch * 0.017453292F);
 
       for(int i = 0; i < 2; ++i) {
-         List list = this.field_78876_b[3][i];
+         List list = this.byType[3][i];
          if(!list.isEmpty()) {
-            Tessellator tessellator = Tessellator.func_178181_a();
-            WorldRenderer worldrenderer = tessellator.func_178180_c();
+            Tessellator tessellator = Tessellator.getInstance();
+            WorldRenderer worldrenderer = tessellator.getBuffer();
 
             for(int j = 0; j < list.size(); ++j) {
                EntityFX entityfx = (EntityFX)list.get(j);
@@ -332,39 +332,39 @@ public class EffectRenderer {
 
    }
 
-   public void func_78870_a(World p_78870_1_) {
-      this.field_78878_a = p_78870_1_;
+   public void clearEffects(World worldIn) {
+      this.world = worldIn;
 
       for(int i = 0; i < 4; ++i) {
          for(int j = 0; j < 2; ++j) {
-            this.field_78876_b[i][j].clear();
+            this.byType[i][j].clear();
          }
       }
 
-      this.field_178933_d.clear();
+      this.particleEmitters.clear();
    }
 
-   public void func_180533_a(BlockPos p_180533_1_, IBlockState p_180533_2_) {
+   public void addBlockDestroyEffects(BlockPos pos, IBlockState state) {
       boolean flag;
       if(Reflector.ForgeBlock_addDestroyEffects.exists() && Reflector.ForgeBlock_isAir.exists()) {
-         Block block = p_180533_2_.func_177230_c();
-         Reflector.callBoolean(block, Reflector.ForgeBlock_isAir, new Object[]{this.field_78878_a, p_180533_1_});
-         flag = !Reflector.callBoolean(block, Reflector.ForgeBlock_isAir, new Object[]{this.field_78878_a, p_180533_1_}) && !Reflector.callBoolean(block, Reflector.ForgeBlock_addDestroyEffects, new Object[]{this.field_78878_a, p_180533_1_, this});
+         Block block = state.getBlock();
+         Reflector.callBoolean(block, Reflector.ForgeBlock_isAir, new Object[]{this.world, pos});
+         flag = !Reflector.callBoolean(block, Reflector.ForgeBlock_isAir, new Object[]{this.world, pos}) && !Reflector.callBoolean(block, Reflector.ForgeBlock_addDestroyEffects, new Object[]{this.world, pos, this});
       } else {
-         flag = p_180533_2_.func_177230_c().func_149688_o() != Material.field_151579_a;
+         flag = state.getBlock().getMaterial() != Material.AIR;
       }
 
       if(flag) {
-         p_180533_2_ = p_180533_2_.func_177230_c().func_176221_a(p_180533_2_, this.field_78878_a, p_180533_1_);
+         state = state.getBlock().func_176221_a(state, this.world, pos);
          byte b0 = 4;
 
          for(int i = 0; i < b0; ++i) {
             for(int j = 0; j < b0; ++j) {
                for(int k = 0; k < b0; ++k) {
-                  double d0 = (double)p_180533_1_.func_177958_n() + ((double)i + 0.5D) / (double)b0;
-                  double d1 = (double)p_180533_1_.func_177956_o() + ((double)j + 0.5D) / (double)b0;
-                  double d2 = (double)p_180533_1_.func_177952_p() + ((double)k + 0.5D) / (double)b0;
-                  this.func_78873_a((new EntityDiggingFX(this.field_78878_a, d0, d1, d2, d0 - (double)p_180533_1_.func_177958_n() - 0.5D, d1 - (double)p_180533_1_.func_177956_o() - 0.5D, d2 - (double)p_180533_1_.func_177952_p() - 0.5D, p_180533_2_)).func_174846_a(p_180533_1_));
+                  double d0 = (double)pos.getX() + ((double)i + 0.5D) / (double)b0;
+                  double d1 = (double)pos.getY() + ((double)j + 0.5D) / (double)b0;
+                  double d2 = (double)pos.getZ() + ((double)k + 0.5D) / (double)b0;
+                  this.addEffect((new EntityDiggingFX(this.world, d0, d1, d2, d0 - (double)pos.getX() - 0.5D, d1 - (double)pos.getY() - 0.5D, d2 - (double)pos.getZ() - 0.5D, state)).setBlockPos(pos));
                }
             }
          }
@@ -372,42 +372,42 @@ public class EffectRenderer {
 
    }
 
-   public void func_180532_a(BlockPos p_180532_1_, EnumFacing p_180532_2_) {
-      IBlockState iblockstate = this.field_78878_a.func_180495_p(p_180532_1_);
-      Block block = iblockstate.func_177230_c();
-      if(block.func_149645_b() != -1) {
-         int i = p_180532_1_.func_177958_n();
-         int j = p_180532_1_.func_177956_o();
-         int k = p_180532_1_.func_177952_p();
+   public void addBlockHitEffects(BlockPos pos, EnumFacing side) {
+      IBlockState iblockstate = this.world.getBlockState(pos);
+      Block block = iblockstate.getBlock();
+      if(block.getRenderType() != -1) {
+         int i = pos.getX();
+         int j = pos.getY();
+         int k = pos.getZ();
          float f = 0.1F;
-         double d0 = (double)i + this.field_78875_d.nextDouble() * (block.func_149753_y() - block.func_149704_x() - (double)(f * 2.0F)) + (double)f + block.func_149704_x();
-         double d1 = (double)j + this.field_78875_d.nextDouble() * (block.func_149669_A() - block.func_149665_z() - (double)(f * 2.0F)) + (double)f + block.func_149665_z();
-         double d2 = (double)k + this.field_78875_d.nextDouble() * (block.func_149693_C() - block.func_149706_B() - (double)(f * 2.0F)) + (double)f + block.func_149706_B();
-         if(p_180532_2_ == EnumFacing.DOWN) {
+         double d0 = (double)i + this.rand.nextDouble() * (block.func_149753_y() - block.func_149704_x() - (double)(f * 2.0F)) + (double)f + block.func_149704_x();
+         double d1 = (double)j + this.rand.nextDouble() * (block.func_149669_A() - block.func_149665_z() - (double)(f * 2.0F)) + (double)f + block.func_149665_z();
+         double d2 = (double)k + this.rand.nextDouble() * (block.func_149693_C() - block.func_149706_B() - (double)(f * 2.0F)) + (double)f + block.func_149706_B();
+         if(side == EnumFacing.DOWN) {
             d1 = (double)j + block.func_149665_z() - (double)f;
          }
 
-         if(p_180532_2_ == EnumFacing.UP) {
+         if(side == EnumFacing.UP) {
             d1 = (double)j + block.func_149669_A() + (double)f;
          }
 
-         if(p_180532_2_ == EnumFacing.NORTH) {
+         if(side == EnumFacing.NORTH) {
             d2 = (double)k + block.func_149706_B() - (double)f;
          }
 
-         if(p_180532_2_ == EnumFacing.SOUTH) {
+         if(side == EnumFacing.SOUTH) {
             d2 = (double)k + block.func_149693_C() + (double)f;
          }
 
-         if(p_180532_2_ == EnumFacing.WEST) {
+         if(side == EnumFacing.WEST) {
             d0 = (double)i + block.func_149704_x() - (double)f;
          }
 
-         if(p_180532_2_ == EnumFacing.EAST) {
+         if(side == EnumFacing.EAST) {
             d0 = (double)i + block.func_149753_y() + (double)f;
          }
 
-         this.func_78873_a((new EntityDiggingFX(this.field_78878_a, d0, d1, d2, 0.0D, 0.0D, 0.0D, iblockstate)).func_174846_a(p_180532_1_).func_70543_e(0.2F).func_70541_f(0.6F));
+         this.addEffect((new EntityDiggingFX(this.world, d0, d1, d2, 0.0D, 0.0D, 0.0D, iblockstate)).setBlockPos(pos).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
       }
 
    }
@@ -422,20 +422,20 @@ public class EffectRenderer {
 
    private void func_178924_a(EntityFX p_178924_1_, int p_178924_2_, int p_178924_3_) {
       for(int i = 0; i < 4; ++i) {
-         if(this.field_78876_b[i][p_178924_2_].contains(p_178924_1_)) {
-            this.field_78876_b[i][p_178924_2_].remove(p_178924_1_);
-            this.field_78876_b[i][p_178924_3_].add(p_178924_1_);
+         if(this.byType[i][p_178924_2_].contains(p_178924_1_)) {
+            this.byType[i][p_178924_2_].remove(p_178924_1_);
+            this.byType[i][p_178924_3_].add(p_178924_1_);
          }
       }
 
    }
 
-   public String func_78869_b() {
+   public String getStatistics() {
       int i = 0;
 
       for(int j = 0; j < 4; ++j) {
          for(int k = 0; k < 2; ++k) {
-            i += this.field_78876_b[j][k].size();
+            i += this.byType[j][k].size();
          }
       }
 
@@ -444,8 +444,8 @@ public class EffectRenderer {
 
    private boolean reuseBarrierParticle(EntityFX p_reuseBarrierParticle_1_, List<EntityFX> p_reuseBarrierParticle_2_) {
       for(EntityFX entityfx : p_reuseBarrierParticle_2_) {
-         if(entityfx instanceof Barrier && p_reuseBarrierParticle_1_.field_70165_t == entityfx.field_70165_t && p_reuseBarrierParticle_1_.field_70163_u == entityfx.field_70163_u && p_reuseBarrierParticle_1_.field_70161_v == entityfx.field_70161_v) {
-            entityfx.field_70546_d = 0;
+         if(entityfx instanceof Barrier && p_reuseBarrierParticle_1_.posX == entityfx.posX && p_reuseBarrierParticle_1_.posY == entityfx.posY && p_reuseBarrierParticle_1_.posZ == entityfx.posZ) {
+            entityfx.age = 0;
             return true;
          }
       }
@@ -454,10 +454,10 @@ public class EffectRenderer {
    }
 
    public void addBlockHitEffects(BlockPos p_addBlockHitEffects_1_, MovingObjectPosition p_addBlockHitEffects_2_) {
-      Block block = this.field_78878_a.func_180495_p(p_addBlockHitEffects_1_).func_177230_c();
-      boolean flag = Reflector.callBoolean(block, Reflector.ForgeBlock_addHitEffects, new Object[]{this.field_78878_a, p_addBlockHitEffects_2_, this});
+      Block block = this.world.getBlockState(p_addBlockHitEffects_1_).getBlock();
+      boolean flag = Reflector.callBoolean(block, Reflector.ForgeBlock_addHitEffects, new Object[]{this.world, p_addBlockHitEffects_2_, this});
       if(block != null && !flag) {
-         this.func_180532_a(p_addBlockHitEffects_1_, p_addBlockHitEffects_2_.field_178784_b);
+         this.addBlockHitEffects(p_addBlockHitEffects_1_, p_addBlockHitEffects_2_.field_178784_b);
       }
 
    }

@@ -104,7 +104,7 @@ public class EntitySilverfish extends EntityMob
         {
             if (source instanceof EntityDamageSource || source == DamageSource.magic)
             {
-                this.summonSilverfish.func_179462_f();
+                this.summonSilverfish.notifyHurt();
             }
 
             return super.attackEntityFrom(source, amount);
@@ -171,12 +171,12 @@ public class EntitySilverfish extends EntityMob
     {
         private final EntitySilverfish field_179485_a;
         private EnumFacing facing;
-        private boolean field_179484_c;
+        private boolean doMerge;
 
-        public AIHideInStone(EntitySilverfish p_i45827_1_)
+        public AIHideInStone(EntitySilverfish silverfishIn)
         {
-            super(p_i45827_1_, 1.0D, 10);
-            this.field_179485_a = p_i45827_1_;
+            super(silverfishIn, 1.0D, 10);
+            this.field_179485_a = silverfishIn;
             this.setMutexBits(1);
         }
 
@@ -202,24 +202,24 @@ public class EntitySilverfish extends EntityMob
 
                     if (BlockSilverfish.canContainSilverfish(iblockstate))
                     {
-                        this.field_179484_c = true;
+                        this.doMerge = true;
                         return true;
                     }
                 }
 
-                this.field_179484_c = false;
+                this.doMerge = false;
                 return super.shouldExecute();
             }
         }
 
         public boolean continueExecuting()
         {
-            return this.field_179484_c ? false : super.continueExecuting();
+            return this.doMerge ? false : super.continueExecuting();
         }
 
         public void startExecuting()
         {
-            if (!this.field_179484_c)
+            if (!this.doMerge)
             {
                 super.startExecuting();
             }
@@ -242,31 +242,31 @@ public class EntitySilverfish extends EntityMob
     static class AISummonSilverfish extends EntityAIBase
     {
         private EntitySilverfish silverfish;
-        private int field_179463_b;
+        private int lookForFriends;
 
-        public AISummonSilverfish(EntitySilverfish p_i45826_1_)
+        public AISummonSilverfish(EntitySilverfish silverfishIn)
         {
-            this.silverfish = p_i45826_1_;
+            this.silverfish = silverfishIn;
         }
 
-        public void func_179462_f()
+        public void notifyHurt()
         {
-            if (this.field_179463_b == 0)
+            if (this.lookForFriends == 0)
             {
-                this.field_179463_b = 20;
+                this.lookForFriends = 20;
             }
         }
 
         public boolean shouldExecute()
         {
-            return this.field_179463_b > 0;
+            return this.lookForFriends > 0;
         }
 
         public void updateTask()
         {
-            --this.field_179463_b;
+            --this.lookForFriends;
 
-            if (this.field_179463_b <= 0)
+            if (this.lookForFriends <= 0)
             {
                 World world = this.silverfish.worldObj;
                 Random random = this.silverfish.getRNG();

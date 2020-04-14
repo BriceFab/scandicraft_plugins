@@ -42,11 +42,11 @@ public class BlockPart
         }
     }
 
-    private float[] getFaceUvs(EnumFacing p_178236_1_)
+    private float[] getFaceUvs(EnumFacing facing)
     {
         float[] afloat;
 
-        switch (p_178236_1_)
+        switch (facing)
         {
             case DOWN:
             case UP:
@@ -88,13 +88,13 @@ public class BlockPart
             }
         }
 
-        private BlockPartRotation parseRotation(JsonObject p_178256_1_)
+        private BlockPartRotation parseRotation(JsonObject object)
         {
             BlockPartRotation blockpartrotation = null;
 
-            if (p_178256_1_.has("rotation"))
+            if (object.has("rotation"))
             {
-                JsonObject jsonobject = JsonUtils.getJsonObject(p_178256_1_, "rotation");
+                JsonObject jsonobject = JsonUtils.getJsonObject(object, "rotation");
                 Vector3f vector3f = this.parsePosition(jsonobject, "origin");
                 vector3f.scale(0.0625F);
                 EnumFacing.Axis enumfacing$axis = this.parseAxis(jsonobject);
@@ -106,9 +106,9 @@ public class BlockPart
             return blockpartrotation;
         }
 
-        private float parseAngle(JsonObject p_178255_1_)
+        private float parseAngle(JsonObject object)
         {
-            float f = JsonUtils.getFloat(p_178255_1_, "angle");
+            float f = JsonUtils.getFloat(object, "angle");
 
             if (f != 0.0F && MathHelper.abs(f) != 22.5F && MathHelper.abs(f) != 45.0F)
             {
@@ -120,9 +120,9 @@ public class BlockPart
             }
         }
 
-        private EnumFacing.Axis parseAxis(JsonObject p_178252_1_)
+        private EnumFacing.Axis parseAxis(JsonObject object)
         {
-            String s = JsonUtils.getString(p_178252_1_, "axis");
+            String s = JsonUtils.getString(object, "axis");
             EnumFacing.Axis enumfacing$axis = EnumFacing.Axis.byName(s.toLowerCase());
 
             if (enumfacing$axis == null)
@@ -135,9 +135,9 @@ public class BlockPart
             }
         }
 
-        private Map<EnumFacing, BlockPartFace> parseFacesCheck(JsonDeserializationContext p_178250_1_, JsonObject p_178250_2_)
+        private Map<EnumFacing, BlockPartFace> parseFacesCheck(JsonDeserializationContext deserializationContext, JsonObject object)
         {
-            Map<EnumFacing, BlockPartFace> map = this.parseFaces(p_178250_1_, p_178250_2_);
+            Map<EnumFacing, BlockPartFace> map = this.parseFaces(deserializationContext, object);
 
             if (map.isEmpty())
             {
@@ -149,15 +149,15 @@ public class BlockPart
             }
         }
 
-        private Map<EnumFacing, BlockPartFace> parseFaces(JsonDeserializationContext p_178253_1_, JsonObject p_178253_2_)
+        private Map<EnumFacing, BlockPartFace> parseFaces(JsonDeserializationContext deserializationContext, JsonObject object)
         {
             Map<EnumFacing, BlockPartFace> map = Maps.newEnumMap(EnumFacing.class);
-            JsonObject jsonobject = JsonUtils.getJsonObject(p_178253_2_, "faces");
+            JsonObject jsonobject = JsonUtils.getJsonObject(object, "faces");
 
             for (Entry<String, JsonElement> entry : jsonobject.entrySet())
             {
                 EnumFacing enumfacing = this.parseEnumFacing((String)entry.getKey());
-                map.put(enumfacing, (BlockPartFace)p_178253_1_.deserialize((JsonElement)entry.getValue(), BlockPartFace.class));
+                map.put(enumfacing, (BlockPartFace)deserializationContext.deserialize((JsonElement)entry.getValue(), BlockPartFace.class));
             }
 
             return map;

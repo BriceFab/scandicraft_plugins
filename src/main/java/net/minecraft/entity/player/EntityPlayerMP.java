@@ -563,10 +563,10 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         for (ScoreObjective scoreobjective : this.worldObj.getScoreboard().getObjectivesFromCriteria(IScoreObjectiveCriteria.deathCount))
         {
             Score score = this.getWorldScoreboard().getValueFromObjective(this.getName(), scoreobjective);
-            score.func_96648_a();
+            score.incrementScore();
         }
 
-        EntityLivingBase entitylivingbase = this.func_94060_bK();
+        EntityLivingBase entitylivingbase = this.getAttackingEntity();
 
         if (entitylivingbase != null)
         {
@@ -606,7 +606,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         }
 
         this.triggerAchievement(StatList.deathsStat);
-        this.func_175145_a(StatList.timeSinceDeathStat);
+        this.takeStat(StatList.timeSinceDeathStat);
         this.getCombatTracker().reset();
     }
 
@@ -726,9 +726,9 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Called whenever an item is picked up from walking over it. Args: pickedUpEntity, stackSize
      */
-    public void onItemPickup(Entity p_71001_1_, int p_71001_2_)
+    public void onItemPickup(Entity entityIn, int quantity)
     {
-        super.onItemPickup(p_71001_1_, p_71001_2_);
+        super.onItemPickup(entityIn, quantity);
         this.openContainer.detectAndSendChanges();
     }
 
@@ -787,7 +787,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * process player falling based on movement packet
      */
-    public void handleFalling(double p_71122_1_, boolean p_71122_3_)
+    public void handleFalling(double y, boolean onGroundIn)
     {
         int i = MathHelper.floor_double(this.posX);
         int j = MathHelper.floor_double(this.posY - 0.20000000298023224D);
@@ -806,7 +806,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
             }
         }
 
-        super.updateFallState(p_71122_1_, p_71122_3_, block, blockpos);
+        super.updateFallState(y, onGroundIn, block, blockpos);
     }
 
     public void openEditSign(TileEntitySign signTile)
@@ -933,9 +933,9 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         }
     }
 
-    public void sendContainerToPlayer(Container p_71120_1_)
+    public void sendContainerToPlayer(Container containerIn)
     {
-        this.updateCraftingInventory(p_71120_1_, p_71120_1_.getInventory());
+        this.updateCraftingInventory(containerIn, containerIn.getInventory());
     }
 
     /**
@@ -994,21 +994,21 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         this.openContainer = this.inventoryContainer;
     }
 
-    public void setEntityActionState(float p_110430_1_, float p_110430_2_, boolean p_110430_3_, boolean sneaking)
+    public void setEntityActionState(float strafe, float forward, boolean jumping, boolean sneaking)
     {
         if (this.ridingEntity != null)
         {
-            if (p_110430_1_ >= -1.0F && p_110430_1_ <= 1.0F)
+            if (strafe >= -1.0F && strafe <= 1.0F)
             {
-                this.moveStrafing = p_110430_1_;
+                this.moveStrafing = strafe;
             }
 
-            if (p_110430_2_ >= -1.0F && p_110430_2_ <= 1.0F)
+            if (forward >= -1.0F && forward <= 1.0F)
             {
-                this.moveForward = p_110430_2_;
+                this.moveForward = forward;
             }
 
-            this.isJumping = p_110430_3_;
+            this.isJumping = jumping;
             this.setSneaking(sneaking);
         }
     }
@@ -1029,25 +1029,25 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
 
             if (this.statsFile.func_150879_e())
             {
-                this.statsFile.func_150876_a(this);
+                this.statsFile.sendStats(this);
             }
         }
     }
 
-    public void func_175145_a(StatBase p_175145_1_)
+    public void takeStat(StatBase stat)
     {
-        if (p_175145_1_ != null)
+        if (stat != null)
         {
-            this.statsFile.unlockAchievement(this, p_175145_1_, 0);
+            this.statsFile.unlockAchievement(this, stat, 0);
 
-            for (ScoreObjective scoreobjective : this.getWorldScoreboard().getObjectivesFromCriteria(p_175145_1_.func_150952_k()))
+            for (ScoreObjective scoreobjective : this.getWorldScoreboard().getObjectivesFromCriteria(stat.func_150952_k()))
             {
                 this.getWorldScoreboard().getValueFromObjective(this.getName(), scoreobjective).setScorePoints(0);
             }
 
             if (this.statsFile.func_150879_e())
             {
-                this.statsFile.func_150876_a(this);
+                this.statsFile.sendStats(this);
             }
         }
     }
@@ -1120,16 +1120,16 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         this.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(this.getEntityId(), id));
     }
 
-    protected void onChangedPotionEffect(PotionEffect id, boolean p_70695_2_)
+    protected void onChangedPotionEffect(PotionEffect id, boolean reapply)
     {
-        super.onChangedPotionEffect(id, p_70695_2_);
+        super.onChangedPotionEffect(id, reapply);
         this.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(this.getEntityId(), id));
     }
 
-    protected void onFinishedPotionEffect(PotionEffect p_70688_1_)
+    protected void onFinishedPotionEffect(PotionEffect effect)
     {
-        super.onFinishedPotionEffect(p_70688_1_);
-        this.playerNetServerHandler.sendPacket(new S1EPacketRemoveEntityEffect(this.getEntityId(), p_70688_1_));
+        super.onFinishedPotionEffect(effect);
+        this.playerNetServerHandler.sendPacket(new S1EPacketRemoveEntityEffect(this.getEntityId(), effect));
     }
 
     /**
@@ -1288,15 +1288,15 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Sends a packet to the player to remove an entity.
      */
-    public void removeEntity(Entity p_152339_1_)
+    public void removeEntity(Entity entityIn)
     {
-        if (p_152339_1_ instanceof EntityPlayer)
+        if (entityIn instanceof EntityPlayer)
         {
-            this.playerNetServerHandler.sendPacket(new S13PacketDestroyEntities(new int[] {p_152339_1_.getEntityId()}));
+            this.playerNetServerHandler.sendPacket(new S13PacketDestroyEntities(new int[] {entityIn.getEntityId()}));
         }
         else
         {
-            this.destroyedItemsNetCache.add(Integer.valueOf(p_152339_1_.getEntityId()));
+            this.destroyedItemsNetCache.add(Integer.valueOf(entityIn.getEntityId()));
         }
     }
 

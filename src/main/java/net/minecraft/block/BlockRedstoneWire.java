@@ -346,7 +346,7 @@ public class BlockRedstoneWire extends Block
 
                 for (Object enumfacing : EnumFacing.Plane.HORIZONTAL)
                 {
-                    if (this.func_176339_d(worldIn, pos, (EnumFacing) enumfacing))
+                    if (this.isPowerSourceAt(worldIn, pos, (EnumFacing) enumfacing))
                     {
                         enumset.add((EnumFacing) enumfacing);
                     }
@@ -368,7 +368,7 @@ public class BlockRedstoneWire extends Block
         }
     }
 
-    private boolean func_176339_d(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
+    private boolean isPowerSourceAt(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
         BlockPos blockpos = pos.offset(side);
         IBlockState iblockstate = worldIn.getBlockState(blockpos);

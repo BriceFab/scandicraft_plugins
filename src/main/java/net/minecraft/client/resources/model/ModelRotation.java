@@ -42,9 +42,9 @@ public enum ModelRotation implements IModelState, ITransformation
     private static final ModelRotation[] $VALUES = new ModelRotation[]{X0_Y0, X0_Y90, X0_Y180, X0_Y270, X90_Y0, X90_Y90, X90_Y180, X90_Y270, X180_Y0, X180_Y90, X180_Y180, X180_Y270, X270_Y0, X270_Y90, X270_Y180, X270_Y270};
     private static final String __OBFID = "CL_00002393";
 
-    private static int combineXY(int p_177521_0_, int p_177521_1_)
+    private static int combineXY(int x, int y)
     {
-        return p_177521_0_ * 360 + p_177521_1_;
+        return x * 360 + y;
     }
 
     private ModelRotation(String p_i13_3_, int p_i13_4_, int p_i13_5_, int p_i13_6_)
@@ -111,9 +111,9 @@ public enum ModelRotation implements IModelState, ITransformation
         return i;
     }
 
-    public static ModelRotation getModelRotation(int p_177524_0_, int p_177524_1_)
+    public static ModelRotation getModelRotation(int x, int y)
     {
-        return (ModelRotation)mapRotations.get(Integer.valueOf(combineXY(MathHelper.normalizeAngle(p_177524_0_, 360), MathHelper.normalizeAngle(p_177524_1_, 360))));
+        return (ModelRotation)mapRotations.get(Integer.valueOf(combineXY(MathHelper.normalizeAngle(x, 360), MathHelper.normalizeAngle(y, 360))));
     }
 
     public Optional<TRSRTransformation> apply(Optional <? extends IModelPart > p_apply_1_)

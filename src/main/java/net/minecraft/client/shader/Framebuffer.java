@@ -125,14 +125,14 @@ public class Framebuffer
         }
     }
 
-    public void setFramebufferFilter(int p_147607_1_)
+    public void setFramebufferFilter(int framebufferFilterIn)
     {
         if (OpenGlHelper.isFramebufferEnabled())
         {
-            this.framebufferFilter = p_147607_1_;
+            this.framebufferFilter = framebufferFilterIn;
             GlStateManager.bindTexture(this.framebufferTexture);
-            GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, (float)p_147607_1_);
-            GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, (float)p_147607_1_);
+            GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, (float)framebufferFilterIn);
+            GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, (float)framebufferFilterIn);
             GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10496.0F);
             GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10496.0F);
             GlStateManager.bindTexture(0);
@@ -184,13 +184,13 @@ public class Framebuffer
         }
     }
 
-    public void bindFramebuffer(boolean p_147610_1_)
+    public void bindFramebuffer(boolean setViewportIn)
     {
         if (OpenGlHelper.isFramebufferEnabled())
         {
             OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, this.framebufferObject);
 
-            if (p_147610_1_)
+            if (setViewportIn)
             {
                 GlStateManager.viewport(0, 0, this.framebufferWidth, this.framebufferHeight);
             }
@@ -205,20 +205,20 @@ public class Framebuffer
         }
     }
 
-    public void setFramebufferColor(float p_147604_1_, float p_147604_2_, float p_147604_3_, float p_147604_4_)
+    public void setFramebufferColor(float red, float green, float blue, float alpha)
     {
-        this.framebufferColor[0] = p_147604_1_;
-        this.framebufferColor[1] = p_147604_2_;
-        this.framebufferColor[2] = p_147604_3_;
-        this.framebufferColor[3] = p_147604_4_;
+        this.framebufferColor[0] = red;
+        this.framebufferColor[1] = green;
+        this.framebufferColor[2] = blue;
+        this.framebufferColor[3] = alpha;
     }
 
-    public void framebufferRender(int p_147615_1_, int p_147615_2_)
+    public void framebufferRender(int width, int height)
     {
-        this.framebufferRenderExt(p_147615_1_, p_147615_2_, true);
+        this.framebufferRenderExt(width, height, true);
     }
 
-    public void framebufferRenderExt(int p_178038_1_, int p_178038_2_, boolean p_178038_3_)
+    public void framebufferRenderExt(int width, int height, boolean p_178038_3_)
     {
         if (OpenGlHelper.isFramebufferEnabled())
         {
@@ -227,11 +227,11 @@ public class Framebuffer
             GlStateManager.depthMask(false);
             GlStateManager.matrixMode(5889);
             GlStateManager.loadIdentity();
-            GlStateManager.ortho(0.0D, (double)p_178038_1_, (double)p_178038_2_, 0.0D, 1000.0D, 3000.0D);
+            GlStateManager.ortho(0.0D, (double)width, (double)height, 0.0D, 1000.0D, 3000.0D);
             GlStateManager.matrixMode(5888);
             GlStateManager.loadIdentity();
             GlStateManager.translate(0.0F, 0.0F, -2000.0F);
-            GlStateManager.viewport(0, 0, p_178038_1_, p_178038_2_);
+            GlStateManager.viewport(0, 0, width, height);
             GlStateManager.enableTexture2D();
             GlStateManager.disableLighting();
             GlStateManager.disableAlpha();
@@ -244,8 +244,8 @@ public class Framebuffer
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.bindFramebufferTexture();
-            float f = (float)p_178038_1_;
-            float f1 = (float)p_178038_2_;
+            float f = (float)width;
+            float f1 = (float)height;
             float f2 = (float)this.framebufferWidth / (float)this.framebufferTextureWidth;
             float f3 = (float)this.framebufferHeight / (float)this.framebufferTextureHeight;
             Tessellator tessellator = Tessellator.getInstance();

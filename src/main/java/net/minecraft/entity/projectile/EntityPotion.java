@@ -93,7 +93,7 @@ public class EntityPotion extends EntityThrowable
     /**
      * Called when this EntityThrowable hits a block or entity.
      */
-    protected void onImpact(MovingObjectPosition p_70184_1_)
+    protected void onImpact(MovingObjectPosition result)
     {
         if (!this.worldObj.isRemote)
         {
@@ -114,7 +114,7 @@ public class EntityPotion extends EntityThrowable
                         {
                             double d1 = 1.0D - Math.sqrt(d0) / 4.0D;
 
-                            if (entitylivingbase == p_70184_1_.entityHit)
+                            if (entitylivingbase == result.entityHit)
                             {
                                 d1 = 1.0D;
                             }

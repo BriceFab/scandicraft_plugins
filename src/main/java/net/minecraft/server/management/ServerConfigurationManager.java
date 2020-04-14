@@ -146,7 +146,7 @@ public abstract class ServerConfigurationManager
         nethandlerplayserver.sendPacket(new S05PacketSpawnPosition(blockpos));
         nethandlerplayserver.sendPacket(new S39PacketPlayerAbilities(playerIn.capabilities));
         nethandlerplayserver.sendPacket(new S09PacketHeldItemChange(playerIn.inventory.currentItem));
-        playerIn.getStatFile().func_150877_d();
+        playerIn.getStatFile().markAllDirty();
         playerIn.getStatFile().sendAchievements(playerIn);
         this.sendScoreboard((ServerScoreboard)worldserver.getScoreboard(), playerIn);
         this.mcServer.refreshStatusNextTick();
@@ -208,7 +208,7 @@ public abstract class ServerConfigurationManager
 
             if (scoreobjective != null && !set.contains(scoreobjective))
             {
-                for (Packet packet : scoreboardIn.func_96550_d(scoreobjective))
+                for (Packet packet : scoreboardIn.getCreatePackets(scoreobjective))
                 {
                     playerIn.playerNetServerHandler.sendPacket(packet);
                 }
@@ -401,7 +401,7 @@ public abstract class ServerConfigurationManager
         }
         else
         {
-            return this.playerEntityList.size() >= this.maxPlayers && !this.func_183023_f(profile) ? "The server is full!" : null;
+            return this.playerEntityList.size() >= this.maxPlayers && !this.bypassesPlayerLimit(profile) ? "The server is full!" : null;
         }
     }
 
@@ -757,7 +757,7 @@ public abstract class ServerConfigurationManager
 
     public void addOp(GameProfile profile)
     {
-        this.ops.addEntry(new UserListOpsEntry(profile, this.mcServer.getOpPermissionLevel(), this.ops.func_183026_b(profile)));
+        this.ops.addEntry(new UserListOpsEntry(profile, this.mcServer.getOpPermissionLevel(), this.ops.bypassesPlayerLimit(profile)));
     }
 
     public void removeOp(GameProfile profile)
@@ -800,13 +800,13 @@ public abstract class ServerConfigurationManager
      * params: srcPlayer,x,y,z,r,dimension. The packet is not sent to the srcPlayer, but all other players within the
      * search radius
      */
-    public void sendToAllNearExcept(EntityPlayer p_148543_1_, double x, double y, double z, double radius, int dimension, Packet p_148543_11_)
+    public void sendToAllNearExcept(EntityPlayer except, double x, double y, double z, double radius, int dimension, Packet packetIn)
     {
         for (int i = 0; i < this.playerEntityList.size(); ++i)
         {
             EntityPlayerMP entityplayermp = (EntityPlayerMP)this.playerEntityList.get(i);
 
-            if (entityplayermp != p_148543_1_ && entityplayermp.dimension == dimension)
+            if (entityplayermp != except && entityplayermp.dimension == dimension)
             {
                 double d0 = x - entityplayermp.posX;
                 double d1 = y - entityplayermp.posY;
@@ -814,7 +814,7 @@ public abstract class ServerConfigurationManager
 
                 if (d0 * d0 + d1 * d1 + d2 * d2 < radius * radius)
                 {
-                    entityplayermp.playerNetServerHandler.sendPacket(p_148543_11_);
+                    entityplayermp.playerNetServerHandler.sendPacket(packetIn);
                 }
             }
         }
@@ -960,23 +960,23 @@ public abstract class ServerConfigurationManager
         return null;
     }
 
-    public void setGameType(WorldSettings.GameType p_152604_1_)
+    public void setGameType(WorldSettings.GameType gameModeIn)
     {
-        this.gameType = p_152604_1_;
+        this.gameType = gameModeIn;
     }
 
-    private void setPlayerGameTypeBasedOnOther(EntityPlayerMP p_72381_1_, EntityPlayerMP p_72381_2_, World worldIn)
+    private void setPlayerGameTypeBasedOnOther(EntityPlayerMP target, EntityPlayerMP source, World worldIn)
     {
-        if (p_72381_2_ != null)
+        if (source != null)
         {
-            p_72381_1_.theItemInWorldManager.setGameType(p_72381_2_.theItemInWorldManager.getGameType());
+            target.theItemInWorldManager.setGameType(source.theItemInWorldManager.getGameType());
         }
         else if (this.gameType != null)
         {
-            p_72381_1_.theItemInWorldManager.setGameType(this.gameType);
+            target.theItemInWorldManager.setGameType(this.gameType);
         }
 
-        p_72381_1_.theItemInWorldManager.initializeGameType(worldIn.getWorldInfo().getGameType());
+        target.theItemInWorldManager.initializeGameType(worldIn.getWorldInfo().getGameType());
     }
 
     /**
@@ -1057,7 +1057,7 @@ public abstract class ServerConfigurationManager
         }
     }
 
-    public List<EntityPlayerMP> func_181057_v()
+    public List<EntityPlayerMP> getPlayers()
     {
         return this.playerEntityList;
     }
@@ -1070,7 +1070,7 @@ public abstract class ServerConfigurationManager
         return (EntityPlayerMP)this.uuidToPlayerMap.get(playerUUID);
     }
 
-    public boolean func_183023_f(GameProfile p_183023_1_)
+    public boolean bypassesPlayerLimit(GameProfile profile)
     {
         return false;
     }

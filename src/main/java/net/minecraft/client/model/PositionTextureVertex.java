@@ -8,14 +8,14 @@ public class PositionTextureVertex
     public float texturePositionX;
     public float texturePositionY;
 
-    public PositionTextureVertex(float p_i1158_1_, float p_i1158_2_, float p_i1158_3_, float p_i1158_4_, float p_i1158_5_)
+    public PositionTextureVertex(float x, float y, float z, float texU, float texV)
     {
-        this(new Vec3((double)p_i1158_1_, (double)p_i1158_2_, (double)p_i1158_3_), p_i1158_4_, p_i1158_5_);
+        this(new Vec3((double)x, (double)y, (double)z), texU, texV);
     }
 
-    public PositionTextureVertex setTexturePosition(float p_78240_1_, float p_78240_2_)
+    public PositionTextureVertex setTexturePosition(float texU, float texV)
     {
-        return new PositionTextureVertex(this, p_78240_1_, p_78240_2_);
+        return new PositionTextureVertex(this, texU, texV);
     }
 
     public PositionTextureVertex(PositionTextureVertex textureVertex, float texturePositionXIn, float texturePositionYIn)

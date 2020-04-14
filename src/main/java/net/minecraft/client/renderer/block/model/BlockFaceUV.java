@@ -20,7 +20,7 @@ public class BlockFaceUV
         this.rotation = rotationIn;
     }
 
-    public float func_178348_a(int p_178348_1_)
+    public float getVertexU(int indexIn)
     {
         if (this.uvs == null)
         {
@@ -28,12 +28,12 @@ public class BlockFaceUV
         }
         else
         {
-            int i = this.func_178347_d(p_178348_1_);
+            int i = this.getVertexRotated(indexIn);
             return i != 0 && i != 1 ? this.uvs[2] : this.uvs[0];
         }
     }
 
-    public float func_178346_b(int p_178346_1_)
+    public float getVertexV(int indexIn)
     {
         if (this.uvs == null)
         {
@@ -41,19 +41,19 @@ public class BlockFaceUV
         }
         else
         {
-            int i = this.func_178347_d(p_178346_1_);
+            int i = this.getVertexRotated(indexIn);
             return i != 0 && i != 3 ? this.uvs[3] : this.uvs[1];
         }
     }
 
-    private int func_178347_d(int p_178347_1_)
+    private int getVertexRotated(int indexIn)
     {
-        return (p_178347_1_ + this.rotation / 90) % 4;
+        return (indexIn + this.rotation / 90) % 4;
     }
 
-    public int func_178345_c(int p_178345_1_)
+    public int getVertexRotatedRev(int indexIn)
     {
-        return (p_178345_1_ + (4 - this.rotation / 90)) % 4;
+        return (indexIn + (4 - this.rotation / 90)) % 4;
     }
 
     public void setUvs(float[] uvsIn)
@@ -74,9 +74,9 @@ public class BlockFaceUV
             return new BlockFaceUV(afloat, i);
         }
 
-        protected int parseRotation(JsonObject p_178291_1_)
+        protected int parseRotation(JsonObject object)
         {
-            int i = JsonUtils.getInt(p_178291_1_, "rotation", 0);
+            int i = JsonUtils.getInt(object, "rotation", 0);
 
             if (i >= 0 && i % 90 == 0 && i / 90 <= 3)
             {
@@ -88,15 +88,15 @@ public class BlockFaceUV
             }
         }
 
-        private float[] parseUV(JsonObject p_178292_1_)
+        private float[] parseUV(JsonObject object)
         {
-            if (!p_178292_1_.has("uv"))
+            if (!object.has("uv"))
             {
                 return null;
             }
             else
             {
-                JsonArray jsonarray = JsonUtils.getJsonArray(p_178292_1_, "uv");
+                JsonArray jsonarray = JsonUtils.getJsonArray(object, "uv");
 
                 if (jsonarray.size() != 4)
                 {

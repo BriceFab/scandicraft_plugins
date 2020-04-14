@@ -13,34 +13,34 @@ public class ModelResourceLocation extends ResourceLocation
         this.variant = StringUtils.isEmpty(p_i46078_2_[2]) ? "normal" : p_i46078_2_[2].toLowerCase();
     }
 
-    public ModelResourceLocation(String p_i46079_1_)
+    public ModelResourceLocation(String pathIn)
     {
-        this(0, parsePathString(p_i46079_1_));
+        this(0, parsePathString(pathIn));
     }
 
-    public ModelResourceLocation(ResourceLocation p_i46080_1_, String p_i46080_2_)
+    public ModelResourceLocation(ResourceLocation location, String variantIn)
     {
-        this(p_i46080_1_.toString(), p_i46080_2_);
+        this(location.toString(), variantIn);
     }
 
-    public ModelResourceLocation(String p_i46081_1_, String p_i46081_2_)
+    public ModelResourceLocation(String location, String variantIn)
     {
-        this(0, parsePathString(p_i46081_1_ + '#' + (p_i46081_2_ == null ? "normal" : p_i46081_2_)));
+        this(0, parsePathString(location + '#' + (variantIn == null ? "normal" : variantIn)));
     }
 
-    protected static String[] parsePathString(String p_177517_0_)
+    protected static String[] parsePathString(String pathIn)
     {
-        String[] astring = new String[] {null, p_177517_0_, null};
-        int i = p_177517_0_.indexOf(35);
-        String s = p_177517_0_;
+        String[] astring = new String[] {null, pathIn, null};
+        int i = pathIn.indexOf(35);
+        String s = pathIn;
 
         if (i >= 0)
         {
-            astring[2] = p_177517_0_.substring(i + 1, p_177517_0_.length());
+            astring[2] = pathIn.substring(i + 1, pathIn.length());
 
             if (i > 1)
             {
-                s = p_177517_0_.substring(0, i);
+                s = pathIn.substring(0, i);
             }
         }
 

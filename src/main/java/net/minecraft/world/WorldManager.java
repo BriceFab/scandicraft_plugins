@@ -43,7 +43,7 @@ public class WorldManager implements IWorldAccess
     public void onEntityRemoved(Entity entityIn)
     {
         this.theWorldServer.getEntityTracker().untrackEntity(entityIn);
-        this.theWorldServer.getScoreboard().func_181140_a(entityIn);
+        this.theWorldServer.getScoreboard().removeEntity(entityIn);
     }
 
     /**
@@ -83,19 +83,19 @@ public class WorldManager implements IWorldAccess
     {
     }
 
-    public void playAuxSFX(EntityPlayer player, int sfxType, BlockPos blockPosIn, int p_180439_4_)
+    public void playAuxSFX(EntityPlayer player, int sfxType, BlockPos blockPosIn, int data)
     {
-        this.mcServer.getConfigurationManager().sendToAllNearExcept(player, (double)blockPosIn.getX(), (double)blockPosIn.getY(), (double)blockPosIn.getZ(), 64.0D, this.theWorldServer.provider.getDimensionId(), new S28PacketEffect(sfxType, blockPosIn, p_180439_4_, false));
+        this.mcServer.getConfigurationManager().sendToAllNearExcept(player, (double)blockPosIn.getX(), (double)blockPosIn.getY(), (double)blockPosIn.getZ(), 64.0D, this.theWorldServer.provider.getDimensionId(), new S28PacketEffect(sfxType, blockPosIn, data, false));
     }
 
-    public void broadcastSound(int p_180440_1_, BlockPos p_180440_2_, int p_180440_3_)
+    public void broadcastSound(int soundID, BlockPos pos, int data)
     {
-        this.mcServer.getConfigurationManager().sendPacketToAllPlayers(new S28PacketEffect(p_180440_1_, p_180440_2_, p_180440_3_, true));
+        this.mcServer.getConfigurationManager().sendPacketToAllPlayers(new S28PacketEffect(soundID, pos, data, true));
     }
 
     public void sendBlockBreakProgress(int breakerId, BlockPos pos, int progress)
     {
-        for (EntityPlayerMP entityplayermp : this.mcServer.getConfigurationManager().func_181057_v())
+        for (EntityPlayerMP entityplayermp : this.mcServer.getConfigurationManager().getPlayers())
         {
             if (entityplayermp != null && entityplayermp.worldObj == this.theWorldServer && entityplayermp.getEntityId() != breakerId)
             {

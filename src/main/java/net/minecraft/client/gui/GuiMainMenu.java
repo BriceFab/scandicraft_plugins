@@ -120,15 +120,15 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
             this.field_92019_w = this.field_92021_u + 24;
         }
 
-        this.mc.func_181537_a(false);
+        this.mc.setConnectedToRealms(false);
     }
 
     /**
      * Adds Singleplayer and Multiplayer buttons on Main Menu for players who have bought the game.
      */
-    private void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_) {
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_, I18n.format("menu.singleplayer", new Object[0])));
-        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 1, I18n.format("menu.multiplayer", new Object[0])));
+    private void addSingleplayerMultiplayerButtons(int yIn, int rowHeightIn) {
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, yIn, I18n.format("menu.singleplayer", new Object[0])));
+        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, yIn + rowHeightIn * 1, I18n.format("menu.multiplayer", new Object[0])));
     }
 
     /**

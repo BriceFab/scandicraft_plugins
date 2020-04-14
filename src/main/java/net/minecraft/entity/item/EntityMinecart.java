@@ -192,7 +192,7 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
         }
     }
 
-    public void killMinecart(DamageSource p_94095_1_)
+    public void killMinecart(DamageSource source)
     {
         this.setDead();
 
@@ -347,7 +347,7 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
 
             if (BlockRailBase.isRailBlock(iblockstate))
             {
-                this.func_180460_a(blockpos, iblockstate);
+                this.moveAlongTrack(blockpos, iblockstate);
 
                 if (iblockstate.getBlock() == Blocks.activator_rail)
                 {
@@ -366,7 +366,7 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
 
             if (d0 * d0 + d2 * d2 > 0.001D)
             {
-                this.rotationYaw = (float)(MathHelper.func_181159_b(d2, d0) * 180.0D / Math.PI);
+                this.rotationYaw = (float)(MathHelper.atan2(d2, d0) * 180.0D / Math.PI);
 
                 if (this.isInReverse)
                 {
@@ -448,23 +448,23 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
     }
 
     @SuppressWarnings("incomplete-switch")
-    protected void func_180460_a(BlockPos p_180460_1_, IBlockState p_180460_2_)
+    protected void moveAlongTrack(BlockPos pos, IBlockState state)
     {
         this.fallDistance = 0.0F;
-        Vec3 vec3 = this.func_70489_a(this.posX, this.posY, this.posZ);
-        this.posY = (double)p_180460_1_.getY();
+        Vec3 vec3 = this.getPos(this.posX, this.posY, this.posZ);
+        this.posY = (double)pos.getY();
         boolean flag = false;
         boolean flag1 = false;
-        BlockRailBase blockrailbase = (BlockRailBase)p_180460_2_.getBlock();
+        BlockRailBase blockrailbase = (BlockRailBase)state.getBlock();
 
         if (blockrailbase == Blocks.golden_rail)
         {
-            flag = ((Boolean)p_180460_2_.getValue(BlockRailPowered.POWERED)).booleanValue();
+            flag = ((Boolean)state.getValue(BlockRailPowered.POWERED)).booleanValue();
             flag1 = !flag;
         }
 
         double d0 = 0.0078125D;
-        BlockRailBase.EnumRailDirection blockrailbase$enumraildirection = (BlockRailBase.EnumRailDirection)p_180460_2_.getValue(blockrailbase.getShapeProperty());
+        BlockRailBase.EnumRailDirection blockrailbase$enumraildirection = (BlockRailBase.EnumRailDirection)state.getValue(blockrailbase.getShapeProperty());
 
         switch (blockrailbase$enumraildirection)
         {
@@ -548,22 +548,22 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
         }
 
         double d18 = 0.0D;
-        double d19 = (double)p_180460_1_.getX() + 0.5D + (double)aint[0][0] * 0.5D;
-        double d20 = (double)p_180460_1_.getZ() + 0.5D + (double)aint[0][2] * 0.5D;
-        double d21 = (double)p_180460_1_.getX() + 0.5D + (double)aint[1][0] * 0.5D;
-        double d10 = (double)p_180460_1_.getZ() + 0.5D + (double)aint[1][2] * 0.5D;
+        double d19 = (double)pos.getX() + 0.5D + (double)aint[0][0] * 0.5D;
+        double d20 = (double)pos.getZ() + 0.5D + (double)aint[0][2] * 0.5D;
+        double d21 = (double)pos.getX() + 0.5D + (double)aint[1][0] * 0.5D;
+        double d10 = (double)pos.getZ() + 0.5D + (double)aint[1][2] * 0.5D;
         d1 = d21 - d19;
         d2 = d10 - d20;
 
         if (d1 == 0.0D)
         {
-            this.posX = (double)p_180460_1_.getX() + 0.5D;
-            d18 = this.posZ - (double)p_180460_1_.getZ();
+            this.posX = (double)pos.getX() + 0.5D;
+            d18 = this.posZ - (double)pos.getZ();
         }
         else if (d2 == 0.0D)
         {
-            this.posZ = (double)p_180460_1_.getZ() + 0.5D;
-            d18 = this.posX - (double)p_180460_1_.getX();
+            this.posZ = (double)pos.getZ() + 0.5D;
+            d18 = this.posX - (double)pos.getX();
         }
         else
         {
@@ -589,17 +589,17 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
         d23 = MathHelper.clamp_double(d23, -d13, d13);
         this.moveEntity(d22, 0.0D, d23);
 
-        if (aint[0][1] != 0 && MathHelper.floor_double(this.posX) - p_180460_1_.getX() == aint[0][0] && MathHelper.floor_double(this.posZ) - p_180460_1_.getZ() == aint[0][2])
+        if (aint[0][1] != 0 && MathHelper.floor_double(this.posX) - pos.getX() == aint[0][0] && MathHelper.floor_double(this.posZ) - pos.getZ() == aint[0][2])
         {
             this.setPosition(this.posX, this.posY + (double)aint[0][1], this.posZ);
         }
-        else if (aint[1][1] != 0 && MathHelper.floor_double(this.posX) - p_180460_1_.getX() == aint[1][0] && MathHelper.floor_double(this.posZ) - p_180460_1_.getZ() == aint[1][2])
+        else if (aint[1][1] != 0 && MathHelper.floor_double(this.posX) - pos.getX() == aint[1][0] && MathHelper.floor_double(this.posZ) - pos.getZ() == aint[1][2])
         {
             this.setPosition(this.posX, this.posY + (double)aint[1][1], this.posZ);
         }
 
         this.applyDrag();
-        Vec3 vec31 = this.func_70489_a(this.posX, this.posY, this.posZ);
+        Vec3 vec31 = this.getPos(this.posX, this.posY, this.posZ);
 
         if (vec31 != null && vec3 != null)
         {
@@ -618,11 +618,11 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
         int j = MathHelper.floor_double(this.posX);
         int i = MathHelper.floor_double(this.posZ);
 
-        if (j != p_180460_1_.getX() || i != p_180460_1_.getZ())
+        if (j != pos.getX() || i != pos.getZ())
         {
             d5 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
-            this.motionX = d5 * (double)(j - p_180460_1_.getX());
-            this.motionZ = d5 * (double)(i - p_180460_1_.getZ());
+            this.motionX = d5 * (double)(j - pos.getX());
+            this.motionZ = d5 * (double)(i - pos.getZ());
         }
 
         if (flag)
@@ -637,22 +637,22 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
             }
             else if (blockrailbase$enumraildirection == BlockRailBase.EnumRailDirection.EAST_WEST)
             {
-                if (this.worldObj.getBlockState(p_180460_1_.west()).getBlock().isNormalCube())
+                if (this.worldObj.getBlockState(pos.west()).getBlock().isNormalCube())
                 {
                     this.motionX = 0.02D;
                 }
-                else if (this.worldObj.getBlockState(p_180460_1_.east()).getBlock().isNormalCube())
+                else if (this.worldObj.getBlockState(pos.east()).getBlock().isNormalCube())
                 {
                     this.motionX = -0.02D;
                 }
             }
             else if (blockrailbase$enumraildirection == BlockRailBase.EnumRailDirection.NORTH_SOUTH)
             {
-                if (this.worldObj.getBlockState(p_180460_1_.north()).getBlock().isNormalCube())
+                if (this.worldObj.getBlockState(pos.north()).getBlock().isNormalCube())
                 {
                     this.motionZ = 0.02D;
                 }
-                else if (this.worldObj.getBlockState(p_180460_1_.south()).getBlock().isNormalCube())
+                else if (this.worldObj.getBlockState(pos.south()).getBlock().isNormalCube())
                 {
                     this.motionZ = -0.02D;
                 }
@@ -689,11 +689,11 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
         this.setEntityBoundingBox(new AxisAlignedBB(x - (double)f, y, z - (double)f, x + (double)f, y + (double)f1, z + (double)f));
     }
 
-    public Vec3 func_70495_a(double p_70495_1_, double p_70495_3_, double p_70495_5_, double p_70495_7_)
+    public Vec3 getPosOffset(double x, double y, double z, double offset)
     {
-        int i = MathHelper.floor_double(p_70495_1_);
-        int j = MathHelper.floor_double(p_70495_3_);
-        int k = MathHelper.floor_double(p_70495_5_);
+        int i = MathHelper.floor_double(x);
+        int j = MathHelper.floor_double(y);
+        int k = MathHelper.floor_double(z);
 
         if (BlockRailBase.isRailBlock(this.worldObj, new BlockPos(i, j - 1, k)))
         {
@@ -705,11 +705,11 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
         if (BlockRailBase.isRailBlock(iblockstate))
         {
             BlockRailBase.EnumRailDirection blockrailbase$enumraildirection = (BlockRailBase.EnumRailDirection)iblockstate.getValue(((BlockRailBase)iblockstate.getBlock()).getShapeProperty());
-            p_70495_3_ = (double)j;
+            y = (double)j;
 
             if (blockrailbase$enumraildirection.isAscending())
             {
-                p_70495_3_ = (double)(j + 1);
+                y = (double)(j + 1);
             }
 
             int[][] aint = matrix[blockrailbase$enumraildirection.getMetadata()];
@@ -718,19 +718,19 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
             double d2 = Math.sqrt(d0 * d0 + d1 * d1);
             d0 = d0 / d2;
             d1 = d1 / d2;
-            p_70495_1_ = p_70495_1_ + d0 * p_70495_7_;
-            p_70495_5_ = p_70495_5_ + d1 * p_70495_7_;
+            x = x + d0 * offset;
+            z = z + d1 * offset;
 
-            if (aint[0][1] != 0 && MathHelper.floor_double(p_70495_1_) - i == aint[0][0] && MathHelper.floor_double(p_70495_5_) - k == aint[0][2])
+            if (aint[0][1] != 0 && MathHelper.floor_double(x) - i == aint[0][0] && MathHelper.floor_double(z) - k == aint[0][2])
             {
-                p_70495_3_ += (double)aint[0][1];
+                y += (double)aint[0][1];
             }
-            else if (aint[1][1] != 0 && MathHelper.floor_double(p_70495_1_) - i == aint[1][0] && MathHelper.floor_double(p_70495_5_) - k == aint[1][2])
+            else if (aint[1][1] != 0 && MathHelper.floor_double(x) - i == aint[1][0] && MathHelper.floor_double(z) - k == aint[1][2])
             {
-                p_70495_3_ += (double)aint[1][1];
+                y += (double)aint[1][1];
             }
 
-            return this.func_70489_a(p_70495_1_, p_70495_3_, p_70495_5_);
+            return this.getPos(x, y, z);
         }
         else
         {
@@ -738,7 +738,7 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
         }
     }
 
-    public Vec3 func_70489_a(double p_70489_1_, double p_70489_3_, double p_70489_5_)
+    public Vec3 getPos(double p_70489_1_, double p_70489_3_, double p_70489_5_)
     {
         int i = MathHelper.floor_double(p_70489_1_);
         int j = MathHelper.floor_double(p_70489_3_);
@@ -820,11 +820,11 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
 
                 if (block == null)
                 {
-                    this.func_174899_a(Blocks.air.getDefaultState());
+                    this.setDisplayTile(Blocks.air.getDefaultState());
                 }
                 else
                 {
-                    this.func_174899_a(block.getStateFromMeta(i));
+                    this.setDisplayTile(block.getStateFromMeta(i));
                 }
             }
             else
@@ -833,11 +833,11 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
 
                 if (block1 == null)
                 {
-                    this.func_174899_a(Blocks.air.getDefaultState());
+                    this.setDisplayTile(Blocks.air.getDefaultState());
                 }
                 else
                 {
-                    this.func_174899_a(block1.getStateFromMeta(i));
+                    this.setDisplayTile(block1.getStateFromMeta(i));
                 }
             }
 
@@ -967,7 +967,7 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
         }
     }
 
-    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean p_180426_10_)
+    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
     {
         this.minecartX = x;
         this.minecartY = y;
@@ -994,9 +994,9 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
      * Sets the current amount of damage the minecart has taken. Decreases over time. The cart breaks when this is over
      * 40.
      */
-    public void setDamage(float p_70492_1_)
+    public void setDamage(float damage)
     {
-        this.dataWatcher.updateObject(19, Float.valueOf(p_70492_1_));
+        this.dataWatcher.updateObject(19, Float.valueOf(damage));
     }
 
     /**
@@ -1011,9 +1011,9 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
     /**
      * Sets the rolling amplitude the cart rolls while being attacked.
      */
-    public void setRollingAmplitude(int p_70497_1_)
+    public void setRollingAmplitude(int rollingAmplitude)
     {
-        this.dataWatcher.updateObject(17, Integer.valueOf(p_70497_1_));
+        this.dataWatcher.updateObject(17, Integer.valueOf(rollingAmplitude));
     }
 
     /**
@@ -1027,9 +1027,9 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
     /**
      * Sets the rolling direction the cart rolls while being attacked. Can be 1 or -1.
      */
-    public void setRollingDirection(int p_70494_1_)
+    public void setRollingDirection(int rollingDirection)
     {
-        this.dataWatcher.updateObject(18, Integer.valueOf(p_70494_1_));
+        this.dataWatcher.updateObject(18, Integer.valueOf(rollingDirection));
     }
 
     /**
@@ -1062,15 +1062,15 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
         return 6;
     }
 
-    public void func_174899_a(IBlockState p_174899_1_)
+    public void setDisplayTile(IBlockState displayTile)
     {
-        this.getDataWatcher().updateObject(20, Integer.valueOf(Block.getStateId(p_174899_1_)));
+        this.getDataWatcher().updateObject(20, Integer.valueOf(Block.getStateId(displayTile)));
         this.setHasDisplayTile(true);
     }
 
-    public void setDisplayTileOffset(int p_94086_1_)
+    public void setDisplayTileOffset(int displayTileOffset)
     {
-        this.getDataWatcher().updateObject(21, Integer.valueOf(p_94086_1_));
+        this.getDataWatcher().updateObject(21, Integer.valueOf(displayTileOffset));
         this.setHasDisplayTile(true);
     }
 
@@ -1079,9 +1079,9 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
         return this.getDataWatcher().getWatchableObjectByte(22) == 1;
     }
 
-    public void setHasDisplayTile(boolean p_94096_1_)
+    public void setHasDisplayTile(boolean showBlock)
     {
-        this.getDataWatcher().updateObject(22, Byte.valueOf((byte)(p_94096_1_ ? 1 : 0)));
+        this.getDataWatcher().updateObject(22, Byte.valueOf((byte)(showBlock ? 1 : 0)));
     }
 
     /**

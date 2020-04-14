@@ -52,29 +52,29 @@ public class ShaderUniform
         }
     }
 
-    public static int parseType(String p_148085_0_)
+    public static int parseType(String typeName)
     {
         int i = -1;
 
-        if (p_148085_0_.equals("int"))
+        if (typeName.equals("int"))
         {
             i = 0;
         }
-        else if (p_148085_0_.equals("float"))
+        else if (typeName.equals("float"))
         {
             i = 4;
         }
-        else if (p_148085_0_.startsWith("matrix"))
+        else if (typeName.startsWith("matrix"))
         {
-            if (p_148085_0_.endsWith("2x2"))
+            if (typeName.endsWith("2x2"))
             {
                 i = 8;
             }
-            else if (p_148085_0_.endsWith("3x3"))
+            else if (typeName.endsWith("3x3"))
             {
                 i = 9;
             }
-            else if (p_148085_0_.endsWith("4x4"))
+            else if (typeName.endsWith("4x4"))
             {
                 i = 10;
             }
@@ -83,9 +83,9 @@ public class ShaderUniform
         return i;
     }
 
-    public void setUniformLocation(int p_148084_1_)
+    public void setUniformLocation(int uniformLocationIn)
     {
-        this.uniformLocation = p_148084_1_;
+        this.uniformLocation = uniformLocationIn;
     }
 
     public String getShaderName()
@@ -128,7 +128,7 @@ public class ShaderUniform
         this.markDirty();
     }
 
-    public void func_148092_b(float p_148092_1_, float p_148092_2_, float p_148092_3_, float p_148092_4_)
+    public void setSafe(float p_148092_1_, float p_148092_2_, float p_148092_3_, float p_148092_4_)
     {
         this.uniformFloatBuffer.position(0);
 

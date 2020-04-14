@@ -20,10 +20,10 @@ public class GuiScreenOptionsSounds extends GuiScreen
     protected String field_146507_a = "Options";
     private String field_146508_h;
 
-    public GuiScreenOptionsSounds(GuiScreen p_i45025_1_, GameSettings p_i45025_2_)
+    public GuiScreenOptionsSounds(GuiScreen parentIn, GameSettings settingsIn)
     {
-        this.field_146505_f = p_i45025_1_;
-        this.game_settings_4 = p_i45025_2_;
+        this.field_146505_f = parentIn;
+        this.game_settings_4 = settingsIn;
     }
 
     /**

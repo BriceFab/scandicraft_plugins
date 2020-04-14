@@ -11,15 +11,15 @@ public class PotionAbsorption extends Potion
         super(potionID, location, badEffect, potionColor);
     }
 
-    public void removeAttributesModifiersFromEntity(EntityLivingBase entityLivingBaseIn, BaseAttributeMap p_111187_2_, int amplifier)
+    public void removeAttributesModifiersFromEntity(EntityLivingBase entityLivingBaseIn, BaseAttributeMap attributeMapIn, int amplifier)
     {
         entityLivingBaseIn.setAbsorptionAmount(entityLivingBaseIn.getAbsorptionAmount() - (float)(4 * (amplifier + 1)));
-        super.removeAttributesModifiersFromEntity(entityLivingBaseIn, p_111187_2_, amplifier);
+        super.removeAttributesModifiersFromEntity(entityLivingBaseIn, attributeMapIn, amplifier);
     }
 
-    public void applyAttributesModifiersToEntity(EntityLivingBase entityLivingBaseIn, BaseAttributeMap p_111185_2_, int amplifier)
+    public void applyAttributesModifiersToEntity(EntityLivingBase entityLivingBaseIn, BaseAttributeMap attributeMapIn, int amplifier)
     {
         entityLivingBaseIn.setAbsorptionAmount(entityLivingBaseIn.getAbsorptionAmount() + (float)(4 * (amplifier + 1)));
-        super.applyAttributesModifiersToEntity(entityLivingBaseIn, p_111185_2_, amplifier);
+        super.applyAttributesModifiersToEntity(entityLivingBaseIn, attributeMapIn, amplifier);
     }
 }

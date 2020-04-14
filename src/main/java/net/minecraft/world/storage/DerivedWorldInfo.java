@@ -12,9 +12,9 @@ public class DerivedWorldInfo extends WorldInfo
     /** Instance of WorldInfo. */
     private final WorldInfo theWorldInfo;
 
-    public DerivedWorldInfo(WorldInfo p_i2145_1_)
+    public DerivedWorldInfo(WorldInfo worldInfoIn)
     {
-        this.theWorldInfo = p_i2145_1_;
+        this.theWorldInfo = worldInfoIn;
     }
 
     /**

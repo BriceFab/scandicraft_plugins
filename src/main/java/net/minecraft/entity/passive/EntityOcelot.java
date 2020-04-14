@@ -319,7 +319,7 @@ public class EntityOcelot extends EntityTameable
         {
             BlockPos blockpos = new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ);
 
-            if (blockpos.getY() < this.worldObj.func_181545_F())
+            if (blockpos.getY() < this.worldObj.getSeaLevel())
             {
                 return false;
             }

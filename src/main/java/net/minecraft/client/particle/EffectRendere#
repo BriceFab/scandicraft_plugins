@@ -5,7 +5,7 @@
   
 -       for(final int i = 0; i < 3; ++i) {
            for(int j = 0; j < 2; ++j) {
-              if(!this.field_78876_b[i][j].isEmpty()) {
+              if(!this.byType[i][j].isEmpty()) {
                  switch(j) {
                  case 0:
 --- 231,239 ----
@@ -15,7 +15,7 @@
 +       for(int i = 0; i < 3; ++i) {
            for(int j = 0; j < 2; ++j) {
 +         	final int i_f = i;
-              if(!this.field_78876_b[i][j].isEmpty()) {
+              if(!this.byType[i][j].isEmpty()) {
                  switch(j) {
                  case 0:
 ***************

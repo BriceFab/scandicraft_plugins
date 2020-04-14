@@ -145,7 +145,7 @@ public class VertexFormat
         return false;
     }
 
-    public int func_181719_f()
+    public int getIntegerSize()
     {
         return this.getNextOffset() / 4;
     }

@@ -123,7 +123,7 @@ public abstract class BiomeGenBase
     public static final BiomeGenBase mesa = (new BiomeGenMesa(37, false, false)).setColor(14238997).setBiomeName("Mesa");
     public static final BiomeGenBase mesaPlateau_F = (new BiomeGenMesa(38, false, true)).setColor(11573093).setBiomeName("Mesa Plateau F").setHeight(height_HighPlateaus);
     public static final BiomeGenBase mesaPlateau = (new BiomeGenMesa(39, false, false)).setColor(13274213).setBiomeName("Mesa Plateau").setHeight(height_HighPlateaus);
-    public static final BiomeGenBase field_180279_ad = ocean;
+    public static final BiomeGenBase DEFAULT = ocean;
     protected static final NoiseGeneratorPerlin temperatureNoise;
     protected static final NoiseGeneratorPerlin GRASS_COLOR_NOISE;
     protected static final WorldGenDoublePlant DOUBLE_PLANT_GENERATOR;
@@ -329,7 +329,7 @@ public abstract class BiomeGenBase
     {
         p_76731_1_ = p_76731_1_ / 3.0F;
         p_76731_1_ = MathHelper.clamp_float(p_76731_1_, -1.0F, 1.0F);
-        return MathHelper.func_181758_c(0.62222224F - p_76731_1_ * 0.05F, 0.5F + p_76731_1_ * 0.1F, 1.0F);
+        return MathHelper.hsvToRGB(0.62222224F - p_76731_1_ * 0.05F, 0.5F + p_76731_1_ * 0.1F, 1.0F);
     }
 
     public List<BiomeGenBase.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType)
@@ -448,7 +448,7 @@ public abstract class BiomeGenBase
 
     public final void generateBiomeTerrain(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int p_180628_4_, int p_180628_5_, double p_180628_6_)
     {
-        int i = worldIn.func_181545_F();
+        int i = worldIn.getSeaLevel();
         IBlockState iblockstate = this.topBlock;
         IBlockState iblockstate1 = this.fillerBlock;
         int j = -1;
@@ -488,7 +488,7 @@ public abstract class BiomeGenBase
 
                         if (j1 < i && (iblockstate == null || iblockstate.getBlock().getMaterial() == Material.air))
                         {
-                            if (this.getFloatTemperature(blockpos$mutableblockpos.func_181079_c(p_180628_4_, j1, p_180628_5_)) < 0.15F)
+                            if (this.getFloatTemperature(blockpos$mutableblockpos.setPos(p_180628_4_, j1, p_180628_5_)) < 0.15F)
                             {
                                 iblockstate = Blocks.ice.getDefaultState();
                             }

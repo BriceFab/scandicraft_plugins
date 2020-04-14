@@ -44,7 +44,7 @@ public abstract class Render<T extends Entity>
     {
         AxisAlignedBB axisalignedbb = livingEntity.getEntityBoundingBox();
 
-        if (axisalignedbb.func_181656_b() || axisalignedbb.getAverageEdgeLength() == 0.0D)
+        if (axisalignedbb.hasNaN() || axisalignedbb.getAverageEdgeLength() == 0.0D)
         {
             axisalignedbb = new AxisAlignedBB(livingEntity.posX - 2.0D, livingEntity.posY - 2.0D, livingEntity.posZ - 2.0D, livingEntity.posX + 2.0D, livingEntity.posY + 2.0D, livingEntity.posZ + 2.0D);
         }
@@ -310,7 +310,7 @@ public abstract class Render<T extends Entity>
     {
         if (this.renderManager.options != null)
         {
-            if (this.renderManager.options.field_181151_V && this.shadowSize > 0.0F && !entityIn.isInvisible() && this.renderManager.isRenderShadow())
+            if (this.renderManager.options.entityShadows && this.shadowSize > 0.0F && !entityIn.isInvisible() && this.renderManager.isRenderShadow())
             {
                 double d0 = this.renderManager.getDistanceToCamera(entityIn.posX, entityIn.posY, entityIn.posZ);
                 float f = (float)((1.0D - d0 / 256.0D) * (double)this.shadowOpaque);

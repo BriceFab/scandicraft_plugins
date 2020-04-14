@@ -91,26 +91,26 @@ public class FoodStats
     /**
      * Reads the food data for the player.
      */
-    public void readNBT(NBTTagCompound p_75112_1_)
+    public void readNBT(NBTTagCompound compound)
     {
-        if (p_75112_1_.hasKey("foodLevel", 99))
+        if (compound.hasKey("foodLevel", 99))
         {
-            this.foodLevel = p_75112_1_.getInteger("foodLevel");
-            this.foodTimer = p_75112_1_.getInteger("foodTickTimer");
-            this.foodSaturationLevel = p_75112_1_.getFloat("foodSaturationLevel");
-            this.foodExhaustionLevel = p_75112_1_.getFloat("foodExhaustionLevel");
+            this.foodLevel = compound.getInteger("foodLevel");
+            this.foodTimer = compound.getInteger("foodTickTimer");
+            this.foodSaturationLevel = compound.getFloat("foodSaturationLevel");
+            this.foodExhaustionLevel = compound.getFloat("foodExhaustionLevel");
         }
     }
 
     /**
      * Writes the food data for the player.
      */
-    public void writeNBT(NBTTagCompound p_75117_1_)
+    public void writeNBT(NBTTagCompound compound)
     {
-        p_75117_1_.setInteger("foodLevel", this.foodLevel);
-        p_75117_1_.setInteger("foodTickTimer", this.foodTimer);
-        p_75117_1_.setFloat("foodSaturationLevel", this.foodSaturationLevel);
-        p_75117_1_.setFloat("foodExhaustionLevel", this.foodExhaustionLevel);
+        compound.setInteger("foodLevel", this.foodLevel);
+        compound.setInteger("foodTickTimer", this.foodTimer);
+        compound.setFloat("foodSaturationLevel", this.foodSaturationLevel);
+        compound.setFloat("foodExhaustionLevel", this.foodExhaustionLevel);
     }
 
     /**
@@ -137,9 +137,9 @@ public class FoodStats
     /**
      * adds input to foodExhaustionLevel to a max of 40
      */
-    public void addExhaustion(float p_75113_1_)
+    public void addExhaustion(float exhaustion)
     {
-        this.foodExhaustionLevel = Math.min(this.foodExhaustionLevel + p_75113_1_, 40.0F);
+        this.foodExhaustionLevel = Math.min(this.foodExhaustionLevel + exhaustion, 40.0F);
     }
 
     /**

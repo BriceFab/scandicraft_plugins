@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderHorse extends RenderLiving<EntityHorse>
 {
-    private static final Map<String, ResourceLocation> field_110852_a = Maps.<String, ResourceLocation>newHashMap();
+    private static final Map<String, ResourceLocation> LAYERED_LOCATION_CACHE = Maps.<String, ResourceLocation>newHashMap();
     private static final ResourceLocation whiteHorseTextures = new ResourceLocation("textures/entity/horse/horse_white.png");
     private static final ResourceLocation muleTextures = new ResourceLocation("textures/entity/horse/mule.png");
     private static final ResourceLocation donkeyTextures = new ResourceLocation("textures/entity/horse/donkey.png");
@@ -87,13 +87,13 @@ public class RenderHorse extends RenderLiving<EntityHorse>
         }
         else
         {
-            ResourceLocation resourcelocation = (ResourceLocation)field_110852_a.get(s);
+            ResourceLocation resourcelocation = (ResourceLocation)LAYERED_LOCATION_CACHE.get(s);
 
             if (resourcelocation == null)
             {
                 resourcelocation = new ResourceLocation(s);
                 Minecraft.getMinecraft().getTextureManager().loadTexture(resourcelocation, new LayeredTexture(horse.getVariantTexturePaths()));
-                field_110852_a.put(s, resourcelocation);
+                LAYERED_LOCATION_CACHE.put(s, resourcelocation);
             }
 
             return resourcelocation;

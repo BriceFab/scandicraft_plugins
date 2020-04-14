@@ -535,7 +535,7 @@ public class EntityItem extends Entity
         this.age = -6000;
     }
 
-    public void func_174870_v()
+    public void makeFakeItem()
     {
         this.setInfinitePickupDelay();
         this.age = 5999;

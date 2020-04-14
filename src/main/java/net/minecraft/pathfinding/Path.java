@@ -62,32 +62,32 @@ public class Path
     /**
      * Changes the provided point's distance to target
      */
-    public void changeDistance(PathPoint p_75850_1_, float p_75850_2_)
+    public void changeDistance(PathPoint point, float distance)
     {
-        float f = p_75850_1_.distanceToTarget;
-        p_75850_1_.distanceToTarget = p_75850_2_;
+        float f = point.distanceToTarget;
+        point.distanceToTarget = distance;
 
-        if (p_75850_2_ < f)
+        if (distance < f)
         {
-            this.sortBack(p_75850_1_.index);
+            this.sortBack(point.index);
         }
         else
         {
-            this.sortForward(p_75850_1_.index);
+            this.sortForward(point.index);
         }
     }
 
     /**
      * Sorts a point to the left
      */
-    private void sortBack(int p_75847_1_)
+    private void sortBack(int index)
     {
-        PathPoint pathpoint = this.pathPoints[p_75847_1_];
+        PathPoint pathpoint = this.pathPoints[index];
         int i;
 
-        for (float f = pathpoint.distanceToTarget; p_75847_1_ > 0; p_75847_1_ = i)
+        for (float f = pathpoint.distanceToTarget; index > 0; index = i)
         {
-            i = p_75847_1_ - 1 >> 1;
+            i = index - 1 >> 1;
             PathPoint pathpoint1 = this.pathPoints[i];
 
             if (f >= pathpoint1.distanceToTarget)
@@ -95,25 +95,25 @@ public class Path
                 break;
             }
 
-            this.pathPoints[p_75847_1_] = pathpoint1;
-            pathpoint1.index = p_75847_1_;
+            this.pathPoints[index] = pathpoint1;
+            pathpoint1.index = index;
         }
 
-        this.pathPoints[p_75847_1_] = pathpoint;
-        pathpoint.index = p_75847_1_;
+        this.pathPoints[index] = pathpoint;
+        pathpoint.index = index;
     }
 
     /**
      * Sorts a point to the right
      */
-    private void sortForward(int p_75846_1_)
+    private void sortForward(int index)
     {
-        PathPoint pathpoint = this.pathPoints[p_75846_1_];
+        PathPoint pathpoint = this.pathPoints[index];
         float f = pathpoint.distanceToTarget;
 
         while (true)
         {
-            int i = 1 + (p_75846_1_ << 1);
+            int i = 1 + (index << 1);
             int j = i + 1;
 
             if (i >= this.count)
@@ -144,9 +144,9 @@ public class Path
                     break;
                 }
 
-                this.pathPoints[p_75846_1_] = pathpoint1;
-                pathpoint1.index = p_75846_1_;
-                p_75846_1_ = i;
+                this.pathPoints[index] = pathpoint1;
+                pathpoint1.index = index;
+                index = i;
             }
             else
             {
@@ -155,14 +155,14 @@ public class Path
                     break;
                 }
 
-                this.pathPoints[p_75846_1_] = pathpoint2;
-                pathpoint2.index = p_75846_1_;
-                p_75846_1_ = j;
+                this.pathPoints[index] = pathpoint2;
+                pathpoint2.index = index;
+                index = j;
             }
         }
 
-        this.pathPoints[p_75846_1_] = pathpoint;
-        pathpoint.index = p_75846_1_;
+        this.pathPoints[index] = pathpoint;
+        pathpoint.index = index;
     }
 
     /**

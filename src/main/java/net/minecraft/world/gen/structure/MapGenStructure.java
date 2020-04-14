@@ -154,7 +154,7 @@ public abstract class MapGenStructure extends MapGenBase
         return null;
     }
 
-    public boolean func_175796_a(World worldIn, BlockPos pos)
+    public boolean isPositionInStructure(World worldIn, BlockPos pos)
     {
         this.func_143027_a(worldIn);
 

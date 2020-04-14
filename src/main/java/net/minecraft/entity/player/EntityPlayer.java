@@ -182,7 +182,7 @@ public abstract class EntityPlayer extends EntityLivingBase
         this.openContainer = this.inventoryContainer;
         BlockPos blockpos = worldIn.getSpawnPoint();
         this.setLocationAndAngles((double)blockpos.getX() + 0.5D, (double)(blockpos.getY() + 1), (double)blockpos.getZ() + 0.5D, 0.0F, 0.0F);
-        this.field_70741_aB = 180.0F;
+        this.unused180 = 180.0F;
         this.fireResistance = 20;
     }
 
@@ -680,9 +680,9 @@ public abstract class EntityPlayer extends EntityLivingBase
         }
     }
 
-    private void collideWithPlayer(Entity p_71044_1_)
+    private void collideWithPlayer(Entity entityIn)
     {
-        p_71044_1_.onCollideWithPlayer(this);
+        entityIn.onCollideWithPlayer(this);
     }
 
     public int getScore()
@@ -693,18 +693,18 @@ public abstract class EntityPlayer extends EntityLivingBase
     /**
      * Set player's score
      */
-    public void setScore(int p_85040_1_)
+    public void setScore(int scoreIn)
     {
-        this.dataWatcher.updateObject(18, Integer.valueOf(p_85040_1_));
+        this.dataWatcher.updateObject(18, Integer.valueOf(scoreIn));
     }
 
     /**
      * Add to player's score
      */
-    public void addScore(int p_85039_1_)
+    public void addScore(int scoreIn)
     {
         int i = this.getScore();
-        this.dataWatcher.updateObject(18, Integer.valueOf(i + p_85039_1_));
+        this.dataWatcher.updateObject(18, Integer.valueOf(i + scoreIn));
     }
 
     /**
@@ -738,7 +738,7 @@ public abstract class EntityPlayer extends EntityLivingBase
         }
 
         this.triggerAchievement(StatList.deathsStat);
-        this.func_175145_a(StatList.timeSinceDeathStat);
+        this.takeStat(StatList.timeSinceDeathStat);
     }
 
     /**
@@ -780,7 +780,7 @@ public abstract class EntityPlayer extends EntityLivingBase
         for (ScoreObjective scoreobjective : collection)
         {
             Score score = this.getWorldScoreboard().getValueFromObjective(this.getName(), scoreobjective);
-            score.func_96648_a();
+            score.incrementScore();
         }
     }
 
@@ -797,7 +797,7 @@ public abstract class EntityPlayer extends EntityLivingBase
                 for (ScoreObjective scoreobjective : this.getWorldScoreboard().getObjectivesFromCriteria(IScoreObjectiveCriteria.field_178793_i[i]))
                 {
                     Score score = this.getWorldScoreboard().getValueFromObjective(p_175137_1_.getName(), scoreobjective);
-                    score.func_96648_a();
+                    score.incrementScore();
                 }
             }
         }
@@ -1117,9 +1117,9 @@ public abstract class EntityPlayer extends EntityLivingBase
         return team == null ? true : (!team.isSameTeam(team1) ? true : team.getAllowFriendlyFire());
     }
 
-    protected void damageArmor(float p_70675_1_)
+    protected void damageArmor(float damage)
     {
-        this.inventory.damageArmor(p_70675_1_);
+        this.inventory.damageArmor(damage);
     }
 
     /**
@@ -1314,11 +1314,11 @@ public abstract class EntityPlayer extends EntityLivingBase
 
                 if (targetEntity instanceof EntityLivingBase)
                 {
-                    f1 = EnchantmentHelper.func_152377_a(this.getHeldItem(), ((EntityLivingBase)targetEntity).getCreatureAttribute());
+                    f1 = EnchantmentHelper.getModifierForCreature(this.getHeldItem(), ((EntityLivingBase)targetEntity).getCreatureAttribute());
                 }
                 else
                 {
-                    f1 = EnchantmentHelper.func_152377_a(this.getHeldItem(), EnumCreatureAttribute.UNDEFINED);
+                    f1 = EnchantmentHelper.getModifierForCreature(this.getHeldItem(), EnumCreatureAttribute.UNDEFINED);
                 }
 
                 i = i + EnchantmentHelper.getKnockbackModifier(this);
@@ -1657,8 +1657,8 @@ public abstract class EntityPlayer extends EntityLivingBase
             }
             else
             {
-                boolean flag = block.func_181623_g();
-                boolean flag1 = worldIn.getBlockState(bedLocation.up()).getBlock().func_181623_g();
+                boolean flag = block.canSpawnInBlock();
+                boolean flag1 = worldIn.getBlockState(bedLocation.up()).getBlock().canSpawnInBlock();
                 return flag && flag1 ? bedLocation : null;
             }
         }
@@ -1760,7 +1760,7 @@ public abstract class EntityPlayer extends EntityLivingBase
     {
     }
 
-    public void func_175145_a(StatBase p_175145_1_)
+    public void takeStat(StatBase stat)
     {
     }
 
@@ -2064,13 +2064,13 @@ public abstract class EntityPlayer extends EntityLivingBase
     /**
      * increases exhaustion level by supplied amount
      */
-    public void addExhaustion(float p_71020_1_)
+    public void addExhaustion(float exhaustion)
     {
         if (!this.capabilities.disableDamage)
         {
             if (!this.worldObj.isRemote)
             {
-                this.foodStats.addExhaustion(p_71020_1_);
+                this.foodStats.addExhaustion(exhaustion);
             }
         }
     }
@@ -2118,21 +2118,21 @@ public abstract class EntityPlayer extends EntityLivingBase
         return this.capabilities.allowEdit;
     }
 
-    public boolean canPlayerEdit(BlockPos p_175151_1_, EnumFacing p_175151_2_, ItemStack p_175151_3_)
+    public boolean canPlayerEdit(BlockPos pos, EnumFacing facing, ItemStack stack)
     {
         if (this.capabilities.allowEdit)
         {
             return true;
         }
-        else if (p_175151_3_ == null)
+        else if (stack == null)
         {
             return false;
         }
         else
         {
-            BlockPos blockpos = p_175151_1_.offset(p_175151_2_.getOpposite());
+            BlockPos blockpos = pos.offset(facing.getOpposite());
             Block block = this.worldObj.getBlockState(blockpos).getBlock();
-            return p_175151_3_.canPlaceOn(block) || p_175151_3_.canEditBlocks();
+            return stack.canPlaceOn(block) || stack.canEditBlocks();
         }
     }
 
@@ -2180,9 +2180,9 @@ public abstract class EntityPlayer extends EntityLivingBase
             this.experienceTotal = oldPlayer.experienceTotal;
             this.experience = oldPlayer.experience;
             this.setScore(oldPlayer.getScore());
-            this.field_181016_an = oldPlayer.field_181016_an;
-            this.field_181017_ao = oldPlayer.field_181017_ao;
-            this.field_181018_ap = oldPlayer.field_181018_ap;
+            this.lastPortalPos = oldPlayer.lastPortalPos;
+            this.lastPortalVec = oldPlayer.lastPortalVec;
+            this.teleportDirection = oldPlayer.teleportDirection;
         }
         else if (this.worldObj.getGameRules().getBoolean("keepInventory"))
         {
@@ -2391,9 +2391,9 @@ public abstract class EntityPlayer extends EntityLivingBase
         }
     }
 
-    public boolean isWearing(EnumPlayerModelParts p_175148_1_)
+    public boolean isWearing(EnumPlayerModelParts part)
     {
-        return (this.getDataWatcher().getWatchableObjectByte(10) & p_175148_1_.getPartMask()) == p_175148_1_.getPartMask();
+        return (this.getDataWatcher().getWatchableObjectByte(10) & part.getPartMask()) == part.getPartMask();
     }
 
     /**

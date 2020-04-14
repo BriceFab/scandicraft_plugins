@@ -5,21 +5,21 @@ import net.minecraft.world.IBlockAccess;
 
 public class BiomeColorHelper
 {
-    private static final BiomeColorHelper.ColorResolver field_180291_a = new BiomeColorHelper.ColorResolver()
+    private static final BiomeColorHelper.ColorResolver GRASS_COLOR = new BiomeColorHelper.ColorResolver()
     {
         public int getColorAtPos(BiomeGenBase p_180283_1_, BlockPos blockPosition)
         {
             return p_180283_1_.getGrassColorAtPos(blockPosition);
         }
     };
-    private static final BiomeColorHelper.ColorResolver field_180289_b = new BiomeColorHelper.ColorResolver()
+    private static final BiomeColorHelper.ColorResolver FOLIAGE_COLOR = new BiomeColorHelper.ColorResolver()
     {
         public int getColorAtPos(BiomeGenBase p_180283_1_, BlockPos blockPosition)
         {
             return p_180283_1_.getFoliageColorAtPos(blockPosition);
         }
     };
-    private static final BiomeColorHelper.ColorResolver field_180290_c = new BiomeColorHelper.ColorResolver()
+    private static final BiomeColorHelper.ColorResolver WATER_COLOR = new BiomeColorHelper.ColorResolver()
     {
         public int getColorAtPos(BiomeGenBase p_180283_1_, BlockPos blockPosition)
         {
@@ -46,17 +46,17 @@ public class BiomeColorHelper
 
     public static int getGrassColorAtPos(IBlockAccess p_180286_0_, BlockPos p_180286_1_)
     {
-        return func_180285_a(p_180286_0_, p_180286_1_, field_180291_a);
+        return func_180285_a(p_180286_0_, p_180286_1_, GRASS_COLOR);
     }
 
     public static int getFoliageColorAtPos(IBlockAccess p_180287_0_, BlockPos p_180287_1_)
     {
-        return func_180285_a(p_180287_0_, p_180287_1_, field_180289_b);
+        return func_180285_a(p_180287_0_, p_180287_1_, FOLIAGE_COLOR);
     }
 
     public static int getWaterColorAtPos(IBlockAccess p_180288_0_, BlockPos p_180288_1_)
     {
-        return func_180285_a(p_180288_0_, p_180288_1_, field_180290_c);
+        return func_180285_a(p_180288_0_, p_180288_1_, WATER_COLOR);
     }
 
     interface ColorResolver

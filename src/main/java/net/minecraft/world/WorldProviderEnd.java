@@ -31,7 +31,7 @@ public class WorldProviderEnd extends WorldProvider
     /**
      * Calculates the angle of sun and moon in the sky relative to a specified time (usually worldTime)
      */
-    public float calculateCelestialAngle(long p_76563_1_, float p_76563_3_)
+    public float calculateCelestialAngle(long worldTime, float partialTicks)
     {
         return 0.0F;
     }
@@ -47,10 +47,10 @@ public class WorldProviderEnd extends WorldProvider
     /**
      * Return Vec3D with biome specific fog color
      */
-    public Vec3 getFogColor(float p_76562_1_, float p_76562_2_)
+    public Vec3 getFogColor(float celestialAngle, float partialTicks)
     {
         int i = 10518688;
-        float f = MathHelper.cos(p_76562_1_ * (float)Math.PI * 2.0F) * 2.0F + 0.5F;
+        float f = MathHelper.cos(celestialAngle * (float)Math.PI * 2.0F) * 2.0F + 0.5F;
         f = MathHelper.clamp_float(f, 0.0F, 1.0F);
         float f1 = (float)(i >> 16 & 255) / 255.0F;
         float f2 = (float)(i >> 8 & 255) / 255.0F;

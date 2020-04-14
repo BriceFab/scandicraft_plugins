@@ -91,7 +91,7 @@ public class GameSettings
     /** Smooth Lighting */
     public int ambientOcclusion = 2;
     public List resourcePacks = Lists.newArrayList();
-    public List field_183018_l = Lists.newArrayList();
+    public List incompatibleResourcePacks = Lists.newArrayList();
     public EntityPlayer.EnumChatVisibility chatVisibility = EntityPlayer.EnumChatVisibility.FULL;
     public boolean chatColours = true;
     public boolean chatLinks = true;
@@ -135,8 +135,8 @@ public class GameSettings
     public int streamChatEnabled = 0;
     public int streamChatUserFilter = 0;
     public int streamMicToggleBehavior = 0;
-    public boolean field_181150_U = true;
-    public boolean field_181151_V = true;
+    public boolean useNativeTransport = true;
+    public boolean entityShadows = true;
     public KeyBinding keyBindForward = new KeyBinding("key.forward", 17, "key.categories.movement", KeyBindingType.MINECRAFT);
     public KeyBinding keyBindLeft = new KeyBinding("key.left", 30, "key.categories.movement", KeyBindingType.MINECRAFT);
     public KeyBinding keyBindBack = new KeyBinding("key.back", 31, "key.categories.movement", KeyBindingType.MINECRAFT);
@@ -172,7 +172,7 @@ public class GameSettings
     /** true if debug info should be displayed instead of version */
     public boolean showDebugInfo;
     public boolean showDebugProfilerChart;
-    public boolean field_181657_aC;
+    public boolean showLagometer;
 
     /** The lastServer string. */
     public String lastServer;
@@ -272,7 +272,7 @@ public class GameSettings
     public KeyBinding ofKeyBindZoom;
     private File optionsFileOF;
 
-    public GameSettings(Minecraft mcIn, File p_i46326_2_)
+    public GameSettings(Minecraft mcIn, File mcDataDir)
     {
         this.keyBindings = (KeyBinding[])((KeyBinding[])ArrayUtils.addAll(new KeyBinding[] {this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindSprint, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock, this.keyBindCommand, this.keyBindScreenshot, this.keyBindTogglePerspective, this.keyBindSmoothCamera, this.keyBindStreamStartStop, this.keyBindStreamPauseUnpause, this.keyBindStreamCommercials, this.keyBindStreamToggleMic, this.keyBindFullscreen, this.keyBindSpectatorOutlines}, this.keyBindsHotbar));
         this.difficulty = EnumDifficulty.NORMAL;
@@ -281,8 +281,8 @@ public class GameSettings
         this.language = "en_US";
         this.forceUnicodeFont = false;
         this.mc = mcIn;
-        this.optionsFile = new File(p_i46326_2_, "options.txt");
-        this.optionsFileOF = new File(p_i46326_2_, "optionsof.txt");
+        this.optionsFile = new File(mcDataDir, "options.txt");
+        this.optionsFileOF = new File(mcDataDir, "optionsof.txt");
         this.limitFramerate = (int)GameSettings.Options.FRAMERATE_LIMIT.getValueMax();
         this.ofKeyBindZoom = new KeyBinding("of.key.zoom", 46, "key.categories.misc", KeyBindingType.MINECRAFT);
         this.keyBindings = (KeyBinding[])((KeyBinding[])ArrayUtils.add(this.keyBindings, this.ofKeyBindZoom));
@@ -606,7 +606,7 @@ public class GameSettings
 
         if (p_74306_1_ == GameSettings.Options.ENTITY_SHADOWS)
         {
-            this.field_181151_V = !this.field_181151_V;
+            this.entityShadows = !this.entityShadows;
         }
 
         this.saveOptions();
@@ -670,7 +670,7 @@ public class GameSettings
                 return this.reducedDebugInfo;
 
             case 17:
-                return this.field_181151_V;
+                return this.entityShadows;
 
             default:
                 return false;
@@ -918,11 +918,11 @@ public class GameSettings
 
                     if (astring[0].equals("incompatibleResourcePacks"))
                     {
-                        this.field_183018_l = (List)gson.fromJson((String)s.substring(s.indexOf(58) + 1), typeListString);
+                        this.incompatibleResourcePacks = (List)gson.fromJson((String)s.substring(s.indexOf(58) + 1), typeListString);
 
-                        if (this.field_183018_l == null)
+                        if (this.incompatibleResourcePacks == null)
                         {
-                            this.field_183018_l = Lists.newArrayList();
+                            this.incompatibleResourcePacks = Lists.newArrayList();
                         }
                     }
 
@@ -1119,12 +1119,12 @@ public class GameSettings
 
                     if (astring[0].equals("useNativeTransport"))
                     {
-                        this.field_181150_U = astring[1].equals("true");
+                        this.useNativeTransport = astring[1].equals("true");
                     }
 
                     if (astring[0].equals("entityShadows"))
                     {
-                        this.field_181151_V = astring[1].equals("true");
+                        this.entityShadows = astring[1].equals("true");
                     }
 
                     for (KeyBinding keybinding : this.keyBindings)
@@ -1226,7 +1226,7 @@ public class GameSettings
             }
 
             printwriter.println("resourcePacks:" + gson.toJson((Object)this.resourcePacks));
-            printwriter.println("incompatibleResourcePacks:" + gson.toJson((Object)this.field_183018_l));
+            printwriter.println("incompatibleResourcePacks:" + gson.toJson((Object)this.incompatibleResourcePacks));
             printwriter.println("lastServer:" + this.lastServer);
             printwriter.println("lang:" + this.language);
             printwriter.println("chatVisibility:" + this.chatVisibility.getChatVisibility());
@@ -1265,8 +1265,8 @@ public class GameSettings
             printwriter.println("forceUnicodeFont:" + this.forceUnicodeFont);
             printwriter.println("allowBlockAlternatives:" + this.allowBlockAlternatives);
             printwriter.println("reducedDebugInfo:" + this.reducedDebugInfo);
-            printwriter.println("useNativeTransport:" + this.field_181150_U);
-            printwriter.println("entityShadows:" + this.field_181151_V);
+            printwriter.println("useNativeTransport:" + this.useNativeTransport);
+            printwriter.println("entityShadows:" + this.entityShadows);
 
             for (KeyBinding keybinding : this.keyBindings)
             {
@@ -1328,29 +1328,29 @@ public class GameSettings
         return ImmutableSet.copyOf(this.setModelParts);
     }
 
-    public void setModelPartEnabled(EnumPlayerModelParts p_178878_1_, boolean p_178878_2_)
+    public void setModelPartEnabled(EnumPlayerModelParts modelPart, boolean enable)
     {
-        if (p_178878_2_)
+        if (enable)
         {
-            this.setModelParts.add(p_178878_1_);
+            this.setModelParts.add(modelPart);
         }
         else
         {
-            this.setModelParts.remove(p_178878_1_);
+            this.setModelParts.remove(modelPart);
         }
 
         this.sendSettingsToServer();
     }
 
-    public void switchModelPartEnabled(EnumPlayerModelParts p_178877_1_)
+    public void switchModelPartEnabled(EnumPlayerModelParts modelPart)
     {
-        if (!this.getModelParts().contains(p_178877_1_))
+        if (!this.getModelParts().contains(modelPart))
         {
-            this.setModelParts.add(p_178877_1_);
+            this.setModelParts.add(modelPart);
         }
         else
         {
-            this.setModelParts.remove(p_178877_1_);
+            this.setModelParts.remove(modelPart);
         }
 
         this.sendSettingsToServer();
@@ -1361,9 +1361,9 @@ public class GameSettings
         return this.renderDistanceChunks >= 4 ? this.clouds : 0;
     }
 
-    public boolean func_181148_f()
+    public boolean isUsingNativeTransport()
     {
-        return this.field_181150_U;
+        return this.useNativeTransport;
     }
 
     private void setOptionFloatValueOF(GameSettings.Options p_setOptionFloatValueOF_1_, float p_setOptionFloatValueOF_2_)
@@ -1820,7 +1820,7 @@ public class GameSettings
 
             if (this.ofFastRender)
             {
-                this.mc.entityRenderer.func_181022_b();
+                this.mc.entityRenderer.stopUseShader();
             }
 
             Config.updateFramebufferSize();

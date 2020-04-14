@@ -81,7 +81,7 @@ public class GuiBeacon extends GuiContainer
                     }
                     else if (l1 == j)
                     {
-                        guibeacon$powerbutton.func_146140_b(true);
+                        guibeacon$powerbutton.setSelected(true);
                     }
                 }
             }
@@ -102,7 +102,7 @@ public class GuiBeacon extends GuiContainer
                 }
                 else if (i3 == k)
                 {
-                    guibeacon$powerbutton2.func_146140_b(true);
+                    guibeacon$powerbutton2.setSelected(true);
                 }
             }
 
@@ -117,7 +117,7 @@ public class GuiBeacon extends GuiContainer
                 }
                 else if (j == k)
                 {
-                    guibeacon$powerbutton1.func_146140_b(true);
+                    guibeacon$powerbutton1.setSelected(true);
                 }
             }
         }
@@ -145,7 +145,7 @@ public class GuiBeacon extends GuiContainer
         }
         else if (button instanceof GuiBeacon.PowerButton)
         {
-            if (((GuiBeacon.PowerButton)button).func_146141_c())
+            if (((GuiBeacon.PowerButton)button).isSelected())
             {
                 return;
             }
@@ -213,7 +213,7 @@ public class GuiBeacon extends GuiContainer
         private final ResourceLocation field_146145_o;
         private final int field_146144_p;
         private final int field_146143_q;
-        private boolean field_146142_r;
+        private boolean selected;
 
         protected Button(int p_i1077_1_, int p_i1077_2_, int p_i1077_3_, ResourceLocation p_i1077_4_, int p_i1077_5_, int p_i1077_6_)
         {
@@ -237,7 +237,7 @@ public class GuiBeacon extends GuiContainer
                 {
                     j += this.width * 2;
                 }
-                else if (this.field_146142_r)
+                else if (this.selected)
                 {
                     j += this.width * 1;
                 }
@@ -257,14 +257,14 @@ public class GuiBeacon extends GuiContainer
             }
         }
 
-        public boolean func_146141_c()
+        public boolean isSelected()
         {
-            return this.field_146142_r;
+            return this.selected;
         }
 
-        public void func_146140_b(boolean p_146140_1_)
+        public void setSelected(boolean selectedIn)
         {
-            this.field_146142_r = p_146140_1_;
+            this.selected = selectedIn;
         }
     }
 

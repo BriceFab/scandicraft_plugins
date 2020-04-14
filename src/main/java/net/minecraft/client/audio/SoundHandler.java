@@ -249,9 +249,9 @@ public class SoundHandler implements IResourceManagerReloadListener, ITickable
         this.sndManager.setSoundCategoryVolume(category, volume);
     }
 
-    public void stopSound(ISound p_147683_1_)
+    public void stopSound(ISound soundIn)
     {
-        this.sndManager.stopSound(p_147683_1_);
+        this.sndManager.stopSound(soundIn);
     }
 
     /**

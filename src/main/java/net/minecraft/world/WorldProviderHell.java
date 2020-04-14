@@ -23,7 +23,7 @@ public class WorldProviderHell extends WorldProvider
     /**
      * Return Vec3D with biome specific fog color
      */
-    public Vec3 getFogColor(float p_76562_1_, float p_76562_2_)
+    public Vec3 getFogColor(float celestialAngle, float partialTicks)
     {
         return new Vec3(0.20000000298023224D, 0.029999999329447746D, 0.029999999329447746D);
     }
@@ -69,7 +69,7 @@ public class WorldProviderHell extends WorldProvider
     /**
      * Calculates the angle of sun and moon in the sky relative to a specified time (usually worldTime)
      */
-    public float calculateCelestialAngle(long p_76563_1_, float p_76563_3_)
+    public float calculateCelestialAngle(long worldTime, float partialTicks)
     {
         return 0.5F;
     }

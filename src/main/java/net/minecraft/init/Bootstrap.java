@@ -99,13 +99,13 @@ public class Bootstrap
             {
                 return new EntityExpBottle(worldIn, position.getX(), position.getY(), position.getZ());
             }
-            protected float func_82498_a()
+            protected float getProjectileInaccuracy()
             {
-                return super.func_82498_a() * 0.5F;
+                return super.getProjectileInaccuracy() * 0.5F;
             }
-            protected float func_82500_b()
+            protected float getProjectileVelocity()
             {
-                return super.func_82500_b() * 1.25F;
+                return super.getProjectileVelocity() * 1.25F;
             }
         });
         BlockDispenser.dispenseBehaviorRegistry.putObject(Items.potionitem, new IBehaviorDispenseItem()
@@ -119,13 +119,13 @@ public class Bootstrap
                     {
                         return new EntityPotion(worldIn, position.getX(), position.getY(), position.getZ(), stack.copy());
                     }
-                    protected float func_82498_a()
+                    protected float getProjectileInaccuracy()
                     {
-                        return super.func_82498_a() * 0.5F;
+                        return super.getProjectileInaccuracy() * 0.5F;
                     }
-                    protected float func_82500_b()
+                    protected float getProjectileVelocity()
                     {
-                        return super.func_82500_b() * 1.25F;
+                        return super.getProjectileVelocity() * 1.25F;
                     }
                 }).dispense(source, stack): this.field_150843_b.dispense(source, stack);
             }
@@ -531,8 +531,8 @@ public class Bootstrap
         System.setOut(new LoggingPrintStream("STDOUT", SYSOUT));
     }
 
-    public static void printToSYSOUT(String p_179870_0_)
+    public static void printToSYSOUT(String message)
     {
-        SYSOUT.println(p_179870_0_);
+        SYSOUT.println(message);
     }
 }

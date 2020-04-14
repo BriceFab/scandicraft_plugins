@@ -42,13 +42,13 @@ public class MusicTicker implements ITickable
 
         if (this.currentMusic == null && this.timeUntilNextMusic-- <= 0)
         {
-            this.func_181558_a(musicticker$musictype);
+            this.play(musicticker$musictype);
         }
     }
 
-    public void func_181558_a(MusicTicker.MusicType p_181558_1_)
+    public void play(MusicTicker.MusicType type)
     {
-        this.currentMusic = PositionedSoundRecord.create(p_181558_1_.getMusicLocation());
+        this.currentMusic = PositionedSoundRecord.create(type.getMusicLocation());
         this.mc.getSoundHandler().playSound(this.currentMusic);
         this.timeUntilNextMusic = Integer.MAX_VALUE;
     }

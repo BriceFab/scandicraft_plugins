@@ -19,9 +19,9 @@ public class RealmsConnect
     private volatile boolean aborted = false;
     private NetworkManager connection;
 
-    public RealmsConnect(RealmsScreen p_i1079_1_)
+    public RealmsConnect(RealmsScreen onlineScreenIn)
     {
-        this.onlineScreen = p_i1079_1_;
+        this.onlineScreen = onlineScreenIn;
     }
 
     public void connect(final String p_connect_1_, final int p_connect_2_)
@@ -42,7 +42,7 @@ public class RealmsConnect
                         return;
                     }
 
-                    RealmsConnect.this.connection = NetworkManager.func_181124_a(inetaddress, p_connect_2_, Minecraft.getMinecraft().gameSettings.func_181148_f());
+                    RealmsConnect.this.connection = NetworkManager.createNetworkManagerAndConnect(inetaddress, p_connect_2_, Minecraft.getMinecraft().gameSettings.isUsingNativeTransport());
 
                     if (RealmsConnect.this.aborted)
                     {

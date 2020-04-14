@@ -23,12 +23,12 @@ public class ResourceIndex
     private static final Logger logger = LogManager.getLogger();
     private final Map<String, File> resourceMap = Maps.<String, File>newHashMap();
 
-    public ResourceIndex(File p_i1047_1_, String p_i1047_2_)
+    public ResourceIndex(File assetsFolder, String indexName)
     {
-        if (p_i1047_2_ != null)
+        if (indexName != null)
         {
-            File file1 = new File(p_i1047_1_, "objects");
-            File file2 = new File(p_i1047_1_, "indexes/" + p_i1047_2_ + ".json");
+            File file1 = new File(assetsFolder, "objects");
+            File file2 = new File(assetsFolder, "indexes/" + indexName + ".json");
             BufferedReader bufferedreader = null;
 
             try

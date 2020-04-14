@@ -83,7 +83,7 @@ public class CommandGive extends CommandBase
 
                 if (entityitem1 != null)
                 {
-                    entityitem1.func_174870_v();
+                    entityitem1.makeFakeItem();
                 }
             }
             else

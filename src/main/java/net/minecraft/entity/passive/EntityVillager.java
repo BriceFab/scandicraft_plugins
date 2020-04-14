@@ -310,7 +310,7 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
 
             if (itemstack != null)
             {
-                this.villagerInventory.func_174894_a(itemstack);
+                this.villagerInventory.addItem(itemstack);
             }
         }
 
@@ -441,9 +441,9 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
         super.onDeath(cause);
     }
 
-    public void setCustomer(EntityPlayer p_70932_1_)
+    public void setCustomer(EntityPlayer player)
     {
-        this.buyingPlayer = p_70932_1_;
+        this.buyingPlayer = player;
     }
 
     public EntityPlayer getCustomer()
@@ -810,7 +810,7 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
 
         if (this.canVillagerPickupItem(item))
         {
-            ItemStack itemstack1 = this.villagerInventory.func_174894_a(itemstack);
+            ItemStack itemstack1 = this.villagerInventory.addItem(itemstack);
 
             if (itemstack1 == null)
             {
@@ -842,7 +842,7 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
         return this.hasEnoughItems(2);
     }
 
-    public boolean func_175557_cr()
+    public boolean wantsMoreFood()
     {
         boolean flag = this.getProfession() == 0;
         return flag ? !this.hasEnoughItems(5) : !this.hasEnoughItems(1);

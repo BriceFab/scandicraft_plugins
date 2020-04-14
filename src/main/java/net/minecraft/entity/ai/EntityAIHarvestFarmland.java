@@ -39,7 +39,7 @@ public class EntityAIHarvestFarmland extends EntityAIMoveToBlock
 
             this.field_179501_f = -1;
             this.hasFarmItem = this.theVillager.isFarmItemInInventory();
-            this.field_179503_e = this.theVillager.func_175557_cr();
+            this.field_179503_e = this.theVillager.wantsMoreFood();
         }
 
         return super.shouldExecute();

@@ -29,11 +29,11 @@ public class EntityEgg extends EntityThrowable
     /**
      * Called when this EntityThrowable hits a block or entity.
      */
-    protected void onImpact(MovingObjectPosition p_70184_1_)
+    protected void onImpact(MovingObjectPosition result)
     {
-        if (p_70184_1_.entityHit != null)
+        if (result.entityHit != null)
         {
-            p_70184_1_.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0.0F);
+            result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0.0F);
         }
 
         if (!this.worldObj.isRemote && this.rand.nextInt(8) == 0)

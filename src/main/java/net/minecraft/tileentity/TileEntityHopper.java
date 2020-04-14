@@ -407,9 +407,9 @@ public class TileEntityHopper extends TileEntityLockable implements IHopper, ITi
         return true;
     }
 
-    public static boolean captureDroppedItems(IHopper p_145891_0_)
+    public static boolean captureDroppedItems(IHopper hopper)
     {
-        IInventory iinventory = getHopperInventory(p_145891_0_);
+        IInventory iinventory = getHopperInventory(hopper);
 
         if (iinventory != null)
         {
@@ -427,7 +427,7 @@ public class TileEntityHopper extends TileEntityLockable implements IHopper, ITi
 
                 for (int i = 0; i < aint.length; ++i)
                 {
-                    if (pullItemFromSlot(p_145891_0_, iinventory, aint[i], enumfacing))
+                    if (pullItemFromSlot(hopper, iinventory, aint[i], enumfacing))
                     {
                         return true;
                     }
@@ -439,7 +439,7 @@ public class TileEntityHopper extends TileEntityLockable implements IHopper, ITi
 
                 for (int k = 0; k < j; ++k)
                 {
-                    if (pullItemFromSlot(p_145891_0_, iinventory, k, enumfacing))
+                    if (pullItemFromSlot(hopper, iinventory, k, enumfacing))
                     {
                         return true;
                     }
@@ -448,9 +448,9 @@ public class TileEntityHopper extends TileEntityLockable implements IHopper, ITi
         }
         else
         {
-            for (EntityItem entityitem : func_181556_a(p_145891_0_.getWorld(), p_145891_0_.getXPos(), p_145891_0_.getYPos() + 1.0D, p_145891_0_.getZPos()))
+            for (EntityItem entityitem : func_181556_a(hopper.getWorld(), hopper.getXPos(), hopper.getYPos() + 1.0D, hopper.getZPos()))
             {
-                if (putDropInInventoryAllSlots(p_145891_0_, entityitem))
+                if (putDropInInventoryAllSlots(hopper, entityitem))
                 {
                     return true;
                 }

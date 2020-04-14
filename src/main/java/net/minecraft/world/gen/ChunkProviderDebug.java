@@ -17,9 +17,9 @@ import net.minecraft.world.chunk.IChunkProvider;
 
 public class ChunkProviderDebug implements IChunkProvider
 {
-    private static final List<IBlockState> field_177464_a = Lists.<IBlockState>newArrayList();
-    private static final int field_177462_b;
-    private static final int field_181039_c;
+    private static final List<IBlockState> ALL_VALID_STATES = Lists.<IBlockState>newArrayList();
+    private static final int GRID_WIDTH;
+    private static final int GRID_HEIGHT;
     private final World world;
 
     public ChunkProviderDebug(World worldIn)
@@ -42,7 +42,7 @@ public class ChunkProviderDebug implements IChunkProvider
                 int k = x * 16 + i;
                 int l = z * 16 + j;
                 chunkprimer.setBlockState(i, 60, j, Blocks.barrier.getDefaultState());
-                IBlockState iblockstate = func_177461_b(k, l);
+                IBlockState iblockstate = getBlockStateFor(k, l);
 
                 if (iblockstate != null)
                 {
@@ -65,7 +65,7 @@ public class ChunkProviderDebug implements IChunkProvider
         return chunk;
     }
 
-    public static IBlockState func_177461_b(int p_177461_0_, int p_177461_1_)
+    public static IBlockState getBlockStateFor(int p_177461_0_, int p_177461_1_)
     {
         IBlockState iblockstate = null;
 
@@ -74,13 +74,13 @@ public class ChunkProviderDebug implements IChunkProvider
             p_177461_0_ = p_177461_0_ / 2;
             p_177461_1_ = p_177461_1_ / 2;
 
-            if (p_177461_0_ <= field_177462_b && p_177461_1_ <= field_181039_c)
+            if (p_177461_0_ <= GRID_WIDTH && p_177461_1_ <= GRID_HEIGHT)
             {
-                int i = MathHelper.abs_int(p_177461_0_ * field_177462_b + p_177461_1_);
+                int i = MathHelper.abs_int(p_177461_0_ * GRID_WIDTH + p_177461_1_);
 
-                if (i < field_177464_a.size())
+                if (i < ALL_VALID_STATES.size())
                 {
-                    iblockstate = (IBlockState)field_177464_a.get(i);
+                    iblockstate = (IBlockState)ALL_VALID_STATES.get(i);
                 }
             }
         }
@@ -178,10 +178,10 @@ public class ChunkProviderDebug implements IChunkProvider
     {
         for (Block block : Block.blockRegistry)
         {
-            field_177464_a.addAll(block.getBlockState().getValidStates());
+            ALL_VALID_STATES.addAll(block.getBlockState().getValidStates());
         }
 
-        field_177462_b = MathHelper.ceiling_float_int(MathHelper.sqrt_float((float)field_177464_a.size()));
-        field_181039_c = MathHelper.ceiling_float_int((float)field_177464_a.size() / (float)field_177462_b);
+        GRID_WIDTH = MathHelper.ceiling_float_int(MathHelper.sqrt_float((float)ALL_VALID_STATES.size()));
+        GRID_HEIGHT = MathHelper.ceiling_float_int((float)ALL_VALID_STATES.size() / (float)GRID_WIDTH);
     }
 }

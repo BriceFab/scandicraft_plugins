@@ -70,7 +70,7 @@ public class ShaderLoader
             {
                 String s = StringUtils.trim(OpenGlHelper.glGetShaderInfoLog(i, 32768));
                 JsonException jsonexception = new JsonException("Couldn\'t compile " + type.getShaderName() + " program: " + s);
-                jsonexception.func_151381_b(resourcelocation.getResourcePath());
+                jsonexception.setFilenameAndFlush(resourcelocation.getResourcePath());
                 throw jsonexception;
             }
 
@@ -107,11 +107,11 @@ public class ShaderLoader
         private final int shaderMode;
         private final Map<String, ShaderLoader> loadedShaders = Maps.<String, ShaderLoader>newHashMap();
 
-        private ShaderType(String p_i45090_3_, String p_i45090_4_, int p_i45090_5_)
+        private ShaderType(String shaderNameIn, String shaderExtensionIn, int shaderModeIn)
         {
-            this.shaderName = p_i45090_3_;
-            this.shaderExtension = p_i45090_4_;
-            this.shaderMode = p_i45090_5_;
+            this.shaderName = shaderNameIn;
+            this.shaderExtension = shaderExtensionIn;
+            this.shaderMode = shaderModeIn;
         }
 
         public String getShaderName()

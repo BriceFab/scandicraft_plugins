@@ -6,7 +6,7 @@ import net.minecraft.client.settings.GameSettings;
 
 public class ScreenChatOptions extends GuiScreen
 {
-    private static final GameSettings.Options[] field_146399_a = new GameSettings.Options[] {GameSettings.Options.CHAT_VISIBILITY, GameSettings.Options.CHAT_COLOR, GameSettings.Options.CHAT_LINKS, GameSettings.Options.CHAT_OPACITY, GameSettings.Options.CHAT_LINKS_PROMPT, GameSettings.Options.CHAT_SCALE, GameSettings.Options.CHAT_HEIGHT_FOCUSED, GameSettings.Options.CHAT_HEIGHT_UNFOCUSED, GameSettings.Options.CHAT_WIDTH, GameSettings.Options.REDUCED_DEBUG_INFO};
+    private static final GameSettings.Options[] CHAT_OPTIONS = new GameSettings.Options[] {GameSettings.Options.CHAT_VISIBILITY, GameSettings.Options.CHAT_COLOR, GameSettings.Options.CHAT_LINKS, GameSettings.Options.CHAT_OPACITY, GameSettings.Options.CHAT_LINKS_PROMPT, GameSettings.Options.CHAT_SCALE, GameSettings.Options.CHAT_HEIGHT_FOCUSED, GameSettings.Options.CHAT_HEIGHT_UNFOCUSED, GameSettings.Options.CHAT_WIDTH, GameSettings.Options.REDUCED_DEBUG_INFO};
     private final GuiScreen parentScreen;
     private final GameSettings game_settings;
     private String field_146401_i;
@@ -26,7 +26,7 @@ public class ScreenChatOptions extends GuiScreen
         int i = 0;
         this.field_146401_i = I18n.format("options.chat.title", new Object[0]);
 
-        for (GameSettings.Options gamesettings$options : field_146399_a)
+        for (GameSettings.Options gamesettings$options : CHAT_OPTIONS)
         {
             if (gamesettings$options.getEnumFloat())
             {

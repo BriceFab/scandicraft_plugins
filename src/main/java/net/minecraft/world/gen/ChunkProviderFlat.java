@@ -98,7 +98,7 @@ public class ChunkProviderFlat implements IChunkProvider
         {
             for (int i = flatlayerinfo.getMinY(); i < flatlayerinfo.getMinY() + flatlayerinfo.getLayerCount(); ++i)
             {
-                IBlockState iblockstate = flatlayerinfo.func_175900_c();
+                IBlockState iblockstate = flatlayerinfo.getLayerMaterial();
 
                 if (iblockstate.getBlock() != Blocks.air)
                 {
@@ -107,7 +107,7 @@ public class ChunkProviderFlat implements IChunkProvider
                 }
             }
 
-            if (flatlayerinfo.func_175900_c().getBlock() == Blocks.air)
+            if (flatlayerinfo.getLayerMaterial().getBlock() == Blocks.air)
             {
                 k += flatlayerinfo.getLayerCount();
             }
@@ -207,7 +207,7 @@ public class ChunkProviderFlat implements IChunkProvider
         {
             BlockPos blockpos1 = blockpos.add(this.random.nextInt(16) + 8, this.random.nextInt(this.random.nextInt(248) + 8), this.random.nextInt(16) + 8);
 
-            if (blockpos1.getY() < this.worldObj.func_181545_F() || this.random.nextInt(10) == 0)
+            if (blockpos1.getY() < this.worldObj.getSeaLevel() || this.random.nextInt(10) == 0)
             {
                 this.lavaLakeGenerator.generate(this.worldObj, this.random, blockpos1);
             }

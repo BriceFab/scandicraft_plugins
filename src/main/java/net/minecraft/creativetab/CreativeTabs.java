@@ -244,19 +244,19 @@ public abstract class CreativeTabs
     /**
      * only shows items which have tabToDisplayOn == this
      */
-    public void displayAllReleventItems(List<ItemStack> p_78018_1_)
+    public void displayAllReleventItems(List<ItemStack> items)
     {
         for (Item item : Item.itemRegistry)
         {
             if (item != null && item.getCreativeTab() == this)
             {
-                item.getSubItems(item, this, p_78018_1_);
+                item.getSubItems(item, this, items);
             }
         }
 
         if (this.getRelevantEnchantmentTypes() != null)
         {
-            this.addEnchantmentBooksToList(p_78018_1_, this.getRelevantEnchantmentTypes());
+            this.addEnchantmentBooksToList(items, this.getRelevantEnchantmentTypes());
         }
     }
 

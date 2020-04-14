@@ -46,14 +46,14 @@ public class RenderChunk
     private final ReentrantLock lockCompileTask = new ReentrantLock();
     private final ReentrantLock lockCompiledChunk = new ReentrantLock();
     private ChunkCompileTaskGenerator compileTask = null;
-    private final Set field_181056_j = Sets.newHashSet();
+    private final Set globalTileEntities = Sets.newHashSet();
     private final int index;
     private final FloatBuffer modelviewMatrix = GLAllocation.createDirectFloatBuffer(16);
     private final VertexBuffer[] vertexBuffers = new VertexBuffer[EnumWorldBlockLayer.values().length];
     public AxisAlignedBB boundingBox;
     private int frameIndex = -1;
     private boolean needsUpdate = true;
-    private EnumMap field_181702_p;
+    private EnumMap mapEnumFacing;
     private static final String __OBFID = "CL_00002452";
     private BlockPos[] positionOffsets16 = new BlockPos[EnumFacing.VALUES.length];
     private static EnumWorldBlockLayer[] ENUM_WORLD_BLOCK_LAYERS = EnumWorldBlockLayer.values();
@@ -182,7 +182,7 @@ public class RenderChunk
 
                 if (block.isOpaqueCube())
                 {
-                    var10.func_178606_a(blockposm);
+                    var10.setOpaqueCube(blockposm);
                 }
 
                 if (ReflectorForge.blockHasTileEntity(iblockstate))
@@ -280,12 +280,12 @@ public class RenderChunk
         try
         {
             HashSet hashset1 = Sets.newHashSet(var11);
-            HashSet hashset2 = Sets.newHashSet(this.field_181056_j);
-            hashset1.removeAll(this.field_181056_j);
+            HashSet hashset2 = Sets.newHashSet(this.globalTileEntities);
+            hashset1.removeAll(this.globalTileEntities);
             hashset2.removeAll(var11);
-            this.field_181056_j.clear();
-            this.field_181056_j.addAll(var11);
-            this.renderGlobal.func_181023_a(hashset2, hashset1);
+            this.globalTileEntities.clear();
+            this.globalTileEntities.addAll(var11);
+            this.renderGlobal.updateTileEntities(hashset2, hashset1);
         }
         finally
         {
@@ -377,8 +377,8 @@ public class RenderChunk
     {
         if (layer == EnumWorldBlockLayer.TRANSLUCENT && !compiledChunkIn.isLayerEmpty(layer))
         {
-            worldRendererIn.func_181674_a(x, y, z);
-            compiledChunkIn.setState(worldRendererIn.func_181672_a());
+            worldRendererIn.sortVertexData(x, y, z);
+            compiledChunkIn.setState(worldRendererIn.getVertexState());
         }
 
         worldRendererIn.finishDrawing();
@@ -467,9 +467,9 @@ public class RenderChunk
         return this.needsUpdate;
     }
 
-    public BlockPos func_181701_a(EnumFacing p_181701_1_)
+    public BlockPos getBlockPosOffset16(EnumFacing facing)
     {
-        return this.getPositionOffset16(p_181701_1_);
+        return this.getPositionOffset16(facing);
     }
 
     public BlockPos getPositionOffset16(EnumFacing p_getPositionOffset16_1_)

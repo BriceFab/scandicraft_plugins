@@ -12,7 +12,7 @@ public class S3BPacketScoreboardObjective implements Packet<INetHandlerPlayClien
     private String objectiveName;
     private String objectiveValue;
     private IScoreObjectiveCriteria.EnumRenderType type;
-    private int field_149342_c;
+    private int action;
 
     public S3BPacketScoreboardObjective()
     {
@@ -23,7 +23,7 @@ public class S3BPacketScoreboardObjective implements Packet<INetHandlerPlayClien
         this.objectiveName = p_i45224_1_.getName();
         this.objectiveValue = p_i45224_1_.getDisplayName();
         this.type = p_i45224_1_.getCriteria().getRenderType();
-        this.field_149342_c = p_i45224_2_;
+        this.action = p_i45224_2_;
     }
 
     /**
@@ -32,9 +32,9 @@ public class S3BPacketScoreboardObjective implements Packet<INetHandlerPlayClien
     public void readPacketData(PacketBuffer buf) throws IOException
     {
         this.objectiveName = buf.readStringFromBuffer(16);
-        this.field_149342_c = buf.readByte();
+        this.action = buf.readByte();
 
-        if (this.field_149342_c == 0 || this.field_149342_c == 2)
+        if (this.action == 0 || this.action == 2)
         {
             this.objectiveValue = buf.readStringFromBuffer(32);
             this.type = IScoreObjectiveCriteria.EnumRenderType.func_178795_a(buf.readStringFromBuffer(16));
@@ -47,9 +47,9 @@ public class S3BPacketScoreboardObjective implements Packet<INetHandlerPlayClien
     public void writePacketData(PacketBuffer buf) throws IOException
     {
         buf.writeString(this.objectiveName);
-        buf.writeByte(this.field_149342_c);
+        buf.writeByte(this.action);
 
-        if (this.field_149342_c == 0 || this.field_149342_c == 2)
+        if (this.action == 0 || this.action == 2)
         {
             buf.writeString(this.objectiveValue);
             buf.writeString(this.type.func_178796_a());
@@ -64,19 +64,19 @@ public class S3BPacketScoreboardObjective implements Packet<INetHandlerPlayClien
         handler.handleScoreboardObjective(this);
     }
 
-    public String func_149339_c()
+    public String getObjectiveName()
     {
         return this.objectiveName;
     }
 
-    public String func_149337_d()
+    public String getDisplayName()
     {
         return this.objectiveValue;
     }
 
-    public int func_149338_e()
+    public int getAction()
     {
-        return this.field_149342_c;
+        return this.action;
     }
 
     public IScoreObjectiveCriteria.EnumRenderType func_179817_d()

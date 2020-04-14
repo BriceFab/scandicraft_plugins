@@ -596,9 +596,9 @@ public class RenderItem implements IResourceManagerReloadListener
                 GlStateManager.disableBlend();
                 Tessellator tessellator = Tessellator.getInstance();
                 WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-                this.func_181565_a(worldrenderer, xPosition + 2, yPosition + 13, 13, 2, 0, 0, 0, 255);
-                this.func_181565_a(worldrenderer, xPosition + 2, yPosition + 13, 12, 1, (255 - j) / 4, 64, 0, 255);
-                this.func_181565_a(worldrenderer, xPosition + 2, yPosition + 13, i, 1, 255 - j, j, 0, 255);
+                this.draw(worldrenderer, xPosition + 2, yPosition + 13, 13, 2, 0, 0, 0, 255);
+                this.draw(worldrenderer, xPosition + 2, yPosition + 13, 12, 1, (255 - j) / 4, 64, 0, 255);
+                this.draw(worldrenderer, xPosition + 2, yPosition + 13, i, 1, 255 - j, j, 0, 255);
 
                 if (!Reflector.ForgeHooksClient.exists())
                 {
@@ -613,13 +613,13 @@ public class RenderItem implements IResourceManagerReloadListener
         }
     }
 
-    private void func_181565_a(WorldRenderer p_181565_1_, int p_181565_2_, int p_181565_3_, int p_181565_4_, int p_181565_5_, int p_181565_6_, int p_181565_7_, int p_181565_8_, int p_181565_9_)
+    private void draw(WorldRenderer renderer, int x, int y, int width, int height, int red, int green, int blue, int alpha)
     {
-        p_181565_1_.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        p_181565_1_.pos((double)(p_181565_2_ + 0), (double)(p_181565_3_ + 0), 0.0D).color(p_181565_6_, p_181565_7_, p_181565_8_, p_181565_9_).endVertex();
-        p_181565_1_.pos((double)(p_181565_2_ + 0), (double)(p_181565_3_ + p_181565_5_), 0.0D).color(p_181565_6_, p_181565_7_, p_181565_8_, p_181565_9_).endVertex();
-        p_181565_1_.pos((double)(p_181565_2_ + p_181565_4_), (double)(p_181565_3_ + p_181565_5_), 0.0D).color(p_181565_6_, p_181565_7_, p_181565_8_, p_181565_9_).endVertex();
-        p_181565_1_.pos((double)(p_181565_2_ + p_181565_4_), (double)(p_181565_3_ + 0), 0.0D).color(p_181565_6_, p_181565_7_, p_181565_8_, p_181565_9_).endVertex();
+        renderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        renderer.pos((double)(x + 0), (double)(y + 0), 0.0D).color(red, green, blue, alpha).endVertex();
+        renderer.pos((double)(x + 0), (double)(y + height), 0.0D).color(red, green, blue, alpha).endVertex();
+        renderer.pos((double)(x + width), (double)(y + height), 0.0D).color(red, green, blue, alpha).endVertex();
+        renderer.pos((double)(x + width), (double)(y + 0), 0.0D).color(red, green, blue, alpha).endVertex();
         Tessellator.getInstance().draw();
     }
 

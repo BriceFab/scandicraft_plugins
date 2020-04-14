@@ -610,21 +610,21 @@ public class EntityWolf extends EntityTameable
         return !this.isTamed() && this.ticksExisted > 2400;
     }
 
-    public boolean shouldAttackEntity(EntityLivingBase p_142018_1_, EntityLivingBase p_142018_2_)
+    public boolean shouldAttackEntity(EntityLivingBase target, EntityLivingBase owner)
     {
-        if (!(p_142018_1_ instanceof EntityCreeper) && !(p_142018_1_ instanceof EntityGhast))
+        if (!(target instanceof EntityCreeper) && !(target instanceof EntityGhast))
         {
-            if (p_142018_1_ instanceof EntityWolf)
+            if (target instanceof EntityWolf)
             {
-                EntityWolf entitywolf = (EntityWolf)p_142018_1_;
+                EntityWolf entitywolf = (EntityWolf)target;
 
-                if (entitywolf.isTamed() && entitywolf.getOwner() == p_142018_2_)
+                if (entitywolf.isTamed() && entitywolf.getOwner() == owner)
                 {
                     return false;
                 }
             }
 
-            return p_142018_1_ instanceof EntityPlayer && p_142018_2_ instanceof EntityPlayer && !((EntityPlayer)p_142018_2_).canAttackPlayer((EntityPlayer)p_142018_1_) ? false : !(p_142018_1_ instanceof EntityHorse) || !((EntityHorse)p_142018_1_).isTame();
+            return target instanceof EntityPlayer && owner instanceof EntityPlayer && !((EntityPlayer)owner).canAttackPlayer((EntityPlayer)target) ? false : !(target instanceof EntityHorse) || !((EntityHorse)target).isTame();
         }
         else
         {

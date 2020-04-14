@@ -74,7 +74,7 @@ public class SimpleBakedModel implements IBakedModel
 
         public Builder(ModelBlock p_i46074_1_)
         {
-            this(p_i46074_1_.isAmbientOcclusion(), p_i46074_1_.isGui3d(), p_i46074_1_.func_181682_g());
+            this(p_i46074_1_.isAmbientOcclusion(), p_i46074_1_.isGui3d(), p_i46074_1_.getAllTransforms());
         }
 
         public Builder(IBakedModel p_i46075_1_, TextureAtlasSprite p_i46075_2_)
@@ -121,21 +121,21 @@ public class SimpleBakedModel implements IBakedModel
             this.builderCameraTransforms = p_i46076_3_;
         }
 
-        public SimpleBakedModel.Builder addFaceQuad(EnumFacing p_177650_1_, BakedQuad p_177650_2_)
+        public SimpleBakedModel.Builder addFaceQuad(EnumFacing facing, BakedQuad quad)
         {
-            ((List)this.builderFaceQuads.get(p_177650_1_.ordinal())).add(p_177650_2_);
+            ((List)this.builderFaceQuads.get(facing.ordinal())).add(quad);
             return this;
         }
 
-        public SimpleBakedModel.Builder addGeneralQuad(BakedQuad p_177648_1_)
+        public SimpleBakedModel.Builder addGeneralQuad(BakedQuad quad)
         {
-            this.builderGeneralQuads.add(p_177648_1_);
+            this.builderGeneralQuads.add(quad);
             return this;
         }
 
-        public SimpleBakedModel.Builder setTexture(TextureAtlasSprite p_177646_1_)
+        public SimpleBakedModel.Builder setTexture(TextureAtlasSprite texture)
         {
-            this.builderTexture = p_177646_1_;
+            this.builderTexture = texture;
             return this;
         }
 

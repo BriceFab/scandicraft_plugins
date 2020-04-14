@@ -98,7 +98,7 @@ public class MapItemRenderer
                 }
                 else
                 {
-                    this.mapTextureData[i] = MapColor.mapColorArray[j / 4].func_151643_b(j & 3);
+                    this.mapTextureData[i] = MapColor.mapColorArray[j / 4].getMapColor(j & 3);
                 }
             }
 
@@ -129,14 +129,14 @@ public class MapItemRenderer
 
             for (Vec4b vec4b : this.mapData.mapDecorations.values())
             {
-                if (!noOverlayRendering || vec4b.func_176110_a() == 1)
+                if (!noOverlayRendering || vec4b.getImage() == 1)
                 {
                     GlStateManager.pushMatrix();
-                    GlStateManager.translate((float)i + (float)vec4b.func_176112_b() / 2.0F + 64.0F, (float)j + (float)vec4b.func_176113_c() / 2.0F + 64.0F, -0.02F);
-                    GlStateManager.rotate((float)(vec4b.func_176111_d() * 360) / 16.0F, 0.0F, 0.0F, 1.0F);
+                    GlStateManager.translate((float)i + (float)vec4b.getX() / 2.0F + 64.0F, (float)j + (float)vec4b.getY() / 2.0F + 64.0F, -0.02F);
+                    GlStateManager.rotate((float)(vec4b.getRotation() * 360) / 16.0F, 0.0F, 0.0F, 1.0F);
                     GlStateManager.scale(4.0F, 4.0F, 3.0F);
                     GlStateManager.translate(-0.125F, 0.125F, 0.0F);
-                    byte b0 = vec4b.func_176110_a();
+                    byte b0 = vec4b.getImage();
                     float f1 = (float)(b0 % 4 + 0) / 4.0F;
                     float f2 = (float)(b0 / 4 + 0) / 4.0F;
                     float f3 = (float)(b0 % 4 + 1) / 4.0F;

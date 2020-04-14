@@ -22,9 +22,9 @@ public enum EnumDifficulty
         return this.difficultyId;
     }
 
-    public static EnumDifficulty getDifficultyEnum(int p_151523_0_)
+    public static EnumDifficulty getDifficultyEnum(int id)
     {
-        return difficultyEnums[p_151523_0_ % difficultyEnums.length];
+        return difficultyEnums[id % difficultyEnums.length];
     }
 
     public String getDifficultyResourceKey()

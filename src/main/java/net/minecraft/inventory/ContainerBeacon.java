@@ -143,9 +143,9 @@ public class ContainerBeacon extends Container
 
     class BeaconSlot extends Slot
     {
-        public BeaconSlot(IInventory p_i1801_2_, int p_i1801_3_, int p_i1801_4_, int p_i1801_5_)
+        public BeaconSlot(IInventory inventoryIn, int index, int xIn, int yIn)
         {
-            super(p_i1801_2_, p_i1801_3_, p_i1801_4_, p_i1801_5_);
+            super(inventoryIn, index, xIn, yIn);
         }
 
         public boolean isItemValid(ItemStack stack)

@@ -41,13 +41,13 @@ public abstract class WorldGenHugeTrees extends WorldGenAbstractTree
         return i;
     }
 
-    private boolean func_175926_c(World worldIn, BlockPos p_175926_2_, int p_175926_3_)
+    private boolean isSpaceAt(World worldIn, BlockPos leavesPos, int height)
     {
         boolean flag = true;
 
-        if (p_175926_2_.getY() >= 1 && p_175926_2_.getY() + p_175926_3_ + 1 <= 256)
+        if (leavesPos.getY() >= 1 && leavesPos.getY() + height + 1 <= 256)
         {
-            for (int i = 0; i <= 1 + p_175926_3_; ++i)
+            for (int i = 0; i <= 1 + height; ++i)
             {
                 int j = 2;
 
@@ -55,7 +55,7 @@ public abstract class WorldGenHugeTrees extends WorldGenAbstractTree
                 {
                     j = 1;
                 }
-                else if (i >= 1 + p_175926_3_ - 2)
+                else if (i >= 1 + height - 2)
                 {
                     j = 2;
                 }
@@ -64,7 +64,7 @@ public abstract class WorldGenHugeTrees extends WorldGenAbstractTree
                 {
                     for (int l = -j; l <= j && flag; ++l)
                     {
-                        if (p_175926_2_.getY() + i < 0 || p_175926_2_.getY() + i >= 256 || !this.func_150523_a(worldIn.getBlockState(p_175926_2_.add(k, i, l)).getBlock()))
+                        if (leavesPos.getY() + i < 0 || leavesPos.getY() + i >= 256 || !this.func_150523_a(worldIn.getBlockState(leavesPos.add(k, i, l)).getBlock()))
                         {
                             flag = false;
                         }
@@ -101,7 +101,7 @@ public abstract class WorldGenHugeTrees extends WorldGenAbstractTree
 
     protected boolean func_175929_a(World worldIn, Random p_175929_2_, BlockPos p_175929_3_, int p_175929_4_)
     {
-        return this.func_175926_c(worldIn, p_175929_3_, p_175929_4_) && this.func_175927_a(p_175929_3_, worldIn);
+        return this.isSpaceAt(worldIn, p_175929_3_, p_175929_4_) && this.func_175927_a(p_175929_3_, worldIn);
     }
 
     protected void func_175925_a(World worldIn, BlockPos p_175925_2_, int p_175925_3_)

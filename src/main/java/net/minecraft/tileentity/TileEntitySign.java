@@ -128,7 +128,7 @@ public class TileEntitySign extends TileEntity
         return new S33PacketUpdateSign(this.worldObj, this.pos, aichatcomponent);
     }
 
-    public boolean func_183000_F()
+    public boolean onlyOpsCanSetNbt()
     {
         return true;
     }

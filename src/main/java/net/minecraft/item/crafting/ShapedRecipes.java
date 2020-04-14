@@ -77,7 +77,7 @@ public class ShapedRecipes implements IRecipe
     /**
      * Checks if the region of a crafting inventory is match for the recipe.
      */
-    private boolean checkMatch(InventoryCrafting p_77573_1_, int p_77573_2_, int p_77573_3_, boolean p_77573_4_)
+    private boolean checkMatch(InventoryCrafting craftingInventory, int p_77573_2_, int p_77573_3_, boolean p_77573_4_)
     {
         for (int i = 0; i < 3; ++i)
         {
@@ -99,7 +99,7 @@ public class ShapedRecipes implements IRecipe
                     }
                 }
 
-                ItemStack itemstack1 = p_77573_1_.getStackInRowAndColumn(i, j);
+                ItemStack itemstack1 = craftingInventory.getStackInRowAndColumn(i, j);
 
                 if (itemstack1 != null || itemstack != null)
                 {

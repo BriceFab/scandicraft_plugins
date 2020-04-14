@@ -61,26 +61,26 @@ public class PlayerControllerMP
     /** Index of the current item held by the player in the inventory hotbar */
     private int currentPlayerItem;
 
-    public PlayerControllerMP(Minecraft mcIn, NetHandlerPlayClient p_i45062_2_)
+    public PlayerControllerMP(Minecraft mcIn, NetHandlerPlayClient netHandler)
     {
         this.mc = mcIn;
-        this.netClientHandler = p_i45062_2_;
+        this.netClientHandler = netHandler;
     }
 
-    public static void clickBlockCreative(Minecraft mcIn, PlayerControllerMP p_178891_1_, BlockPos p_178891_2_, EnumFacing p_178891_3_)
+    public static void clickBlockCreative(Minecraft mcIn, PlayerControllerMP playerController, BlockPos pos, EnumFacing facing)
     {
-        if (!mcIn.theWorld.extinguishFire(mcIn.thePlayer, p_178891_2_, p_178891_3_))
+        if (!mcIn.theWorld.extinguishFire(mcIn.thePlayer, pos, facing))
         {
-            p_178891_1_.onPlayerDestroyBlock(p_178891_2_, p_178891_3_);
+            playerController.onPlayerDestroyBlock(pos, facing);
         }
     }
 
     /**
      * Sets player capabilities depending on current gametype. params: player
      */
-    public void setPlayerCapabilities(EntityPlayer p_78748_1_)
+    public void setPlayerCapabilities(EntityPlayer player)
     {
-        this.currentGameType.configurePlayerCapabilities(p_78748_1_.capabilities);
+        this.currentGameType.configurePlayerCapabilities(player.capabilities);
     }
 
     /**
@@ -94,9 +94,9 @@ public class PlayerControllerMP
     /**
      * Sets the game type for the player.
      */
-    public void setGameType(WorldSettings.GameType p_78746_1_)
+    public void setGameType(WorldSettings.GameType type)
     {
-        this.currentGameType = p_78746_1_;
+        this.currentGameType = type;
         this.currentGameType.configurePlayerCapabilities(this.mc.thePlayer.capabilities);
     }
 
@@ -532,9 +532,9 @@ public class PlayerControllerMP
      * GuiEnchantment uses this during multiplayer to tell PlayerControllerMP to send a packet indicating the
      * enchantment action the player has taken.
      */
-    public void sendEnchantPacket(int p_78756_1_, int p_78756_2_)
+    public void sendEnchantPacket(int windowID, int button)
     {
-        this.netClientHandler.addToSendQueue(new C11PacketEnchantItem(p_78756_1_, p_78756_2_));
+        this.netClientHandler.addToSendQueue(new C11PacketEnchantItem(windowID, button));
     }
 
     /**
@@ -613,7 +613,7 @@ public class PlayerControllerMP
         return this.currentGameType;
     }
 
-    public boolean func_181040_m()
+    public boolean getIsHittingBlock()
     {
         return this.isHittingBlock;
     }

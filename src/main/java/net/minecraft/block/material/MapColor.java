@@ -64,26 +64,26 @@ public class MapColor
         }
     }
 
-    public int func_151643_b(int p_151643_1_)
+    public int getMapColor(int index)
     {
         short short1 = 220;
 
-        if (p_151643_1_ == 3)
+        if (index == 3)
         {
             short1 = 135;
         }
 
-        if (p_151643_1_ == 2)
+        if (index == 2)
         {
             short1 = 255;
         }
 
-        if (p_151643_1_ == 1)
+        if (index == 1)
         {
             short1 = 220;
         }
 
-        if (p_151643_1_ == 0)
+        if (index == 0)
         {
             short1 = 180;
         }

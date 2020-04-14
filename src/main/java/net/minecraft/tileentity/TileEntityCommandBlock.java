@@ -75,7 +75,7 @@ public class TileEntityCommandBlock extends TileEntity
         return new S35PacketUpdateTileEntity(this.pos, 2, nbttagcompound);
     }
 
-    public boolean func_183000_F()
+    public boolean onlyOpsCanSetNbt()
     {
         return true;
     }

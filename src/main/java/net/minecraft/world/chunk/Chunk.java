@@ -596,7 +596,7 @@ public class Chunk
 
             if (pos.getY() == 70)
             {
-                iblockstate = ChunkProviderDebug.func_177461_b(pos.getX(), pos.getZ());
+                iblockstate = ChunkProviderDebug.getBlockStateFor(pos.getX(), pos.getZ());
             }
 
             return iblockstate == null ? Blocks.air.getDefaultState() : iblockstate;
@@ -886,19 +886,19 @@ public class Chunk
     /**
      * Removes entity at the specified index from the entity array.
      */
-    public void removeEntityAtIndex(Entity entityIn, int p_76608_2_)
+    public void removeEntityAtIndex(Entity entityIn, int index)
     {
-        if (p_76608_2_ < 0)
+        if (index < 0)
         {
-            p_76608_2_ = 0;
+            index = 0;
         }
 
-        if (p_76608_2_ >= this.entityLists.length)
+        if (index >= this.entityLists.length)
         {
-            p_76608_2_ = this.entityLists.length - 1;
+            index = this.entityLists.length - 1;
         }
 
-        this.entityLists[p_76608_2_].remove(entityIn);
+        this.entityLists[index].remove(entityIn);
     }
 
     public boolean canSeeSky(BlockPos pos)
@@ -915,18 +915,18 @@ public class Chunk
         return !block.hasTileEntity() ? null : ((ITileEntityProvider)block).createNewTileEntity(this.worldObj, this.getBlockMetadata(pos));
     }
 
-    public TileEntity getTileEntity(BlockPos pos, Chunk.EnumCreateEntityType p_177424_2_)
+    public TileEntity getTileEntity(BlockPos pos, Chunk.EnumCreateEntityType creationMode)
     {
         TileEntity tileentity = (TileEntity)this.chunkTileEntityMap.get(pos);
 
         if (tileentity == null)
         {
-            if (p_177424_2_ == Chunk.EnumCreateEntityType.IMMEDIATE)
+            if (creationMode == Chunk.EnumCreateEntityType.IMMEDIATE)
             {
                 tileentity = this.createNewTileEntity(pos);
                 this.worldObj.setTileEntity(pos, tileentity);
             }
-            else if (p_177424_2_ == Chunk.EnumCreateEntityType.QUEUED)
+            else if (creationMode == Chunk.EnumCreateEntityType.QUEUED)
             {
                 this.tileEntityPosQueue.add(pos);
             }
@@ -1028,7 +1028,7 @@ public class Chunk
     /**
      * Fills the given list of all entities that intersect within the given bounding box that aren't the passed entity.
      */
-    public void getEntitiesWithinAABBForEntity(Entity entityIn, AxisAlignedBB aabb, List<Entity> listToFill, Predicate <? super Entity > p_177414_4_)
+    public void getEntitiesWithinAABBForEntity(Entity entityIn, AxisAlignedBB aabb, List<Entity> listToFill, Predicate <? super Entity > filter)
     {
         int i = MathHelper.floor_double((aabb.minY - 2.0D) / 16.0D);
         int j = MathHelper.floor_double((aabb.maxY + 2.0D) / 16.0D);
@@ -1043,7 +1043,7 @@ public class Chunk
                 {
                     if (entity.getEntityBoundingBox().intersectsWith(aabb) && entity != entityIn)
                     {
-                        if (p_177414_4_ == null || p_177414_4_.apply(entity))
+                        if (filter == null || filter.apply(entity))
                         {
                             listToFill.add(entity);
                         }
@@ -1056,7 +1056,7 @@ public class Chunk
                             {
                                 entity = aentity[l];
 
-                                if (entity != entityIn && entity.getEntityBoundingBox().intersectsWith(aabb) && (p_177414_4_ == null || p_177414_4_.apply(entity)))
+                                if (entity != entityIn && entity.getEntityBoundingBox().intersectsWith(aabb) && (filter == null || filter.apply(entity)))
                                 {
                                     listToFill.add(entity);
                                 }
@@ -1068,7 +1068,7 @@ public class Chunk
         }
     }
 
-    public <T extends Entity> void getEntitiesOfTypeWithinAAAB(Class <? extends T > entityClass, AxisAlignedBB aabb, List<T> listToFill, Predicate <? super T > p_177430_4_)
+    public <T extends Entity> void getEntitiesOfTypeWithinAAAB(Class <? extends T > entityClass, AxisAlignedBB aabb, List<T> listToFill, Predicate <? super T > filter)
     {
         int i = MathHelper.floor_double((aabb.minY - 2.0D) / 16.0D);
         int j = MathHelper.floor_double((aabb.maxY + 2.0D) / 16.0D);
@@ -1079,7 +1079,7 @@ public class Chunk
         {
             for (T t : this.entityLists[k].getByClass(entityClass))
             {
-                if (t.getEntityBoundingBox().intersectsWith(aabb) && (p_177430_4_ == null || p_177430_4_.apply(t)))
+                if (t.getEntityBoundingBox().intersectsWith(aabb) && (filter == null || filter.apply(t)))
                 {
                     listToFill.add(t);
                 }
@@ -1483,7 +1483,7 @@ public class Chunk
 
         if (!this.worldObj.provider.getHasNoSky())
         {
-            if (this.worldObj.isAreaLoaded(blockpos.add(-1, 0, -1), blockpos.add(16, this.worldObj.func_181545_F(), 16)))
+            if (this.worldObj.isAreaLoaded(blockpos.add(-1, 0, -1), blockpos.add(16, this.worldObj.getSeaLevel(), 16)))
             {
                 label92:
 
@@ -1569,12 +1569,12 @@ public class Chunk
         boolean flag1 = false;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos((this.xPosition << 4) + x, 0, (this.zPosition << 4) + z);
 
-        for (int j = i + 16 - 1; j > this.worldObj.func_181545_F() || j > 0 && !flag1; --j)
+        for (int j = i + 16 - 1; j > this.worldObj.getSeaLevel() || j > 0 && !flag1; --j)
         {
-            blockpos$mutableblockpos.func_181079_c(blockpos$mutableblockpos.getX(), j, blockpos$mutableblockpos.getZ());
+            blockpos$mutableblockpos.setPos(blockpos$mutableblockpos.getX(), j, blockpos$mutableblockpos.getZ());
             int k = this.getBlockLightOpacity(blockpos$mutableblockpos);
 
-            if (k == 255 && blockpos$mutableblockpos.getY() < this.worldObj.func_181545_F())
+            if (k == 255 && blockpos$mutableblockpos.getY() < this.worldObj.getSeaLevel())
             {
                 flag1 = true;
             }
@@ -1591,7 +1591,7 @@ public class Chunk
 
         for (int l = blockpos$mutableblockpos.getY(); l > 0; --l)
         {
-            blockpos$mutableblockpos.func_181079_c(blockpos$mutableblockpos.getX(), l, blockpos$mutableblockpos.getZ());
+            blockpos$mutableblockpos.setPos(blockpos$mutableblockpos.getX(), l, blockpos$mutableblockpos.getZ());
 
             if (this.getBlock(blockpos$mutableblockpos).getLightValue() > 0)
             {

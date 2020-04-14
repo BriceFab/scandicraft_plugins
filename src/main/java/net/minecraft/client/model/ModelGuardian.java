@@ -79,7 +79,7 @@ public class ModelGuardian extends ModelBase
         float[] afloat3 = new float[] {0.0F, 0.0F, 8.0F, -8.0F, -8.0F, 8.0F, 8.0F, -8.0F, 0.0F, 0.0F, 8.0F, -8.0F};
         float[] afloat4 = new float[] { -8.0F, -8.0F, -8.0F, -8.0F, 0.0F, 0.0F, 0.0F, 0.0F, 8.0F, 8.0F, 8.0F, 8.0F};
         float[] afloat5 = new float[] {8.0F, -8.0F, 0.0F, 0.0F, -8.0F, -8.0F, 8.0F, 8.0F, 8.0F, -8.0F, 0.0F, 0.0F};
-        float f1 = (1.0F - entityguardian.func_175469_o(f)) * 0.55F;
+        float f1 = (1.0F - entityguardian.getSpikesAnimation(f)) * 0.55F;
 
         for (int i = 0; i < 12; ++i)
         {
@@ -122,7 +122,7 @@ public class ModelGuardian extends ModelBase
         }
 
         this.guardianEye.showModel = true;
-        float f2 = entityguardian.func_175471_a(f);
+        float f2 = entityguardian.getTailAnimation(f);
         this.guardianTail[0].rotateAngleY = MathHelper.sin(f2) * (float)Math.PI * 0.05F;
         this.guardianTail[1].rotateAngleY = MathHelper.sin(f2) * (float)Math.PI * 0.1F;
         this.guardianTail[1].rotationPointX = -1.5F;

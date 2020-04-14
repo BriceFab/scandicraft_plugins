@@ -80,7 +80,7 @@ public class ItemBlock extends Item
         }
     }
 
-    public static boolean setTileEntityNBT(World worldIn, EntityPlayer pos, BlockPos stack, ItemStack p_179224_3_)
+    public static boolean setTileEntityNBT(World worldIn, EntityPlayer pos, BlockPos stack, ItemStack stackIn)
     {
         MinecraftServer minecraftserver = MinecraftServer.getServer();
 
@@ -90,13 +90,13 @@ public class ItemBlock extends Item
         }
         else
         {
-            if (p_179224_3_.hasTagCompound() && p_179224_3_.getTagCompound().hasKey("BlockEntityTag", 10))
+            if (stackIn.hasTagCompound() && stackIn.getTagCompound().hasKey("BlockEntityTag", 10))
             {
                 TileEntity tileentity = worldIn.getTileEntity(stack);
 
                 if (tileentity != null)
                 {
-                    if (!worldIn.isRemote && tileentity.func_183000_F() && !minecraftserver.getConfigurationManager().canSendCommands(pos.getGameProfile()))
+                    if (!worldIn.isRemote && tileentity.onlyOpsCanSetNbt() && !minecraftserver.getConfigurationManager().canSendCommands(pos.getGameProfile()))
                     {
                         return false;
                     }
@@ -104,7 +104,7 @@ public class ItemBlock extends Item
                     NBTTagCompound nbttagcompound = new NBTTagCompound();
                     NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttagcompound.copy();
                     tileentity.writeToNBT(nbttagcompound);
-                    NBTTagCompound nbttagcompound2 = (NBTTagCompound)p_179224_3_.getTagCompound().getTag("BlockEntityTag");
+                    NBTTagCompound nbttagcompound2 = (NBTTagCompound)stackIn.getTagCompound().getTag("BlockEntityTag");
                     nbttagcompound.merge(nbttagcompound2);
                     nbttagcompound.setInteger("x", stack.getX());
                     nbttagcompound.setInteger("y", stack.getY());

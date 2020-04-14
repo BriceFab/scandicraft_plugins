@@ -434,7 +434,7 @@ public class ChunkProviderGenerate implements IChunkProvider
             int l2 = this.rand.nextInt(this.rand.nextInt(248) + 8);
             int k3 = this.rand.nextInt(16) + 8;
 
-            if (l2 < this.worldObj.func_181545_F() || this.rand.nextInt(this.settings.lavaLakeChance / 8) == 0)
+            if (l2 < this.worldObj.getSeaLevel() || this.rand.nextInt(this.settings.lavaLakeChance / 8) == 0)
             {
                 (new WorldGenLakes(Blocks.lava)).generate(this.worldObj, this.rand, blockpos.add(i2, l2, k3));
             }
@@ -541,7 +541,7 @@ public class ChunkProviderGenerate implements IChunkProvider
                 return this.scatteredFeatureGenerator.getScatteredFeatureSpawnList();
             }
 
-            if (creatureType == EnumCreatureType.MONSTER && this.settings.useMonuments && this.oceanMonumentGenerator.func_175796_a(this.worldObj, pos))
+            if (creatureType == EnumCreatureType.MONSTER && this.settings.useMonuments && this.oceanMonumentGenerator.isPositionInStructure(this.worldObj, pos))
             {
                 return this.oceanMonumentGenerator.func_175799_b();
             }

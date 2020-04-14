@@ -70,7 +70,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
             }
 
             this.serverListSelector = new ServerSelectionList(this, this.mc, this.width, this.height, 32, this.height - 64, 36);
-            this.serverListSelector.func_148195_a(this.savedServerList);
+            this.serverListSelector.updateOnlineServers(this.savedServerList);
         }
         else
         {
@@ -112,7 +112,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
         {
             List<LanServerDetector.LanServer> list = this.lanServerList.getLanServers();
             this.lanServerList.setWasNotUpdated();
-            this.serverListSelector.func_148194_a(list);
+            this.serverListSelector.updateNetworkServers(list);
         }
 
         this.oldServerPinger.pingPendingNetworks();
@@ -209,7 +209,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
                 this.savedServerList.removeServerData(this.serverListSelector.func_148193_k());
                 this.savedServerList.saveServerList();
                 this.serverListSelector.setSelectedSlotIndex(-1);
-                this.serverListSelector.func_148195_a(this.savedServerList);
+                this.serverListSelector.updateOnlineServers(this.savedServerList);
             }
 
             this.mc.displayGuiScreen(this);
@@ -236,7 +236,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
                 this.savedServerList.addServerData(this.selectedServer);
                 this.savedServerList.saveServerList();
                 this.serverListSelector.setSelectedSlotIndex(-1);
-                this.serverListSelector.func_148195_a(this.savedServerList);
+                this.serverListSelector.updateOnlineServers(this.savedServerList);
             }
 
             this.mc.displayGuiScreen(this);
@@ -252,7 +252,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
                 serverdata.serverIP = this.selectedServer.serverIP;
                 serverdata.copyFrom(this.selectedServer);
                 this.savedServerList.saveServerList();
-                this.serverListSelector.func_148195_a(this.savedServerList);
+                this.serverListSelector.updateOnlineServers(this.savedServerList);
             }
 
             this.mc.displayGuiScreen(this);
@@ -285,7 +285,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
                             this.savedServerList.swapServers(i, i - 1);
                             this.selectServer(this.serverListSelector.func_148193_k() - 1);
                             this.serverListSelector.scrollBy(-this.serverListSelector.getSlotHeight());
-                            this.serverListSelector.func_148195_a(this.savedServerList);
+                            this.serverListSelector.updateOnlineServers(this.savedServerList);
                         }
                     }
                     else if (i > 0)
@@ -320,7 +320,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
                             this.savedServerList.swapServers(i, i + 1);
                             this.selectServer(i + 1);
                             this.serverListSelector.scrollBy(this.serverListSelector.getSlotHeight());
-                            this.serverListSelector.func_148195_a(this.savedServerList);
+                            this.serverListSelector.updateOnlineServers(this.savedServerList);
                         }
                     }
                     else if (i < this.serverListSelector.getSize())
@@ -472,7 +472,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
             this.selectServer(i);
         }
 
-        this.serverListSelector.func_148195_a(this.savedServerList);
+        this.serverListSelector.updateOnlineServers(this.savedServerList);
     }
 
     public void func_175393_b(ServerListEntryNormal p_175393_1_, int p_175393_2_, boolean p_175393_3_)
@@ -485,6 +485,6 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
             this.selectServer(i);
         }
 
-        this.serverListSelector.func_148195_a(this.savedServerList);
+        this.serverListSelector.updateOnlineServers(this.savedServerList);
     }
 }

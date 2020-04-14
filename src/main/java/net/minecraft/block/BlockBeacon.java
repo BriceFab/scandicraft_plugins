@@ -116,7 +116,7 @@ public class BlockBeacon extends BlockContainer
 
     public static void updateColorAsync(final World worldIn, final BlockPos glassPos)
     {
-        HttpUtil.field_180193_a.submit(new Runnable()
+        HttpUtil.DOWNLOADER_EXECUTOR.submit(new Runnable()
         {
             public void run()
             {

@@ -272,9 +272,9 @@ public enum EnumFacing implements IStringSerializable
     /**
      * Get a Facing by it's horizontal index (0-3). The order is S-W-N-E.
      */
-    public static EnumFacing getHorizontal(int p_176731_0_)
+    public static EnumFacing getHorizontal(int horizontalIndexIn)
     {
-        return HORIZONTALS[MathHelper.abs_int(p_176731_0_ % HORIZONTALS.length)];
+        return HORIZONTALS[MathHelper.abs_int(horizontalIndexIn % HORIZONTALS.length)];
     }
 
     /**
@@ -293,14 +293,14 @@ public enum EnumFacing implements IStringSerializable
         return values()[rand.nextInt(values().length)];
     }
 
-    public static EnumFacing getFacingFromVector(float p_176737_0_, float p_176737_1_, float p_176737_2_)
+    public static EnumFacing getFacingFromVector(float x, float y, float z)
     {
         EnumFacing enumfacing = NORTH;
         float f = Float.MIN_VALUE;
 
         for (EnumFacing enumfacing1 : values())
         {
-            float f1 = p_176737_0_ * (float)enumfacing1.directionVec.getX() + p_176737_1_ * (float)enumfacing1.directionVec.getY() + p_176737_2_ * (float)enumfacing1.directionVec.getZ();
+            float f1 = x * (float)enumfacing1.directionVec.getX() + y * (float)enumfacing1.directionVec.getY() + z * (float)enumfacing1.directionVec.getZ();
 
             if (f1 > f)
             {
@@ -322,17 +322,17 @@ public enum EnumFacing implements IStringSerializable
         return this.name;
     }
 
-    public static EnumFacing func_181076_a(EnumFacing.AxisDirection p_181076_0_, EnumFacing.Axis p_181076_1_)
+    public static EnumFacing getFacingFromAxis(EnumFacing.AxisDirection axisDirectionIn, EnumFacing.Axis axisIn)
     {
         for (EnumFacing enumfacing : values())
         {
-            if (enumfacing.getAxisDirection() == p_181076_0_ && enumfacing.getAxis() == p_181076_1_)
+            if (enumfacing.getAxisDirection() == axisDirectionIn && enumfacing.getAxis() == axisIn)
             {
                 return enumfacing;
             }
         }
 
-        throw new IllegalArgumentException("No such direction: " + p_181076_0_ + " " + p_181076_1_);
+        throw new IllegalArgumentException("No such direction: " + axisDirectionIn + " " + axisIn);
     }
 
     /**

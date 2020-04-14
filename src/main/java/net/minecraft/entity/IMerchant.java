@@ -8,7 +8,7 @@ import net.minecraft.village.MerchantRecipeList;
 
 public interface IMerchant
 {
-    void setCustomer(EntityPlayer p_70932_1_);
+    void setCustomer(EntityPlayer player);
 
     EntityPlayer getCustomer();
 

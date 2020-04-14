@@ -95,15 +95,15 @@ public class EntityItemFrame extends EntityHanging
         this.dropItemOrSelf(brokenEntity, true);
     }
 
-    public void dropItemOrSelf(Entity p_146065_1_, boolean p_146065_2_)
+    public void dropItemOrSelf(Entity entityIn, boolean p_146065_2_)
     {
         if (this.worldObj.getGameRules().getBoolean("doEntityDrops"))
         {
             ItemStack itemstack = this.getDisplayedItem();
 
-            if (p_146065_1_ instanceof EntityPlayer)
+            if (entityIn instanceof EntityPlayer)
             {
-                EntityPlayer entityplayer = (EntityPlayer)p_146065_1_;
+                EntityPlayer entityplayer = (EntityPlayer)entityIn;
 
                 if (entityplayer.capabilities.isCreativeMode)
                 {
@@ -129,17 +129,17 @@ public class EntityItemFrame extends EntityHanging
     /**
      * Removes the dot representing this frame's position from the map when the item frame is broken.
      */
-    private void removeFrameFromMap(ItemStack p_110131_1_)
+    private void removeFrameFromMap(ItemStack stack)
     {
-        if (p_110131_1_ != null)
+        if (stack != null)
         {
-            if (p_110131_1_.getItem() == Items.filled_map)
+            if (stack.getItem() == Items.filled_map)
             {
-                MapData mapdata = ((ItemMap)p_110131_1_.getItem()).getMapData(p_110131_1_, this.worldObj);
+                MapData mapdata = ((ItemMap)stack.getItem()).getMapData(stack, this.worldObj);
                 mapdata.mapDecorations.remove("frame-" + this.getEntityId());
             }
 
-            p_110131_1_.setItemFrame((EntityItemFrame)null);
+            stack.setItemFrame((EntityItemFrame)null);
         }
     }
 
@@ -148,21 +148,21 @@ public class EntityItemFrame extends EntityHanging
         return this.getDataWatcher().getWatchableObjectItemStack(8);
     }
 
-    public void setDisplayedItem(ItemStack p_82334_1_)
+    public void setDisplayedItem(ItemStack stack)
     {
-        this.setDisplayedItemWithUpdate(p_82334_1_, true);
+        this.setDisplayedItemWithUpdate(stack, true);
     }
 
-    private void setDisplayedItemWithUpdate(ItemStack p_174864_1_, boolean p_174864_2_)
+    private void setDisplayedItemWithUpdate(ItemStack stack, boolean p_174864_2_)
     {
-        if (p_174864_1_ != null)
+        if (stack != null)
         {
-            p_174864_1_ = p_174864_1_.copy();
-            p_174864_1_.stackSize = 1;
-            p_174864_1_.setItemFrame(this);
+            stack = stack.copy();
+            stack.stackSize = 1;
+            stack.setItemFrame(this);
         }
 
-        this.getDataWatcher().updateObject(8, p_174864_1_);
+        this.getDataWatcher().updateObject(8, stack);
         this.getDataWatcher().setObjectWatched(8);
 
         if (p_174864_2_ && this.hangingPosition != null)
@@ -179,14 +179,14 @@ public class EntityItemFrame extends EntityHanging
         return this.getDataWatcher().getWatchableObjectByte(9);
     }
 
-    public void setItemRotation(int p_82336_1_)
+    public void setItemRotation(int rotationIn)
     {
-        this.func_174865_a(p_82336_1_, true);
+        this.setRotation(rotationIn, true);
     }
 
-    private void func_174865_a(int p_174865_1_, boolean p_174865_2_)
+    private void setRotation(int rotationIn, boolean p_174865_2_)
     {
-        this.getDataWatcher().updateObject(9, Byte.valueOf((byte)(p_174865_1_ % 8)));
+        this.getDataWatcher().updateObject(9, Byte.valueOf((byte)(rotationIn % 8)));
 
         if (p_174865_2_ && this.hangingPosition != null)
         {
@@ -219,7 +219,7 @@ public class EntityItemFrame extends EntityHanging
         if (nbttagcompound != null && !nbttagcompound.hasNoTags())
         {
             this.setDisplayedItemWithUpdate(ItemStack.loadItemStackFromNBT(nbttagcompound), false);
-            this.func_174865_a(tagCompund.getByte("ItemRotation"), false);
+            this.setRotation(tagCompund.getByte("ItemRotation"), false);
 
             if (tagCompund.hasKey("ItemDropChance", 99))
             {
@@ -228,7 +228,7 @@ public class EntityItemFrame extends EntityHanging
 
             if (tagCompund.hasKey("Direction"))
             {
-                this.func_174865_a(this.getRotation() * 2, false);
+                this.setRotation(this.getRotation() * 2, false);
             }
         }
 
@@ -262,7 +262,7 @@ public class EntityItemFrame extends EntityHanging
         return true;
     }
 
-    public int func_174866_q()
+    public int getAnalogOutput()
     {
         return this.getDisplayedItem() == null ? 0 : this.getRotation() % 8 + 1;
     }

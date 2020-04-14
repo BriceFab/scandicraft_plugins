@@ -129,7 +129,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private static final List<DisplayMode> macDisplayModes = Lists.newArrayList(new DisplayMode(2560, 1600), new DisplayMode(2880, 1800));
     private final File fileResourcepacks;
     private final PropertyMap twitchDetails;
-    private final PropertyMap field_181038_N;
+    private final PropertyMap profileProperties;
     private ServerData currentServerData;
 
     /**
@@ -152,7 +152,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private CrashReport crashReporter;
     public int displayWidth;
     public int displayHeight;
-    private boolean field_181541_X = false;
+    private boolean connectedToRealms = false;
     private Timer timer = new Timer(20.0F);
 
     /**
@@ -263,8 +263,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Join player counter
      */
     private int joinPlayerCounter;
-    public final FrameTimer field_181542_y = new FrameTimer();
-    long field_181543_z = System.nanoTime();
+    public final FrameTimer frameTimer = new FrameTimer();
+    long startNanoTime = System.nanoTime();
     private final boolean jvm64bit;
     private final boolean isDemo;
     private NetworkManager myNetworkManager;
@@ -340,7 +340,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.fileResourcepacks = gameConfig.folderInfo.resourcePacksDir;
         this.launchedVersion = gameConfig.gameInfo.version;
         this.twitchDetails = gameConfig.userInfo.userProperties;
-        this.field_181038_N = gameConfig.userInfo.field_181172_c;
+        this.profileProperties = gameConfig.userInfo.profileProperties;
         this.mcDefaultResourcePack = new DefaultResourcePack((new ResourceIndex(gameConfig.folderInfo.assetsDir, gameConfig.folderInfo.assetIndex)).getResourceMap());
         this.proxy = gameConfig.userInfo.proxy == null ? Proxy.NO_PROXY : gameConfig.userInfo.proxy;
         this.sessionService = (new YggdrasilAuthenticationService(gameConfig.userInfo.proxy, UUID.randomUUID().toString())).createMinecraftSessionService();
@@ -699,7 +699,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             this.mcResourcePackRepository.setRepositories(Collections.<ResourcePackRepository.Entry>emptyList());
             this.mcResourceManager.reloadResources(list);
             this.gameSettings.resourcePacks.clear();
-            this.gameSettings.field_183018_l.clear();
+            this.gameSettings.incompatibleResourcePacks.clear();
             this.gameSettings.saveOptions();
             this.scandiCraftSettings.saveOptions();
         }
@@ -1009,8 +1009,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         ++this.fpsCounter;
         this.isGamePaused = this.isSingleplayer() && this.currentScreen != null && this.currentScreen.doesGuiPauseGame() && !this.theIntegratedServer.getPublic();
         long k = System.nanoTime();
-        this.field_181542_y.func_181747_a(k - this.field_181543_z);
-        this.field_181543_z = k;
+        this.frameTimer.addFrame(k - this.startNanoTime);
+        this.startNanoTime = k;
 
         while (getSystemTime() >= this.debugUpdateTime + 1000L) {
             debugFPS = this.fpsCounter;
@@ -1324,7 +1324,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Called when user clicked he's mouse right button (place)
      */
     private void rightClickMouse() {
-        if (!this.playerController.func_181040_m()) {
+        if (!this.playerController.getIsHittingBlock()) {
             this.rightClickDelayTimer = 4;
             boolean flag = true;
             ItemStack itemstack = this.thePlayer.inventory.getCurrentItem();
@@ -1448,7 +1448,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
     }
 
-    public MusicTicker func_181535_r() {
+    public MusicTicker getMusicTicker() {
         return this.mcMusicTicker;
     }
 
@@ -1533,7 +1533,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
                 if (Mouse.getEventButtonState()) {
                     if (this.thePlayer.isSpectator() && i == 2) {
-                        this.ingameGUI.getSpectatorGui().func_175261_b();
+                        this.ingameGUI.getSpectatorGui().onMiddleClick();
                     } else {
                         KeyBinding.onTick(i - 100);
                     }
@@ -1548,7 +1548,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                         if (this.thePlayer.isSpectator()) {
                             j = j < 0 ? -1 : 1;
 
-                            if (this.ingameGUI.getSpectatorGui().func_175262_a()) {
+                            if (this.ingameGUI.getSpectatorGui().isMenuActive()) {
                                 this.ingameGUI.getSpectatorGui().func_175259_b(-j);
                             } else {
                                 float f = MathHelper.clamp_float(this.thePlayer.capabilities.getFlySpeed() + (float) j * 0.005F, 0.0F, 0.2F);
@@ -1670,7 +1670,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                         if (k == 61) {
                             this.gameSettings.showDebugInfo = !this.gameSettings.showDebugInfo;
                             this.gameSettings.showDebugProfilerChart = GuiScreen.isShiftKeyDown();
-                            this.gameSettings.field_181657_aC = GuiScreen.isAltKeyDown();
+                            this.gameSettings.showLagometer = GuiScreen.isAltKeyDown();
                         }
 
                         if (this.gameSettings.keyBindTogglePerspective.isPressed()) {
@@ -1711,7 +1711,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             for (int l = 0; l < 9; ++l) {
                 if (this.gameSettings.keyBindsHotbar[l].isPressed()) {
                     if (this.thePlayer.isSpectator()) {
-                        this.ingameGUI.getSpectatorGui().func_175260_a(l);
+                        this.ingameGUI.getSpectatorGui().onHotbarSelected(l);
                     } else {
                         this.thePlayer.inventory.currentItem = l;
                     }
@@ -1812,7 +1812,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 this.theWorld.updateEntities();
             }
         } else if (this.entityRenderer.isShaderActive()) {
-            this.entityRenderer.func_181022_b();
+            this.entityRenderer.stopUseShader();
         }
 
         if (!this.isGamePaused) {
@@ -1955,7 +1955,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
         if (worldClientIn == null && this.theWorld != null) {
             this.mcResourcePackRepository.func_148529_f();
-            this.ingameGUI.func_181029_i();
+            this.ingameGUI.resetPlayersOverlayFooterHeader();
             this.setServerData((ServerData) null);
             this.integratedServerIsRunning = false;
         }
@@ -2232,7 +2232,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
                     stringbuilder.append(s);
 
-                    if (Minecraft.this.gameSettings.field_183018_l.contains(s)) {
+                    if (Minecraft.this.gameSettings.incompatibleResourcePacks.contains(s)) {
                         stringbuilder.append(" (incompatible)");
                     }
                 }
@@ -2284,7 +2284,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         playerSnooper.addClientStat("display_frequency", Integer.valueOf(Display.getDisplayMode().getFrequency()));
         playerSnooper.addClientStat("display_type", this.fullscreen ? "fullscreen" : "windowed");
         playerSnooper.addClientStat("run_time", Long.valueOf((MinecraftServer.getCurrentTimeMillis() - playerSnooper.getMinecraftStartTimeMillis()) / 60L * 1000L));
-        playerSnooper.addClientStat("current_action", this.func_181538_aA());
+        playerSnooper.addClientStat("current_action", this.getCurrentAction());
         String s = ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN ? "little" : "big";
         playerSnooper.addClientStat("endianness", s);
         playerSnooper.addClientStat("resource_packs", Integer.valueOf(this.mcResourcePackRepository.getRepositoryEntries().size()));
@@ -2299,8 +2299,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
     }
 
-    private String func_181538_aA() {
-        return this.theIntegratedServer != null ? (this.theIntegratedServer.getPublic() ? "hosting_lan" : "singleplayer") : (this.currentServerData != null ? (this.currentServerData.func_181041_d() ? "playing_lan" : "multiplayer") : "out_of_game");
+    private String getCurrentAction() {
+        return this.theIntegratedServer != null ? (this.theIntegratedServer.getPublic() ? "hosting_lan" : "singleplayer") : (this.currentServerData != null ? (this.currentServerData.isOnLAN() ? "playing_lan" : "multiplayer") : "out_of_game");
     }
 
     public void addServerTypeToSnooper(PlayerUsageSnooper playerSnooper) {
@@ -2506,13 +2506,13 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         return this.twitchDetails;
     }
 
-    public PropertyMap func_181037_M() {
-        if (this.field_181038_N.isEmpty()) {
+    public PropertyMap getProfileProperties() {
+        if (this.profileProperties.isEmpty()) {
             GameProfile gameprofile = this.getSessionService().fillProfileProperties(this.session.getProfile(), false);
-            this.field_181038_N.putAll(gameprofile.getProperties());
+            this.profileProperties.putAll(gameprofile.getProperties());
         }
 
-        return this.field_181038_N;
+        return this.profileProperties;
     }
 
     public Proxy getProxy() {
@@ -2676,8 +2676,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         return debugFPS;
     }
 
-    public FrameTimer func_181539_aj() {
-        return this.field_181542_y;
+    public FrameTimer getFrameTimer() {
+        return this.frameTimer;
     }
 
     public static Map<String, String> getSessionInfo() {
@@ -2688,11 +2688,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         return map;
     }
 
-    public boolean func_181540_al() {
-        return this.field_181541_X;
+    public boolean isConnectedToRealms() {
+        return this.connectedToRealms;
     }
 
-    public void func_181537_a(boolean p_181537_1_) {
-        this.field_181541_X = p_181537_1_;
+    public void setConnectedToRealms(boolean isConnected) {
+        this.connectedToRealms = isConnected;
     }
 }

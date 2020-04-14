@@ -285,7 +285,7 @@ public abstract class TileEntity
         this.pos = posIn;
     }
 
-    public boolean func_183000_F()
+    public boolean onlyOpsCanSetNbt()
     {
         return false;
     }

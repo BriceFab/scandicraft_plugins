@@ -521,9 +521,9 @@ public class EntityZombie extends EntityMob
         return f;
     }
 
-    protected boolean func_175448_a(ItemStack stack)
+    protected boolean canEquipItem(ItemStack stack)
     {
-        return stack.getItem() == Items.egg && this.isChild() && this.isRiding() ? false : super.func_175448_a(stack);
+        return stack.getItem() == Items.egg && this.isChild() && this.isRiding() ? false : super.canEquipItem(stack);
     }
 
     /**
@@ -733,7 +733,7 @@ public class EntityZombie extends EntityMob
                 {
                     for (int i1 = (int)this.posZ - 4; i1 < (int)this.posZ + 4 && j < 14; ++i1)
                     {
-                        Block block = this.worldObj.getBlockState(blockpos$mutableblockpos.func_181079_c(k, l, i1)).getBlock();
+                        Block block = this.worldObj.getBlockState(blockpos$mutableblockpos.setPos(k, l, i1)).getBlock();
 
                         if (block == Blocks.iron_bars || block == Blocks.bed)
                         {
@@ -800,7 +800,7 @@ public class EntityZombie extends EntityMob
 
         if (cause.getEntity() instanceof EntityCreeper && !(this instanceof EntityPigZombie) && ((EntityCreeper)cause.getEntity()).getPowered() && ((EntityCreeper)cause.getEntity()).isAIEnabled())
         {
-            ((EntityCreeper)cause.getEntity()).func_175493_co();
+            ((EntityCreeper)cause.getEntity()).incrementDroppedSkulls();
             this.entityDropItem(new ItemStack(Items.skull, 1, 2), 0.0F);
         }
     }

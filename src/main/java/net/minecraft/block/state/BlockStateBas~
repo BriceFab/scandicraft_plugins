@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 
 public abstract class BlockStateBase implements IBlockState {
    private static final Joiner field_177234_a = Joiner.on(',');
-   private static final Function field_177233_b = new Function() {
+   private static final Function MAP_ENTRY_TO_STRING = new Function() {
       private static final String __OBFID = "CL_00002031";
 
       public String apply(Entry p_apply_1_) {
@@ -22,7 +22,7 @@ public abstract class BlockStateBase implements IBlockState {
             return "<NULL>";
          } else {
             IProperty iproperty = (IProperty)p_apply_1_.getKey();
-            return iproperty.func_177701_a() + "=" + iproperty.func_177702_a((Comparable)p_apply_1_.getValue());
+            return iproperty.getName() + "=" + iproperty.getName((Comparable)p_apply_1_.getValue());
          }
       }
 
@@ -38,7 +38,7 @@ public abstract class BlockStateBase implements IBlockState {
 
    public int getBlockId() {
       if(this.blockId < 0) {
-         this.blockId = Block.func_149682_b(this.func_177230_c());
+         this.blockId = Block.func_149682_b(this.getBlock());
       }
 
       return this.blockId;
@@ -54,7 +54,7 @@ public abstract class BlockStateBase implements IBlockState {
 
    public int getMetadata() {
       if(this.metadata < 0) {
-         this.metadata = this.func_177230_c().func_176201_c(this);
+         this.metadata = this.getBlock().func_176201_c(this);
       }
 
       return this.metadata;
@@ -62,26 +62,26 @@ public abstract class BlockStateBase implements IBlockState {
 
    public ResourceLocation getBlockLocation() {
       if(this.blockLocation == null) {
-         this.blockLocation = (ResourceLocation)Block.field_149771_c.func_177774_c(this.func_177230_c());
+         this.blockLocation = (ResourceLocation)Block.field_149771_c.getKey(this.getBlock());
       }
 
       return this.blockLocation;
    }
 
-   public IBlockState func_177231_a(IProperty p_177231_1_) {
-      return this.func_177226_a(p_177231_1_, (Comparable)func_177232_a(p_177231_1_.func_177700_c(), this.func_177229_b(p_177231_1_)));
+   public IBlockState cycle(IProperty property) {
+      return this.func_177226_a(property, (Comparable)cyclePropertyValue(property.getAllowedValues(), this.get(property)));
    }
 
-   protected static Object func_177232_a(Collection p_177232_0_, Object p_177232_1_) {
-      Iterator iterator = p_177232_0_.iterator();
+   protected static Object cyclePropertyValue(Collection values, Object currentValue) {
+      Iterator iterator = values.iterator();
 
       while(iterator.hasNext()) {
-         if(iterator.next().equals(p_177232_1_)) {
+         if(iterator.next().equals(currentValue)) {
             if(iterator.hasNext()) {
                return iterator.next();
             }
 
-            return p_177232_0_.iterator().next();
+            return values.iterator().next();
          }
       }
 
@@ -90,10 +90,10 @@ public abstract class BlockStateBase implements IBlockState {
 
    public String toString() {
       StringBuilder stringbuilder = new StringBuilder();
-      stringbuilder.append(Block.field_149771_c.func_177774_c(this.func_177230_c()));
+      stringbuilder.append(Block.field_149771_c.getKey(this.getBlock()));
       if(!this.func_177228_b().isEmpty()) {
          stringbuilder.append("[");
-         field_177234_a.appendTo(stringbuilder, Iterables.transform(this.func_177228_b().entrySet(), field_177233_b));
+         field_177234_a.appendTo(stringbuilder, Iterables.transform(this.func_177228_b().entrySet(), MAP_ENTRY_TO_STRING));
          stringbuilder.append("]");
       }
 

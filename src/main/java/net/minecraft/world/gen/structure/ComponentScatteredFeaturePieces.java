@@ -331,7 +331,7 @@ public class ComponentScatteredFeaturePieces
                 {
                     for (int l = this.boundingBox.minX; l <= this.boundingBox.maxX; ++l)
                     {
-                        blockpos$mutableblockpos.func_181079_c(l, 64, k);
+                        blockpos$mutableblockpos.setPos(l, 64, k);
 
                         if (p_74935_2_.isVecInside(blockpos$mutableblockpos))
                         {
@@ -594,7 +594,7 @@ public class ComponentScatteredFeaturePieces
             {
             }
 
-            public void selectBlocks(Random rand, int x, int y, int z, boolean p_75062_5_)
+            public void selectBlocks(Random rand, int x, int y, int z, boolean wall)
             {
                 if (rand.nextFloat() < 0.4F)
                 {

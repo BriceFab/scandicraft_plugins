@@ -90,9 +90,9 @@ public class InventoryMerchant implements IInventory
     /**
      * if par1 slot has changed, does resetRecipeAndSlots need to be called?
      */
-    private boolean inventoryResetNeededOnSlotChange(int p_70469_1_)
+    private boolean inventoryResetNeededOnSlotChange(int slotIn)
     {
-        return p_70469_1_ == 0 || p_70469_1_ == 1;
+        return slotIn == 0 || slotIn == 1;
     }
 
     /**

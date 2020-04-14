@@ -146,12 +146,12 @@ public abstract class StructureComponent
         {
             for (int l1 = k; l1 <= j1; ++l1)
             {
-                if (worldIn.getBlockState(blockpos$mutableblockpos.func_181079_c(k1, j, l1)).getBlock().getMaterial().isLiquid())
+                if (worldIn.getBlockState(blockpos$mutableblockpos.setPos(k1, j, l1)).getBlock().getMaterial().isLiquid())
                 {
                     return true;
                 }
 
-                if (worldIn.getBlockState(blockpos$mutableblockpos.func_181079_c(k1, i1, l1)).getBlock().getMaterial().isLiquid())
+                if (worldIn.getBlockState(blockpos$mutableblockpos.setPos(k1, i1, l1)).getBlock().getMaterial().isLiquid())
                 {
                     return true;
                 }
@@ -162,12 +162,12 @@ public abstract class StructureComponent
         {
             for (int k2 = j; k2 <= i1; ++k2)
             {
-                if (worldIn.getBlockState(blockpos$mutableblockpos.func_181079_c(i2, k2, k)).getBlock().getMaterial().isLiquid())
+                if (worldIn.getBlockState(blockpos$mutableblockpos.setPos(i2, k2, k)).getBlock().getMaterial().isLiquid())
                 {
                     return true;
                 }
 
-                if (worldIn.getBlockState(blockpos$mutableblockpos.func_181079_c(i2, k2, j1)).getBlock().getMaterial().isLiquid())
+                if (worldIn.getBlockState(blockpos$mutableblockpos.setPos(i2, k2, j1)).getBlock().getMaterial().isLiquid())
                 {
                     return true;
                 }
@@ -178,12 +178,12 @@ public abstract class StructureComponent
         {
             for (int l2 = j; l2 <= i1; ++l2)
             {
-                if (worldIn.getBlockState(blockpos$mutableblockpos.func_181079_c(i, l2, j2)).getBlock().getMaterial().isLiquid())
+                if (worldIn.getBlockState(blockpos$mutableblockpos.setPos(i, l2, j2)).getBlock().getMaterial().isLiquid())
                 {
                     return true;
                 }
 
-                if (worldIn.getBlockState(blockpos$mutableblockpos.func_181079_c(l, l2, j2)).getBlock().getMaterial().isLiquid())
+                if (worldIn.getBlockState(blockpos$mutableblockpos.setPos(l, l2, j2)).getBlock().getMaterial().isLiquid())
                 {
                     return true;
                 }
@@ -706,7 +706,7 @@ public abstract class StructureComponent
         }
     }
 
-    protected void randomlyRareFillWithBlocks(World worldIn, StructureBoundingBox boundingboxIn, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, IBlockState blockstateIn, boolean p_180777_10_)
+    protected void randomlyRareFillWithBlocks(World worldIn, StructureBoundingBox boundingboxIn, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, IBlockState blockstateIn, boolean excludeAir)
     {
         float f = (float)(maxX - minX + 1);
         float f1 = (float)(maxY - minY + 1);
@@ -726,7 +726,7 @@ public abstract class StructureComponent
                 {
                     float f7 = ((float)k - f4) / (f2 * 0.5F);
 
-                    if (!p_180777_10_ || this.getBlockStateFromPos(worldIn, j, i, k, boundingboxIn).getBlock().getMaterial() != Material.air)
+                    if (!excludeAir || this.getBlockStateFromPos(worldIn, j, i, k, boundingboxIn).getBlock().getMaterial() != Material.air)
                     {
                         float f8 = f6 * f6 + f5 * f5 + f7 * f7;
 
@@ -834,16 +834,16 @@ public abstract class StructureComponent
         }
     }
 
-    public void func_181138_a(int p_181138_1_, int p_181138_2_, int p_181138_3_)
+    public void offset(int x, int y, int z)
     {
-        this.boundingBox.offset(p_181138_1_, p_181138_2_, p_181138_3_);
+        this.boundingBox.offset(x, y, z);
     }
 
     public abstract static class BlockSelector
     {
         protected IBlockState blockstate = Blocks.air.getDefaultState();
 
-        public abstract void selectBlocks(Random rand, int x, int y, int z, boolean p_75062_5_);
+        public abstract void selectBlocks(Random rand, int x, int y, int z, boolean wall);
 
         public IBlockState getBlockState()
         {

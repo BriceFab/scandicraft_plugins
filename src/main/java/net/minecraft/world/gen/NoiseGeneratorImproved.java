@@ -19,12 +19,12 @@ public class NoiseGeneratorImproved extends NoiseGenerator
         this(new Random());
     }
 
-    public NoiseGeneratorImproved(Random p_i45469_1_)
+    public NoiseGeneratorImproved(Random rand)
     {
         this.permutations = new int[512];
-        this.xCoord = p_i45469_1_.nextDouble() * 256.0D;
-        this.yCoord = p_i45469_1_.nextDouble() * 256.0D;
-        this.zCoord = p_i45469_1_.nextDouble() * 256.0D;
+        this.xCoord = rand.nextDouble() * 256.0D;
+        this.yCoord = rand.nextDouble() * 256.0D;
+        this.zCoord = rand.nextDouble() * 256.0D;
 
         for (int i = 0; i < 256; this.permutations[i] = i++)
         {
@@ -33,7 +33,7 @@ public class NoiseGeneratorImproved extends NoiseGenerator
 
         for (int l = 0; l < 256; ++l)
         {
-            int j = p_i45469_1_.nextInt(256 - l) + l;
+            int j = rand.nextInt(256 - l) + l;
             int k = this.permutations[l];
             this.permutations[l] = this.permutations[j];
             this.permutations[j] = k;

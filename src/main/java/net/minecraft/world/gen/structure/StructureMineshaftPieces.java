@@ -38,7 +38,7 @@ public class StructureMineshaftPieces
 
         if (i >= 80)
         {
-            StructureBoundingBox structureboundingbox = StructureMineshaftPieces.Cross.func_175813_a(listIn, rand, x, y, z, facing);
+            StructureBoundingBox structureboundingbox = StructureMineshaftPieces.Cross.findCrossing(listIn, rand, x, y, z, facing);
 
             if (structureboundingbox != null)
             {
@@ -47,7 +47,7 @@ public class StructureMineshaftPieces
         }
         else if (i >= 70)
         {
-            StructureBoundingBox structureboundingbox1 = StructureMineshaftPieces.Stairs.func_175812_a(listIn, rand, x, y, z, facing);
+            StructureBoundingBox structureboundingbox1 = StructureMineshaftPieces.Stairs.findStairs(listIn, rand, x, y, z, facing);
 
             if (structureboundingbox1 != null)
             {
@@ -56,7 +56,7 @@ public class StructureMineshaftPieces
         }
         else
         {
-            StructureBoundingBox structureboundingbox2 = StructureMineshaftPieces.Corridor.func_175814_a(listIn, rand, x, y, z, facing);
+            StructureBoundingBox structureboundingbox2 = StructureMineshaftPieces.Corridor.findCorridorSize(listIn, rand, x, y, z, facing);
 
             if (structureboundingbox2 != null)
             {
@@ -136,7 +136,7 @@ public class StructureMineshaftPieces
             }
         }
 
-        public static StructureBoundingBox func_175814_a(List<StructureComponent> p_175814_0_, Random rand, int x, int y, int z, EnumFacing facing)
+        public static StructureBoundingBox findCorridorSize(List<StructureComponent> p_175814_0_, Random rand, int x, int y, int z, EnumFacing facing)
         {
             StructureBoundingBox structureboundingbox = new StructureBoundingBox(x, y, z, x, y + 2, z);
             int i;
@@ -447,7 +447,7 @@ public class StructureMineshaftPieces
             this.isMultipleFloors = structurebb.getYSize() > 3;
         }
 
-        public static StructureBoundingBox func_175813_a(List<StructureComponent> listIn, Random rand, int x, int y, int z, EnumFacing facing)
+        public static StructureBoundingBox findCrossing(List<StructureComponent> listIn, Random rand, int x, int y, int z, EnumFacing facing)
         {
             StructureBoundingBox structureboundingbox = new StructureBoundingBox(x, y, z, x, y + 2, z);
 
@@ -700,13 +700,13 @@ public class StructureMineshaftPieces
             }
         }
 
-        public void func_181138_a(int p_181138_1_, int p_181138_2_, int p_181138_3_)
+        public void offset(int x, int y, int z)
         {
-            super.func_181138_a(p_181138_1_, p_181138_2_, p_181138_3_);
+            super.offset(x, y, z);
 
             for (StructureBoundingBox structureboundingbox : this.roomsLinkedToTheRoom)
             {
-                structureboundingbox.offset(p_181138_1_, p_181138_2_, p_181138_3_);
+                structureboundingbox.offset(x, y, z);
             }
         }
 
@@ -754,7 +754,7 @@ public class StructureMineshaftPieces
         {
         }
 
-        public static StructureBoundingBox func_175812_a(List<StructureComponent> listIn, Random rand, int x, int y, int z, EnumFacing facing)
+        public static StructureBoundingBox findStairs(List<StructureComponent> listIn, Random rand, int x, int y, int z, EnumFacing facing)
         {
             StructureBoundingBox structureboundingbox = new StructureBoundingBox(x, y - 5, z, x, y + 2, z);
 

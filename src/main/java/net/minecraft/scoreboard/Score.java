@@ -18,14 +18,14 @@ public class Score
     private final String scorePlayerName;
     private int scorePoints;
     private boolean locked;
-    private boolean field_178818_g;
+    private boolean forceUpdate;
 
     public Score(Scoreboard theScoreboardIn, ScoreObjective theScoreObjectiveIn, String scorePlayerNameIn)
     {
         this.theScoreboard = theScoreboardIn;
         this.theScoreObjective = theScoreObjectiveIn;
         this.scorePlayerName = scorePlayerNameIn;
-        this.field_178818_g = true;
+        this.forceUpdate = true;
     }
 
     public void increseScore(int amount)
@@ -52,7 +52,7 @@ public class Score
         }
     }
 
-    public void func_96648_a()
+    public void incrementScore()
     {
         if (this.theScoreObjective.getCriteria().isReadOnly())
         {
@@ -74,10 +74,10 @@ public class Score
         int i = this.scorePoints;
         this.scorePoints = points;
 
-        if (i != points || this.field_178818_g)
+        if (i != points || this.forceUpdate)
         {
-            this.field_178818_g = false;
-            this.getScoreScoreboard().func_96536_a(this);
+            this.forceUpdate = false;
+            this.getScoreScoreboard().onScoreChanged(this);
         }
     }
 

@@ -246,7 +246,7 @@ public class DynamicLights
             else if (p_getLightLevel_0_ instanceof EntityBlaze)
             {
                 EntityBlaze entityblaze = (EntityBlaze)p_getLightLevel_0_;
-                return entityblaze.func_70845_n() ? 15 : 10;
+                return entityblaze.isCharged() ? 15 : 10;
             }
             else if (p_getLightLevel_0_ instanceof EntityMagmaCube)
             {

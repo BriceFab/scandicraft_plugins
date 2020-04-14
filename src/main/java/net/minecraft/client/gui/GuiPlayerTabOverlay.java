@@ -22,7 +22,7 @@ import net.minecraft.world.WorldSettings;
 
 public class GuiPlayerTabOverlay extends Gui
 {
-    private static final Ordering<NetworkPlayerInfo> field_175252_a = Ordering.from(new GuiPlayerTabOverlay.PlayerComparator());
+    private static final Ordering<NetworkPlayerInfo> ENTRY_ORDERING = Ordering.from(new GuiPlayerTabOverlay.PlayerComparator());
     private final Minecraft mc;
     private final GuiIngame guiIngame;
     private IChatComponent footer;
@@ -70,7 +70,7 @@ public class GuiPlayerTabOverlay extends Gui
     public void renderPlayerlist(int width, Scoreboard scoreboardIn, ScoreObjective scoreObjectiveIn)
     {
         NetHandlerPlayClient nethandlerplayclient = this.mc.thePlayer.sendQueue;
-        List<NetworkPlayerInfo> list = field_175252_a.<NetworkPlayerInfo>sortedCopy(nethandlerplayclient.getPlayerInfoMap());
+        List<NetworkPlayerInfo> list = ENTRY_ORDERING.<NetworkPlayerInfo>sortedCopy(nethandlerplayclient.getPlayerInfoMap());
         int i = 0;
         int j = 0;
 
@@ -271,40 +271,40 @@ public class GuiPlayerTabOverlay extends Gui
         this.zLevel -= 100.0F;
     }
 
-    private void drawScoreboardValues(ScoreObjective p_175247_1_, int p_175247_2_, String p_175247_3_, int p_175247_4_, int p_175247_5_, NetworkPlayerInfo p_175247_6_)
+    private void drawScoreboardValues(ScoreObjective objective, int p_175247_2_, String name, int p_175247_4_, int p_175247_5_, NetworkPlayerInfo info)
     {
-        int i = p_175247_1_.getScoreboard().getValueFromObjective(p_175247_3_, p_175247_1_).getScorePoints();
+        int i = objective.getScoreboard().getValueFromObjective(name, objective).getScorePoints();
 
-        if (p_175247_1_.getRenderType() == IScoreObjectiveCriteria.EnumRenderType.HEARTS)
+        if (objective.getRenderType() == IScoreObjectiveCriteria.EnumRenderType.HEARTS)
         {
             this.mc.getTextureManager().bindTexture(icons);
 
-            if (this.lastTimeOpened == p_175247_6_.func_178855_p())
+            if (this.lastTimeOpened == info.getRenderVisibilityId())
             {
-                if (i < p_175247_6_.func_178835_l())
+                if (i < info.getLastHealth())
                 {
-                    p_175247_6_.func_178846_a(Minecraft.getSystemTime());
-                    p_175247_6_.func_178844_b((long)(this.guiIngame.getUpdateCounter() + 20));
+                    info.setLastHealthTime(Minecraft.getSystemTime());
+                    info.setHealthBlinkTime((long)(this.guiIngame.getUpdateCounter() + 20));
                 }
-                else if (i > p_175247_6_.func_178835_l())
+                else if (i > info.getLastHealth())
                 {
-                    p_175247_6_.func_178846_a(Minecraft.getSystemTime());
-                    p_175247_6_.func_178844_b((long)(this.guiIngame.getUpdateCounter() + 10));
+                    info.setLastHealthTime(Minecraft.getSystemTime());
+                    info.setHealthBlinkTime((long)(this.guiIngame.getUpdateCounter() + 10));
                 }
             }
 
-            if (Minecraft.getSystemTime() - p_175247_6_.func_178847_n() > 1000L || this.lastTimeOpened != p_175247_6_.func_178855_p())
+            if (Minecraft.getSystemTime() - info.getLastHealthTime() > 1000L || this.lastTimeOpened != info.getRenderVisibilityId())
             {
-                p_175247_6_.func_178836_b(i);
-                p_175247_6_.func_178857_c(i);
-                p_175247_6_.func_178846_a(Minecraft.getSystemTime());
+                info.setLastHealth(i);
+                info.setDisplayHealth(i);
+                info.setLastHealthTime(Minecraft.getSystemTime());
             }
 
-            p_175247_6_.func_178843_c(this.lastTimeOpened);
-            p_175247_6_.func_178836_b(i);
-            int j = MathHelper.ceiling_float_int((float)Math.max(i, p_175247_6_.func_178860_m()) / 2.0F);
-            int k = Math.max(MathHelper.ceiling_float_int((float)(i / 2)), Math.max(MathHelper.ceiling_float_int((float)(p_175247_6_.func_178860_m() / 2)), 10));
-            boolean flag = p_175247_6_.func_178858_o() > (long)this.guiIngame.getUpdateCounter() && (p_175247_6_.func_178858_o() - (long)this.guiIngame.getUpdateCounter()) / 3L % 2L == 1L;
+            info.setRenderVisibilityId(this.lastTimeOpened);
+            info.setLastHealth(i);
+            int j = MathHelper.ceiling_float_int((float)Math.max(i, info.getDisplayHealth()) / 2.0F);
+            int k = Math.max(MathHelper.ceiling_float_int((float)(i / 2)), Math.max(MathHelper.ceiling_float_int((float)(info.getDisplayHealth() / 2)), 10));
+            boolean flag = info.getHealthBlinkTime() > (long)this.guiIngame.getUpdateCounter() && (info.getHealthBlinkTime() - (long)this.guiIngame.getUpdateCounter()) / 3L % 2L == 1L;
 
             if (j > 0)
             {
@@ -323,12 +323,12 @@ public class GuiPlayerTabOverlay extends Gui
 
                         if (flag)
                         {
-                            if (j1 * 2 + 1 < p_175247_6_.func_178860_m())
+                            if (j1 * 2 + 1 < info.getDisplayHealth())
                             {
                                 this.drawTexturedModalRect((float)p_175247_4_ + (float)j1 * f, (float)p_175247_2_, 70, 0, 9, 9);
                             }
 
-                            if (j1 * 2 + 1 == p_175247_6_.func_178860_m())
+                            if (j1 * 2 + 1 == info.getDisplayHealth())
                             {
                                 this.drawTexturedModalRect((float)p_175247_4_ + (float)j1 * f, (float)p_175247_2_, 79, 0, 9, 9);
                             }
@@ -377,7 +377,7 @@ public class GuiPlayerTabOverlay extends Gui
         this.header = headerIn;
     }
 
-    public void func_181030_a()
+    public void resetFooterHeader()
     {
         this.header = null;
         this.footer = null;

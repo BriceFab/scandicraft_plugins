@@ -11,10 +11,10 @@ import net.minecraft.world.World;
 
 public class DemoWorldManager extends ItemInWorldManager
 {
-    private boolean field_73105_c;
+    private boolean displayedIntro;
     private boolean demoTimeExpired;
-    private int field_73104_e;
-    private int field_73102_f;
+    private int demoEndedReminder;
+    private int gameModeTicks;
 
     public DemoWorldManager(World worldIn)
     {
@@ -24,13 +24,13 @@ public class DemoWorldManager extends ItemInWorldManager
     public void updateBlockRemoving()
     {
         super.updateBlockRemoving();
-        ++this.field_73102_f;
+        ++this.gameModeTicks;
         long i = this.theWorld.getTotalWorldTime();
         long j = i / 24000L + 1L;
 
-        if (!this.field_73105_c && this.field_73102_f > 20)
+        if (!this.displayedIntro && this.gameModeTicks > 20)
         {
-            this.field_73105_c = true;
+            this.displayedIntro = true;
             this.thisPlayerMP.playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(5, 0.0F));
         }
 
@@ -38,7 +38,7 @@ public class DemoWorldManager extends ItemInWorldManager
 
         if (this.demoTimeExpired)
         {
-            ++this.field_73104_e;
+            ++this.demoEndedReminder;
         }
 
         if (i % 24000L == 500L)
@@ -74,10 +74,10 @@ public class DemoWorldManager extends ItemInWorldManager
      */
     private void sendDemoReminder()
     {
-        if (this.field_73104_e > 100)
+        if (this.demoEndedReminder > 100)
         {
             this.thisPlayerMP.addChatMessage(new ChatComponentTranslation("demo.reminder", new Object[0]));
-            this.field_73104_e = 0;
+            this.demoEndedReminder = 0;
         }
     }
 

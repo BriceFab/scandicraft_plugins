@@ -42,8 +42,8 @@ public class RenderGuardian extends RenderLiving<EntityGuardian>
 
                 if (entitylivingbase != null)
                 {
-                    Vec3 vec3 = this.func_177110_a(entitylivingbase, (double)entitylivingbase.height * 0.5D, 1.0F);
-                    Vec3 vec31 = this.func_177110_a(livingEntity, (double)livingEntity.getEyeHeight(), 1.0F);
+                    Vec3 vec3 = this.getPosition(entitylivingbase, (double)entitylivingbase.height * 0.5D, 1.0F);
+                    Vec3 vec31 = this.getPosition(livingEntity, (double)livingEntity.getEyeHeight(), 1.0F);
 
                     if (camera.isBoundingBoxInFrustum(AxisAlignedBB.fromBounds(vec31.xCoord, vec31.yCoord, vec31.zCoord, vec3.xCoord, vec3.yCoord, vec3.zCoord)))
                     {
@@ -56,7 +56,7 @@ public class RenderGuardian extends RenderLiving<EntityGuardian>
         }
     }
 
-    private Vec3 func_177110_a(EntityLivingBase entityLivingBaseIn, double p_177110_2_, float p_177110_4_)
+    private Vec3 getPosition(EntityLivingBase entityLivingBaseIn, double p_177110_2_, float p_177110_4_)
     {
         double d0 = entityLivingBaseIn.lastTickPosX + (entityLivingBaseIn.posX - entityLivingBaseIn.lastTickPosX) * (double)p_177110_4_;
         double d1 = p_177110_2_ + entityLivingBaseIn.lastTickPosY + (entityLivingBaseIn.posY - entityLivingBaseIn.lastTickPosY) * (double)p_177110_4_;
@@ -83,7 +83,7 @@ public class RenderGuardian extends RenderLiving<EntityGuardian>
 
         if (entitylivingbase != null)
         {
-            float f = entity.func_175477_p(partialTicks);
+            float f = entity.getAttackAnimationScale(partialTicks);
             Tessellator tessellator = Tessellator.getInstance();
             WorldRenderer worldrenderer = tessellator.getWorldRenderer();
             this.bindTexture(GUARDIAN_BEAM_TEXTURE);
@@ -101,8 +101,8 @@ public class RenderGuardian extends RenderLiving<EntityGuardian>
             float f4 = entity.getEyeHeight();
             GlStateManager.pushMatrix();
             GlStateManager.translate((float)x, (float)y + f4, (float)z);
-            Vec3 vec3 = this.func_177110_a(entitylivingbase, (double)entitylivingbase.height * 0.5D, partialTicks);
-            Vec3 vec31 = this.func_177110_a(entity, (double)f4, partialTicks);
+            Vec3 vec3 = this.getPosition(entitylivingbase, (double)entitylivingbase.height * 0.5D, partialTicks);
+            Vec3 vec31 = this.getPosition(entity, (double)f4, partialTicks);
             Vec3 vec32 = vec3.subtract(vec31);
             double d0 = vec32.lengthVector() + 1.0D;
             vec32 = vec32.normalize();

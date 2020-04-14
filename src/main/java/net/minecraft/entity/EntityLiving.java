@@ -306,7 +306,7 @@ public abstract class EntityLiving extends EntityLivingBase
         }
     }
 
-    protected float func_110146_f(float p_110146_1_, float p_110146_2_)
+    protected float updateDistance(float p_110146_1_, float p_110146_2_)
     {
         this.bodyHelper.updateRenderAngles();
         return p_110146_2_;
@@ -451,9 +451,9 @@ public abstract class EntityLiving extends EntityLivingBase
         this.setNoAI(tagCompund.getBoolean("NoAI"));
     }
 
-    public void setMoveForward(float p_70657_1_)
+    public void setMoveForward(float amount)
     {
-        this.moveForward = p_70657_1_;
+        this.moveForward = amount;
     }
 
     /**
@@ -557,7 +557,7 @@ public abstract class EntityLiving extends EntityLivingBase
                 }
             }
 
-            if (flag && this.func_175448_a(itemstack))
+            if (flag && this.canEquipItem(itemstack))
             {
                 if (itemstack1 != null && this.rand.nextFloat() - 0.1F < this.equipmentDropChances[i])
                 {
@@ -583,7 +583,7 @@ public abstract class EntityLiving extends EntityLivingBase
         }
     }
 
-    protected boolean func_175448_a(ItemStack stack)
+    protected boolean canEquipItem(ItemStack stack)
     {
         return true;
     }
@@ -696,7 +696,7 @@ public abstract class EntityLiving extends EntityLivingBase
     /**
      * Changes pitch and yaw so that the entity calling the function is facing the entity provided as an argument.
      */
-    public void faceEntity(Entity entityIn, float p_70625_2_, float p_70625_3_)
+    public void faceEntity(Entity entityIn, float maxYawIncrease, float maxPitchIncrease)
     {
         double d0 = entityIn.posX - this.posX;
         double d1 = entityIn.posZ - this.posZ;
@@ -713,30 +713,30 @@ public abstract class EntityLiving extends EntityLivingBase
         }
 
         double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d1 * d1);
-        float f = (float)(MathHelper.func_181159_b(d1, d0) * 180.0D / Math.PI) - 90.0F;
-        float f1 = (float)(-(MathHelper.func_181159_b(d2, d3) * 180.0D / Math.PI));
-        this.rotationPitch = this.updateRotation(this.rotationPitch, f1, p_70625_3_);
-        this.rotationYaw = this.updateRotation(this.rotationYaw, f, p_70625_2_);
+        float f = (float)(MathHelper.atan2(d1, d0) * 180.0D / Math.PI) - 90.0F;
+        float f1 = (float)(-(MathHelper.atan2(d2, d3) * 180.0D / Math.PI));
+        this.rotationPitch = this.updateRotation(this.rotationPitch, f1, maxPitchIncrease);
+        this.rotationYaw = this.updateRotation(this.rotationYaw, f, maxYawIncrease);
     }
 
     /**
      * Arguments: current rotation, intended rotation, max increment.
      */
-    private float updateRotation(float p_70663_1_, float p_70663_2_, float p_70663_3_)
+    private float updateRotation(float angle, float targetAngle, float maxIncrease)
     {
-        float f = MathHelper.wrapAngleTo180_float(p_70663_2_ - p_70663_1_);
+        float f = MathHelper.wrapAngleTo180_float(targetAngle - angle);
 
-        if (f > p_70663_3_)
+        if (f > maxIncrease)
         {
-            f = p_70663_3_;
+            f = maxIncrease;
         }
 
-        if (f < -p_70663_3_)
+        if (f < -maxIncrease)
         {
-            f = -p_70663_3_;
+            f = -maxIncrease;
         }
 
-        return p_70663_1_ + f;
+        return angle + f;
     }
 
     /**

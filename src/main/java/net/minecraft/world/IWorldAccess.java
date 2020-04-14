@@ -42,9 +42,9 @@ public interface IWorldAccess
 
     void playRecord(String recordName, BlockPos blockPosIn);
 
-    void broadcastSound(int p_180440_1_, BlockPos p_180440_2_, int p_180440_3_);
+    void broadcastSound(int soundID, BlockPos pos, int data);
 
-    void playAuxSFX(EntityPlayer player, int sfxType, BlockPos blockPosIn, int p_180439_4_);
+    void playAuxSFX(EntityPlayer player, int sfxType, BlockPos blockPosIn, int data);
 
     void sendBlockBreakProgress(int breakerId, BlockPos pos, int progress);
 }

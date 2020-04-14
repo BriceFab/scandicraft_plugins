@@ -120,7 +120,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
      */
     private int chatSpamThresholdCount;
     private int itemDropThreshold;
-    private IntHashMap<Short> field_147372_n = new IntHashMap();
+    private IntHashMap<Short> pendingTransactions = new IntHashMap();
     private double lastPosX;
     private double lastPosY;
     private double lastPosZ;
@@ -208,7 +208,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
         this.playerEntity.setEntityActionState(packetIn.getStrafeSpeed(), packetIn.getForwardSpeed(), packetIn.isJumping(), packetIn.isSneaking());
     }
 
-    private boolean func_183006_b(C03PacketPlayer p_183006_1_)
+    private boolean isMovePlayerPacketInvalid(C03PacketPlayer p_183006_1_)
     {
         return !Doubles.isFinite(p_183006_1_.getPositionX()) || !Doubles.isFinite(p_183006_1_.getPositionY()) || !Doubles.isFinite(p_183006_1_.getPositionZ()) || !Floats.isFinite(p_183006_1_.getPitch()) || !Floats.isFinite(p_183006_1_.getYaw());
     }
@@ -220,7 +220,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
     {
         PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.playerEntity.getServerForPlayer());
 
-        if (this.func_183006_b(packetIn))
+        if (this.isMovePlayerPacketInvalid(packetIn))
         {
             this.kickPlayerFromServer("Invalid move packet received");
         }
@@ -982,7 +982,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
                 break;
 
             case REQUEST_STATS:
-                this.playerEntity.getStatFile().func_150876_a(this.playerEntity);
+                this.playerEntity.getStatFile().sendStats(this.playerEntity);
                 break;
 
             case OPEN_INVENTORY_ACHIEVEMENT:
@@ -1036,7 +1036,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
                 }
                 else
                 {
-                    this.field_147372_n.addKey(this.playerEntity.openContainer.windowId, Short.valueOf(packetIn.getActionNumber()));
+                    this.pendingTransactions.addKey(this.playerEntity.openContainer.windowId, Short.valueOf(packetIn.getActionNumber()));
                     this.playerEntity.playerNetServerHandler.sendPacket(new S32PacketConfirmTransaction(packetIn.getWindowId(), packetIn.getActionNumber(), false));
                     this.playerEntity.openContainer.setCanCraft(this.playerEntity, false);
                     List<ItemStack> list1 = Lists.<ItemStack>newArrayList();
@@ -1139,7 +1139,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
     public void processConfirmTransaction(C0FPacketConfirmTransaction packetIn)
     {
         PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.playerEntity.getServerForPlayer());
-        Short oshort = (Short)this.field_147372_n.lookup(this.playerEntity.openContainer.windowId);
+        Short oshort = (Short)this.pendingTransactions.lookup(this.playerEntity.openContainer.windowId);
 
         if (oshort != null && packetIn.getUid() == oshort.shortValue() && this.playerEntity.openContainer.windowId == packetIn.getWindowId() && !this.playerEntity.openContainer.getCanCraft(this.playerEntity) && !this.playerEntity.isSpectator())
         {

@@ -122,15 +122,15 @@ public class EnchantmentProtection extends Enchantment
         return p_92093_1_;
     }
 
-    public static double func_92092_a(Entity p_92092_0_, double p_92092_1_)
+    public static double getBlastDamageReduction(Entity entityLivingBaseIn, double damage)
     {
-        int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantment.blastProtection.effectId, p_92092_0_.getInventory());
+        int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantment.blastProtection.effectId, entityLivingBaseIn.getInventory());
 
         if (i > 0)
         {
-            p_92092_1_ -= (double)MathHelper.floor_double(p_92092_1_ * (double)((float)i * 0.15F));
+            damage -= (double)MathHelper.floor_double(damage * (double)((float)i * 0.15F));
         }
 
-        return p_92092_1_;
+        return damage;
     }
 }

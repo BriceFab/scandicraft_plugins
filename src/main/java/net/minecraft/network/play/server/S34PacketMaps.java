@@ -80,9 +80,9 @@ public class S34PacketMaps implements Packet<INetHandlerPlayClient>
 
         for (Vec4b vec4b : this.mapVisiblePlayersVec4b)
         {
-            buf.writeByte((vec4b.func_176110_a() & 15) << 4 | vec4b.func_176111_d() & 15);
-            buf.writeByte(vec4b.func_176112_b());
-            buf.writeByte(vec4b.func_176113_c());
+            buf.writeByte((vec4b.getImage() & 15) << 4 | vec4b.getRotation() & 15);
+            buf.writeByte(vec4b.getX());
+            buf.writeByte(vec4b.getY());
         }
 
         buf.writeByte(this.mapMaxX);

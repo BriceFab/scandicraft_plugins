@@ -16,15 +16,15 @@ public class ArmorStandRenderer extends RendererLivingEntity<EntityArmorStand>
      */
     public static final ResourceLocation TEXTURE_ARMOR_STAND = new ResourceLocation("textures/entity/armorstand/wood.png");
 
-    public ArmorStandRenderer(RenderManager p_i46195_1_)
+    public ArmorStandRenderer(RenderManager manager)
     {
-        super(p_i46195_1_, new ModelArmorStand(), 0.0F);
+        super(manager, new ModelArmorStand(), 0.0F);
         LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this)
         {
             protected void initArmor()
             {
-                this.field_177189_c = new ModelArmorStandArmor(0.5F);
-                this.field_177186_d = new ModelArmorStandArmor(1.0F);
+                this.modelLeggings = new ModelArmorStandArmor(0.5F);
+                this.modelArmor = new ModelArmorStandArmor(1.0F);
             }
         };
         this.addLayer(layerbipedarmor);

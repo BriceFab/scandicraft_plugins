@@ -60,8 +60,8 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
     private int eatingHaystackCounter;
     private int openMouthCounter;
     private int jumpRearingCounter;
-    public int field_110278_bp;
-    public int field_110279_bq;
+    public int tailCounter;
+    public int sprintCounter;
     protected boolean horseJumping;
     private AnimalChest horseChest;
     private boolean hasReproduced;
@@ -71,7 +71,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
      */
     protected int temper;
     protected float jumpPower;
-    private boolean field_110294_bI;
+    private boolean allowStandSliding;
     private float headLean;
     private float prevHeadLean;
     private float rearingAmount;
@@ -259,7 +259,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         return !this.isUndead() && super.allowLeashing();
     }
 
-    protected void func_142017_o(float p_142017_1_)
+    protected void onLeashDistance(float p_142017_1_)
     {
         if (p_142017_1_ > 6.0F && this.isEatingHaystack())
         {
@@ -404,7 +404,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         }
     }
 
-    private void func_110266_cB()
+    private void eatingHorse()
     {
         this.openHorseMouth();
 
@@ -459,7 +459,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
 
         if (animalchest != null)
         {
-            animalchest.func_110132_b(this);
+            animalchest.removeListener(this);
             int i = Math.min(animalchest.getSizeInventory(), this.horseChest.getSizeInventory());
 
             for (int j = 0; j < i; ++j)
@@ -473,7 +473,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
             }
         }
 
-        this.horseChest.func_110134_a(this);
+        this.horseChest.addListener(this);
         this.updateHorseSlots();
     }
 
@@ -496,7 +496,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
     /**
      * Called by InventoryBasic.onInventoryChanged() on a array that is never filled.
      */
-    public void onInventoryChanged(InventoryBasic p_76316_1_)
+    public void onInventoryChanged(InventoryBasic invBasic)
     {
         int i = this.getHorseArmorIndexSynced();
         boolean flag = this.isHorseSaddled();
@@ -924,7 +924,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
 
                     if (flag)
                     {
-                        this.func_110266_cB();
+                        this.eatingHorse();
                     }
                 }
 
@@ -1047,9 +1047,9 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         return false;
     }
 
-    private void func_110210_cH()
+    private void moveTail()
     {
-        this.field_110278_bp = 1;
+        this.tailCounter = 1;
     }
 
     /**
@@ -1073,7 +1073,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
     {
         if (this.rand.nextInt(200) == 0)
         {
-            this.func_110210_cH();
+            this.moveTail();
         }
 
         super.onLivingUpdate();
@@ -1133,18 +1133,18 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
             this.setRearing(false);
         }
 
-        if (this.field_110278_bp > 0 && ++this.field_110278_bp > 8)
+        if (this.tailCounter > 0 && ++this.tailCounter > 8)
         {
-            this.field_110278_bp = 0;
+            this.tailCounter = 0;
         }
 
-        if (this.field_110279_bq > 0)
+        if (this.sprintCounter > 0)
         {
-            ++this.field_110279_bq;
+            ++this.sprintCounter;
 
-            if (this.field_110279_bq > 300)
+            if (this.sprintCounter > 300)
             {
-                this.field_110279_bq = 0;
+                this.sprintCounter = 0;
             }
         }
 
@@ -1183,7 +1183,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         }
         else
         {
-            this.field_110294_bI = false;
+            this.allowStandSliding = false;
             this.rearingAmount += (0.8F * this.rearingAmount * this.rearingAmount * this.rearingAmount - this.rearingAmount) * 0.6F - 0.05F;
 
             if (this.rearingAmount < 0.0F)
@@ -1320,7 +1320,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
                 this.gallopTime = 0;
             }
 
-            if (this.onGround && this.jumpPower == 0.0F && this.isRearing() && !this.field_110294_bI)
+            if (this.onGround && this.jumpPower == 0.0F && this.isRearing() && !this.allowStandSliding)
             {
                 strafe = 0.0F;
                 forward = 0.0F;
@@ -1705,7 +1705,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
             }
             else
             {
-                this.field_110294_bI = true;
+                this.allowStandSliding = true;
                 this.makeHorseRear();
             }
 

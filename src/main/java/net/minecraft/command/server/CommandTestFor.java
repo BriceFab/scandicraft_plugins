@@ -70,7 +70,7 @@ public class CommandTestFor extends CommandBase
                 NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                 entity.writeToNBT(nbttagcompound1);
 
-                if (!NBTUtil.func_181123_a(nbttagcompound, nbttagcompound1, true))
+                if (!NBTUtil.areNBTEquals(nbttagcompound, nbttagcompound1, true))
                 {
                     throw new CommandException("commands.testfor.failure", new Object[] {entity.getName()});
                 }

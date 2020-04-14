@@ -11,9 +11,9 @@ public class RealmsAnvilLevelStorageSource
 {
     private ISaveFormat levelStorageSource;
 
-    public RealmsAnvilLevelStorageSource(ISaveFormat p_i1106_1_)
+    public RealmsAnvilLevelStorageSource(ISaveFormat levelStorageSourceIn)
     {
-        this.levelStorageSource = p_i1106_1_;
+        this.levelStorageSource = levelStorageSourceIn;
     }
 
     public String getName()

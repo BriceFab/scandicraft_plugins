@@ -28,7 +28,7 @@ public class EnumTypeAdapterFactory implements TypeAdapterFactory
 
             for (T t : oclass.getEnumConstants())
             {
-                map.put(this.func_151232_a(t), t);
+                map.put(this.getName(t), t);
             }
 
             return new TypeAdapter<T>()
@@ -41,7 +41,7 @@ public class EnumTypeAdapterFactory implements TypeAdapterFactory
                     }
                     else
                     {
-                        p_write_1_.value(EnumTypeAdapterFactory.this.func_151232_a(p_write_2_));
+                        p_write_1_.value(EnumTypeAdapterFactory.this.getName(p_write_2_));
                     }
                 }
                 public T read(JsonReader p_read_1_) throws IOException
@@ -60,8 +60,8 @@ public class EnumTypeAdapterFactory implements TypeAdapterFactory
         }
     }
 
-    private String func_151232_a(Object p_151232_1_)
+    private String getName(Object objectIn)
     {
-        return p_151232_1_ instanceof Enum ? ((Enum)p_151232_1_).name().toLowerCase(Locale.US) : p_151232_1_.toString().toLowerCase(Locale.US);
+        return objectIn instanceof Enum ? ((Enum)objectIn).name().toLowerCase(Locale.US) : objectIn.toString().toLowerCase(Locale.US);
     }
 }

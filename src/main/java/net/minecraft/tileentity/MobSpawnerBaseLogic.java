@@ -243,7 +243,7 @@ public abstract class MobSpawnerBaseLogic
             this.setRandomEntity((MobSpawnerBaseLogic.WeightedRandomMinecart)WeightedRandom.getRandomItem(this.getSpawnerWorld().rand, this.minecartToSpawn));
         }
 
-        this.func_98267_a(1);
+        this.broadcastEvent(1);
     }
 
     public void readFromNBT(NBTTagCompound nbt)
@@ -378,7 +378,7 @@ public abstract class MobSpawnerBaseLogic
         this.randomEntity = p_98277_1_;
     }
 
-    public abstract void func_98267_a(int id);
+    public abstract void broadcastEvent(int id);
 
     public abstract World getSpawnerWorld();
 

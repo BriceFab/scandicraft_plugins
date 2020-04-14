@@ -108,9 +108,9 @@ public class StatBase
         return false;
     }
 
-    public String format(int p_75968_1_)
+    public String format(int number)
     {
-        return this.type.format(p_75968_1_);
+        return this.type.format(number);
     }
 
     public IChatComponent getStatName()

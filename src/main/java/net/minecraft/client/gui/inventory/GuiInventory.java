@@ -22,9 +22,9 @@ public class GuiInventory extends InventoryEffectRenderer
     /** The old y position of the mouse pointer */
     private float oldMouseY;
 
-    public GuiInventory(EntityPlayer p_i1094_1_)
+    public GuiInventory(EntityPlayer player)
     {
-        super(p_i1094_1_.inventoryContainer);
+        super(player.inventoryContainer);
         this.allowUserInput = true;
     }
 

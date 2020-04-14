@@ -6,7 +6,7 @@ import net.minecraft.world.gen.ChunkProviderSettings;
 
 public class GenLayerBiome extends GenLayer
 {
-    private BiomeGenBase[] field_151623_c = new BiomeGenBase[] {BiomeGenBase.desert, BiomeGenBase.desert, BiomeGenBase.desert, BiomeGenBase.savanna, BiomeGenBase.savanna, BiomeGenBase.plains};
+    private BiomeGenBase[] warmBiomes = new BiomeGenBase[] {BiomeGenBase.desert, BiomeGenBase.desert, BiomeGenBase.desert, BiomeGenBase.savanna, BiomeGenBase.savanna, BiomeGenBase.plains};
     private BiomeGenBase[] field_151621_d = new BiomeGenBase[] {BiomeGenBase.forest, BiomeGenBase.roofedForest, BiomeGenBase.extremeHills, BiomeGenBase.plains, BiomeGenBase.birchForest, BiomeGenBase.swampland};
     private BiomeGenBase[] field_151622_e = new BiomeGenBase[] {BiomeGenBase.forest, BiomeGenBase.extremeHills, BiomeGenBase.taiga, BiomeGenBase.plains};
     private BiomeGenBase[] field_151620_f = new BiomeGenBase[] {BiomeGenBase.icePlains, BiomeGenBase.icePlains, BiomeGenBase.icePlains, BiomeGenBase.coldTaiga};
@@ -19,7 +19,7 @@ public class GenLayerBiome extends GenLayer
 
         if (p_i45560_4_ == WorldType.DEFAULT_1_1)
         {
-            this.field_151623_c = new BiomeGenBase[] {BiomeGenBase.desert, BiomeGenBase.forest, BiomeGenBase.extremeHills, BiomeGenBase.swampland, BiomeGenBase.plains, BiomeGenBase.taiga};
+            this.warmBiomes = new BiomeGenBase[] {BiomeGenBase.desert, BiomeGenBase.forest, BiomeGenBase.extremeHills, BiomeGenBase.swampland, BiomeGenBase.plains, BiomeGenBase.taiga};
             this.field_175973_g = null;
         }
         else if (p_i45560_4_ == WorldType.CUSTOMIZED)
@@ -77,7 +77,7 @@ public class GenLayerBiome extends GenLayer
                     }
                     else
                     {
-                        aint1[j + i * areaWidth] = this.field_151623_c[this.nextInt(this.field_151623_c.length)].biomeID;
+                        aint1[j + i * areaWidth] = this.warmBiomes[this.nextInt(this.warmBiomes.length)].biomeID;
                     }
                 }
                 else if (k == 2)

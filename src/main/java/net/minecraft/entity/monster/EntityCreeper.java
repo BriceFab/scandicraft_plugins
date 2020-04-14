@@ -37,7 +37,7 @@ public class EntityCreeper extends EntityMob
 
     /** Explosion radius for this creeper. */
     private int explosionRadius = 3;
-    private int field_175494_bm = 0;
+    private int droppedSkulls = 0;
 
     public EntityCreeper(World worldIn)
     {
@@ -197,7 +197,7 @@ public class EntityCreeper extends EntityMob
         }
         else if (cause.getEntity() instanceof EntityCreeper && cause.getEntity() != this && ((EntityCreeper)cause.getEntity()).getPowered() && ((EntityCreeper)cause.getEntity()).isAIEnabled())
         {
-            ((EntityCreeper)cause.getEntity()).func_175493_co();
+            ((EntityCreeper)cause.getEntity()).incrementDroppedSkulls();
             this.entityDropItem(new ItemStack(Items.skull, 1, 4), 0.0F);
         }
     }
@@ -218,9 +218,9 @@ public class EntityCreeper extends EntityMob
     /**
      * Params: (Float)Render tick. Returns the intensity of the creeper's flash when it is ignited.
      */
-    public float getCreeperFlashIntensity(float p_70831_1_)
+    public float getCreeperFlashIntensity(float partialTicks)
     {
-        return ((float)this.lastActiveTime + (float)(this.timeSinceIgnited - this.lastActiveTime) * p_70831_1_) / (float)(this.fuseTime - 2);
+        return ((float)this.lastActiveTime + (float)(this.timeSinceIgnited - this.lastActiveTime) * partialTicks) / (float)(this.fuseTime - 2);
     }
 
     protected Item getDropItem()
@@ -305,11 +305,11 @@ public class EntityCreeper extends EntityMob
      */
     public boolean isAIEnabled()
     {
-        return this.field_175494_bm < 1 && this.worldObj.getGameRules().getBoolean("doMobLoot");
+        return this.droppedSkulls < 1 && this.worldObj.getGameRules().getBoolean("doMobLoot");
     }
 
-    public void func_175493_co()
+    public void incrementDroppedSkulls()
     {
-        ++this.field_175494_bm;
+        ++this.droppedSkulls;
     }
 }

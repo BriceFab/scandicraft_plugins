@@ -11,10 +11,10 @@ public class ServerAddress
     private final String ipAddress;
     private final int serverPort;
 
-    private ServerAddress(String p_i1192_1_, int p_i1192_2_)
+    private ServerAddress(String address, int port)
     {
-        this.ipAddress = p_i1192_1_;
-        this.serverPort = p_i1192_2_;
+        this.ipAddress = address;
+        this.serverPort = port;
     }
 
     public String getIP()
@@ -27,24 +27,24 @@ public class ServerAddress
         return this.serverPort;
     }
 
-    public static ServerAddress func_78860_a(String p_78860_0_)
+    public static ServerAddress fromString(String addrString)
     {
-        if (p_78860_0_ == null)
+        if (addrString == null)
         {
             return null;
         }
         else
         {
-            String[] astring = p_78860_0_.split(":");
+            String[] astring = addrString.split(":");
 
-            if (p_78860_0_.startsWith("["))
+            if (addrString.startsWith("["))
             {
-                int i = p_78860_0_.indexOf("]");
+                int i = addrString.indexOf("]");
 
                 if (i > 0)
                 {
-                    String s = p_78860_0_.substring(1, i);
-                    String s1 = p_78860_0_.substring(i + 1).trim();
+                    String s = addrString.substring(1, i);
+                    String s1 = addrString.substring(i + 1).trim();
 
                     if (s1.startsWith(":") && s1.length() > 0)
                     {
@@ -60,7 +60,7 @@ public class ServerAddress
 
             if (astring.length > 2)
             {
-                astring = new String[] {p_78860_0_};
+                astring = new String[] {addrString};
             }
 
             String s2 = astring[0];
@@ -101,15 +101,15 @@ public class ServerAddress
         }
     }
 
-    private static int parseIntWithDefault(String p_78862_0_, int p_78862_1_)
+    private static int parseIntWithDefault(String value, int defaultValue)
     {
         try
         {
-            return Integer.parseInt(p_78862_0_.trim());
+            return Integer.parseInt(value.trim());
         }
         catch (Exception var3)
         {
-            return p_78862_1_;
+            return defaultValue;
         }
     }
 }

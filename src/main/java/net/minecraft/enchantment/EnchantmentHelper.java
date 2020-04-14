@@ -212,43 +212,43 @@ public class EnchantmentHelper
         return (enchantmentModifierDamage.damageModifier + 1 >> 1) + enchantmentRand.nextInt((enchantmentModifierDamage.damageModifier >> 1) + 1);
     }
 
-    public static float func_152377_a(ItemStack p_152377_0_, EnumCreatureAttribute p_152377_1_)
+    public static float getModifierForCreature(ItemStack stack, EnumCreatureAttribute creatureAttribute)
     {
         enchantmentModifierLiving.livingModifier = 0.0F;
-        enchantmentModifierLiving.entityLiving = p_152377_1_;
-        applyEnchantmentModifier(enchantmentModifierLiving, p_152377_0_);
+        enchantmentModifierLiving.entityLiving = creatureAttribute;
+        applyEnchantmentModifier(enchantmentModifierLiving, stack);
         return enchantmentModifierLiving.livingModifier;
     }
 
-    public static void applyThornEnchantments(EntityLivingBase p_151384_0_, Entity p_151384_1_)
+    public static void applyThornEnchantments(EntityLivingBase user, Entity attacker)
     {
-        ENCHANTMENT_ITERATOR_HURT.attacker = p_151384_1_;
-        ENCHANTMENT_ITERATOR_HURT.user = p_151384_0_;
+        ENCHANTMENT_ITERATOR_HURT.attacker = attacker;
+        ENCHANTMENT_ITERATOR_HURT.user = user;
 
-        if (p_151384_0_ != null)
+        if (user != null)
         {
-            applyEnchantmentModifierArray(ENCHANTMENT_ITERATOR_HURT, p_151384_0_.getInventory());
+            applyEnchantmentModifierArray(ENCHANTMENT_ITERATOR_HURT, user.getInventory());
         }
 
-        if (p_151384_1_ instanceof EntityPlayer)
+        if (attacker instanceof EntityPlayer)
         {
-            applyEnchantmentModifier(ENCHANTMENT_ITERATOR_HURT, p_151384_0_.getHeldItem());
+            applyEnchantmentModifier(ENCHANTMENT_ITERATOR_HURT, user.getHeldItem());
         }
     }
 
-    public static void applyArthropodEnchantments(EntityLivingBase p_151385_0_, Entity p_151385_1_)
+    public static void applyArthropodEnchantments(EntityLivingBase user, Entity target)
     {
-        ENCHANTMENT_ITERATOR_DAMAGE.user = p_151385_0_;
-        ENCHANTMENT_ITERATOR_DAMAGE.target = p_151385_1_;
+        ENCHANTMENT_ITERATOR_DAMAGE.user = user;
+        ENCHANTMENT_ITERATOR_DAMAGE.target = target;
 
-        if (p_151385_0_ != null)
+        if (user != null)
         {
-            applyEnchantmentModifierArray(ENCHANTMENT_ITERATOR_DAMAGE, p_151385_0_.getInventory());
+            applyEnchantmentModifierArray(ENCHANTMENT_ITERATOR_DAMAGE, user.getInventory());
         }
 
-        if (p_151385_0_ instanceof EntityPlayer)
+        if (user instanceof EntityPlayer)
         {
-            applyEnchantmentModifier(ENCHANTMENT_ITERATOR_DAMAGE, p_151385_0_.getHeldItem());
+            applyEnchantmentModifier(ENCHANTMENT_ITERATOR_DAMAGE, user.getHeldItem());
         }
     }
 
@@ -357,9 +357,9 @@ public class EnchantmentHelper
      * Returns the enchantability of itemstack, it's uses a singular formula for each index (2nd parameter: 0, 1 and 2),
      * cutting to the max enchantability power of the table (3rd parameter)
      */
-    public static int calcItemStackEnchantability(Random p_77514_0_, int p_77514_1_, int p_77514_2_, ItemStack p_77514_3_)
+    public static int calcItemStackEnchantability(Random rand, int enchantNum, int power, ItemStack stack)
     {
-        Item item = p_77514_3_.getItem();
+        Item item = stack.getItem();
         int i = item.getItemEnchantability();
 
         if (i <= 0)
@@ -368,27 +368,27 @@ public class EnchantmentHelper
         }
         else
         {
-            if (p_77514_2_ > 15)
+            if (power > 15)
             {
-                p_77514_2_ = 15;
+                power = 15;
             }
 
-            int j = p_77514_0_.nextInt(8) + 1 + (p_77514_2_ >> 1) + p_77514_0_.nextInt(p_77514_2_ + 1);
-            return p_77514_1_ == 0 ? Math.max(j / 3, 1) : (p_77514_1_ == 1 ? j * 2 / 3 + 1 : Math.max(j, p_77514_2_ * 2));
+            int j = rand.nextInt(8) + 1 + (power >> 1) + rand.nextInt(power + 1);
+            return enchantNum == 0 ? Math.max(j / 3, 1) : (enchantNum == 1 ? j * 2 / 3 + 1 : Math.max(j, power * 2));
         }
     }
 
     /**
      * Adds a random enchantment to the specified item. Args: random, itemStack, enchantabilityLevel
      */
-    public static ItemStack addRandomEnchantment(Random p_77504_0_, ItemStack p_77504_1_, int p_77504_2_)
+    public static ItemStack addRandomEnchantment(Random random, ItemStack stack, int level)
     {
-        List<EnchantmentData> list = buildEnchantmentList(p_77504_0_, p_77504_1_, p_77504_2_);
-        boolean flag = p_77504_1_.getItem() == Items.book;
+        List<EnchantmentData> list = buildEnchantmentList(random, stack, level);
+        boolean flag = stack.getItem() == Items.book;
 
         if (flag)
         {
-            p_77504_1_.setItem(Items.enchanted_book);
+            stack.setItem(Items.enchanted_book);
         }
 
         if (list != null)
@@ -397,19 +397,19 @@ public class EnchantmentHelper
             {
                 if (flag)
                 {
-                    Items.enchanted_book.addEnchantment(p_77504_1_, enchantmentdata);
+                    Items.enchanted_book.addEnchantment(stack, enchantmentdata);
                 }
                 else
                 {
-                    p_77504_1_.addEnchantment(enchantmentdata.enchantmentobj, enchantmentdata.enchantmentLevel);
+                    stack.addEnchantment(enchantmentdata.enchantmentobj, enchantmentdata.enchantmentLevel);
                 }
             }
         }
 
-        return p_77504_1_;
+        return stack;
     }
 
-    public static List<EnchantmentData> buildEnchantmentList(Random randomIn, ItemStack itemStackIn, int p_77513_2_)
+    public static List<EnchantmentData> buildEnchantmentList(Random randomIn, ItemStack itemStackIn, int level)
     {
         Item item = itemStackIn.getItem();
         int i = item.getItemEnchantability();
@@ -422,7 +422,7 @@ public class EnchantmentHelper
         {
             i = i / 2;
             i = 1 + randomIn.nextInt((i >> 1) + 1) + randomIn.nextInt((i >> 1) + 1);
-            int j = i + p_77513_2_;
+            int j = i + level;
             float f = (randomIn.nextFloat() + randomIn.nextFloat() - 1.0F) * 0.15F;
             int k = (int)((float)j * (1.0F + f) + 0.5F);
 

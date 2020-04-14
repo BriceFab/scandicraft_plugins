@@ -72,10 +72,10 @@ public class IntegratedServer extends MinecraftServer
         return new IntegratedServerCommandManager();
     }
 
-    protected void loadAllWorlds(String p_71247_1_, String p_71247_2_, long seed, WorldType type, String p_71247_6_)
+    protected void loadAllWorlds(String saveName, String worldNameIn, long seed, WorldType type, String generatorOptions)
     {
-        this.convertMapIfNeeded(p_71247_1_);
-        ISaveHandler isavehandler = this.getActiveAnvilConverter().getSaveLoader(p_71247_1_, true);
+        this.convertMapIfNeeded(saveName);
+        ISaveHandler isavehandler = this.getActiveAnvilConverter().getSaveLoader(saveName, true);
         this.setResourcePackFromWorld(this.getFolderName(), isavehandler);
         WorldInfo worldinfo = isavehandler.loadWorldInfo();
 
@@ -119,11 +119,11 @@ public class IntegratedServer extends MinecraftServer
 
             if (worldinfo == null)
             {
-                worldinfo = new WorldInfo(this.theWorldSettings, p_71247_2_);
+                worldinfo = new WorldInfo(this.theWorldSettings, worldNameIn);
             }
             else
             {
-                worldinfo.setWorldName(p_71247_2_);
+                worldinfo.setWorldName(worldNameIn);
             }
 
             for (int l = 0; l < this.worldServers.length; ++l)
@@ -318,7 +318,7 @@ public class IntegratedServer extends MinecraftServer
         return this.mc.mcDataDir;
     }
 
-    public boolean func_181035_ah()
+    public boolean shouldUseNativeTransport()
     {
         return false;
     }
@@ -457,7 +457,7 @@ public class IntegratedServer extends MinecraftServer
             private static final String __OBFID = "CL_00002380";
             public void run()
             {
-                for (EntityPlayerMP entityplayermp : Lists.newArrayList(IntegratedServer.this.getConfigurationManager().func_181057_v()))
+                for (EntityPlayerMP entityplayermp : Lists.newArrayList(IntegratedServer.this.getConfigurationManager().getPlayers()))
                 {
                     IntegratedServer.this.getConfigurationManager().playerLoggedOut(entityplayermp);
                 }

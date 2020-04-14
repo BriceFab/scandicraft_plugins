@@ -224,7 +224,7 @@ public class BlockSkull extends BlockContainer
                 BlockPos blockpos1 = blockpattern$patternhelper.translateOffset(1, 2, 0).getPos();
                 entitywither.setLocationAndAngles((double)blockpos1.getX() + 0.5D, (double)blockpos1.getY() + 0.55D, (double)blockpos1.getZ() + 0.5D, blockpattern$patternhelper.getFinger().getAxis() == EnumFacing.Axis.X ? 0.0F : 90.0F, 0.0F);
                 entitywither.renderYawOffset = blockpattern$patternhelper.getFinger().getAxis() == EnumFacing.Axis.X ? 0.0F : 90.0F;
-                entitywither.func_82206_m();
+                entitywither.ignite();
 
                 for (EntityPlayer entityplayer : worldIn.getEntitiesWithinAABB(EntityPlayer.class, entitywither.getEntityBoundingBox().expand(50.0D, 50.0D, 50.0D)))
                 {

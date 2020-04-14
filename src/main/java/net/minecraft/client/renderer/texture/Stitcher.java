@@ -99,42 +99,42 @@ public class Stitcher
         return arraylist1;
     }
 
-    private static int getMipmapDimension(int p_147969_0_, int p_147969_1_)
+    private static int getMipmapDimension(int dimensionIn, int mipmapLevelIn)
     {
-        return (p_147969_0_ >> p_147969_1_) + ((p_147969_0_ & (1 << p_147969_1_) - 1) == 0 ? 0 : 1) << p_147969_1_;
+        return (dimensionIn >> mipmapLevelIn) + ((dimensionIn & (1 << mipmapLevelIn) - 1) == 0 ? 0 : 1) << mipmapLevelIn;
     }
 
     /**
      * Attempts to find space for specified tile
      */
-    private boolean allocateSlot(Stitcher.Holder p_94310_1_)
+    private boolean allocateSlot(Stitcher.Holder holderIn)
     {
         for (int i = 0; i < this.stitchSlots.size(); ++i)
         {
-            if (((Stitcher.Slot)this.stitchSlots.get(i)).addSlot(p_94310_1_))
+            if (((Stitcher.Slot)this.stitchSlots.get(i)).addSlot(holderIn))
             {
                 return true;
             }
 
-            p_94310_1_.rotate();
+            holderIn.rotate();
 
-            if (((Stitcher.Slot)this.stitchSlots.get(i)).addSlot(p_94310_1_))
+            if (((Stitcher.Slot)this.stitchSlots.get(i)).addSlot(holderIn))
             {
                 return true;
             }
 
-            p_94310_1_.rotate();
+            holderIn.rotate();
         }
 
-        return this.expandAndAllocateSlot(p_94310_1_);
+        return this.expandAndAllocateSlot(holderIn);
     }
 
     /**
      * Expand stitched texture in order to make space for specified tile
      */
-    private boolean expandAndAllocateSlot(Stitcher.Holder p_94311_1_)
+    private boolean expandAndAllocateSlot(Stitcher.Holder holderIn)
     {
-        int i = Math.min(p_94311_1_.getWidth(), p_94311_1_.getHeight());
+        int i = Math.min(holderIn.getWidth(), holderIn.getHeight());
         boolean flag = this.currentWidth == 0 && this.currentHeight == 0;
         boolean flag1;
 
@@ -177,7 +177,7 @@ public class Stitcher
             flag1 = flag6 && (flag || this.currentWidth <= this.currentHeight);
         }
 
-        int j1 = Math.max(p_94311_1_.getWidth(), p_94311_1_.getHeight());
+        int j1 = Math.max(holderIn.getWidth(), holderIn.getHeight());
 
         if (MathHelper.roundUpToPowerOfTwo((!flag1 ? this.currentHeight : this.currentWidth) + j1) > (!flag1 ? this.maxHeight : this.maxWidth))
         {
@@ -189,26 +189,26 @@ public class Stitcher
 
             if (flag1)
             {
-                if (p_94311_1_.getWidth() > p_94311_1_.getHeight())
+                if (holderIn.getWidth() > holderIn.getHeight())
                 {
-                    p_94311_1_.rotate();
+                    holderIn.rotate();
                 }
 
                 if (this.currentHeight == 0)
                 {
-                    this.currentHeight = p_94311_1_.getHeight();
+                    this.currentHeight = holderIn.getHeight();
                 }
 
-                stitcher$slot = new Stitcher.Slot(this.currentWidth, 0, p_94311_1_.getWidth(), this.currentHeight);
-                this.currentWidth += p_94311_1_.getWidth();
+                stitcher$slot = new Stitcher.Slot(this.currentWidth, 0, holderIn.getWidth(), this.currentHeight);
+                this.currentWidth += holderIn.getWidth();
             }
             else
             {
-                stitcher$slot = new Stitcher.Slot(0, this.currentHeight, this.currentWidth, p_94311_1_.getHeight());
-                this.currentHeight += p_94311_1_.getHeight();
+                stitcher$slot = new Stitcher.Slot(0, this.currentHeight, this.currentWidth, holderIn.getHeight());
+                this.currentHeight += holderIn.getHeight();
             }
 
-            stitcher$slot.addSlot(p_94311_1_);
+            stitcher$slot.addSlot(holderIn);
             this.stitchSlots.add(stitcher$slot);
             return true;
         }
@@ -313,10 +313,10 @@ public class Stitcher
         private Stitcher.Holder holder;
         private static final String __OBFID = "CL_00001056";
 
-        public Slot(int p_i1277_1_, int p_i1277_2_, int widthIn, int heightIn)
+        public Slot(int originXIn, int originYIn, int widthIn, int heightIn)
         {
-            this.originX = p_i1277_1_;
-            this.originY = p_i1277_2_;
+            this.originX = originXIn;
+            this.originY = originYIn;
             this.width = widthIn;
             this.height = heightIn;
         }

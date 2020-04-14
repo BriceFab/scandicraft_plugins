@@ -109,7 +109,7 @@ public class BiomeGenMesa extends BiomeGenBase
 
         int j1 = p_180622_4_ & 15;
         int k1 = p_180622_5_ & 15;
-        int l1 = worldIn.func_181545_F();
+        int l1 = worldIn.getSeaLevel();
         IBlockState iblockstate = Blocks.stained_hardened_clay.getDefaultState();
         IBlockState iblockstate3 = this.fillerBlock;
         int k = (int)(p_180622_6_ / 3.0D + 3.0D + rand.nextDouble() * 0.25D);

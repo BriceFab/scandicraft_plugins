@@ -174,7 +174,7 @@ public final class SpawnerAnimals
         Chunk chunk = worldIn.getChunkFromChunkCoords(x, z);
         int i = x * 16 + worldIn.rand.nextInt(16);
         int j = z * 16 + worldIn.rand.nextInt(16);
-        int k = MathHelper.func_154354_b(chunk.getHeight(new BlockPos(i, 0, j)) + 1, 16);
+        int k = MathHelper.roundUp(chunk.getHeight(new BlockPos(i, 0, j)) + 1, 16);
         int l = worldIn.rand.nextInt(k > 0 ? k : chunk.getTopFilledSegment() + 16 - 1);
         return new BlockPos(i, l, j);
     }
@@ -214,19 +214,19 @@ public final class SpawnerAnimals
     /**
      * Called during chunk generation to spawn initial creatures.
      */
-    public static void performWorldGenSpawning(World worldIn, BiomeGenBase p_77191_1_, int p_77191_2_, int p_77191_3_, int p_77191_4_, int p_77191_5_, Random p_77191_6_)
+    public static void performWorldGenSpawning(World worldIn, BiomeGenBase biomeIn, int centerX, int centerZ, int diameterX, int p_77191_5_, Random p_77191_6_)
     {
-        List<BiomeGenBase.SpawnListEntry> list = p_77191_1_.getSpawnableList(EnumCreatureType.CREATURE);
+        List<BiomeGenBase.SpawnListEntry> list = biomeIn.getSpawnableList(EnumCreatureType.CREATURE);
 
         if (!list.isEmpty())
         {
-            while (p_77191_6_.nextFloat() < p_77191_1_.getSpawningChance())
+            while (p_77191_6_.nextFloat() < biomeIn.getSpawningChance())
             {
                 BiomeGenBase.SpawnListEntry biomegenbase$spawnlistentry = (BiomeGenBase.SpawnListEntry)WeightedRandom.getRandomItem(worldIn.rand, list);
                 int i = biomegenbase$spawnlistentry.minGroupCount + p_77191_6_.nextInt(1 + biomegenbase$spawnlistentry.maxGroupCount - biomegenbase$spawnlistentry.minGroupCount);
                 IEntityLivingData ientitylivingdata = null;
-                int j = p_77191_2_ + p_77191_6_.nextInt(p_77191_4_);
-                int k = p_77191_3_ + p_77191_6_.nextInt(p_77191_5_);
+                int j = centerX + p_77191_6_.nextInt(diameterX);
+                int k = centerZ + p_77191_6_.nextInt(p_77191_5_);
                 int l = j;
                 int i1 = k;
 
@@ -260,7 +260,7 @@ public final class SpawnerAnimals
 
                         j += p_77191_6_.nextInt(5) - p_77191_6_.nextInt(5);
 
-                        for (k += p_77191_6_.nextInt(5) - p_77191_6_.nextInt(5); j < p_77191_2_ || j >= p_77191_2_ + p_77191_4_ || k < p_77191_3_ || k >= p_77191_3_ + p_77191_4_; k = i1 + p_77191_6_.nextInt(5) - p_77191_6_.nextInt(5))
+                        for (k += p_77191_6_.nextInt(5) - p_77191_6_.nextInt(5); j < centerX || j >= centerX + diameterX || k < centerZ || k >= centerZ + diameterX; k = i1 + p_77191_6_.nextInt(5) - p_77191_6_.nextInt(5))
                         {
                             j = l + p_77191_6_.nextInt(5) - p_77191_6_.nextInt(5);
                         }

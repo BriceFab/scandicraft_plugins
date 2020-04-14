@@ -159,7 +159,7 @@ public class EntityBlaze extends EntityMob
      */
     public boolean isBurning()
     {
-        return this.func_70845_n();
+        return this.isCharged();
     }
 
     /**
@@ -178,7 +178,7 @@ public class EntityBlaze extends EntityMob
         }
     }
 
-    public boolean func_70845_n()
+    public boolean isCharged()
     {
         return (this.dataWatcher.getWatchableObjectByte(16) & 1) != 0;
     }
@@ -210,12 +210,12 @@ public class EntityBlaze extends EntityMob
     static class AIFireballAttack extends EntityAIBase
     {
         private EntityBlaze blaze;
-        private int field_179467_b;
-        private int field_179468_c;
+        private int attackStep;
+        private int attackTime;
 
-        public AIFireballAttack(EntityBlaze p_i45846_1_)
+        public AIFireballAttack(EntityBlaze blazeIn)
         {
-            this.blaze = p_i45846_1_;
+            this.blaze = blazeIn;
             this.setMutexBits(3);
         }
 
@@ -227,7 +227,7 @@ public class EntityBlaze extends EntityMob
 
         public void startExecuting()
         {
-            this.field_179467_b = 0;
+            this.attackStep = 0;
         }
 
         public void resetTask()
@@ -237,15 +237,15 @@ public class EntityBlaze extends EntityMob
 
         public void updateTask()
         {
-            --this.field_179468_c;
+            --this.attackTime;
             EntityLivingBase entitylivingbase = this.blaze.getAttackTarget();
             double d0 = this.blaze.getDistanceSqToEntity(entitylivingbase);
 
             if (d0 < 4.0D)
             {
-                if (this.field_179468_c <= 0)
+                if (this.attackTime <= 0)
                 {
-                    this.field_179468_c = 20;
+                    this.attackTime = 20;
                     this.blaze.attackEntityAsMob(entitylivingbase);
                 }
 
@@ -257,27 +257,27 @@ public class EntityBlaze extends EntityMob
                 double d2 = entitylivingbase.getEntityBoundingBox().minY + (double)(entitylivingbase.height / 2.0F) - (this.blaze.posY + (double)(this.blaze.height / 2.0F));
                 double d3 = entitylivingbase.posZ - this.blaze.posZ;
 
-                if (this.field_179468_c <= 0)
+                if (this.attackTime <= 0)
                 {
-                    ++this.field_179467_b;
+                    ++this.attackStep;
 
-                    if (this.field_179467_b == 1)
+                    if (this.attackStep == 1)
                     {
-                        this.field_179468_c = 60;
+                        this.attackTime = 60;
                         this.blaze.setOnFire(true);
                     }
-                    else if (this.field_179467_b <= 4)
+                    else if (this.attackStep <= 4)
                     {
-                        this.field_179468_c = 6;
+                        this.attackTime = 6;
                     }
                     else
                     {
-                        this.field_179468_c = 100;
-                        this.field_179467_b = 0;
+                        this.attackTime = 100;
+                        this.attackStep = 0;
                         this.blaze.setOnFire(false);
                     }
 
-                    if (this.field_179467_b > 1)
+                    if (this.attackStep > 1)
                     {
                         float f = MathHelper.sqrt_float(MathHelper.sqrt_double(d0)) * 0.5F;
                         this.blaze.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1009, new BlockPos((int)this.blaze.posX, (int)this.blaze.posY, (int)this.blaze.posZ), 0);

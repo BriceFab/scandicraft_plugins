@@ -56,7 +56,7 @@ public class EntityFirework
         private int baseTextureIndex = 160;
         private boolean trail;
         private boolean twinkle;
-        private final EffectRenderer field_92047_az;
+        private final EffectRenderer effectRenderer;
         private float fadeColourRed;
         private float fadeColourGreen;
         private float fadeColourBlue;
@@ -68,7 +68,7 @@ public class EntityFirework
             this.motionX = p_i46465_8_;
             this.motionY = p_i46465_10_;
             this.motionZ = p_i46465_12_;
-            this.field_92047_az = p_i46465_14_;
+            this.effectRenderer = p_i46465_14_;
             this.particleScale *= 0.75F;
             this.particleMaxAge = 48 + this.rand.nextInt(12);
             this.noClip = false;
@@ -157,7 +157,7 @@ public class EntityFirework
 
             if (this.trail && this.particleAge < this.particleMaxAge / 2 && (this.particleAge + this.particleMaxAge) % 2 == 0)
             {
-                EntityFirework.SparkFX entityfirework$sparkfx = new EntityFirework.SparkFX(this.worldObj, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D, this.field_92047_az);
+                EntityFirework.SparkFX entityfirework$sparkfx = new EntityFirework.SparkFX(this.worldObj, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D, this.effectRenderer);
                 entityfirework$sparkfx.setAlphaF(0.99F);
                 entityfirework$sparkfx.setRBGColorF(this.particleRed, this.particleGreen, this.particleBlue);
                 entityfirework$sparkfx.particleAge = entityfirework$sparkfx.particleMaxAge / 2;
@@ -171,7 +171,7 @@ public class EntityFirework
                 }
 
                 entityfirework$sparkfx.twinkle = this.twinkle;
-                this.field_92047_az.addEffect(entityfirework$sparkfx);
+                this.effectRenderer.addEffect(entityfirework$sparkfx);
             }
         }
 
@@ -237,7 +237,7 @@ public class EntityFirework
         {
             if (this.fireworkAge == 0 && this.fireworkExplosions != null)
             {
-                boolean flag = this.func_92037_i();
+                boolean flag = this.isFarFromCamera();
                 boolean flag1 = false;
 
                 if (this.fireworkExplosions.tagCount() >= 3)
@@ -313,7 +313,7 @@ public class EntityFirework
             {
                 if (this.twinkle)
                 {
-                    boolean flag3 = this.func_92037_i();
+                    boolean flag3 = this.isFarFromCamera();
                     String s = "fireworks." + (flag3 ? "twinkle_far" : "twinkle");
                     this.worldObj.playSound(this.posX, this.posY, this.posZ, s, 20.0F, 0.9F + this.rand.nextFloat() * 0.15F, true);
                 }
@@ -322,7 +322,7 @@ public class EntityFirework
             }
         }
 
-        private boolean func_92037_i()
+        private boolean isFarFromCamera()
         {
             Minecraft minecraft = Minecraft.getMinecraft();
             return minecraft == null || minecraft.getRenderViewEntity() == null || minecraft.getRenderViewEntity().getDistanceSq(this.posX, this.posY, this.posZ) >= 256.0D;

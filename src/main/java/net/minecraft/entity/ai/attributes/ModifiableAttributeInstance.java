@@ -112,7 +112,7 @@ public class ModifiableAttributeInstance implements IAttributeInstance
     protected void flagForUpdate()
     {
         this.needsUpdate = true;
-        this.attributeMap.func_180794_a(this);
+        this.attributeMap.onAttributeModified(this);
     }
 
     public void removeModifier(AttributeModifier modifier)
@@ -191,7 +191,7 @@ public class ModifiableAttributeInstance implements IAttributeInstance
     {
         Set<AttributeModifier> set = Sets.newHashSet(this.getModifiersByOperation(p_180375_1_));
 
-        for (IAttribute iattribute = this.genericAttribute.func_180372_d(); iattribute != null; iattribute = iattribute.func_180372_d())
+        for (IAttribute iattribute = this.genericAttribute.getParent(); iattribute != null; iattribute = iattribute.getParent())
         {
             IAttributeInstance iattributeinstance = this.attributeMap.getAttributeInstance(iattribute);
 

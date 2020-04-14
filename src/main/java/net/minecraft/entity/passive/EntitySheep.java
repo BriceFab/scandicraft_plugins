@@ -55,7 +55,7 @@ public class EntitySheep extends EntityAnimal
     private int sheepTimer;
     private EntityAIEatGrass entityAIEatGrass = new EntityAIEatGrass(this);
 
-    public static float[] func_175513_a(EnumDyeColor dyeColor)
+    public static float[] getDyeRgb(EnumDyeColor dyeColor)
     {
         return (float[])DYE_TO_RGB.get(dyeColor);
     }

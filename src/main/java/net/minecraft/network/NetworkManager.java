@@ -62,7 +62,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
             return new NioEventLoopGroup(0, (new ThreadFactoryBuilder()).setNameFormat("Netty Client IO #%d").setDaemon(true).build());
         }
     };
-    public static final LazyLoadBase<EpollEventLoopGroup> field_181125_e = new LazyLoadBase<EpollEventLoopGroup>()
+    public static final LazyLoadBase<EpollEventLoopGroup> CLIENT_EPOLL_EVENTLOOP = new LazyLoadBase<EpollEventLoopGroup>()
     {
         protected EpollEventLoopGroup load()
         {
@@ -339,16 +339,16 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
         return this.channel instanceof LocalChannel || this.channel instanceof LocalServerChannel;
     }
 
-    public static NetworkManager func_181124_a(InetAddress p_181124_0_, int p_181124_1_, boolean p_181124_2_)
+    public static NetworkManager createNetworkManagerAndConnect(InetAddress address, int serverPort, boolean useNativeTransport)
     {
         final NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.CLIENTBOUND);
         Class <? extends SocketChannel > oclass;
         LazyLoadBase <? extends EventLoopGroup > lazyloadbase;
 
-        if (Epoll.isAvailable() && p_181124_2_)
+        if (Epoll.isAvailable() && useNativeTransport)
         {
             oclass = EpollSocketChannel.class;
-            lazyloadbase = field_181125_e;
+            lazyloadbase = CLIENT_EPOLL_EVENTLOOP;
         }
         else
         {
@@ -371,7 +371,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
                 p_initChannel_1_.pipeline().addLast((String)"timeout", (ChannelHandler)(new ReadTimeoutHandler(30))).addLast((String)"splitter", (ChannelHandler)(new MessageDeserializer2())).addLast((String)"decoder", (ChannelHandler)(new MessageDeserializer(EnumPacketDirection.CLIENTBOUND))).addLast((String)"prepender", (ChannelHandler)(new MessageSerializer2())).addLast((String)"encoder", (ChannelHandler)(new MessageSerializer(EnumPacketDirection.SERVERBOUND))).addLast((String)"packet_handler", (ChannelHandler)networkmanager);
             }
-        })).channel(oclass)).connect(p_181124_0_, p_181124_1_).syncUninterruptibly();
+        })).channel(oclass)).connect(address, serverPort).syncUninterruptibly();
         return networkmanager;
     }
 

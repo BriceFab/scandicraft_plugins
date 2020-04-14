@@ -77,7 +77,7 @@ public class ResourcePackRepository
             {
                 if (resourcepackrepository$entry.getResourcePackName().equals(s))
                 {
-                    if (resourcepackrepository$entry.func_183027_f() == 1 || settings.field_183018_l.contains(resourcepackrepository$entry.getResourcePackName()))
+                    if (resourcepackrepository$entry.func_183027_f() == 1 || settings.incompatibleResourcePacks.contains(resourcepackrepository$entry.getResourcePackName()))
                     {
                         this.repositoryEntries.add(resourcepackrepository$entry);
                         break;

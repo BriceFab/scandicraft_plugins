@@ -147,7 +147,7 @@ public class Potion
         return this.id;
     }
 
-    public void performEffect(EntityLivingBase entityLivingBaseIn, int p_76394_2_)
+    public void performEffect(EntityLivingBase entityLivingBaseIn, int amplifier)
     {
         if (this.id == regeneration.id)
         {
@@ -169,49 +169,49 @@ public class Potion
         }
         else if (this.id == hunger.id && entityLivingBaseIn instanceof EntityPlayer)
         {
-            ((EntityPlayer)entityLivingBaseIn).addExhaustion(0.025F * (float)(p_76394_2_ + 1));
+            ((EntityPlayer)entityLivingBaseIn).addExhaustion(0.025F * (float)(amplifier + 1));
         }
         else if (this.id == saturation.id && entityLivingBaseIn instanceof EntityPlayer)
         {
             if (!entityLivingBaseIn.worldObj.isRemote)
             {
-                ((EntityPlayer)entityLivingBaseIn).getFoodStats().addStats(p_76394_2_ + 1, 1.0F);
+                ((EntityPlayer)entityLivingBaseIn).getFoodStats().addStats(amplifier + 1, 1.0F);
             }
         }
         else if ((this.id != heal.id || entityLivingBaseIn.isEntityUndead()) && (this.id != harm.id || !entityLivingBaseIn.isEntityUndead()))
         {
             if (this.id == harm.id && !entityLivingBaseIn.isEntityUndead() || this.id == heal.id && entityLivingBaseIn.isEntityUndead())
             {
-                entityLivingBaseIn.attackEntityFrom(DamageSource.magic, (float)(6 << p_76394_2_));
+                entityLivingBaseIn.attackEntityFrom(DamageSource.magic, (float)(6 << amplifier));
             }
         }
         else
         {
-            entityLivingBaseIn.heal((float)Math.max(4 << p_76394_2_, 0));
+            entityLivingBaseIn.heal((float)Math.max(4 << amplifier, 0));
         }
     }
 
-    public void affectEntity(Entity p_180793_1_, Entity p_180793_2_, EntityLivingBase entityLivingBaseIn, int p_180793_4_, double p_180793_5_)
+    public void affectEntity(Entity source, Entity indirectSource, EntityLivingBase entityLivingBaseIn, int amplifier, double health)
     {
         if ((this.id != heal.id || entityLivingBaseIn.isEntityUndead()) && (this.id != harm.id || !entityLivingBaseIn.isEntityUndead()))
         {
             if (this.id == harm.id && !entityLivingBaseIn.isEntityUndead() || this.id == heal.id && entityLivingBaseIn.isEntityUndead())
             {
-                int j = (int)(p_180793_5_ * (double)(6 << p_180793_4_) + 0.5D);
+                int j = (int)(health * (double)(6 << amplifier) + 0.5D);
 
-                if (p_180793_1_ == null)
+                if (source == null)
                 {
                     entityLivingBaseIn.attackEntityFrom(DamageSource.magic, (float)j);
                 }
                 else
                 {
-                    entityLivingBaseIn.attackEntityFrom(DamageSource.causeIndirectMagicDamage(p_180793_1_, p_180793_2_), (float)j);
+                    entityLivingBaseIn.attackEntityFrom(DamageSource.causeIndirectMagicDamage(source, indirectSource), (float)j);
                 }
             }
         }
         else
         {
-            int i = (int)(p_180793_5_ * (double)(4 << p_180793_4_) + 0.5D);
+            int i = (int)(health * (double)(4 << amplifier) + 0.5D);
             entityLivingBaseIn.heal((float)i);
         }
     }
@@ -227,22 +227,22 @@ public class Potion
     /**
      * checks if Potion effect is ready to be applied this tick.
      */
-    public boolean isReady(int p_76397_1_, int p_76397_2_)
+    public boolean isReady(int duration, int amplifier)
     {
         if (this.id == regeneration.id)
         {
-            int k = 50 >> p_76397_2_;
-            return k > 0 ? p_76397_1_ % k == 0 : true;
+            int k = 50 >> amplifier;
+            return k > 0 ? duration % k == 0 : true;
         }
         else if (this.id == poison.id)
         {
-            int j = 25 >> p_76397_2_;
-            return j > 0 ? p_76397_1_ % j == 0 : true;
+            int j = 25 >> amplifier;
+            return j > 0 ? duration % j == 0 : true;
         }
         else if (this.id == wither.id)
         {
-            int i = 40 >> p_76397_2_;
-            return i > 0 ? p_76397_1_ % i == 0 : true;
+            int i = 40 >> amplifier;
+            return i > 0 ? duration % i == 0 : true;
         }
         else
         {
@@ -343,11 +343,11 @@ public class Potion
         return this.attributeModifierMap;
     }
 
-    public void removeAttributesModifiersFromEntity(EntityLivingBase entityLivingBaseIn, BaseAttributeMap p_111187_2_, int amplifier)
+    public void removeAttributesModifiersFromEntity(EntityLivingBase entityLivingBaseIn, BaseAttributeMap attributeMapIn, int amplifier)
     {
         for (Entry<IAttribute, AttributeModifier> entry : this.attributeModifierMap.entrySet())
         {
-            IAttributeInstance iattributeinstance = p_111187_2_.getAttributeInstance((IAttribute)entry.getKey());
+            IAttributeInstance iattributeinstance = attributeMapIn.getAttributeInstance((IAttribute)entry.getKey());
 
             if (iattributeinstance != null)
             {
@@ -356,11 +356,11 @@ public class Potion
         }
     }
 
-    public void applyAttributesModifiersToEntity(EntityLivingBase entityLivingBaseIn, BaseAttributeMap p_111185_2_, int amplifier)
+    public void applyAttributesModifiersToEntity(EntityLivingBase entityLivingBaseIn, BaseAttributeMap attributeMapIn, int amplifier)
     {
         for (Entry<IAttribute, AttributeModifier> entry : this.attributeModifierMap.entrySet())
         {
-            IAttributeInstance iattributeinstance = p_111185_2_.getAttributeInstance((IAttribute)entry.getKey());
+            IAttributeInstance iattributeinstance = attributeMapIn.getAttributeInstance((IAttribute)entry.getKey());
 
             if (iattributeinstance != null)
             {
@@ -371,8 +371,8 @@ public class Potion
         }
     }
 
-    public double getAttributeModifierAmount(int p_111183_1_, AttributeModifier modifier)
+    public double getAttributeModifierAmount(int amplifier, AttributeModifier modifier)
     {
-        return modifier.getAmount() * (double)(p_111183_1_ + 1);
+        return modifier.getAmount() * (double)(amplifier + 1);
     }
 }

@@ -37,9 +37,9 @@ public class ModelBlockDefinition
         }
     }
 
-    public ModelBlockDefinition(List<ModelBlockDefinition> p_i46222_1_)
+    public ModelBlockDefinition(List<ModelBlockDefinition> definitions)
     {
-        for (ModelBlockDefinition modelblockdefinition : p_i46222_1_)
+        for (ModelBlockDefinition modelblockdefinition : definitions)
         {
             this.mapVariants.putAll(modelblockdefinition.mapVariants);
         }

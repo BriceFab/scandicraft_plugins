@@ -49,7 +49,7 @@ public class NetHandlerLoginClient implements INetHandlerLoginClient
         PublicKey publickey = packetIn.getPublicKey();
         String s1 = (new BigInteger(CryptManager.getServerIdHash(s, publickey, secretkey))).toString(16);
 
-        if (this.mc.getCurrentServerData() != null && this.mc.getCurrentServerData().func_181041_d())
+        if (this.mc.getCurrentServerData() != null && this.mc.getCurrentServerData().isOnLAN())
         {
             try
             {
@@ -114,7 +114,7 @@ public class NetHandlerLoginClient implements INetHandlerLoginClient
 
     public void handleDisconnect(S00PacketDisconnect packetIn)
     {
-        this.networkManager.closeChannel(packetIn.func_149603_c());
+        this.networkManager.closeChannel(packetIn.getReason());
     }
 
     public void handleEnableCompression(S03PacketEnableCompression packetIn)

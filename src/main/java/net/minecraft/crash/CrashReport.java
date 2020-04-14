@@ -42,7 +42,7 @@ public class CrashReport
 
     /** File of crash report. */
     private File crashReportFile;
-    private boolean field_85059_f = true;
+    private boolean firstCategoryInCrashReport = true;
     private StackTraceElement[] stacktrace = new StackTraceElement[0];
     private static final String __OBFID = "CL_00000990";
     private boolean reported = false;
@@ -340,7 +340,7 @@ public class CrashReport
     {
         CrashReportCategory crashreportcategory = new CrashReportCategory(this, categoryName);
 
-        if (this.field_85059_f)
+        if (this.firstCategoryInCrashReport)
         {
             int i = crashreportcategory.getPrunedStackTrace(stacktraceLength);
             StackTraceElement[] astacktraceelement = this.cause.getStackTrace();
@@ -363,7 +363,7 @@ public class CrashReport
                 }
             }
 
-            this.field_85059_f = crashreportcategory.firstTwoElementsOfStackTraceMatch(stacktraceelement, stacktraceelement1);
+            this.firstCategoryInCrashReport = crashreportcategory.firstTwoElementsOfStackTraceMatch(stacktraceelement, stacktraceelement1);
 
             if (i > 0 && !this.crashReportSections.isEmpty())
             {
@@ -377,7 +377,7 @@ public class CrashReport
             }
             else
             {
-                this.field_85059_f = false;
+                this.firstCategoryInCrashReport = false;
             }
         }
 

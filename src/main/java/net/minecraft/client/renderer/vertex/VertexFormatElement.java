@@ -13,7 +13,7 @@ public class VertexFormatElement
 
     public VertexFormatElement(int indexIn, VertexFormatElement.EnumType typeIn, VertexFormatElement.EnumUsage usageIn, int count)
     {
-        if (!this.func_177372_a(indexIn, usageIn))
+        if (!this.isFirstOrUV(indexIn, usageIn))
         {
             LOGGER.warn("Multiple vertex elements of the same type other than UVs are not supported. Forcing type to UV.");
             this.usage = VertexFormatElement.EnumUsage.UV;
@@ -28,9 +28,9 @@ public class VertexFormatElement
         this.elementCount = count;
     }
 
-    private final boolean func_177372_a(int p_177372_1_, VertexFormatElement.EnumUsage p_177372_2_)
+    private final boolean isFirstOrUV(int indexIn, VertexFormatElement.EnumUsage usageIn)
     {
-        return p_177372_1_ == 0 || p_177372_2_ == VertexFormatElement.EnumUsage.UV;
+        return indexIn == 0 || usageIn == VertexFormatElement.EnumUsage.UV;
     }
 
     public final VertexFormatElement.EnumType getType()

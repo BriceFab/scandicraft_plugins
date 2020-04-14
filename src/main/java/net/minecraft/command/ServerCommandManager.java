@@ -127,7 +127,7 @@ public class ServerCommandManager extends CommandHandler implements IAdminComman
 
         if (flag)
         {
-            for (EntityPlayer entityplayer : minecraftserver.getConfigurationManager().func_181057_v())
+            for (EntityPlayer entityplayer : minecraftserver.getConfigurationManager().getPlayers())
             {
                 if (entityplayer != sender && minecraftserver.getConfigurationManager().canSendCommands(entityplayer.getGameProfile()) && command.canCommandSenderUseCommand(sender))
                 {
