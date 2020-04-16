@@ -1456,7 +1456,7 @@ public class Block
 
 
         // ScandiCraft : UZApocalyps
-        //Start ID : 5000
+        //Start ID : 2500
         registerBlock(2500, "scandium_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreScandium"));
         registerBlock(2501, "scandium_block", (new Block(Material.iron, MapColor.diamondColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockScandium").setCreativeTab(CreativeTabs.tabBlock));
         registerBlock(2502, "pyrite_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("orePyrite"));

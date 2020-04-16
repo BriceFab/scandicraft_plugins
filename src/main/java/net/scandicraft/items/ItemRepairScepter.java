@@ -23,7 +23,7 @@ public class ItemRepairScepter extends Item {
      */
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
         repairStuff(playerIn.inventory.mainInventory);
-        repairStuff(playerIn.getInventory());
+        repairStuff(playerIn.inventory.armorInventory);
 
         if (!playerIn.capabilities.isCreativeMode)
         {
@@ -35,7 +35,7 @@ public class ItemRepairScepter extends Item {
 
     private void repairStuff(ItemStack[] items) {
         for (ItemStack item : items) {
-            if (item != null) {
+            if (item != null && item.isItemDamaged()) {
                 item.setItemDamage(0);
             }
         }
