@@ -976,11 +976,11 @@ public class Item
         registerItem(3505, "scandium_pickaxe", (new ItemPickaxe(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("pickaxeScandium"));
         registerItem(3506, "scandium_axe", (new ItemAxe(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("hatchetScandium"));
         registerItem(3507, "scandium_hoe", (new ItemHoe(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("hoeScandium"));
-        registerItem(3508, "pyrite_sword", (new ItemSword(Item.ToolMaterial.PYRITE)).setUnlocalizedName("swordpyrite"));
-        registerItem(3509, "pyrite_shovel", (new ItemSpade(Item.ToolMaterial.PYRITE)).setUnlocalizedName("shovelpyrite"));
-        registerItem(3510, "pyrite_pickaxe", (new ItemPickaxe(Item.ToolMaterial.PYRITE)).setUnlocalizedName("pickaxepyrite"));
-        registerItem(3511, "pyrite_axe", (new ItemAxe(Item.ToolMaterial.PYRITE)).setUnlocalizedName("hatchetpyrite"));
-        registerItem(3512, "pyrite_hoe", (new ItemHoe(Item.ToolMaterial.PYRITE)).setUnlocalizedName("hoepyrite"));
+        registerItem(3508, "pyrite_sword", (new ItemSword(Item.ToolMaterial.PYRITE)).setUnlocalizedName("swordPyrite"));
+        registerItem(3509, "pyrite_shovel", (new ItemSpade(Item.ToolMaterial.PYRITE)).setUnlocalizedName("shovelPyrite"));
+        registerItem(3510, "pyrite_pickaxe", (new ItemPickaxe(Item.ToolMaterial.PYRITE)).setUnlocalizedName("pickaxePyrite"));
+        registerItem(3511, "pyrite_axe", (new ItemAxe(Item.ToolMaterial.PYRITE)).setUnlocalizedName("hatchetPyrite"));
+        registerItem(3512, "pyrite_hoe", (new ItemHoe(Item.ToolMaterial.PYRITE)).setUnlocalizedName("hoePyrite"));
         registerItem(3513, "lazurite_sword", (new ItemSword(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("swordLazurite"));
         registerItem(3514, "lazurite_shovel", (new ItemSpade(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("shovelLazurite"));
         registerItem(3515, "lazurite_pickaxe", (new ItemPickaxe(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("pickaxeLazurite"));
