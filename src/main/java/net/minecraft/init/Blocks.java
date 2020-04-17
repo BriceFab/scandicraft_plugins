@@ -33,6 +33,7 @@ import net.minecraft.block.BlockStaticLiquid;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.BlockTripWireHook;
 import net.minecraft.util.ResourceLocation;
+import net.scandicraft.Block.PyriteBlockChest;
 
 public class Blocks
 {
@@ -241,6 +242,7 @@ public class Blocks
     public static final Block pyrite_block;
     public static final Block lazurite_ore;
     public static final Block lazurite_block;
+    public static final PyriteBlockChest chest_pyrite;
 
     /**
      * Returns the Block in the blockRegistry with the specified name.
@@ -464,6 +466,7 @@ public class Blocks
             pyrite_block = getRegisteredBlock("pyrite_block");
             lazurite_ore = getRegisteredBlock("lazurite_ore");
             lazurite_block = getRegisteredBlock("lazurite_block");
+            chest_pyrite =(PyriteBlockChest) getRegisteredBlock("chest_pyrite");
         }
     }
 }
