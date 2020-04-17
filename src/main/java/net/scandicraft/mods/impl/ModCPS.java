@@ -9,6 +9,11 @@ import java.util.List;
 
 public class ModCPS extends ModDraggable {
 
+    @Override
+    public ScreenPosition getDefaultPos() {
+        return ScreenPosition.fromRelativePosition(0.00625,0.011764705882352941);
+    }
+
     private List<Long> clicks = new ArrayList<>();
     private boolean wasPressed;
 
