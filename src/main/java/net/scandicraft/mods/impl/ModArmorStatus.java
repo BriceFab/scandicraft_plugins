@@ -36,10 +36,27 @@ public class ModArmorStatus extends ModDraggable {
 
     @Override
     public void renderDummy(ScreenPosition pos) {
-        renderItemStack(pos, 3, new ItemStack(Items.scandium_helmet));
-        renderItemStack(pos, 2, new ItemStack(Items.scandium_chestplate));
-        renderItemStack(pos, 1, new ItemStack(Items.scandium_leggings));
-        renderItemStack(pos, 0, new ItemStack(Items.scandium_boots));
+        ItemStack[] armors = mc.thePlayer.inventory.armorInventory;
+        for (int i = 0; i < armors.length; i++) {
+            ItemStack itemStack = armors[i];
+            if (itemStack == null) itemStack = getDefaultArmor(i);
+            renderItemStack(pos, i, itemStack);
+        }
+    }
+
+    private ItemStack getDefaultArmor(int i) {
+        switch (i) {
+            default:
+                return null;
+            case 3:
+                return new ItemStack(Items.scandium_helmet);
+            case 2:
+                return new ItemStack(Items.scandium_chestplate);
+            case 1:
+                return new ItemStack(Items.scandium_leggings);
+            case 0:
+                return new ItemStack(Items.scandium_boots);
+        }
     }
 
     private void renderItemStack(ScreenPosition pos, int i, ItemStack itemStack) {
