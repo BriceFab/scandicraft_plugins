@@ -89,6 +89,8 @@ import net.scandicraft.Config;
 import net.scandicraft.anti_cheat.AntiTransparency;
 import net.scandicraft.anti_cheat.CheatScreen;
 import net.scandicraft.anti_cheat.CheatType;
+import net.scandicraft.client.ScandiCraftClient;
+import net.scandicraft.event.impl.ClientTickEvent;
 import net.scandicraft.settings.ScandiCraftSettings;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Validate;
@@ -418,6 +420,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Starts the game: initializes the canvas, the title, the settings, etcetera.
      */
     private void startGame() throws LWJGLException, IOException {
+        //Init ScandiCraft client
+        ScandiCraftClient.getInstance().init();
+
         this.gameSettings = new GameSettings(this, this.mcDataDir);
         this.scandiCraftSettings = new ScandiCraftSettings(this, this.mcDataDir);
         this.defaultResourcePacks.add(this.mcDefaultResourcePack);
@@ -530,6 +535,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         this.renderGlobal.makeEntityOutlineShader();
+        ScandiCraftClient.getInstance().start();
     }
 
     private void registerMetadataSerializers() {
@@ -891,6 +897,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      */
     public void shutdownMinecraftApplet() {
         try {
+            //ShutDown ScandiCraft Client
+            ScandiCraftClient.getInstance().shutDown();
+
             this.stream.shutdownStream();
             logger.info("Stopping!");
 
@@ -1855,6 +1864,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             this.mcProfiler.endStartSection("pendingConnection");
             this.myNetworkManager.processReceivedPackets();
         }
+
+        //ScandiCraft Client TickEvent
+        new ClientTickEvent().call();
 
         this.mcProfiler.endSection();
         this.systemTime = getSystemTime();

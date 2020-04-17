@@ -70,6 +70,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.scandicraft.event.impl.RenderEvent;
 import optifine.Config;
 import optifine.CustomColors;
 import optifine.Lagometer;
@@ -1414,6 +1415,9 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 }
             }
         }
+
+        //ScandiCraft RenderEvent
+        new RenderEvent().call();
 
         this.frameFinish();
         this.waitForServerThread();
