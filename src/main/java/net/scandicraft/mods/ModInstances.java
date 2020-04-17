@@ -2,6 +2,7 @@ package net.scandicraft.mods;
 
 import net.scandicraft.gui.hud.HUDManager;
 import net.scandicraft.mods.impl.ModArmorStatus;
+import net.scandicraft.mods.impl.ModCPS;
 import net.scandicraft.mods.impl.ModFPS;
 
 public class ModInstances {
@@ -14,6 +15,9 @@ public class ModInstances {
 
         ModFPS modFPS = new ModFPS();
         api.register(modFPS);
+
+        ModCPS modCPS = new ModCPS();
+        api.register(modCPS);
     }
 
     public static ModArmorStatus getModArmorStatus() {
