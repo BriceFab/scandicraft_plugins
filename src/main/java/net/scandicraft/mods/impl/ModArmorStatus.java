@@ -9,8 +9,6 @@ import org.lwjgl.opengl.GL11;
 
 public class ModArmorStatus extends ModDraggable {
 
-    private ScreenPosition pos = ScreenPosition.fromRelativePosition(0.5, 0.5);
-
     @Override
     public int getWidth() {
         return 64;
@@ -57,13 +55,4 @@ public class ModArmorStatus extends ModDraggable {
         GL11.glPopMatrix();
     }
 
-    @Override
-    public void save(ScreenPosition pos) {
-        this.pos = pos;
-    }
-
-    @Override
-    public ScreenPosition load() {
-        return pos;
-    }
 }

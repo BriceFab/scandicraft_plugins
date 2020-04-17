@@ -5,7 +5,6 @@ import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
 
 public class ModFPS extends ModDraggable {
-    private ScreenPosition pos;
 
     @Override
     public int getWidth() {
@@ -22,13 +21,4 @@ public class ModFPS extends ModDraggable {
         font.drawString("FPS: " + Minecraft.getDebugFPS(), pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
     }
 
-    @Override
-    public void save(ScreenPosition pos) {
-        this.pos = pos;
-    }
-
-    @Override
-    public ScreenPosition load() {
-        return pos;
-    }
 }

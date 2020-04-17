@@ -7,6 +7,7 @@ import net.scandicraft.event.EventTarget;
 import net.scandicraft.event.impl.ClientTickEvent;
 import net.scandicraft.gui.hud.HUDManager;
 import net.scandicraft.mods.ModInstances;
+import net.scandicraft.settings.FileManager;
 
 public class ScandiCraftClient {
 
@@ -20,7 +21,7 @@ public class ScandiCraftClient {
 
     public void init() {
         Config.print_debug("init ScandiCraft Client");
-        //TODO
+        FileManager.init();
         EventManager.register(this);
     }
 
@@ -32,7 +33,7 @@ public class ScandiCraftClient {
 
     public void shutDown() {
         Config.print_debug("shutDown ScandiCraft Client");
-        //TODO
+        EventManager.unregister(this);
     }
 
     @EventTarget
