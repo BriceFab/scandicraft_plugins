@@ -1006,7 +1006,7 @@ public class Item
         registerItem(3535, "bloody_boots", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 6, 3)).setUnlocalizedName("bootsBloody"));
         registerItem(3536,"scepter_creeper", (new ItemSpawnScepter(3).setUnlocalizedName("scepterCreeper")));
         registerItem(3537,"scepter_repair", (new ItemRepairScepter().setUnlocalizedName("scepterRepair")));
-
+        registerItem(3538, "chest_pyrite", (new ItemMinecart(EntityMinecart.EnumMinecartType.CHEST)).setUnlocalizedName("pyriteChest"));
 
 
 

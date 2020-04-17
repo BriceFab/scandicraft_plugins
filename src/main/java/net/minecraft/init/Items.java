@@ -232,6 +232,7 @@ public class Items {
     public static final Item bloody_sword;
     public static final ItemSpawnScepter scepter_creeper;
     public static final ItemRepairScepter scepter_repair;
+    public static final Item pyrite_pie;
 
     private static Item getRegisteredItem(String name) {
         return (Item) Item.itemRegistry.getObject(new ResourceLocation(name));
@@ -468,6 +469,7 @@ public class Items {
             bloody_sword = getRegisteredItem("bloody_sword");
             scepter_creeper = (ItemSpawnScepter) getRegisteredItem("scepter_creeper");
             scepter_repair = (ItemRepairScepter) getRegisteredItem("scepter_repair");
+            pyrite_pie = getRegisteredItem("pyrite_pie");
         }
     }
 }

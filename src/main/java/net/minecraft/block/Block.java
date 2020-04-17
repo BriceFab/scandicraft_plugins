@@ -32,6 +32,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.scandicraft.Block.PyriteBlockChest;
 
 public class Block
 {
@@ -1463,7 +1464,8 @@ public class Block
         registerBlock(2503, "pyrite_block", (new Block(Material.iron, MapColor.diamondColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockPyrite").setCreativeTab(CreativeTabs.tabBlock));
         registerBlock(2504, "lazurite_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreLazurite"));
         registerBlock(2505, "lazurite_block", (new Block(Material.iron, MapColor.diamondColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockLazurite").setCreativeTab(CreativeTabs.tabBlock));
-
+        registerBlock(2506, "chest_pyrite", (new PyriteBlockChest(0)).setHardness(2.5F).setStepSound(soundTypeWood).setUnlocalizedName("chestPyrite"));
+        registerBlock(2507, "lazurite_ladder", (new BlockLadder()).setHardness(0.4F).setStepSound(soundTypeLadder).setUnlocalizedName("ladderLazurite"));
 
 
 
