@@ -18,6 +18,7 @@ run/saves
 run/resourcepacks
 run/logs
 run/tmp
+run/scandicraft/
 *.dat
 *.txt
 *.gz
