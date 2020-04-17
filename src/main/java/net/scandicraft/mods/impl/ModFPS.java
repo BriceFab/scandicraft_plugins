@@ -5,6 +5,12 @@ import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
 
 public class ModFPS extends ModDraggable {
+    public static ScreenPosition FPS_POSITION = ScreenPosition.fromAbsolutePosition(3, 3);
+
+    @Override
+    public ScreenPosition getDefaultPos() {
+        return FPS_POSITION;
+    }
 
     @Override
     public int getWidth() {

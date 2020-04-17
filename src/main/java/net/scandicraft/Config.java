@@ -1,5 +1,6 @@
 package net.scandicraft;
 
+import net.scandicraft.gui.hud.ScreenPosition;
 import org.apache.logging.log4j.LogManager;
 
 public class Config {

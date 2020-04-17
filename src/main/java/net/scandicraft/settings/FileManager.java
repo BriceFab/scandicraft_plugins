@@ -8,13 +8,9 @@ public class FileManager {
 
     private static final Gson gson = new Gson();
 
-    private static final File ROOT_DIR = new File("scandicraft");
-    private static final File MODS_DIR = new File(ROOT_DIR, "config");
+    private static final File MODS_DIR = new File("scandicraft");
 
     public static void init() {
-        if (!ROOT_DIR.exists()) {
-            ROOT_DIR.mkdirs();
-        }
         if (!MODS_DIR.exists()) {
             MODS_DIR.mkdirs();
         }

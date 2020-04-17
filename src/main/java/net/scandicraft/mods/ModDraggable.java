@@ -35,7 +35,7 @@ public abstract class ModDraggable extends Mod implements IRenderer {
 
         ScreenPosition loaded = FileManager.readFromJsonFile(new File(getFolder(), "position.json"), ScreenPosition.class);
         if (loaded == null) {
-            loaded = ScreenPosition.fromRelativePosition(0.5, 0.5);
+            loaded = getDefaultPos();
             this.pos = loaded;
             savePositionToFile();
         }
@@ -55,4 +55,7 @@ public abstract class ModDraggable extends Mod implements IRenderer {
         return (font.FONT_HEIGHT + 3) * lineNum;
     }
 
+    public ScreenPosition getDefaultPos() {
+        return ScreenPosition.fromRelativePosition(0.5, 0.5);
+    }
 }
