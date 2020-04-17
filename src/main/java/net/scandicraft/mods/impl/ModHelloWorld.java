@@ -4,6 +4,8 @@ import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
 
 public class ModHelloWorld extends ModDraggable {
+    private ScreenPosition pos;
+
     @Override
     public int getWidth() {
         return font.getStringWidth("Hello World (Dummy)");
@@ -26,11 +28,11 @@ public class ModHelloWorld extends ModDraggable {
 
     @Override
     public void save(ScreenPosition pos) {
-
+        this.pos = pos;
     }
 
     @Override
     public ScreenPosition load() {
-        return null;
+        return pos;
     }
 }

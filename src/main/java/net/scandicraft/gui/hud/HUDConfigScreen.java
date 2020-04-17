@@ -3,7 +3,6 @@ package net.scandicraft.gui.hud;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.scandicraft.Config;
 import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
@@ -35,7 +34,6 @@ public class HUDConfigScreen extends GuiScreen {
 
             adjustBounds(renderer, pos);
             this.renderers.put(renderer, pos);
-
         }
 
     }
@@ -72,7 +70,6 @@ public class HUDConfigScreen extends GuiScreen {
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         if (keyCode == Keyboard.KEY_ESCAPE) {
             renderers.entrySet().forEach((entry) -> {
-                Config.print_debug("Save " + entry.getValue());
                 entry.getKey().save(entry.getValue());
             });
             this.mc.displayGuiScreen(null);
