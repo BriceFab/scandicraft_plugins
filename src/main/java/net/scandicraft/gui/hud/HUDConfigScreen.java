@@ -36,6 +36,7 @@ public class HUDConfigScreen extends GuiScreen {
             this.renderers.put(renderer, pos);
         }
 
+        org.lwjgl.opengl.Display.setVSyncEnabled(true); //fix FPS error
     }
 
     @Override
@@ -70,9 +71,7 @@ public class HUDConfigScreen extends GuiScreen {
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         if (keyCode == Keyboard.KEY_ESCAPE) {
-            renderers.entrySet().forEach((entry) -> {
-                entry.getKey().save(entry.getValue());
-            });
+            renderers.forEach(IRenderConfig::save);
             this.mc.displayGuiScreen(null);
         }
     }
@@ -100,6 +99,8 @@ public class HUDConfigScreen extends GuiScreen {
         for (IRenderer renderer : renderers.keySet()) {
             renderer.save(renderers.get(renderer));
         }
+
+        org.lwjgl.opengl.Display.setVSyncEnabled(false); //fix FPS error
     }
 
     @Override
