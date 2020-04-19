@@ -1540,7 +1540,6 @@ public class Shaders
 
     public static void startup(Minecraft mc)
     {
-        checkShadersModInstalled();
         Shaders.mc = mc;
         mc = Minecraft.getMinecraft();
         capabilities = GLContext.getCapabilities();
@@ -4739,20 +4738,6 @@ public class Shaders
         }
 
         configAntialiasingLevel = Config.limit(configAntialiasingLevel, 0, 4);
-    }
-
-    public static void checkShadersModInstalled()
-    {
-        try
-        {
-            Class oclass = Class.forName("shadersmod.transform.SMCClassTransformer");
-        }
-        catch (Throwable var1)
-        {
-            return;
-        }
-
-        throw new RuntimeException("Shaders Mod detected. Please remove it, OptiFine has built-in support for shaders.");
     }
 
     public static void resourcesReloaded()
