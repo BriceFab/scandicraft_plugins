@@ -5,13 +5,14 @@ import net.scandicraft.mods.impl.ModArmorStatus;
 import net.scandicraft.mods.impl.ModCPS;
 import net.scandicraft.mods.impl.ModFPS;
 import net.scandicraft.mods.impl.ModPing;
+import net.scandicraft.mods.impl.togglesprintsneak.ModToggleSprintSneak;
 
 public class ModInstances {
 
-    private static ModArmorStatus modArmorStatus;
+    private static ModToggleSprintSneak modToggleSprintSneak;
 
     public static void register(HUDManager api) {
-        modArmorStatus = new ModArmorStatus();
+        ModArmorStatus modArmorStatus = new ModArmorStatus();
         api.register(modArmorStatus);
 
         ModFPS modFPS = new ModFPS();
@@ -22,9 +23,12 @@ public class ModInstances {
 
         ModPing modPing = new ModPing();
         api.register(modPing);
+
+        modToggleSprintSneak = new ModToggleSprintSneak();
+        api.register(modToggleSprintSneak);
     }
 
-    public static ModArmorStatus getModArmorStatus() {
-        return modArmorStatus;
+    public static ModToggleSprintSneak getModToggleSprintSneak() {
+        return modToggleSprintSneak;
     }
 }

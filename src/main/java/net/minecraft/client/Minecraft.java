@@ -91,6 +91,7 @@ import net.scandicraft.anti_cheat.CheatScreen;
 import net.scandicraft.anti_cheat.CheatType;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.event.impl.ClientTickEvent;
+import net.scandicraft.mods.impl.togglesprintsneak.ClientMovementInput;
 import net.scandicraft.settings.ScandiCraftSettings;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Validate;
@@ -1991,7 +1992,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
             this.thePlayer.preparePlayerToSpawn();
             worldClientIn.spawnEntityInWorld(this.thePlayer);
-            this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings);
+            this.thePlayer.movementInput = new ClientMovementInput(this.gameSettings);
             this.playerController.setPlayerCapabilities(this.thePlayer);
             this.renderViewEntity = this.thePlayer;
         } else {
@@ -2025,7 +2026,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.thePlayer.setClientBrand(s);
         this.theWorld.spawnEntityInWorld(this.thePlayer);
         this.playerController.flipPlayer(this.thePlayer);
-        this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings);
+        this.thePlayer.movementInput = new ClientMovementInput(this.gameSettings);
         this.thePlayer.setEntityId(i);
         this.playerController.setPlayerCapabilities(this.thePlayer);
         this.thePlayer.setReducedDebug(entityplayersp.hasReducedDebug());
