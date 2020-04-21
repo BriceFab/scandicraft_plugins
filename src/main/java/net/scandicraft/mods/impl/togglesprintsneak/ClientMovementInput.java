@@ -16,8 +16,6 @@ public class ClientMovementInput extends MovementInput {
     private int sneakWasPressed = 0;
     private int sprintWasPressed = 0;
     private EntityPlayerSP player;
-    private float originalFlySpeed = -1.0F;
-    private float boostedFlySpeed = 0;
     private Minecraft mc;
     private static final DecimalFormat decimalFormat = new DecimalFormat("#.D");
 
@@ -112,27 +110,6 @@ public class ClientMovementInput extends MovementInput {
             player.setSprinting(true);
         }
 
-        if (ModInstances.getModToggleSprintSneak().flyBoost && player.capabilities.isFlying && player.capabilities.isCreativeMode && (mc.getRenderViewEntity() == player) && sprint) {
-            if (originalFlySpeed < 0.0F || this.player.capabilities.getFlySpeed() != boostedFlySpeed) {
-                originalFlySpeed = this.player.capabilities.getFlySpeed();
-            }
-            boostedFlySpeed = originalFlySpeed * ModInstances.getModToggleSprintSneak().flyBoostFactor;
-            player.capabilities.setFlySpeed(boostedFlySpeed);
-
-            if (sneak) {
-                player.motionY -= 0.5D * (double) (ModInstances.getModToggleSprintSneak().flyBoostFactor - 1.0F);
-            }
-
-            if (jump) {
-                player.motionY += 0.5D * (double) (ModInstances.getModToggleSprintSneak().flyBoostFactor - 1.0F);
-            }
-        } else {
-            if (player.capabilities.getFlySpeed() == boostedFlySpeed) {
-                this.player.capabilities.setFlySpeed(originalFlySpeed);
-            }
-            originalFlySpeed = -1.0F;
-        }
-
     }
 
     public String getDisplayText() {
@@ -143,33 +120,19 @@ public class ClientMovementInput extends MovementInput {
         boolean isHoldingSneak = gameSettings.keyBindSneak.isKeyDown();
         boolean isHoldingSrpint = gameSettings.keyBindSprint.isKeyDown();
 
-        if (!isFlying) {
-            if (originalFlySpeed > 0.0F) {
-                displayText += "[Flying (" + decimalFormat.format(boostedFlySpeed / originalFlySpeed) + " x Boost)]  ";
-            } else {
-                displayText += "[Flying]  ";
-            }
-        }
-
-        if (!isRiding) {
-            displayText += "[Riding]  ";
-        }
-
-        if (sneak) {
-            if (isFlying) {
-                displayText += "[Descending]  ";
-            } else if (isRiding) {
-                displayText += "[Dismounting] ";
-            } else if (isHoldingSneak) {
-                displayText += "[Sneaking (Key Held)]";
-            } else {
-                displayText += "[Sneaking (Key Toggled)]";
-            }
-        } else if (sprint && !isFlying && !isRiding) {
-            if (isHoldingSrpint) {
-                displayText += "[Sprinting (Key Held)]";
-            } else {
-                displayText += "[Sprinting (Key Toggled)]";
+        if (!isFlying && !isRiding) {
+            if (sneak) {
+                if (isHoldingSneak) {
+                    displayText = "[Sneaking (Key Held)]";
+                } else {
+                    displayText = "[Sneaking (Key Toggled)]";
+                }
+            } else if (sprint) {
+                if (isHoldingSrpint) {
+                    displayText = "[Sprinting (Key Held)]";
+                } else {
+                    displayText = "[Sprinting (Key Toggled)]";
+                }
             }
         }
 

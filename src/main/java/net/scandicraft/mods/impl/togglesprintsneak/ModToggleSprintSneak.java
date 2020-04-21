@@ -1,5 +1,6 @@
 package net.scandicraft.mods.impl.togglesprintsneak;
 
+import net.scandicraft.Config;
 import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
 
@@ -30,7 +31,7 @@ public class ModToggleSprintSneak extends ModDraggable {
 
     @Override
     public void renderDummy(ScreenPosition pos) {
-        textToRender = "[Dummy Text]";
+        textToRender = "[" + Config.SERVER_NAME + " Toggle]";
         font.drawString(textToRender, pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
     }
 }
