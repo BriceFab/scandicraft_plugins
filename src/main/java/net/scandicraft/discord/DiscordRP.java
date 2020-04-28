@@ -3,8 +3,6 @@ package net.scandicraft.discord;
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
-import net.arikia.dev.drpc.DiscordUser;
-import net.arikia.dev.drpc.callbacks.ReadyCallback;
 import net.scandicraft.Config;
 
 public class DiscordRP {
@@ -15,12 +13,9 @@ public class DiscordRP {
     public void start() {
         this.created = System.currentTimeMillis();
 
-        DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler(new ReadyCallback() {
-            @Override
-            public void apply(DiscordUser discordUser) {
-                Config.print_debug("Discord " + discordUser.username + " #" + discordUser.discriminator + ".");
-                update("Chargement..");
-            }
+        DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler(discordUser -> {
+            Config.print_debug("Discord ScandiCraft " + discordUser.username + " #" + discordUser.discriminator + ".");
+            update("Chargement..");
         }).build();
 
         DiscordRPC.discordInitialize(Config.DISCORD_CLIENT_ID, handlers, true);

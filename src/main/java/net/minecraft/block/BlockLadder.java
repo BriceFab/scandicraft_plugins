@@ -18,7 +18,8 @@ public class BlockLadder extends Block
 {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
-    protected BlockLadder()
+    //ScandiCraft set protected to public
+    public BlockLadder()
     {
         super(Material.circuits);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));

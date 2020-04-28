@@ -45,6 +45,8 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.scandicraft.items.ItemRepairScepter;
 import net.scandicraft.items.ItemSpawnScepter;
+import net.scandicraft.items.ScandiCraftItem;
+import net.scandicraft.items.ScandiCraftItems;
 
 public class Item
 {
@@ -765,17 +767,6 @@ public class Item
         registerItemBlock(Blocks.red_sandstone_stairs);
         registerItemBlock(Blocks.stone_slab2, (new ItemSlab(Blocks.stone_slab2, Blocks.stone_slab2, Blocks.double_stone_slab2)).setUnlocalizedName("stoneSlab2"));
 
-//================================================================== NEW BLOCKS ==========================================================================================
-        //ScandiCraft : UZApocalyps New Blocks
-        registerItemBlock(Blocks.scandium_ore);
-        registerItemBlock(Blocks.scandium_block);
-        registerItemBlock(Blocks.pyrite_ore);
-        registerItemBlock(Blocks.pyrite_block);
-        registerItemBlock(Blocks.lazurite_ore);
-        registerItemBlock(Blocks.lazurite_block);
-//============================================================================================================================================================
-
-
         registerItem(256, "iron_shovel", (new ItemSpade(Item.ToolMaterial.IRON)).setUnlocalizedName("shovelIron"));
         registerItem(257, "iron_pickaxe", (new ItemPickaxe(Item.ToolMaterial.IRON)).setUnlocalizedName("pickaxeIron"));
         registerItem(258, "iron_axe", (new ItemAxe(Item.ToolMaterial.IRON)).setUnlocalizedName("hatchetIron"));
@@ -965,59 +956,14 @@ public class Item
         registerItem(2266, "record_11", (new ItemRecord("11")).setUnlocalizedName("record"));
         registerItem(2267, "record_wait", (new ItemRecord("wait")).setUnlocalizedName("record"));
 
-
-//============================================================================================================================================================
-        //ScandiCraft : UZApocalyps New items
-        registerItem(3500, "scandium", (new Item()).setUnlocalizedName("scandium").setCreativeTab(CreativeTabs.tabMaterials));
-        registerItem(3501, "pyrite", (new Item()).setUnlocalizedName("pyrite").setCreativeTab(CreativeTabs.tabMaterials));
-        registerItem(3502, "lazurite", (new Item()).setUnlocalizedName("lazurite").setCreativeTab(CreativeTabs.tabMaterials));
-        registerItem(3503, "scandium_sword", (new ItemSword(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("swordScandium"));
-        registerItem(3504, "scandium_shovel", (new ItemSpade(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("shovelScandium"));
-        registerItem(3505, "scandium_pickaxe", (new ItemPickaxe(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("pickaxeScandium"));
-        registerItem(3506, "scandium_axe", (new ItemAxe(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("hatchetScandium"));
-        registerItem(3507, "scandium_hoe", (new ItemHoe(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("hoeScandium"));
-        registerItem(3508, "pyrite_sword", (new ItemSword(Item.ToolMaterial.PYRITE)).setUnlocalizedName("swordPyrite"));
-        registerItem(3509, "pyrite_shovel", (new ItemSpade(Item.ToolMaterial.PYRITE)).setUnlocalizedName("shovelPyrite"));
-        registerItem(3510, "pyrite_pickaxe", (new ItemPickaxe(Item.ToolMaterial.PYRITE)).setUnlocalizedName("pickaxePyrite"));
-        registerItem(3511, "pyrite_axe", (new ItemAxe(Item.ToolMaterial.PYRITE)).setUnlocalizedName("hatchetPyrite"));
-        registerItem(3512, "pyrite_hoe", (new ItemHoe(Item.ToolMaterial.PYRITE)).setUnlocalizedName("hoePyrite"));
-        registerItem(3513, "lazurite_sword", (new ItemSword(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("swordLazurite"));
-        registerItem(3514, "lazurite_shovel", (new ItemSpade(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("shovelLazurite"));
-        registerItem(3515, "lazurite_pickaxe", (new ItemPickaxe(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("pickaxeLazurite"));
-        registerItem(3516, "lazurite_axe", (new ItemAxe(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("hatchetLazurite"));
-        registerItem(3517, "lazurite_hoe", (new ItemHoe(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("hoeLazurite"));
-        registerItem(3518, "pyrite_pie", (new ItemAppleGold(4, 1.2F, false)).setAlwaysEdible().setPotionEffect(Potion.nightVision.id, 120, 1, 1.0F).setUnlocalizedName("piePyrite"));
-        registerItem(3519, "scandium_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.SCANDIUM, 7, 0)).setUnlocalizedName("helmetScandium"));
-        registerItem(3520, "scandium_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.SCANDIUM, 7, 1)).setUnlocalizedName("chestplateScandium"));
-        registerItem(3521, "scandium_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.SCANDIUM, 7, 2)).setUnlocalizedName("leggingsScandium"));
-        registerItem(3522, "scandium_boots", (new ItemArmor(ItemArmor.ArmorMaterial.SCANDIUM, 7, 3)).setUnlocalizedName("bootsScandium"));
-        registerItem(3523, "pyrite_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.PYRITE, 8, 0)).setUnlocalizedName("helmetPyrite"));
-        registerItem(3524, "pyrite_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.PYRITE, 8, 1)).setUnlocalizedName("chestplatePyrite"));
-        registerItem(3525, "pyrite_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.PYRITE, 8, 2)).setUnlocalizedName("leggingsPyrite"));
-        registerItem(3526, "pyrite_boots", (new ItemArmor(ItemArmor.ArmorMaterial.PYRITE, 8, 3)).setUnlocalizedName("bootsPyrite"));
-        registerItem(3527, "lazurite_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.LAZURITE, 9, 0)).setUnlocalizedName("helmetLazurite"));
-        registerItem(3528, "lazurite_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.LAZURITE, 9, 1)).setUnlocalizedName("chestplateLazurite"));
-        registerItem(3529, "lazurite_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.LAZURITE, 9, 2)).setUnlocalizedName("leggingsLazurite"));
-        registerItem(3530, "lazurite_boots", (new ItemArmor(ItemArmor.ArmorMaterial.LAZURITE, 9, 3)).setUnlocalizedName("bootsLazurite"));
-        registerItem(3531, "bloody_sword", (new ItemSword(Item.ToolMaterial.BLOODY)).setUnlocalizedName("swordBloody"));
-        registerItem(3532, "bloody_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 6, 0)).setUnlocalizedName("helmetBloody"));
-        registerItem(3533, "bloody_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 6, 1)).setUnlocalizedName("chestplateBloody"));
-        registerItem(3534, "bloody_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 6, 2)).setUnlocalizedName("leggingsBloody"));
-        registerItem(3535, "bloody_boots", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 6, 3)).setUnlocalizedName("bootsBloody"));
-        registerItem(3536,"scepter_creeper", (new ItemSpawnScepter(3).setUnlocalizedName("scepterCreeper")));
-        registerItem(3537,"scepter_repair", (new ItemRepairScepter().setUnlocalizedName("scepterRepair")));
-        registerItem(3538, "chest_pyrite", (new ItemMinecart(EntityMinecart.EnumMinecartType.CHEST)).setUnlocalizedName("pyriteChest"));
-
-
-
-
-        //============================================================================================================================================================
+        //ScandiCraft call new blocks
+        ScandiCraftItem.registerItems();
     }
 
     /**
      * Register a default ItemBlock for the given Block.
      */
-    private static void registerItemBlock(Block blockIn)
+    public static void registerItemBlock(Block blockIn)
     {
         registerItemBlock(blockIn, new ItemBlock(blockIn));
     }
@@ -1025,13 +971,15 @@ public class Item
     /**
      * Register the given Item as the ItemBlock for the given Block.
      */
-    protected static void registerItemBlock(Block blockIn, Item itemIn)
+    //ScandiCraft set protected to public
+    public static void registerItemBlock(Block blockIn, Item itemIn)
     {
         registerItem(Block.getIdFromBlock(blockIn), (ResourceLocation)Block.blockRegistry.getNameForObject(blockIn), itemIn);
         BLOCK_TO_ITEM.put(blockIn, itemIn);
     }
 
-    private static void registerItem(int id, String textualID, Item itemIn)
+    //ScandiCraft set private to public
+    public static void registerItem(int id, String textualID, Item itemIn)
     {
         registerItem(id, new ResourceLocation(textualID), itemIn);
     }
@@ -1100,9 +1048,9 @@ public class Item
                             (this == GOLD ? Items.gold_ingot :
                                     (this == IRON ? Items.iron_ingot :
                                             (this == EMERALD ? Items.diamond :
-                                                    (this == SCANDIUM ? Items.scandium :
-                                                            (this == PYRITE ? Items.pyrite :
-                                                                    (this == LAZURITE ? Items.lazurite : null)))))));
+                                                    (this == SCANDIUM ? ScandiCraftItems.scandium :
+                                                            (this == PYRITE ? ScandiCraftItems.pyrite :
+                                                                    (this == LAZURITE ? ScandiCraftItems.lazurite : null)))))));
         }
     }
 }

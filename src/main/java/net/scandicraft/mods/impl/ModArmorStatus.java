@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.scandicraft.gui.hud.ScreenPosition;
+import net.scandicraft.items.ScandiCraftItems;
 import net.scandicraft.mods.ModDraggable;
 import org.lwjgl.opengl.GL11;
 
@@ -49,13 +50,13 @@ public class ModArmorStatus extends ModDraggable {
             default:
                 return null;
             case 3:
-                return new ItemStack(Items.scandium_helmet);
+                return new ItemStack(ScandiCraftItems.scandium_helmet);
             case 2:
-                return new ItemStack(Items.scandium_chestplate);
+                return new ItemStack(ScandiCraftItems.scandium_chestplate);
             case 1:
-                return new ItemStack(Items.scandium_leggings);
+                return new ItemStack(ScandiCraftItems.scandium_leggings);
             case 0:
-                return new ItemStack(Items.scandium_boots);
+                return new ItemStack(ScandiCraftItems.scandium_boots);
         }
     }
 

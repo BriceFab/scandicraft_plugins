@@ -37,6 +37,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.scandicraft.items.ScandiCraftItems;
 import optifine.BlockPosM;
 import optifine.Config;
 import optifine.Reflector;
@@ -973,19 +974,19 @@ public abstract class EntityLiving extends EntityLivingBase
                 }
                 else if (itemTier == 6)
                 {
-                    return Items.bloody_helmet;
+                    return ScandiCraftItems.bloody_helmet;
                 }
                 else if (itemTier == 7)
                 {
-                    return Items.scandium_helmet;
+                    return ScandiCraftItems.scandium_helmet;
                 }
                 else if (itemTier == 8)
                 {
-                    return Items.pyrite_helmet;
+                    return ScandiCraftItems.pyrite_helmet;
                 }
                 else if (itemTier == 9)
                 {
-                    return Items.lazurite_helmet;
+                    return ScandiCraftItems.lazurite_helmet;
                 }
 
             case 3:
@@ -1011,19 +1012,19 @@ public abstract class EntityLiving extends EntityLivingBase
                 }
                 else if (itemTier == 6)
                 {
-                    return Items.bloody_chestplate;
+                    return ScandiCraftItems.bloody_chestplate;
                 }
                 else if (itemTier == 7)
                 {
-                    return Items.scandium_chestplate;
+                    return ScandiCraftItems.scandium_chestplate;
                 }
                 else if (itemTier == 8)
                 {
-                    return Items.pyrite_chestplate;
+                    return ScandiCraftItems.pyrite_chestplate;
                 }
                 else if (itemTier == 9)
                 {
-                    return Items.lazurite_chestplate;
+                    return ScandiCraftItems.lazurite_chestplate;
                 }
 
             case 2:
@@ -1049,19 +1050,19 @@ public abstract class EntityLiving extends EntityLivingBase
                 }
                 else if (itemTier == 6)
                 {
-                    return Items.bloody_leggings;
+                    return ScandiCraftItems.bloody_leggings;
                 }
                 else if (itemTier == 7)
                 {
-                    return Items.scandium_leggings;
+                    return ScandiCraftItems.scandium_leggings;
                 }
                 else if (itemTier == 8)
                 {
-                    return Items.pyrite_leggings;
+                    return ScandiCraftItems.pyrite_leggings;
                 }
                 else if (itemTier == 9)
                 {
-                    return Items.lazurite_leggings;
+                    return ScandiCraftItems.lazurite_leggings;
                 }
 
             case 1:
@@ -1087,19 +1088,19 @@ public abstract class EntityLiving extends EntityLivingBase
                 }
                 else if (itemTier == 6)
                 {
-                    return Items.bloody_boots;
+                    return ScandiCraftItems.bloody_boots;
                 }
                 else if (itemTier == 7)
                 {
-                    return Items.scandium_boots;
+                    return ScandiCraftItems.scandium_boots;
                 }
                 else if (itemTier == 8)
                 {
-                    return Items.pyrite_boots;
+                    return ScandiCraftItems.pyrite_boots;
                 }
                 else if (itemTier == 9)
                 {
-                    return Items.lazurite_boots;
+                    return ScandiCraftItems.lazurite_boots;
                 }
 
             default:

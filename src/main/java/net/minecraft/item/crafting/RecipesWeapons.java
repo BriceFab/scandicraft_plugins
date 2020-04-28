@@ -4,11 +4,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.scandicraft.items.ScandiCraftItems;
 
 public class RecipesWeapons {
     private String[][] recipePatterns = new String[][]{{"X", "X", "#"}};
-    private Object[][] recipeItems = new Object[][]{{Blocks.planks, Blocks.cobblestone, Items.iron_ingot, Items.diamond, Items.gold_ingot, Items.scandium, Items.pyrite, Items.lazurite},
-            {Items.wooden_sword, Items.stone_sword, Items.iron_sword, Items.diamond_sword, Items.golden_sword, Items.scandium_sword, Items.pyrite_sword, Items.lazurite_sword}};
+    private Object[][] recipeItems = new Object[][]{{Blocks.planks, Blocks.cobblestone, Items.iron_ingot, Items.diamond, Items.gold_ingot, ScandiCraftItems.scandium, ScandiCraftItems.pyrite, ScandiCraftItems.lazurite},
+            {Items.wooden_sword, Items.stone_sword, Items.iron_sword, Items.diamond_sword, Items.golden_sword, ScandiCraftItems.scandium_sword, ScandiCraftItems.pyrite_sword, ScandiCraftItems.lazurite_sword}};
 
     /**
      * Adds the weapon recipes to the CraftingManager.

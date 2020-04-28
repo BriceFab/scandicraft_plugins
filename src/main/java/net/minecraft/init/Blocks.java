@@ -235,19 +235,12 @@ public class Blocks
     public static final Block red_sandstone_stairs;
     public static final BlockSlab double_stone_slab2;
     public static final BlockSlab stone_slab2;
-    //ScandiCraft : UZApocalyps New blocks
-    public static final Block scandium_ore;
-    public static final Block scandium_block;
-    public static final Block pyrite_ore;
-    public static final Block pyrite_block;
-    public static final Block lazurite_ore;
-    public static final Block lazurite_block;
-    public static final PyriteBlockChest chest_pyrite;
 
     /**
      * Returns the Block in the blockRegistry with the specified name.
      */
-    private static Block getRegisteredBlock(String p_180383_0_)
+    //ScandiCraft set private to public
+    public static Block getRegisteredBlock(String p_180383_0_)
     {
         return (Block)Block.blockRegistry.getObject(new ResourceLocation(p_180383_0_));
     }
@@ -458,15 +451,6 @@ public class Blocks
             red_sandstone_stairs = getRegisteredBlock("red_sandstone_stairs");
             double_stone_slab2 = (BlockSlab)getRegisteredBlock("double_stone_slab2");
             stone_slab2 = (BlockSlab)getRegisteredBlock("stone_slab2");
-
-            //ScandiCraft : UZApocalyps New Blocks
-            scandium_ore = getRegisteredBlock("scandium_ore");
-            scandium_block = getRegisteredBlock("scandium_block");
-            pyrite_ore = getRegisteredBlock("pyrite_ore");
-            pyrite_block = getRegisteredBlock("pyrite_block");
-            lazurite_ore = getRegisteredBlock("lazurite_ore");
-            lazurite_block = getRegisteredBlock("lazurite_block");
-            chest_pyrite =(PyriteBlockChest) getRegisteredBlock("chest_pyrite");
         }
     }
 }

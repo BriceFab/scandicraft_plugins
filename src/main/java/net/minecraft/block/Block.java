@@ -33,6 +33,7 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.scandicraft.blocks.PyriteBlockChest;
+import net.scandicraft.blocks.ScandiCraftBlock;
 
 public class Block
 {
@@ -306,7 +307,8 @@ public class Block
     /**
      * Sets the footstep sound for the block. Returns the object for convenience in constructing.
      */
-    protected Block setStepSound(Block.SoundType sound)
+    //ScandiCraft set protected to public
+    public Block setStepSound(Block.SoundType sound)
     {
         this.stepSound = sound;
         return this;
@@ -334,7 +336,8 @@ public class Block
     /**
      * Sets the the blocks resistance to explosions. Returns the object for convenience in constructing.
      */
-    protected Block setResistance(float resistance)
+    //ScandiCraft set protected to public
+    public Block setResistance(float resistance)
     {
         this.blockResistance = resistance * 3.0F;
         return this;
@@ -391,7 +394,8 @@ public class Block
     /**
      * Sets how many hits it takes to break a block.
      */
-    protected Block setHardness(float hardness)
+    //ScandiCraft set protected to public
+    public Block setHardness(float hardness)
     {
         this.blockHardness = hardness;
 
@@ -1453,23 +1457,8 @@ public class Block
         registerBlock(196, "acacia_door", (new BlockDoor(Material.wood)).setHardness(3.0F).setStepSound(soundTypeWood).setUnlocalizedName("doorAcacia").disableStats());
         registerBlock(197, "dark_oak_door", (new BlockDoor(Material.wood)).setHardness(3.0F).setStepSound(soundTypeWood).setUnlocalizedName("doorDarkOak").disableStats());
 
-
-
-
-        // ScandiCraft : UZApocalyps
-        //Start ID : 2500
-        registerBlock(2500, "scandium_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreScandium"));
-        registerBlock(2501, "scandium_block", (new Block(Material.iron, MapColor.diamondColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockScandium").setCreativeTab(CreativeTabs.tabBlock));
-        registerBlock(2502, "pyrite_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("orePyrite"));
-        registerBlock(2503, "pyrite_block", (new Block(Material.iron, MapColor.diamondColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockPyrite").setCreativeTab(CreativeTabs.tabBlock));
-        registerBlock(2504, "lazurite_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(soundTypePiston).setUnlocalizedName("oreLazurite"));
-        registerBlock(2505, "lazurite_block", (new Block(Material.iron, MapColor.diamondColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundTypeMetal).setUnlocalizedName("blockLazurite").setCreativeTab(CreativeTabs.tabBlock));
-        registerBlock(2506, "chest_pyrite", (new PyriteBlockChest(0)).setHardness(2.5F).setStepSound(soundTypeWood).setUnlocalizedName("chestPyrite"));
-        registerBlock(2507, "lazurite_ladder", (new BlockLadder()).setHardness(0.4F).setStepSound(soundTypeLadder).setUnlocalizedName("ladderLazurite"));
-
-
-
-
+        //ScandiCraft: BriceFab register blocks
+        ScandiCraftBlock.registerBlocks();
 
         blockRegistry.validateKey();
 
@@ -1512,7 +1501,8 @@ public class Block
         blockRegistry.register(id, textualID, block_);
     }
 
-    private static void registerBlock(int id, String textualID, Block block_)
+    //ScandiCraft set private to public
+    public static void registerBlock(int id, String textualID, Block block_)
     {
         registerBlock(id, new ResourceLocation(textualID), block_);
     }

@@ -2,8 +2,6 @@ package net.minecraft.init;
 
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
-import net.scandicraft.items.ItemSpawnScepter;
-import net.scandicraft.items.ItemRepairScepter;
 
 public class Items {
     public static final Item iron_shovel;
@@ -194,47 +192,8 @@ public class Items {
     public static final Item prismarine_crystals;
     public static final Item banner;
 
-    //ScandiCraft : UZApocalyps New Items
-    public static final Item scandium;
-    public static final Item pyrite;
-    public static final Item lazurite;
-    public static final Item scandium_sword;
-    public static final Item scandium_shovel;
-    public static final Item scandium_pickaxe;
-    public static final Item scandium_axe;
-    public static final Item scandium_hoe;
-    public static final Item pyrite_sword;
-    public static final Item pyrite_shovel;
-    public static final Item pyrite_pickaxe;
-    public static final Item pyrite_axe;
-    public static final Item pyrite_hoe;
-    public static final Item lazurite_sword;
-    public static final Item lazurite_shovel;
-    public static final Item lazurite_pickaxe;
-    public static final Item lazurite_axe;
-    public static final Item lazurite_hoe;
-    public static final ItemArmor scandium_helmet;
-    public static final ItemArmor scandium_chestplate;
-    public static final ItemArmor scandium_leggings;
-    public static final ItemArmor scandium_boots;
-    public static final ItemArmor pyrite_helmet;
-    public static final ItemArmor pyrite_chestplate;
-    public static final ItemArmor pyrite_leggings;
-    public static final ItemArmor pyrite_boots;
-    public static final ItemArmor lazurite_helmet;
-    public static final ItemArmor lazurite_chestplate;
-    public static final ItemArmor lazurite_leggings;
-    public static final ItemArmor lazurite_boots;
-    public static final ItemArmor bloody_helmet;
-    public static final ItemArmor bloody_chestplate;
-    public static final ItemArmor bloody_leggings;
-    public static final ItemArmor bloody_boots;
-    public static final Item bloody_sword;
-    public static final ItemSpawnScepter scepter_creeper;
-    public static final ItemRepairScepter scepter_repair;
-    public static final Item pyrite_pie;
-
-    private static Item getRegisteredItem(String name) {
+    //ScandiCraft set to public
+    public static Item getRegisteredItem(String name) {
         return (Item) Item.itemRegistry.getObject(new ResourceLocation(name));
     }
 
@@ -429,47 +388,6 @@ public class Items {
             prismarine_shard = getRegisteredItem("prismarine_shard");
             prismarine_crystals = getRegisteredItem("prismarine_crystals");
             banner = getRegisteredItem("banner");
-
-            //ScandiCraft : UZApocalyps
-
-            scandium = getRegisteredItem("scandium");
-            pyrite = getRegisteredItem("pyrite");
-            lazurite = getRegisteredItem("lazurite");
-            scandium_sword = getRegisteredItem("scandium_sword");
-            scandium_shovel = getRegisteredItem("scandium_shovel");
-            scandium_pickaxe = getRegisteredItem("scandium_pickaxe");
-            scandium_axe = getRegisteredItem("scandium_axe");
-            scandium_hoe = getRegisteredItem("scandium_hoe");
-            pyrite_sword = getRegisteredItem("pyrite_sword");
-            pyrite_shovel = getRegisteredItem("pyrite_shovel");
-            pyrite_pickaxe = getRegisteredItem("pyrite_pickaxe");
-            pyrite_axe = getRegisteredItem("pyrite_axe");
-            pyrite_hoe = getRegisteredItem("pyrite_hoe");
-            lazurite_sword = getRegisteredItem("lazurite_sword");
-            lazurite_shovel = getRegisteredItem("lazurite_shovel");
-            lazurite_pickaxe = getRegisteredItem("lazurite_pickaxe");
-            lazurite_axe = getRegisteredItem("lazurite_axe");
-            lazurite_hoe = getRegisteredItem("lazurite_hoe");
-            scandium_helmet = (ItemArmor) getRegisteredItem("scandium_helmet");
-            scandium_chestplate = (ItemArmor) getRegisteredItem("scandium_chestplate");
-            scandium_leggings = (ItemArmor) getRegisteredItem("scandium_leggings");
-            scandium_boots = (ItemArmor) getRegisteredItem("scandium_boots");
-            pyrite_helmet = (ItemArmor) getRegisteredItem("pyrite_helmet");
-            pyrite_chestplate = (ItemArmor) getRegisteredItem("pyrite_chestplate");
-            pyrite_leggings = (ItemArmor) getRegisteredItem("pyrite_leggings");
-            pyrite_boots = (ItemArmor) getRegisteredItem("pyrite_boots");
-            lazurite_helmet = (ItemArmor) getRegisteredItem("lazurite_helmet");
-            lazurite_chestplate = (ItemArmor) getRegisteredItem("lazurite_chestplate");
-            lazurite_leggings = (ItemArmor) getRegisteredItem("lazurite_leggings");
-            lazurite_boots = (ItemArmor) getRegisteredItem("lazurite_boots");
-            bloody_helmet = (ItemArmor) getRegisteredItem("bloody_helmet");
-            bloody_chestplate = (ItemArmor) getRegisteredItem("bloody_chestplate");
-            bloody_leggings = (ItemArmor) getRegisteredItem("bloody_leggings");
-            bloody_boots = (ItemArmor) getRegisteredItem("bloody_boots");
-            bloody_sword = getRegisteredItem("bloody_sword");
-            scepter_creeper = (ItemSpawnScepter) getRegisteredItem("scepter_creeper");
-            scepter_repair = (ItemRepairScepter) getRegisteredItem("scepter_repair");
-            pyrite_pie = getRegisteredItem("pyrite_pie");
         }
     }
 }

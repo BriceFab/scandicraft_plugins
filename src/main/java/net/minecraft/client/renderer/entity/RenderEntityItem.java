@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.scandicraft.Config;
+import net.scandicraft.items.ScandiCraftItems;
 import net.scandicraft.settings.ScandiCraftSettings;
 
 import java.util.Random;
@@ -58,14 +59,14 @@ public class RenderEntityItem extends Render<EntityItem> {
                     GlStateManager.rotate(-90F, 0f, 0f, 1f);
                     GlStateManager.scale(1.5f, 1.5f, 1.5f);
                 }
-                if (item == Items.scandium || item == Items.pyrite || item == Items.lazurite || item == Items.dye ||
+                if (item == ScandiCraftItems.scandium || item == ScandiCraftItems.pyrite || item == ScandiCraftItems.lazurite || item == Items.dye ||
                         item == Items.diamond || item == Items.gold_ingot || item == Items.iron_ingot || item == Items.emerald || item == Items.coal || item == Items.redstone) {
                     GlStateManager.scale(0.8f, 0.8f, 0.8f);
                 }
                 if (item == Items.enchanted_book || item == Items.book) {
                     GlStateManager.scale(0.7f, 0.7f, 0.7f);
                 }
-                if (item == Items.bloody_sword || item == Items.scandium_sword || item == Items.pyrite_sword || item == Items.lazurite_sword || item == Items.wooden_sword || item == Items.stone_sword || item == Items.iron_sword || item == Items.golden_sword || item == Items.diamond_sword) {
+                if (item == ScandiCraftItems.bloody_sword || item == ScandiCraftItems.scandium_sword || item == ScandiCraftItems.pyrite_sword || item == ScandiCraftItems.lazurite_sword || item == Items.wooden_sword || item == Items.stone_sword || item == Items.iron_sword || item == Items.golden_sword || item == Items.diamond_sword) {
                     GlStateManager.translate(0f, 0f, 0.15f);
                     GlStateManager.rotate(-90f, 1.0f, 0.0f, 0.0f);
                     GlStateManager.rotate(45f, 0.0f, 1.0f, 0.0f);

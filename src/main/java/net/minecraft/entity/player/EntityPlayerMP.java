@@ -99,6 +99,7 @@ import net.minecraft.world.WorldSettings;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.scandicraft.Config;
+import net.scandicraft.items.ScandiCraftItems;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -440,18 +441,18 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
                 ItemStack boots = player.getEquipmentInSlot(1);
 
                 //ScandiCraft : UZApocalyps effet sur les armures de sang
-                if (helmet != null && helmet.getItem().equals(Items.bloody_helmet))
+                if (helmet != null && helmet.getItem().equals(ScandiCraftItems.bloody_helmet))
                 {
                     player.setAir(280);
                 }
-                if(leggings != null && leggings.getItem().equals(Items.bloody_leggings))
+                if(leggings != null && leggings.getItem().equals(ScandiCraftItems.bloody_leggings))
                 {
                     PotionEffect actPotionSpeed = player.getActivePotionEffect(Potion.moveSpeed);
                     if (actPotionSpeed == null) {
                         player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id,100));
                     }
                 }
-                if (boots != null && boots.getItem().equals(Items.bloody_boots))
+                if (boots != null && boots.getItem().equals(ScandiCraftItems.bloody_boots))
                 {
                     player.fallDistance = 0;
                 }
@@ -570,7 +571,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
                 EntityPlayer actualPlayer = (EntityPlayer) cause.getEntity();
                 ItemStack chestplate = actualPlayer.getEquipmentInSlot(3);
 
-                if(chestplate.getItem().equals(Items.bloody_chestplate) )
+                if(chestplate.getItem().equals(ScandiCraftItems.bloody_chestplate) )
                 {
                     //10 = 10 demi-coeurs = 5 coeurs
                     if (actualPlayer.getHealth() + 10 > actualPlayer.getMaxHealth())

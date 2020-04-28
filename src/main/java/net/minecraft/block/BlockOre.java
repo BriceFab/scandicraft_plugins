@@ -12,6 +12,8 @@ import net.minecraft.item.Item;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.scandicraft.blocks.ScandiCraftBlocks;
+import net.scandicraft.items.ScandiCraftItems;
 
 public class BlockOre extends Block
 {
@@ -36,9 +38,9 @@ public class BlockOre extends Block
                     (this == Blocks.lapis_ore ? Items.dye :
                         (this == Blocks.emerald_ore ? Items.emerald :
                                 (this == Blocks.quartz_ore ? Items.quartz :
-                                        (this == Blocks.scandium_ore ? Items.scandium :
-                                                (this == Blocks.pyrite_ore ? Items.pyrite :
-                                                        (this == Blocks.lazurite_ore ? Items.lazurite:
+                                        (this == ScandiCraftBlocks.scandium_ore ? ScandiCraftItems.scandium :
+                                                (this == ScandiCraftBlocks.pyrite_ore ? ScandiCraftItems.pyrite :
+                                                        (this == ScandiCraftBlocks.lazurite_ore ? ScandiCraftItems.lazurite:
                                                             Item.getItemFromBlock(this))))))));
     }
 
