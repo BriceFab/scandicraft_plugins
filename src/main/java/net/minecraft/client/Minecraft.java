@@ -153,7 +153,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private CrashReport crashReporter;
     public int displayWidth;
     public int displayHeight;
-    private boolean connectedToRealms = false;
     private Timer timer = new Timer(20.0F);
 
     /**
@@ -1924,6 +1923,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         networkmanager.sendPacket(new C00Handshake(47, socketaddress.toString(), 0, EnumConnectionState.LOGIN));
         networkmanager.sendPacket(new C00PacketLoginStart(this.getSession().getProfile()));
         this.myNetworkManager = networkmanager;
+
+        ScandiCraftClient.getInstance().getDiscordRP().update("Joue en solo");
     }
 
     /**
@@ -2697,11 +2698,4 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         return map;
     }
 
-    public boolean isConnectedToRealms() {
-        return this.connectedToRealms;
-    }
-
-    public void setConnectedToRealms(boolean isConnected) {
-        this.connectedToRealms = isConnected;
-    }
 }

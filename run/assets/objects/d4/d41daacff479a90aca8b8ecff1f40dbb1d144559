@@ -13,7 +13,6 @@ mco.backup.nobackups=Realm ini tidak memiliki cadangan saat ini.
 mco.backup.restoring=Memulihkan realm anda
 mco.backup.title=Ubah Dunia
 mco.buy.realms.buy=Saya ingin satu!
-mco.buy.realms.title=Beli Realm
 mco.client.outdated.msg=Klien anda tidak cocok dengan Realms, mohon pertimbangkan untuk memperbaruinya
 mco.client.outdated.title=Klien tidak cocok!
 mco.configure.world.buttons.activity=Aktivitas Pemain
