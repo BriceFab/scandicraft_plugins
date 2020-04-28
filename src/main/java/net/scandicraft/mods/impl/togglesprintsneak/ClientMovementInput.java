@@ -50,7 +50,7 @@ public class ClientMovementInput extends MovementInput {
         jump = gameSettings.keyBindJump.isKeyDown();
 
         //ToggleSneak
-        if (ModInstances.getModToggleSprintSneak().isEnabled()) {
+        if (ModInstances.getModToggleSprintSneak().isEnabled() && this.mc.currentScreen == null) {
 
             if (gameSettings.keyBindSneak.isKeyDown()) {
                 if (sneakWasPressed == 0) {
@@ -82,7 +82,7 @@ public class ClientMovementInput extends MovementInput {
         }
 
         //ToggleSprint
-        if (ModInstances.getModToggleSprintSneak().isEnabled()) {
+        if (ModInstances.getModToggleSprintSneak().isEnabled() && this.mc.currentScreen == null) {
             if (gameSettings.keyBindSprint.isKeyDown()) {
                 if (sprintWasPressed == 0) {
                     if (sprint) {
