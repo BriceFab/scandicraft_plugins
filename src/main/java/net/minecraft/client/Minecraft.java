@@ -86,9 +86,7 @@ import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
 import net.scandicraft.Config;
-import net.scandicraft.anti_cheat.AntiTransparency;
-import net.scandicraft.anti_cheat.CheatScreen;
-import net.scandicraft.anti_cheat.CheatType;
+import net.scandicraft.anti_cheat.x_ray.PackManager;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.event.impl.ClientTickEvent;
 import net.scandicraft.mods.impl.togglesprintsneak.ClientMovementInput;
@@ -468,6 +466,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.mcResourceManager.registerReloadListener(this.standardGalacticFontRenderer);
         this.mcResourceManager.registerReloadListener(new GrassColorReloadListener());
         this.mcResourceManager.registerReloadListener(new FoliageColorReloadListener());
+
+        //ScandiCraft anti x_ray
+        this.mcResourceManager.registerReloadListener(new PackManager());
+
         AchievementList.openInventory.setStatStringFormatter(new IStatStringFormat() {
             public String formatString(String p_74535_1_) {
                 try {
@@ -693,12 +695,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
         try {
             this.mcResourceManager.reloadResources(list);
-
-            Config.print_debug("check x-ray ressources packs..");
-            boolean hasIllegal = AntiTransparency.checkTexturePack();
-            if (hasIllegal) {
-                CheatScreen.onCheatDetect(CheatType.XRAY);
-            }
         } catch (RuntimeException runtimeexception) {
             logger.info((String) "Caught error stitching, removing all assigned resourcepacks", (Throwable) runtimeexception);
             list.clear();

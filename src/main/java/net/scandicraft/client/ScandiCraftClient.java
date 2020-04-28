@@ -33,6 +33,9 @@ public class ScandiCraftClient {
 
     public void shutDown() {
         Config.print_debug("shutDown ScandiCraft Client");
+
+        //TODO remove all refresh_token for user
+
         EventManager.unregister(this);
     }
 

@@ -1,4 +1,4 @@
-package net.scandicraft.anti_cheat;
+package net.scandicraft.anti_cheat.x_ray;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -7,19 +7,20 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
+import net.scandicraft.utils.Checksum;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AntiTransparency {
     private final static String BLOCKS_PATH = "textures/blocks/";
-    private static List<String> texturesCheck = new ArrayList<>(Arrays.asList(
+    private static final List<String> texturesCheck = new ArrayList<>(Arrays.asList(
             BLOCKS_PATH + "stone.png",
             BLOCKS_PATH + "cobblestone.png",
             BLOCKS_PATH + "snow.png",
@@ -36,11 +37,12 @@ public class AntiTransparency {
             BLOCKS_PATH + "red_sand.png",
             BLOCKS_PATH + "bedrock.png"
     ));
+
     private final static String MODELS_PATH = "models/block/";
-    private static List<String> modelsCheck = new ArrayList<>(Arrays.asList(
-            MODELS_PATH + "cube.json",
-            MODELS_PATH + "grass.json"
-    ));
+    private static final Map<String, String> modelsCheck = Stream.of(
+            new AbstractMap.SimpleEntry<>(MODELS_PATH + "cube.json", "ed43d9b0a87ce1aefd6da424096f3f6593a12016"),
+            new AbstractMap.SimpleEntry<>(MODELS_PATH + "grass.json", "88447d7e37b2450dbaa5646af1c83d6c3cb6e96c"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     private final static IResourceManager resourceManager = Minecraft.getMinecraft().getResourceManager();
 
     /**
@@ -59,15 +61,16 @@ public class AntiTransparency {
      * @return true == hasIllegalModels
      */
     private static boolean checkModels() {
-        for (String texture : modelsCheck) {
+        for (Map.Entry<String, String> model : modelsCheck.entrySet()) {
             try {
-                IResource resource = resourceManager.getResource(new ResourceLocation(texture));
+                IResource resource = resourceManager.getResource(new ResourceLocation(model.getKey()));
                 InputStream inputStream = resource.getInputStream();
                 JsonObject jsonModel;
                 JsonElement jsonElement = new JsonParser().parse(
                         new InputStreamReader(inputStream)
                 );
                 jsonModel = jsonElement.getAsJsonObject();
+
                 for (JsonElement element : jsonModel.getAsJsonArray("elements")) {
                     for (JsonElement to : element.getAsJsonObject().getAsJsonArray("to")) {
                         int toValue = to.getAsInt();
@@ -75,6 +78,12 @@ public class AntiTransparency {
                             return true;
                         }
                     }
+                }
+
+                // Config.print_debug("checksum " + model.getKey() + " " + Checksum.getSHA1(jsonModel.toString()) + " " + model.getValue());
+
+                if (!Objects.equals(Checksum.getSHA1(jsonModel.toString()), model.getValue())) {
+                    return true;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
