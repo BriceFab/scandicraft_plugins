@@ -7,8 +7,6 @@ import net.scandicraft.mods.ModDraggable;
 public class ModToggleSprintSneak extends ModDraggable {
 
     //settings
-    public boolean flyBoost = true;
-    public float flyBoostFactor = 4;
     public int keyHoldTicks = 7;
 
     private String textToRender = "";

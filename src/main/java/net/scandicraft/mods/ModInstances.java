@@ -8,6 +8,7 @@ public class ModInstances {
 
     private static ModToggleSprintSneak modToggleSprintSneak;
     private static ModPing modPing;
+    private static ModCPS modCPS;
 
     public static void register(HUDManager api) {
         ModArmorStatus modArmorStatus = new ModArmorStatus();
@@ -16,7 +17,7 @@ public class ModInstances {
         ModFPS modFPS = new ModFPS();
         api.register(modFPS);
 
-        ModCPS modCPS = new ModCPS();
+        modCPS = new ModCPS();
         api.register(modCPS);
 
         modPing = new ModPing();
@@ -36,5 +37,9 @@ public class ModInstances {
 
     public static ModPing getModPing() {
         return modPing;
+    }
+
+    public static ModCPS getModCPS() {
+        return modCPS;
     }
 }

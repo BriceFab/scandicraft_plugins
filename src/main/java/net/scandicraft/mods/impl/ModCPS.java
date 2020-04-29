@@ -53,7 +53,7 @@ public class ModCPS extends ModDraggable {
 
     }
 
-    private int getCPS() {
+    public int getCPS() {
         final long time = System.currentTimeMillis();
         this.clicks.removeIf(aLong -> aLong + 1000 < time);
         return this.clicks.size();
