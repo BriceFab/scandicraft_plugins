@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
@@ -21,21 +20,9 @@ import org.lwjgl.opengl.GLContext;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.Random;
 
 public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     private static final Logger logger = LogManager.getLogger();
-    private static final Random RANDOM = new Random();
-
-    /**
-     * Counts the number of screen updates.
-     */
-    private float updateCounter;
-
-    /**
-     * Texture allocated for the current viewport of the main menu's panorama background.
-     */
-    private DynamicTexture viewportTexture;
 
     /**
      * The Object object utilized as a thread lock when performing non thread-safe operations
@@ -60,17 +47,14 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     private static final ResourceLocation backgroundPath = new ResourceLocation("textures/gui/background.png");
     public static final String field_96138_a = "Please click " + EnumChatFormatting.UNDERLINE + "here" + EnumChatFormatting.RESET + " for more information.";
     private int field_92024_r;
-    private int field_92023_s;
     private int field_92022_t;
     private int field_92021_u;
     private int field_92020_v;
     private int field_92019_w;
-    private ResourceLocation backgroundTexture;
 
     public GuiMainMenu() {
         this.openGLWarning2 = field_96138_a;
 
-        this.updateCounter = RANDOM.nextFloat();
         this.openGLWarning1 = "";
 
         if (!GLContext.getCapabilities().OpenGL20 && !OpenGlHelper.areShadersSupported()) {
@@ -99,13 +83,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
      * window resizes, the buttonList is cleared beforehand.
      */
     public void initGui() {
-        this.viewportTexture = new DynamicTexture(256, 256);
-        this.backgroundTexture = this.mc.getTextureManager().getDynamicTextureLocation("background", this.viewportTexture);
-
-        int i = 24;
         int j = this.height / 4 + 48;
 
-        this.addSingleplayerMultiplayerButtons(j, 24);
+        this.addSingleplayerMultiplayerButtons(j);
 
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, I18n.format("menu.options", new Object[0])));
         this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 72 + 12, 98, 20, I18n.format("menu.quit", new Object[0])));
@@ -113,11 +93,11 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         ScandiCraftClient.getInstance().getDiscordRP().update("Menu principal");
 
         synchronized (this.threadLock) {
-            this.field_92023_s = this.fontRendererObj.getStringWidth(this.openGLWarning1);
+            int field_92023_s = this.fontRendererObj.getStringWidth(this.openGLWarning1);
             this.field_92024_r = this.fontRendererObj.getStringWidth(this.openGLWarning2);
-            int k = Math.max(this.field_92023_s, this.field_92024_r);
+            int k = Math.max(field_92023_s, this.field_92024_r);
             this.field_92022_t = (this.width - k) / 2;
-            this.field_92021_u = ((GuiButton) this.buttonList.get(0)).yPosition - 24;
+            this.field_92021_u = this.buttonList.get(0).yPosition - 24;
             this.field_92020_v = this.field_92022_t + k;
             this.field_92019_w = this.field_92021_u + 24;
         }
@@ -126,9 +106,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     /**
      * Adds Singleplayer and Multiplayer buttons on Main Menu for players who have bought the game.
      */
-    private void addSingleplayerMultiplayerButtons(int yIn, int rowHeightIn) {
+    private void addSingleplayerMultiplayerButtons(int yIn) {
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, yIn, I18n.format("menu.singleplayer", new Object[0])));
-        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, yIn + rowHeightIn * 1, I18n.format("menu.multiplayer", new Object[0])));
+        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, yIn + 24, I18n.format("menu.multiplayer", new Object[0])));
     }
 
     /**
@@ -180,10 +160,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
             if (result) {
                 try {
                     Class<?> oclass = Class.forName("java.awt.Desktop");
-                    Object object = oclass.getMethod("getDesktop", new Class[0]).invoke((Object) null, new Object[0]);
-                    oclass.getMethod("browse", new Class[]{URI.class}).invoke(object, new Object[]{new URI(this.openGLWarningLink)});
+                    Object object = oclass.getMethod("getDesktop", new Class[0]).invoke(null);
+                    oclass.getMethod("browse", new Class[]{URI.class}).invoke(object, new URI(this.openGLWarningLink));
                 } catch (Throwable throwable) {
-                    logger.error("Couldn\'t open link", throwable);
+                    logger.error("Couldn't open link", throwable);
                 }
             }
 
@@ -205,7 +185,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0) {
             drawRect(this.field_92022_t - 2, this.field_92021_u - 2, this.field_92020_v + 2, this.field_92019_w - 1, 1428160512);
             this.drawString(this.fontRendererObj, this.openGLWarning1, this.field_92022_t, this.field_92021_u, -1);
-            this.drawString(this.fontRendererObj, this.openGLWarning2, (this.width - this.field_92024_r) / 2, ((GuiButton) this.buttonList.get(0)).yPosition - 12, -1);
+            this.drawString(this.fontRendererObj, this.openGLWarning2, (this.width - this.field_92024_r) / 2, this.buttonList.get(0).yPosition - 12, -1);
         }
 
         super.drawScreen(mouseX, mouseY, partialTicks);

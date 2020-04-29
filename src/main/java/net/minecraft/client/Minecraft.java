@@ -87,6 +87,7 @@ import net.scandicraft.Config;
 import net.scandicraft.anti_cheat.x_ray.PackManager;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.event.impl.ClientTickEvent;
+import net.scandicraft.mods.ModInstances;
 import net.scandicraft.mods.impl.togglesprintsneak.ClientMovementInput;
 import net.scandicraft.settings.ScandiCraftSettings;
 import org.apache.commons.io.IOUtils;
@@ -1894,6 +1895,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.myNetworkManager = networkmanager;
 
         ScandiCraftClient.getInstance().getDiscordRP().update("Joue en solo");
+        ModInstances.getModPing().setEnabled(false);
     }
 
     /**

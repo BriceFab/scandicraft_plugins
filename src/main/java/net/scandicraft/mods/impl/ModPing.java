@@ -60,10 +60,10 @@ public class ModPing extends ModDraggable {
                     oldServerPinger.ping(serverData);
                 } catch (UnknownHostException var2) {
                     serverData.pingToServer = -1L;
-                    serverData.serverMOTD = EnumChatFormatting.DARK_RED + "Can\'t resolve hostname";
+                    serverData.serverMOTD = EnumChatFormatting.DARK_RED + "Can't resolve hostname";
                 } catch (Exception var3) {
                     serverData.pingToServer = -1L;
-                    serverData.serverMOTD = EnumChatFormatting.DARK_RED + "Can\'t connect to server.";
+                    serverData.serverMOTD = EnumChatFormatting.DARK_RED + "Can't connect to server.";
                 }
             });
             lastPing = Instant.now();
@@ -114,4 +114,5 @@ public class ModPing extends ModDraggable {
         Gui.drawModalRectWithCustomSizedTexture(pos.getAbsoluteX() - 15, pos.getAbsoluteY(), (float) (k * 10), (float) (176 + l * 8), pingIconWidth, pingIconHeight, 256.0F, 256.0F);
         font.drawString(s1, pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
     }
+
 }

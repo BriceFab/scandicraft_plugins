@@ -17,6 +17,7 @@ import net.minecraft.network.login.client.C00PacketLoginStart;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.scandicraft.client.ScandiCraftClient;
+import net.scandicraft.mods.ModInstances;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -69,6 +70,7 @@ public class GuiConnecting extends GuiScreen
                     GuiConnecting.this.networkManager.sendPacket(new C00PacketLoginStart(GuiConnecting.this.mc.getSession().getProfile()));
 
                     ScandiCraftClient.getInstance().getDiscordRP().update("joue en ligne !");
+                    ModInstances.getModPing().setEnabled(true);
                 }
                 catch (UnknownHostException unknownhostexception)
                 {
@@ -77,7 +79,7 @@ public class GuiConnecting extends GuiScreen
                         return;
                     }
 
-                    GuiConnecting.logger.error((String)"Couldn\'t connect to server", (Throwable)unknownhostexception);
+                    GuiConnecting.logger.error("Couldn't connect to server", unknownhostexception);
                     GuiConnecting.this.mc.displayGuiScreen(new GuiDisconnected(GuiConnecting.this.previousGuiScreen, "connect.failed", new ChatComponentTranslation("disconnect.genericReason", new Object[] {"Unknown host"})));
                 }
                 catch (Exception exception)

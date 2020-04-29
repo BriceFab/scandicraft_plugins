@@ -7,6 +7,7 @@ import net.scandicraft.mods.impl.togglesprintsneak.ModToggleSprintSneak;
 public class ModInstances {
 
     private static ModToggleSprintSneak modToggleSprintSneak;
+    private static ModPing modPing;
 
     public static void register(HUDManager api) {
         ModArmorStatus modArmorStatus = new ModArmorStatus();
@@ -18,7 +19,8 @@ public class ModInstances {
         ModCPS modCPS = new ModCPS();
         api.register(modCPS);
 
-        ModPing modPing = new ModPing();
+        modPing = new ModPing();
+        modPing.setEnabled(false);
         api.register(modPing);
 
         ModKeystrokes modKeystrokes = new ModKeystrokes();
@@ -30,5 +32,9 @@ public class ModInstances {
 
     public static ModToggleSprintSneak getModToggleSprintSneak() {
         return modToggleSprintSneak;
+    }
+
+    public static ModPing getModPing() {
+        return modPing;
     }
 }
