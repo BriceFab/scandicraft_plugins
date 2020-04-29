@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.scandicraft.items.ScandiCraftItems;
 
 public class RecipesWeapons {
-    private String[][] recipePatterns = new String[][]{{"X", "X", "#"}};
-    private Object[][] recipeItems = new Object[][]{{Blocks.planks, Blocks.cobblestone, Items.iron_ingot, Items.diamond, Items.gold_ingot, ScandiCraftItems.scandium, ScandiCraftItems.pyrite, ScandiCraftItems.lazurite},
+    private final String[][] recipePatterns = new String[][]{{"X", "X", "#"}};
+    private final Object[][] recipeItems = new Object[][]{{Blocks.planks, Blocks.cobblestone, Items.iron_ingot, Items.diamond, Items.gold_ingot, ScandiCraftItems.scandium, ScandiCraftItems.pyrite, ScandiCraftItems.lazurite},
             {Items.wooden_sword, Items.stone_sword, Items.iron_sword, Items.diamond_sword, Items.golden_sword, ScandiCraftItems.scandium_sword, ScandiCraftItems.pyrite_sword, ScandiCraftItems.lazurite_sword}};
 
     /**
@@ -20,11 +20,11 @@ public class RecipesWeapons {
 
             for (int j = 0; j < this.recipeItems.length - 1; ++j) {
                 Item item = (Item) this.recipeItems[j + 1][i];
-                p_77583_1_.addRecipe(new ItemStack(item), new Object[]{this.recipePatterns[j], '#', Items.stick, 'X', object});
+                p_77583_1_.addRecipe(new ItemStack(item), this.recipePatterns[j], '#', Items.stick, 'X', object);
             }
         }
 
-        p_77583_1_.addRecipe(new ItemStack(Items.bow, 1), new Object[]{" #X", "# X", " #X", 'X', Items.string, '#', Items.stick});
-        p_77583_1_.addRecipe(new ItemStack(Items.arrow, 4), new Object[]{"X", "#", "Y", 'Y', Items.feather, 'X', Items.flint, '#', Items.stick});
+        p_77583_1_.addRecipe(new ItemStack(Items.bow, 1), " #X", "# X", " #X", 'X', Items.string, '#', Items.stick);
+        p_77583_1_.addRecipe(new ItemStack(Items.arrow, 4), "X", "#", "Y", 'Y', Items.feather, 'X', Items.flint, '#', Items.stick);
     }
 }

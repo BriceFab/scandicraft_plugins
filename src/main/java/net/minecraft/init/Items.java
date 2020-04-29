@@ -194,7 +194,7 @@ public class Items {
 
     //ScandiCraft set to public
     public static Item getRegisteredItem(String name) {
-        return (Item) Item.itemRegistry.getObject(new ResourceLocation(name));
+        return Item.itemRegistry.getObject(new ResourceLocation(name));
     }
 
     static {

@@ -8,8 +8,8 @@ import net.scandicraft.items.ScandiCraftItems;
 
 public class RecipesTools
 {
-    private String[][] recipePatterns = new String[][] {{"XXX", " # ", " # "}, {"X", "#", "#"}, {"XX", "X#", " #"}, {"XX", " #", " #"}};
-    private Object[][] recipeItems = new Object[][] {{Blocks.planks, Blocks.cobblestone, Items.iron_ingot, Items.diamond, Items.gold_ingot, ScandiCraftItems.scandium, ScandiCraftItems.pyrite, ScandiCraftItems.lazurite},
+    private final String[][] recipePatterns = new String[][] {{"XXX", " # ", " # "}, {"X", "#", "#"}, {"XX", "X#", " #"}, {"XX", " #", " #"}};
+    private final Object[][] recipeItems = new Object[][] {{Blocks.planks, Blocks.cobblestone, Items.iron_ingot, Items.diamond, Items.gold_ingot, ScandiCraftItems.scandium, ScandiCraftItems.pyrite, ScandiCraftItems.lazurite},
             {Items.wooden_pickaxe, Items.stone_pickaxe, Items.iron_pickaxe, Items.diamond_pickaxe, Items.golden_pickaxe, ScandiCraftItems.scandium_pickaxe, ScandiCraftItems.pyrite_pickaxe, ScandiCraftItems.lazurite_pickaxe},
             {Items.wooden_shovel, Items.stone_shovel, Items.iron_shovel, Items.diamond_shovel, Items.golden_shovel, ScandiCraftItems.scandium_shovel, ScandiCraftItems.pyrite_shovel, ScandiCraftItems.lazurite_shovel},
             {Items.wooden_axe, Items.stone_axe, Items.iron_axe, Items.diamond_axe, Items.golden_axe, ScandiCraftItems.scandium_axe, ScandiCraftItems.pyrite_axe, ScandiCraftItems.lazurite_axe},
@@ -27,10 +27,10 @@ public class RecipesTools
             for (int j = 0; j < this.recipeItems.length - 1; ++j)
             {
                 Item item = (Item)this.recipeItems[j + 1][i];
-                p_77586_1_.addRecipe(new ItemStack(item), new Object[] {this.recipePatterns[j], '#', Items.stick, 'X', object});
+                p_77586_1_.addRecipe(new ItemStack(item), this.recipePatterns[j], '#', Items.stick, 'X', object);
             }
         }
 
-        p_77586_1_.addRecipe(new ItemStack(Items.shears), new Object[] {" #", "# ", '#', Items.iron_ingot});
+        p_77586_1_.addRecipe(new ItemStack(Items.shears), " #", "# ", '#', Items.iron_ingot);
     }
 }
