@@ -1,6 +1,5 @@
 package net.scandicraft;
 
-import net.scandicraft.gui.hud.ScreenPosition;
 import org.apache.logging.log4j.LogManager;
 
 public class Config {
@@ -14,6 +13,7 @@ public class Config {
     public static String SKINS_PATH = "https://scandicraft-mc.fr/upload/skins/";    //.png only ; TODO user_id + upload
     public static String CAPES_PATH = "https://scandicraft-mc.fr/upload/capes/";    //.png only ; TODO user_id + upload
     public static String DISCORD_CLIENT_ID = "704772787616874617";  //https://discordapp.com/developers
+    public static int MAX_CPS = 20;
 
     /* Fonctions */
     public static void print_debug(String message) {

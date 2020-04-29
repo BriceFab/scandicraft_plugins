@@ -1,5 +1,6 @@
 package net.scandicraft.mods.impl;
 
+import net.scandicraft.anti_cheat.auto_click.CheckAutoClick;
 import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
 import org.lwjgl.input.Mouse;
@@ -11,7 +12,7 @@ public class ModCPS extends ModDraggable {
 
     @Override
     public ScreenPosition getDefaultPos() {
-        return ScreenPosition.fromRelativePosition(0.00625,0.011764705882352941);
+        return ScreenPosition.fromRelativePosition(0.00625, 0.011764705882352941);
     }
 
     private List<Long> clicks = new ArrayList<>();
@@ -33,7 +34,11 @@ public class ModCPS extends ModDraggable {
         //0 = left; 1 = right
         int button = mc.gameSettings.keyBindAttack.getKeyCode() == -100 ? 0 : 1;
 
-        final boolean pressed = Mouse.isButtonDown(button);
+        boolean pressed = Mouse.isButtonDown(button);
+        if (!pressed) { //CPS with Key (touche)
+            pressed = mc.gameSettings.keyBindAttack.isKeyDown();
+        }
+
         if (pressed != this.wasPressed) {
             long lastPressed = System.currentTimeMillis();
             this.wasPressed = pressed;
@@ -42,7 +47,9 @@ public class ModCPS extends ModDraggable {
             }
         }
 
-        font.drawString("CPS: " + getCPS(), pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
+        int CPS = getCPS();
+        CheckAutoClick.checkCPS(CPS);
+        font.drawString("CPS: " + CPS, pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
 
     }
 
