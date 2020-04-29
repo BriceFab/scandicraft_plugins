@@ -9,6 +9,7 @@ public class ModInstances {
     private static ModToggleSprintSneak modToggleSprintSneak;
     private static ModPing modPing;
     private static ModCPS modCPS;
+    private static ModKeystrokes modKeystrokes;
 
     public static void register(HUDManager api) {
         ModArmorStatus modArmorStatus = new ModArmorStatus();
@@ -24,7 +25,7 @@ public class ModInstances {
         modPing.setEnabled(false);
         api.register(modPing);
 
-        ModKeystrokes modKeystrokes = new ModKeystrokes();
+        modKeystrokes = new ModKeystrokes();
         api.register(modKeystrokes);
 
         modToggleSprintSneak = new ModToggleSprintSneak();
@@ -41,5 +42,9 @@ public class ModInstances {
 
     public static ModCPS getModCPS() {
         return modCPS;
+    }
+
+    public static ModKeystrokes getModKeystrokes() {
+        return modKeystrokes;
     }
 }
