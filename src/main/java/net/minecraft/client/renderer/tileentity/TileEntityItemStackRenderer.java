@@ -1,7 +1,6 @@
 package net.minecraft.client.renderer.tileentity;
 
 import com.mojang.authlib.GameProfile;
-import java.util.UUID;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
@@ -15,45 +14,36 @@ import net.minecraft.tileentity.TileEntityEnderChest;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.EnumFacing;
 
-public class TileEntityItemStackRenderer
-{
-    public static TileEntityItemStackRenderer instance = new TileEntityItemStackRenderer();
-    private TileEntityChest chestBasic = new TileEntityChest(0);
-    private TileEntityChest chestTrap = new TileEntityChest(1);
-    private TileEntityEnderChest enderChest = new TileEntityEnderChest();
-    private TileEntityBanner banner = new TileEntityBanner();
-    private TileEntitySkull skull = new TileEntitySkull();
+import java.util.UUID;
 
-    public void renderByItem(ItemStack itemStackIn)
-    {
-        if (itemStackIn.getItem() == Items.banner)
-        {
+public class TileEntityItemStackRenderer {
+    public static TileEntityItemStackRenderer instance = new TileEntityItemStackRenderer();
+    private final TileEntityChest chestBasic = new TileEntityChest(0);
+    private final TileEntityChest chestTrap = new TileEntityChest(1);
+    private final TileEntityEnderChest enderChest = new TileEntityEnderChest();
+    private final TileEntityBanner banner = new TileEntityBanner();
+
+    public void renderByItem(ItemStack itemStackIn) {
+        if (itemStackIn.getItem() == Items.banner) {
             this.banner.setItemValues(itemStackIn);
             TileEntityRendererDispatcher.instance.renderTileEntityAt(this.banner, 0.0D, 0.0D, 0.0D, 0.0F);
-        }
-        else if (itemStackIn.getItem() == Items.skull)
-        {
+        } else if (itemStackIn.getItem() == Items.skull) {
             GameProfile gameprofile = null;
 
-            if (itemStackIn.hasTagCompound())
-            {
+            if (itemStackIn.hasTagCompound()) {
                 NBTTagCompound nbttagcompound = itemStackIn.getTagCompound();
 
-                if (nbttagcompound.hasKey("SkullOwner", 10))
-                {
+                if (nbttagcompound.hasKey("SkullOwner", 10)) {
                     gameprofile = NBTUtil.readGameProfileFromNBT(nbttagcompound.getCompoundTag("SkullOwner"));
-                }
-                else if (nbttagcompound.hasKey("SkullOwner", 8) && nbttagcompound.getString("SkullOwner").length() > 0)
-                {
-                    gameprofile = new GameProfile((UUID)null, nbttagcompound.getString("SkullOwner"));
+                } else if (nbttagcompound.hasKey("SkullOwner", 8) && nbttagcompound.getString("SkullOwner").length() > 0) {
+                    gameprofile = new GameProfile(null, nbttagcompound.getString("SkullOwner"));
                     gameprofile = TileEntitySkull.updateGameprofile(gameprofile);
                     nbttagcompound.removeTag("SkullOwner");
                     nbttagcompound.setTag("SkullOwner", NBTUtil.writeGameProfile(new NBTTagCompound(), gameprofile));
                 }
             }
 
-            if (TileEntitySkullRenderer.instance != null)
-            {
+            if (TileEntitySkullRenderer.instance != null) {
                 GlStateManager.pushMatrix();
                 GlStateManager.translate(-0.5F, 0.0F, -0.5F);
                 GlStateManager.scale(2.0F, 2.0F, 2.0F);
@@ -62,21 +52,14 @@ public class TileEntityItemStackRenderer
                 GlStateManager.enableCull();
                 GlStateManager.popMatrix();
             }
-        }
-        else
-        {
+        } else {
             Block block = Block.getBlockFromItem(itemStackIn.getItem());
 
-            if (block == Blocks.ender_chest)
-            {
+            if (block == Blocks.ender_chest) {
                 TileEntityRendererDispatcher.instance.renderTileEntityAt(this.enderChest, 0.0D, 0.0D, 0.0D, 0.0F);
-            }
-            else if (block == Blocks.trapped_chest)
-            {
+            } else if (block == Blocks.trapped_chest) {
                 TileEntityRendererDispatcher.instance.renderTileEntityAt(this.chestTrap, 0.0D, 0.0D, 0.0D, 0.0F);
-            }
-            else
-            {
+            } else {
                 TileEntityRendererDispatcher.instance.renderTileEntityAt(this.chestBasic, 0.0D, 0.0D, 0.0D, 0.0F);
             }
         }

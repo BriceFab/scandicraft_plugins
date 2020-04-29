@@ -2,11 +2,7 @@ package net.minecraft.client.renderer.tileentity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -32,21 +28,17 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.MapData;
 import optifine.Config;
 import optifine.Reflector;
-
 import org.lwjgl.opengl.GL11;
 import shadersmod.client.ShadersTex;
 
-public class RenderItemFrame extends Render
-{
+public class RenderItemFrame extends Render {
     private static final ResourceLocation mapBackgroundTextures = new ResourceLocation("textures/map/map_background.png");
     private final Minecraft mc = Minecraft.getMinecraft();
     private final ModelResourceLocation itemFrameModel = new ModelResourceLocation("item_frame", "normal");
     private final ModelResourceLocation mapModel = new ModelResourceLocation("item_frame", "map");
-    private RenderItem itemRenderer;
-    private static final String __OBFID = "CL_00001002";
+    private final RenderItem itemRenderer;
 
-    public RenderItemFrame(RenderManager renderManagerIn, RenderItem itemRendererIn)
-    {
+    public RenderItemFrame(RenderManager renderManagerIn, RenderItem itemRendererIn) {
         super(renderManagerIn);
         this.itemRenderer = itemRendererIn;
     }
@@ -57,13 +49,12 @@ public class RenderItemFrame extends Render
      * (Render<T extends Entity>) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doe
      */
-    public void doRender(EntityItemFrame entity, double x, double y, double z, float entityYaw, float partialTicks)
-    {
+    public void doRender(EntityItemFrame entity, double x, double y, double z) {
         GlStateManager.pushMatrix();
         BlockPos blockpos = entity.getHangingPosition();
-        double d0 = (double)blockpos.getX() - entity.posX + x;
-        double d1 = (double)blockpos.getY() - entity.posY + y;
-        double d2 = (double)blockpos.getZ() - entity.posZ + z;
+        double d0 = (double) blockpos.getX() - entity.posX + x;
+        double d1 = (double) blockpos.getY() - entity.posY + y;
+        double d2 = (double) blockpos.getZ() - entity.posZ + z;
         GlStateManager.translate(d0 + 0.5D, d1 + 0.5D, d2 + 0.5D);
         GlStateManager.rotate(180.0F - entity.rotationYaw, 0.0F, 1.0F, 0.0F);
         this.renderManager.renderEngine.bindTexture(TextureMap.locationBlocksTexture);
@@ -71,12 +62,9 @@ public class RenderItemFrame extends Render
         ModelManager modelmanager = blockrendererdispatcher.getBlockModelShapes().getModelManager();
         IBakedModel ibakedmodel;
 
-        if (entity.getDisplayedItem() != null && entity.getDisplayedItem().getItem() == Items.filled_map)
-        {
+        if (entity.getDisplayedItem() != null && entity.getDisplayedItem().getItem() == Items.filled_map) {
             ibakedmodel = modelmanager.getModel(this.mapModel);
-        }
-        else
-        {
+        } else {
             ibakedmodel = modelmanager.getModel(this.itemFrameModel);
         }
 
@@ -87,23 +75,20 @@ public class RenderItemFrame extends Render
         GlStateManager.translate(0.0F, 0.0F, 0.4375F);
         this.renderItem(entity);
         GlStateManager.popMatrix();
-        this.renderName(entity, x + (double)((float)entity.facingDirection.getFrontOffsetX() * 0.3F), y - 0.25D, z + (double)((float)entity.facingDirection.getFrontOffsetZ() * 0.3F));
+        this.renderName(entity, x + (double) ((float) entity.facingDirection.getFrontOffsetX() * 0.3F), y - 0.25D, z + (double) ((float) entity.facingDirection.getFrontOffsetZ() * 0.3F));
     }
 
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(EntityItemFrame entity)
-    {
+    protected ResourceLocation getEntityTexture() {
         return null;
     }
 
-    private void renderItem(EntityItemFrame itemFrame)
-    {
+    private void renderItem(EntityItemFrame itemFrame) {
         ItemStack itemstack = itemFrame.getDisplayedItem();
 
-        if (itemstack != null)
-        {
+        if (itemstack != null) {
             EntityItem entityitem = new EntityItem(itemFrame.worldObj, 0.0D, 0.0D, 0.0D, itemstack);
             Item item = entityitem.getEntityItem().getItem();
             entityitem.getEntityItem().stackSize = 1;
@@ -112,17 +97,14 @@ public class RenderItemFrame extends Render
             GlStateManager.disableLighting();
             int i = itemFrame.getRotation();
 
-            if (item instanceof ItemMap)
-            {
+            if (item instanceof ItemMap) {
                 i = i % 4 * 2;
             }
 
-            GlStateManager.rotate((float)i * 360.0F / 8.0F, 0.0F, 0.0F, 1.0F);
+            GlStateManager.rotate((float) i * 360.0F / 8.0F, 0.0F, 0.0F, 1.0F);
 
-            if (!Reflector.postForgeBusEvent(Reflector.RenderItemInFrameEvent_Constructor, new Object[] {itemFrame, this}))
-            {
-                if (item instanceof ItemMap)
-                {
+            if (!Reflector.postForgeBusEvent(Reflector.RenderItemInFrameEvent_Constructor, itemFrame, this)) {
+                if (item instanceof ItemMap) {
                     this.renderManager.renderEngine.bindTexture(mapBackgroundTextures);
                     GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
                     float f = 0.0078125F;
@@ -131,49 +113,38 @@ public class RenderItemFrame extends Render
                     MapData mapdata = Items.filled_map.getMapData(entityitem.getEntityItem(), itemFrame.worldObj);
                     GlStateManager.translate(0.0F, 0.0F, -1.0F);
 
-                    if (mapdata != null)
-                    {
+                    if (mapdata != null) {
                         this.mc.entityRenderer.getMapItemRenderer().renderMap(mapdata, true);
                     }
-                }
-                else
-                {
+                } else {
                     TextureAtlasSprite textureatlassprite = null;
 
-                    if (item == Items.compass)
-                    {
+                    if (item == Items.compass) {
                         textureatlassprite = this.mc.getTextureMapBlocks().getAtlasSprite(TextureCompass.field_176608_l);
 
-                        if (Config.isShaders())
-                        {
+                        if (Config.isShaders()) {
                             ShadersTex.bindTextureMapForUpdateAndRender(this.mc.getTextureManager(), TextureMap.locationBlocksTexture);
-                        }
-                        else
-                        {
+                        } else {
                             this.mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
                         }
 
-                        if (textureatlassprite instanceof TextureCompass)
-                        {
-                            TextureCompass texturecompass = (TextureCompass)textureatlassprite;
+                        if (textureatlassprite instanceof TextureCompass) {
+                            TextureCompass texturecompass = (TextureCompass) textureatlassprite;
                             double d0 = texturecompass.currentAngle;
                             double d1 = texturecompass.angleDelta;
                             texturecompass.currentAngle = 0.0D;
                             texturecompass.angleDelta = 0.0D;
-                            texturecompass.updateCompass(itemFrame.worldObj, itemFrame.posX, itemFrame.posZ, (double)MathHelper.wrapAngleTo180_float((float)(180 + itemFrame.facingDirection.getHorizontalIndex() * 90)), false, true);
+                            texturecompass.updateCompass(itemFrame.worldObj, itemFrame.posX, itemFrame.posZ, MathHelper.wrapAngleTo180_float((float) (180 + itemFrame.facingDirection.getHorizontalIndex() * 90)), false, true);
                             texturecompass.currentAngle = d0;
                             texturecompass.angleDelta = d1;
-                        }
-                        else
-                        {
+                        } else {
                             textureatlassprite = null;
                         }
                     }
 
                     GlStateManager.scale(0.5F, 0.5F, 0.5F);
 
-                    if (!this.itemRenderer.shouldRenderItemIn3D(entityitem.getEntityItem()) || item instanceof ItemSkull)
-                    {
+                    if (!this.itemRenderer.shouldRenderItemIn3D(entityitem.getEntityItem()) || item instanceof ItemSkull) {
                         GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
                     }
 
@@ -183,8 +154,7 @@ public class RenderItemFrame extends Render
                     RenderHelper.disableStandardItemLighting();
                     GlStateManager.popAttrib();
 
-                    if (textureatlassprite != null && textureatlassprite.getFrameCount() > 0)
-                    {
+                    if (textureatlassprite != null && textureatlassprite.getFrameCount() > 0) {
                         textureatlassprite.updateAnimation();
                     }
                 }
@@ -194,24 +164,20 @@ public class RenderItemFrame extends Render
         }
     }
 
-    protected void renderName(EntityItemFrame entity, double x, double y, double z)
-    {
-        if (Minecraft.isGuiEnabled() && entity.getDisplayedItem() != null && entity.getDisplayedItem().hasDisplayName() && this.renderManager.pointedEntity == entity)
-        {
+    protected void renderName(EntityItemFrame entity, double x, double y, double z) {
+        if (Minecraft.isGuiEnabled() && entity.getDisplayedItem() != null && entity.getDisplayedItem().hasDisplayName() && this.renderManager.pointedEntity == entity) {
             float f = 1.6F;
             float f1 = 0.016666668F * f;
             double d0 = entity.getDistanceSqToEntity(this.renderManager.livingPlayer);
             float f2 = entity.isSneaking() ? 32.0F : 64.0F;
 
-            if (d0 < (double)(f2 * f2))
-            {
+            if (d0 < (double) (f2 * f2)) {
                 String s = entity.getDisplayedItem().getDisplayName();
 
-                if (entity.isSneaking())
-                {
+                if (entity.isSneaking()) {
                     FontRenderer fontrenderer = this.getFontRendererFromRenderManager();
                     GlStateManager.pushMatrix();
-                    GlStateManager.translate((float)x + 0.0F, (float)y + entity.height + 0.5F, (float)z);
+                    GlStateManager.translate((float) x + 0.0F, (float) y + entity.height + 0.5F, (float) z);
                     GL11.glNormal3f(0.0F, 1.0F, 0.0F);
                     GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
                     GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
@@ -226,10 +192,10 @@ public class RenderItemFrame extends Render
                     int i = fontrenderer.getStringWidth(s) / 2;
                     GlStateManager.disableTexture2D();
                     worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-                    worldrenderer.pos((double)(-i - 1), -1.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-                    worldrenderer.pos((double)(-i - 1), 8.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-                    worldrenderer.pos((double)(i + 1), 8.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-                    worldrenderer.pos((double)(i + 1), -1.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                    worldrenderer.pos(-i - 1, -1.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                    worldrenderer.pos(-i - 1, 8.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                    worldrenderer.pos(i + 1, 8.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                    worldrenderer.pos(i + 1, -1.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
                     tessellator.draw();
                     GlStateManager.enableTexture2D();
                     GlStateManager.depthMask(true);
@@ -238,10 +204,8 @@ public class RenderItemFrame extends Render
                     GlStateManager.disableBlend();
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                     GlStateManager.popMatrix();
-                }
-                else
-                {
-                    this.renderLivingLabel(entity, s, x, y, z, 64);
+                } else {
+                    this.renderLivingLabel(entity, s, x, y, z);
                 }
             }
         }
@@ -250,14 +214,12 @@ public class RenderItemFrame extends Render
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity entity)
-    {
-        return this.getEntityTexture((EntityItemFrame)entity);
+    protected ResourceLocation getEntityTexture(Entity entity) {
+        return this.getEntityTexture();
     }
 
-    protected void renderName(Entity entity, double x, double y, double z)
-    {
-        this.renderName((EntityItemFrame)entity, x, y, z);
+    protected void renderName(Entity entity, double x, double y, double z) {
+        this.renderName((EntityItemFrame) entity, x, y, z);
     }
 
     /**
@@ -266,8 +228,7 @@ public class RenderItemFrame extends Render
      * (Render<T extends Entity>) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doe
      */
-    public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks)
-    {
-        this.doRender((EntityItemFrame)entity, x, y, z, entityYaw, partialTicks);
+    public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks) {
+        this.doRender((EntityItemFrame) entity, x, y, z);
     }
 }

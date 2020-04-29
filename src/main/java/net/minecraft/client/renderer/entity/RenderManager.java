@@ -407,7 +407,7 @@ public class RenderManager
                 {
                     if (!this.renderOutlines)
                     {
-                        render.doRenderShadowAndFire(entity, x, y, z, entityYaw, partialTicks);
+                        render.doRenderShadowAndFire(entity, x, y, z, partialTicks);
                     }
                 }
                 catch (Throwable throwable1)

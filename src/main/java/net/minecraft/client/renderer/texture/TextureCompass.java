@@ -7,74 +7,61 @@ import net.minecraft.world.World;
 import optifine.Config;
 import shadersmod.client.ShadersTex;
 
-public class TextureCompass extends TextureAtlasSprite
-{
-    /** Current compass heading in radians */
+public class TextureCompass extends TextureAtlasSprite {
+    /**
+     * Current compass heading in radians
+     */
     public double currentAngle;
 
-    /** Speed and direction of compass rotation */
+    /**
+     * Speed and direction of compass rotation
+     */
     public double angleDelta;
     public static String field_176608_l;
-    private static final String __OBFID = "CL_00001071";
 
-    public TextureCompass(String iconName)
-    {
+    public TextureCompass(String iconName) {
         super(iconName);
         field_176608_l = iconName;
     }
 
-    public void updateAnimation()
-    {
+    public void updateAnimation() {
         Minecraft minecraft = Minecraft.getMinecraft();
 
-        if (minecraft.theWorld != null && minecraft.thePlayer != null)
-        {
-            this.updateCompass(minecraft.theWorld, minecraft.thePlayer.posX, minecraft.thePlayer.posZ, (double)minecraft.thePlayer.rotationYaw, false, false);
-        }
-        else
-        {
-            this.updateCompass((World)null, 0.0D, 0.0D, 0.0D, true, false);
+        if (minecraft.theWorld != null && minecraft.thePlayer != null) {
+            this.updateCompass(minecraft.theWorld, minecraft.thePlayer.posX, minecraft.thePlayer.posZ, (double) minecraft.thePlayer.rotationYaw, false, false);
+        } else {
+            this.updateCompass((World) null, 0.0D, 0.0D, 0.0D, true, false);
         }
     }
 
     /**
      * Updates the compass based on the given x,z coords and camera direction
      */
-    public void updateCompass(World worldIn, double p_94241_2_, double p_94241_4_, double p_94241_6_, boolean p_94241_8_, boolean p_94241_9_)
-    {
-        if (!this.framesTextureData.isEmpty())
-        {
+    public void updateCompass(World worldIn, double p_94241_2_, double p_94241_4_, double p_94241_6_, boolean p_94241_8_, boolean p_94241_9_) {
+        if (!this.framesTextureData.isEmpty()) {
             double d0 = 0.0D;
 
-            if (worldIn != null && !p_94241_8_)
-            {
+            if (worldIn != null && !p_94241_8_) {
                 BlockPos blockpos = worldIn.getSpawnPoint();
-                double d1 = (double)blockpos.getX() - p_94241_2_;
-                double d2 = (double)blockpos.getZ() - p_94241_4_;
+                double d1 = (double) blockpos.getX() - p_94241_2_;
+                double d2 = (double) blockpos.getZ() - p_94241_4_;
                 p_94241_6_ = p_94241_6_ % 360.0D;
                 d0 = -((p_94241_6_ - 90.0D) * Math.PI / 180.0D - Math.atan2(d2, d1));
 
-                if (!worldIn.provider.isSurfaceWorld())
-                {
+                if (!worldIn.provider.isSurfaceWorld()) {
                     d0 = Math.random() * Math.PI * 2.0D;
                 }
             }
 
-            if (p_94241_9_)
-            {
+            if (p_94241_9_) {
                 this.currentAngle = d0;
-            }
-            else
-            {
+            } else {
                 double d3;
 
-                for (d3 = d0 - this.currentAngle; d3 < -Math.PI; d3 += (Math.PI * 2D))
-                {
-                    ;
+                for (d3 = d0 - this.currentAngle; d3 < -Math.PI; d3 += (Math.PI * 2D)) {
                 }
 
-                while (d3 >= Math.PI)
-                {
+                while (d3 >= Math.PI) {
                     d3 -= (Math.PI * 2D);
                 }
 
@@ -86,22 +73,16 @@ public class TextureCompass extends TextureAtlasSprite
 
             int i;
 
-            for (i = (int)((this.currentAngle / (Math.PI * 2D) + 1.0D) * (double)this.framesTextureData.size()) % this.framesTextureData.size(); i < 0; i = (i + this.framesTextureData.size()) % this.framesTextureData.size())
-            {
-                ;
+            for (i = (int) ((this.currentAngle / (Math.PI * 2D) + 1.0D) * (double) this.framesTextureData.size()) % this.framesTextureData.size(); i < 0; i = (i + this.framesTextureData.size()) % this.framesTextureData.size()) {
             }
 
-            if (i != this.frameCounter)
-            {
+            if (i != this.frameCounter) {
                 this.frameCounter = i;
 
-                if (Config.isShaders())
-                {
-                    ShadersTex.uploadTexSub((int[][])((int[][])this.framesTextureData.get(this.frameCounter)), this.width, this.height, this.originX, this.originY, false, false);
-                }
-                else
-                {
-                    TextureUtil.uploadTextureMipmap((int[][])((int[][])this.framesTextureData.get(this.frameCounter)), this.width, this.height, this.originX, this.originY, false, false);
+                if (Config.isShaders()) {
+                    ShadersTex.uploadTexSub((int[][]) this.framesTextureData.get(this.frameCounter), this.width, this.height, this.originX, this.originY, false, false);
+                } else {
+                    TextureUtil.uploadTextureMipmap((int[][]) this.framesTextureData.get(this.frameCounter), this.width, this.height, this.originX, this.originY, false, false);
                 }
             }
         }

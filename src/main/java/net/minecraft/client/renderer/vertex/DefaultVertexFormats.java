@@ -4,8 +4,7 @@ import optifine.Config;
 import optifine.Reflector;
 import shadersmod.client.SVertexFormat;
 
-public class DefaultVertexFormats
-{
+public class DefaultVertexFormats {
     public static VertexFormat BLOCK = new VertexFormat();
     public static VertexFormat ITEM = new VertexFormat();
     private static final VertexFormat BLOCK_VANILLA = BLOCK;
@@ -26,36 +25,28 @@ public class DefaultVertexFormats
     public static final VertexFormatElement TEX_2S = new VertexFormatElement(1, VertexFormatElement.EnumType.SHORT, VertexFormatElement.EnumUsage.UV, 2);
     public static final VertexFormatElement NORMAL_3B = new VertexFormatElement(0, VertexFormatElement.EnumType.BYTE, VertexFormatElement.EnumUsage.NORMAL, 3);
     public static final VertexFormatElement PADDING_1B = new VertexFormatElement(0, VertexFormatElement.EnumType.BYTE, VertexFormatElement.EnumUsage.PADDING, 1);
-    private static final String __OBFID = "CL_00002403";
 
-    public static void updateVertexFormats()
-    {
-        if (Config.isShaders())
-        {
+    public static void updateVertexFormats() {
+        if (Config.isShaders()) {
             BLOCK = SVertexFormat.makeDefVertexFormatBlock();
             ITEM = SVertexFormat.makeDefVertexFormatItem();
-        }
-        else
-        {
+        } else {
             BLOCK = BLOCK_VANILLA;
             ITEM = ITEM_VANILLA;
         }
 
-        if (Reflector.Attributes_DEFAULT_BAKED_FORMAT.exists())
-        {
+        if (Reflector.Attributes_DEFAULT_BAKED_FORMAT.exists()) {
             VertexFormat vertexformat = ITEM;
-            VertexFormat vertexformat1 = (VertexFormat)Reflector.getFieldValue(Reflector.Attributes_DEFAULT_BAKED_FORMAT);
+            VertexFormat vertexformat1 = (VertexFormat) Reflector.getFieldValue(Reflector.Attributes_DEFAULT_BAKED_FORMAT);
             vertexformat1.clear();
 
-            for (int i = 0; i < vertexformat.getElementCount(); ++i)
-            {
+            for (int i = 0; i < vertexformat.getElementCount(); ++i) {
                 vertexformat1.func_181721_a(vertexformat.getElement(i));
             }
         }
     }
 
-    static
-    {
+    static {
         BLOCK.func_181721_a(POSITION_3F);
         BLOCK.func_181721_a(COLOR_4UB);
         BLOCK.func_181721_a(TEX_2F);

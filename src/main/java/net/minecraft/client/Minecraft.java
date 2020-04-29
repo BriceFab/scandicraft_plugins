@@ -983,7 +983,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.framebufferMc.framebufferRender(this.displayWidth, this.displayHeight);
         GlStateManager.popMatrix();
         GlStateManager.pushMatrix();
-        this.entityRenderer.renderStreamIndicator(this.timer.renderPartialTicks);
+        this.entityRenderer.renderStreamIndicator();
         GlStateManager.popMatrix();
         this.mcProfiler.startSection("root");
         this.updateDisplay();
