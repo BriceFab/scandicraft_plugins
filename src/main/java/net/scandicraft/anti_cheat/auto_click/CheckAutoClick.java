@@ -29,8 +29,8 @@ public class CheckAutoClick {
         boolean attackByMouse = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode() < 0; //souris = plus petit que 0
         addKeyDownHistory(!attackByMouse || Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown());
 
-        Config.print_debug("act CPS: " + actCPS + " count: " + countHistoryZero() + " size:" + clicks_history.size());
-        Config.print_debug("LMB " + Minecraft.getMinecraft().gameSettings.keyBindAttack.isPressed() + " count: " + countHistoryDown() + " size:" + keyDown_history.size() + " attackByMouse: " + attackByMouse);
+        // Config.print_debug("act CPS: " + actCPS + " count: " + countHistoryZero() + " size:" + clicks_history.size());
+        // Config.print_debug("LMB " + Minecraft.getMinecraft().gameSettings.keyBindAttack.isPressed() + " count: " + countHistoryDown() + " size:" + keyDown_history.size() + " attackByMouse: " + attackByMouse);
 
         if (countHistoryZero() >= MAX_HISTORY / 2) {
             CheatScreen.onCheatDetect(CheatType.AUTOCLICK);
