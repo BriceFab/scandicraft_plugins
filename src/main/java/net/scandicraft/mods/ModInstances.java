@@ -1,10 +1,7 @@
 package net.scandicraft.mods;
 
 import net.scandicraft.gui.hud.HUDManager;
-import net.scandicraft.mods.impl.ModArmorStatus;
-import net.scandicraft.mods.impl.ModCPS;
-import net.scandicraft.mods.impl.ModFPS;
-import net.scandicraft.mods.impl.ModPing;
+import net.scandicraft.mods.impl.*;
 import net.scandicraft.mods.impl.togglesprintsneak.ModToggleSprintSneak;
 
 public class ModInstances {
@@ -23,6 +20,9 @@ public class ModInstances {
 
         ModPing modPing = new ModPing();
         api.register(modPing);
+
+        ModKeystrokes modKeystrokes = new ModKeystrokes();
+        api.register(modKeystrokes);
 
         modToggleSprintSneak = new ModToggleSprintSneak();
         api.register(modToggleSprintSneak);
