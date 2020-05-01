@@ -17,10 +17,11 @@ public class Config {
     /* Anti-Cheat */
     //CPS
     public static int MAX_CPS = 20;
-    public static int MAX_SUSPECT_AVERAGE = 8;
+    public static int MAX_SUSPECT_AVERAGE = 10;
     public static final int MAX_HISTORY = 14;
-    public static final double MIN_DIFF_TIME = 30;            //différence minimale entre 2 clicks = 0.03 secondes
-    public static final double MIN_DIFF_TIME_AVERAGE = 50;    //différence minimale de la sommes des temps = 0.05 seconds en moyenne
+    public static final double MIN_DIFF_TIME = 10;            //si plus de 3 clicks dans la moyenne est plus petit que 10
+    public static final int MAX_SUM_SUSPECT = 3;              //si plus de x clicks dans la moyenne max
+    public static final double MIN_DIFF_TIME_AVERAGE = 30;    //différence minimale de la moyenne des temps = 0.03 seconds en moyenne
 
     /* Fonctions */
     public static void print_debug(String message) {

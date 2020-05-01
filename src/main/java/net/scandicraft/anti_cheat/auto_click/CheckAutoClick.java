@@ -59,7 +59,7 @@ public class CheckAutoClick {
 
             if (max == 0 || result_average >= Config.MAX_SUSPECT_AVERAGE) {
                 Config.print_debug("reason: suspectClicks");
-                CheatScreen.onCheatDetect(CheatType.AUTOCLICK);
+                // CheatScreen.onCheatDetect(CheatType.AUTOCLICK);
             }
         }
         if (countHistoryDown() >= Config.MAX_HISTORY / 2) { //et que le click provient de la souris
@@ -144,6 +144,7 @@ public class CheckAutoClick {
             //converti en tableau de différence entre chaque temps
             ArrayList<Long> diffs = new ArrayList<>();
 
+            int countTimeUnderMin = 0;
             for (int i = 1; i < time_history.size(); i++) {
                 long last = time_history.get(i - 1);
                 long current = time_history.get(i);
@@ -154,18 +155,24 @@ public class CheckAutoClick {
 
                 if (diff <= Config.MIN_DIFF_TIME) {
                     Config.print_debug("diff under " + Config.MIN_DIFF_TIME + " ms");
-                    return true;
+                    countTimeUnderMin++;
                 }
 
                 diffs.add(diff);
             }
 
+            if (countTimeUnderMin >= Config.MAX_SUM_SUSPECT) {
+                Config.print_debug("max 3 moyenne under " + Config.MIN_DIFF_TIME + " ms");
+                return true;
+            }
+
             OptionalDouble average = diffs.stream().mapToLong(a -> a).average();
             double result_average = average.isPresent() ? average.getAsDouble() : 0;
-            Config.print_debug("somme " + result_average);
+
+            Config.print_debug("moyenne " + result_average);
 
             if (result_average <= Config.MIN_DIFF_TIME_AVERAGE) {
-                Config.print_debug("somme under " + Config.MIN_DIFF_TIME_AVERAGE + " ms");
+                Config.print_debug("moyenne under " + Config.MIN_DIFF_TIME_AVERAGE + " ms");
                 return true;
             }
 
