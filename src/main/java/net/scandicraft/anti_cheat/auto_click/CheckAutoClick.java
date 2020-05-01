@@ -130,11 +130,14 @@ public class CheckAutoClick {
     /**
      * Ajoute à l'historique du temps entre chaque clicks +
      * Quand arrive au max vérifie les différences de temps entre les clicks
+     *
      * @param time temps
      * @return boolean (true = cheat | false = no cheat)
      */
     private static boolean addTimeHistory(long time) {
-        time_history.add(time);
+        if (Minecraft.getDebugFPS() >= 20) { //Sinon enregistre ms trop bas
+            time_history.add(time);
+        }
         if (time_history.size() >= Config.MAX_HISTORY) {
 
             //Après MAX_HISTORY, on analyse les times historique
@@ -145,12 +148,11 @@ public class CheckAutoClick {
                 long last = time_history.get(i - 1);
                 long current = time_history.get(i);
 
-                long diff = Math.abs(current - last);
+                long diff = current - last;
 
                 Config.print_debug(String.format("TIME last: %d current: %d diff: %d", last, current, diff));
 
-                if (diff <= Config.MIN_DIFF_TIME)
-                {
+                if (diff <= Config.MIN_DIFF_TIME) {
                     Config.print_debug("diff under " + Config.MIN_DIFF_TIME + " ms");
                     return true;
                 }
@@ -166,7 +168,6 @@ public class CheckAutoClick {
                 Config.print_debug("somme under " + Config.MIN_DIFF_TIME_AVERAGE + " ms");
                 return true;
             }
-
 
             time_history.clear();
         }
