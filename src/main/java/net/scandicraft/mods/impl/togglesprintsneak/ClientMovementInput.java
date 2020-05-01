@@ -118,7 +118,7 @@ public class ClientMovementInput extends MovementInput {
         boolean isFlying = mc.thePlayer.capabilities.isFlying;
         boolean isRiding = mc.thePlayer.isRiding();
         boolean isHoldingSneak = gameSettings.keyBindSneak.isKeyDown();
-        boolean isHoldingSrpint = gameSettings.keyBindSprint.isKeyDown();
+        boolean isHoldingSprint = gameSettings.keyBindSprint.isKeyDown();
 
         if (!isFlying && !isRiding) {
             if (sneak) {
@@ -128,7 +128,7 @@ public class ClientMovementInput extends MovementInput {
                     displayText = "[Sneaking (Key Toggled)]";
                 }
             } else if (sprint) {
-                if (isHoldingSrpint) {
+                if (isHoldingSprint) {
                     displayText = "[Sprinting (Key Held)]";
                 } else {
                     displayText = "[Sprinting (Key Toggled)]";
