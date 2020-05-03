@@ -3,6 +3,7 @@ package net.scandicraft.gui.hud;
 import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
+import net.scandicraft.Config;
 import net.scandicraft.event.EventManager;
 import net.scandicraft.event.EventTarget;
 import net.scandicraft.event.impl.RenderEvent;
@@ -33,7 +34,13 @@ public class HUDManager {
     private final Set<IRenderer> registeredRenderers = Sets.newHashSet();
     private final Minecraft mc = Minecraft.getMinecraft();
 
-    public void register(IRenderer... renderers) {
+    public void register(IRenderer renderer) {
+        Config.print_debug("register renderer " + renderer.getClass());
+        this.registeredRenderers.add(renderer);
+        Config.print_debug("renderers array size " + this.registeredRenderers.size());
+    }
+
+    public void registerAll(IRenderer... renderers) {
         this.registeredRenderers.addAll(Arrays.asList(renderers));
     }
 
@@ -44,7 +51,9 @@ public class HUDManager {
     }
 
     public Collection<IRenderer> getRegisteredRenderers() {
-        return Sets.newHashSet(registeredRenderers);
+        Config.print_debug("getRegisteredRenderers renderers array size " + this.registeredRenderers.size());
+        // return Sets.newHashSet(registeredRenderers);
+        return registeredRenderers;
     }
 
     public void openConfigScreen() {

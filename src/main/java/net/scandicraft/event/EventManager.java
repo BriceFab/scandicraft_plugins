@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class EventManager {
 
-    private static final Map<Class<? extends Event>, ArrayList<EventData>> REGISTRY_MAP = new HashMap<Class<? extends Event>, ArrayList<EventData>>();
+    private static final Map<Class<? extends Event>, ArrayList<EventData>> REGISTRY_MAP = new HashMap<>();
 
     private static void sortListValue(final Class<? extends Event> clazz) {
 
-        final ArrayList<EventData> flexableArray = new ArrayList<EventData>();
+        final ArrayList<EventData> flexableArray = new ArrayList<>();
 
         for (final byte b : EventPriority.VALUE_ARRAY) {
             for (EventData methodData : EventManager.REGISTRY_MAP.get(clazz)) {
