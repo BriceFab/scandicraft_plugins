@@ -2,9 +2,6 @@ package net.scandicraft.gui;
 
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.demo.DemoWorldServer;
@@ -12,7 +9,6 @@ import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.WorldInfo;
 import net.scandicraft.Config;
 import net.scandicraft.client.ScandiCraftClient;
-import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 
@@ -38,22 +34,14 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
      * window resizes, the buttonList is cleared beforehand.
      */
     public void initGui() {
-        int j = this.height / 4 + 48;
+        int yIn = this.height / 4 + 48;
 
-        this.addSingleplayerMultiplayerButtons(j);
-
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 72 + 12, 98, 20, I18n.format("menu.quit", new Object[0])));
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, yIn, I18n.format("menu.singleplayer")));
+        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, yIn + 24, I18n.format("menu.multiplayer")));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, yIn + 72 + 12, 98, 20, I18n.format("menu.options")));
+        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, yIn + 72 + 12, 98, 20, I18n.format("menu.quit")));
 
         ScandiCraftClient.getInstance().getDiscordRP().update("Menu principal");
-    }
-
-    /**
-     * Adds Singleplayer and Multiplayer buttons on Main Menu for players who have bought the game.
-     */
-    private void addSingleplayerMultiplayerButtons(int yIn) {
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, yIn, I18n.format("menu.singleplayer", new Object[0])));
-        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, yIn + 24, I18n.format("menu.multiplayer", new Object[0])));
     }
 
     /**
@@ -119,22 +107,12 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
     }
 
     private void renderBackGround() {
-        this.mc.getTextureManager().bindTexture(backgroundPath);
+        final ScaledResolution scaledResolution = new ScaledResolution(mc);
+        final int width = scaledResolution.getScaledWidth();
+        final int height = scaledResolution.getScaledHeight();
 
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
-        worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
-
-        int w = this.width;
-        int h = this.height;
-
-        worldRenderer.pos(0, 0, this.zLevel).tex(0, 0).endVertex(); //point haut gauche (x,y,z)
-        worldRenderer.pos(0, h, this.zLevel).tex(0, 1).endVertex(); //point bas gauche  (x,y,z)
-        worldRenderer.pos(w, h, this.zLevel).tex(1, 1).endVertex(); //point haut doite  (x,y,z)
-        worldRenderer.pos(w, 0, this.zLevel).tex(1, 0).endVertex(); //point bas droite  (x,y,z)
-
-        tessellator.draw();
+        mc.getTextureManager().bindTexture(backgroundPath);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, width, height, width, height, width, height);
     }
 }
