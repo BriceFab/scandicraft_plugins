@@ -15,7 +15,7 @@ public class ModCPS extends ModDraggable {
         return ScreenPosition.fromRelativePosition(0.00625, 0.011764705882352941);
     }
 
-    private List<Long> clicks = new ArrayList<>();
+    private final List<Long> clicks = new ArrayList<>();
     private boolean wasPressed;
 
     @Override
@@ -55,7 +55,7 @@ public class ModCPS extends ModDraggable {
 
     public int getCPS() {
         final long time = System.currentTimeMillis();
-        this.clicks.removeIf(aLong -> aLong + 1000 < time);
+        this.clicks.removeIf(aLong -> (aLong + 1000L < time));
         return this.clicks.size();
     }
 

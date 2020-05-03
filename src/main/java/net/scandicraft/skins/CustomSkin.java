@@ -9,10 +9,10 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public class CustomSkin {
-    private static HashMap<String, CustomSkin> map = new HashMap<>();
+    private static final HashMap<String, CustomSkin> map = new HashMap<>();
     private static final ResourceLocation steve = new ResourceLocation("textures/entity/steve.png");
 
-    private String pseudo;
+    private final String pseudo;
     private ResourceLocation rl;
     private BufferedImage buffer;
 

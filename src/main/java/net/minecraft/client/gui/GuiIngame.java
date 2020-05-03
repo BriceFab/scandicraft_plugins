@@ -92,7 +92,6 @@ public class GuiIngame extends Gui
 
     /** Used with updateCounter to make the heart bar flash */
     private long healthUpdateCounter = 0L;
-    private static final String __OBFID = "CL_00000661";
 
     public GuiIngame(Minecraft mcIn)
     {

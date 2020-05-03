@@ -3,6 +3,7 @@ package net.scandicraft.gui.hud;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.scandicraft.Config;
 import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
@@ -20,9 +21,10 @@ public class HUDConfigScreen extends GuiScreen {
     private int prevX, prevY;
 
     public HUDConfigScreen(HUDManager api) {
-
         Collection<IRenderer> registeredRenderers = api.getRegisteredRenderers();
         for (IRenderer renderer : registeredRenderers) {
+            Config.print_debug("HUD Config open " + renderer.getClass());
+
             if (!renderer.isEnabled()) {
                 return;
             }
@@ -134,7 +136,7 @@ public class HUDConfigScreen extends GuiScreen {
 
     private class MouseOverFinder implements Predicate<IRenderer> {
 
-        private int mouseX, mouseY;
+        private final int mouseX, mouseY;
 
         public MouseOverFinder(int x, int y) {
             this.mouseX = x;

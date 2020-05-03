@@ -13,7 +13,7 @@ import net.scandicraft.settings.FileManager;
 public class ScandiCraftClient {
 
     private static final ScandiCraftClient INSTANCE = new ScandiCraftClient();
-    private DiscordRP discordRP = new DiscordRP();
+    private final DiscordRP discordRP = new DiscordRP();
 
     private HUDManager hudManager;
 

@@ -10,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Writer;
@@ -27,12 +26,12 @@ public class ScandiCraftSettings {
 
     protected Minecraft mc;
     public String language;
-    private String optionsFileName = "sc_options.json";
+    private final String optionsFileName = "sc_options.json";
 
     public KeyBinding OPEN_HUD_MANAGER = new KeyBinding("ScandiCraft Mod Positioning", Keyboard.KEY_O, "scandicraft.options.categorie.keyboards", KeyBindingType.SCANDICRAFT);
     public KeyBinding keyBindTest2 = new KeyBinding("test2", 0, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
 
-    public ScandiCraftSettings(Minecraft mcIn, File file) {
+    public ScandiCraftSettings(Minecraft mcIn) {
         this.language = "en_US";
         this.mc = mcIn;
         this.keyBindings = ArrayUtils.addAll(new KeyBinding[]{this.OPEN_HUD_MANAGER, this.keyBindTest2});
@@ -106,7 +105,7 @@ public class ScandiCraftSettings {
      * Represents a key or mouse button as a string. Args: key
      */
     public static String getKeyDisplayString(int p_74298_0_) {
-        return p_74298_0_ < 0 ? I18n.format("key.mouseButton", new Object[]{Integer.valueOf(p_74298_0_ + 101)}) : (p_74298_0_ < 256 ? Keyboard.getKeyName(p_74298_0_) : String.format("%c", new Object[]{Character.valueOf((char) (p_74298_0_ - 256))}).toUpperCase());
+        return p_74298_0_ < 0 ? I18n.format("key.mouseButton", p_74298_0_ + 101) : (p_74298_0_ < 256 ? Keyboard.getKeyName(p_74298_0_) : String.format("%c", (char) (p_74298_0_ - 256)).toUpperCase());
     }
 
     /**
@@ -124,7 +123,8 @@ public class ScandiCraftSettings {
     }
 
     public enum Options {
-        ITEMS_PHYSICS("scandicraft.options.items_physics", true);
+        ITEMS_PHYSICS("scandicraft.options.items_physics", true),
+        INVENTORY_POTIONS("scandicraft.options.inventory.potions", false);
 
         private final String key;
         private Object value;

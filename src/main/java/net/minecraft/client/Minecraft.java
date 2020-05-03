@@ -418,7 +418,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         ScandiCraftClient.getInstance().init();
 
         this.gameSettings = new GameSettings(this, this.mcDataDir);
-        this.scandiCraftSettings = new ScandiCraftSettings(this, this.mcDataDir);
+        this.scandiCraftSettings = new ScandiCraftSettings(this);
         this.defaultResourcePacks.add(this.mcDefaultResourcePack);
         //ScandiCraft remove this line this.startTimerHackThread();
 

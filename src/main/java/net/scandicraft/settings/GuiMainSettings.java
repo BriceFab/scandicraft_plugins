@@ -12,12 +12,15 @@ import optifine.TooltipManager;
 import java.io.IOException;
 
 public class GuiMainSettings extends GuiScreen {
-    private GuiScreen parentGuiScreen;
+    private final GuiScreen parentGuiScreen;
     protected String screenTitle = "ScandiCraft Settings";
-    private ScandiCraftSettings scandicraftSettings;
-    private static ScandiCraftSettings.Options[] options = new ScandiCraftSettings.Options[]{ScandiCraftSettings.Options.ITEMS_PHYSICS};
+    private final ScandiCraftSettings scandicraftSettings;
+    private static final ScandiCraftSettings.Options[] options = new ScandiCraftSettings.Options[]{
+            ScandiCraftSettings.Options.ITEMS_PHYSICS,
+            ScandiCraftSettings.Options.INVENTORY_POTIONS,
+    };
 
-    private TooltipManager tooltipManager = new TooltipManager(this);
+    private final TooltipManager tooltipManager = new TooltipManager(this);
 
     public GuiMainSettings(GuiScreen parentScreenIn, ScandiCraftSettings scandicraftSettings) {
         this.parentGuiScreen = parentScreenIn;

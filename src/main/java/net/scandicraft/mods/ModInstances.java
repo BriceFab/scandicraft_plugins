@@ -10,6 +10,7 @@ public class ModInstances {
     private static ModPing modPing;
     private static ModCPS modCPS;
     private static ModKeystrokes modKeystrokes;
+    private static ModPotionStatus modPotionStatus;
 
     public static void register(HUDManager api) {
         ModArmorStatus modArmorStatus = new ModArmorStatus();
@@ -30,6 +31,9 @@ public class ModInstances {
 
         modToggleSprintSneak = new ModToggleSprintSneak();
         api.register(modToggleSprintSneak);
+
+        modPotionStatus = new ModPotionStatus();
+        api.register(modPotionStatus);
     }
 
     public static ModToggleSprintSneak getModToggleSprintSneak() {

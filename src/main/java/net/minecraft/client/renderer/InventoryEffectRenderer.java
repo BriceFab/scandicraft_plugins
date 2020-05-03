@@ -5,6 +5,9 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.scandicraft.Config;
+import net.scandicraft.client.ScandiCraftClient;
+import net.scandicraft.settings.ScandiCraftSettings;
 
 import java.util.Collection;
 
@@ -28,12 +31,14 @@ public abstract class InventoryEffectRenderer extends GuiContainer {
     }
 
     protected void updateActivePotionEffects() {
-        if (!this.mc.thePlayer.getActivePotionEffects().isEmpty()) {
-            this.guiLeft = 160 + (this.width - this.xSize - 200) / 2;
-            this.hasActivePotionEffects = true;
-        } else {
-            this.guiLeft = (this.width - this.xSize) / 2;
-            this.hasActivePotionEffects = false;
+        if ((Boolean) ScandiCraftSettings.Options.INVENTORY_POTIONS.getValue()) {
+            if (!this.mc.thePlayer.getActivePotionEffects().isEmpty()) {
+                this.guiLeft = 160 + (this.width - this.xSize - 200) / 2;
+                this.hasActivePotionEffects = true;
+            } else {
+                this.guiLeft = (this.width - this.xSize) / 2;
+                this.hasActivePotionEffects = false;
+            }
         }
     }
 
@@ -43,8 +48,10 @@ public abstract class InventoryEffectRenderer extends GuiContainer {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        if (this.hasActivePotionEffects) {
-            this.drawActivePotionEffects();
+        if ((Boolean) ScandiCraftSettings.Options.INVENTORY_POTIONS.getValue()) {
+            if (this.hasActivePotionEffects) {
+                this.drawActivePotionEffects();
+            }
         }
     }
 
