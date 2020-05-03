@@ -153,7 +153,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private CrashReport crashReporter;
     public int displayWidth;
     public int displayHeight;
-    private final Timer timer = new Timer(20.0F);
+    public final Timer timer = new Timer(20.0F);
 
     /**
      * Instance of PlayerUsageSnooper.

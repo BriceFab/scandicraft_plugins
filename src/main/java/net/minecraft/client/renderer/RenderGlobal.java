@@ -2761,4 +2761,33 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             this(p_i5_1_, p_i5_2_, p_i5_3_);
         }
     }
+
+    public static void drawSelectionBoundingBox(AxisAlignedBB p_drawSelectionBoundingBox_0_) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        worldrenderer.begin(3, DefaultVertexFormats.POSITION);
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.minX, p_drawSelectionBoundingBox_0_.minY, p_drawSelectionBoundingBox_0_.minZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.maxX, p_drawSelectionBoundingBox_0_.minY, p_drawSelectionBoundingBox_0_.minZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.maxX, p_drawSelectionBoundingBox_0_.minY, p_drawSelectionBoundingBox_0_.maxZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.minX, p_drawSelectionBoundingBox_0_.minY, p_drawSelectionBoundingBox_0_.maxZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.minX, p_drawSelectionBoundingBox_0_.minY, p_drawSelectionBoundingBox_0_.minZ).endVertex();
+        tessellator.draw();
+        worldrenderer.begin(3, DefaultVertexFormats.POSITION);
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.minX, p_drawSelectionBoundingBox_0_.maxY, p_drawSelectionBoundingBox_0_.minZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.maxX, p_drawSelectionBoundingBox_0_.maxY, p_drawSelectionBoundingBox_0_.minZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.maxX, p_drawSelectionBoundingBox_0_.maxY, p_drawSelectionBoundingBox_0_.maxZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.minX, p_drawSelectionBoundingBox_0_.maxY, p_drawSelectionBoundingBox_0_.maxZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.minX, p_drawSelectionBoundingBox_0_.maxY, p_drawSelectionBoundingBox_0_.minZ).endVertex();
+        tessellator.draw();
+        worldrenderer.begin(1, DefaultVertexFormats.POSITION);
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.minX, p_drawSelectionBoundingBox_0_.minY, p_drawSelectionBoundingBox_0_.minZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.minX, p_drawSelectionBoundingBox_0_.maxY, p_drawSelectionBoundingBox_0_.minZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.maxX, p_drawSelectionBoundingBox_0_.minY, p_drawSelectionBoundingBox_0_.minZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.maxX, p_drawSelectionBoundingBox_0_.maxY, p_drawSelectionBoundingBox_0_.minZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.maxX, p_drawSelectionBoundingBox_0_.minY, p_drawSelectionBoundingBox_0_.maxZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.maxX, p_drawSelectionBoundingBox_0_.maxY, p_drawSelectionBoundingBox_0_.maxZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.minX, p_drawSelectionBoundingBox_0_.minY, p_drawSelectionBoundingBox_0_.maxZ).endVertex();
+        worldrenderer.pos(p_drawSelectionBoundingBox_0_.minX, p_drawSelectionBoundingBox_0_.maxY, p_drawSelectionBoundingBox_0_.maxZ).endVertex();
+        tessellator.draw();
+    }
 }
