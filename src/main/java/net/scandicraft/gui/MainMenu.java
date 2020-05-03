@@ -1,5 +1,6 @@
-package net.minecraft.client.gui;
+package net.scandicraft.gui;
 
+import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -21,7 +22,7 @@ import org.lwjgl.opengl.GLContext;
 import java.io.IOException;
 import java.net.URI;
 
-public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
+public class MainMenu extends GuiScreen implements GuiYesNoCallback {
     private static final Logger logger = LogManager.getLogger();
 
     /**
@@ -52,7 +53,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     private int field_92020_v;
     private int field_92019_w;
 
-    public GuiMainMenu() {
+    public MainMenu() {
         this.openGLWarning2 = field_96138_a;
 
         this.openGLWarning1 = "";
