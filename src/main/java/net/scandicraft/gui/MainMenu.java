@@ -13,7 +13,6 @@ import net.minecraft.world.storage.WorldInfo;
 import net.scandicraft.Config;
 import net.scandicraft.client.ScandiCraftClient;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.Project;
 
 import java.io.IOException;
 
