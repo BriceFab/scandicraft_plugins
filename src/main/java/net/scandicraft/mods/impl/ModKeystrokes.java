@@ -122,8 +122,8 @@ public class ModKeystrokes extends ModDraggable {
 
         GL11.glPushMatrix();
 
-        boolean blend = GL11.glIsEnabled(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_BLEND);
+        // boolean blend = GL11.glIsEnabled(GL11.GL_BLEND);
+        // GL11.glDisable(GL11.GL_BLEND);
 
         for (Key key : mode.getKeys()) {
 
@@ -146,9 +146,9 @@ public class ModKeystrokes extends ModDraggable {
 
         }
 
-        if (blend) {
-            GL11.glEnable(GL11.GL_BLEND);
-        }
+        //if (blend) {
+            // GL11.glEnable(GL11.GL_BLEND);
+        // }
 
         GL11.glPopMatrix();
 
