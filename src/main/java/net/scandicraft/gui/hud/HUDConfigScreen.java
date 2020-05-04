@@ -22,21 +22,17 @@ public class HUDConfigScreen extends GuiScreen {
 
     public HUDConfigScreen(HUDManager api) {
         Collection<IRenderer> registeredRenderers = api.getRegisteredRenderers();
-        Config.print_debug("HUDConfigScreen size " + registeredRenderers.size());
+
         for (IRenderer renderer : registeredRenderers) {
-            Config.print_debug("HUD Config open " + renderer.getClass());
+            if (renderer.isEnabled()) {
+                ScreenPosition pos = renderer.load();
+                if (pos == null) {
+                    pos = ScreenPosition.fromRelativePosition(0.5, 0.5);
+                }
 
-            if (!renderer.isEnabled()) {
-                return;
+                adjustBounds(renderer, pos);
+                this.renderers.put(renderer, pos);
             }
-
-            ScreenPosition pos = renderer.load();
-            if (pos == null) {
-                pos = ScreenPosition.fromRelativePosition(0.5, 0.5);
-            }
-
-            adjustBounds(renderer, pos);
-            this.renderers.put(renderer, pos);
         }
 
         org.lwjgl.opengl.Display.setVSyncEnabled(true); //fix FPS error
