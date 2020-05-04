@@ -122,8 +122,8 @@ public class CheckAutoClick {
             Config.print_debug("not suspect");
         }
 
-        if (keyDown_history.size() >= Config.MAX_HISTORY) {
-            keyDown_history.clear();
+        if (suspectClick_history.size() >= Config.MAX_HISTORY) {
+            suspectClick_history.clear();
         }
     }
 
@@ -153,7 +153,7 @@ public class CheckAutoClick {
 
                 Config.print_debug(String.format("TIME last: %d current: %d diff: %d", last, current, diff));
 
-                if (diff <= Config.MIN_DIFF_TIME) {
+                if (diff <= Config.MIN_DIFF_TIME && diff != 1) { //TODO test diff de 1 = bug
                     Config.print_debug("diff under " + Config.MIN_DIFF_TIME + " ms");
                     countTimeUnderMin++;
                 }
