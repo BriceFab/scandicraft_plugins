@@ -17,6 +17,9 @@ public class ModPotionStatus extends ModDraggable {
     private static final ResourceLocation inventoryBackground = new ResourceLocation("textures/gui/container/inventory.png");
     private final int right_shift = 22;             //décalage du texte à gauche (de la texture potion)
     private final int y_space_between_potion = 20;  //espacement entre chaque potion (Y)
+    private final int icon_size = 18;               //taille de l'icon (inventory.png)
+    private final Potion REFERENCE_POTION_WIDTH = Potion.potionTypes[Potion.fireResistance.getId()];    //Potion avec le plus grand nom comme référence largeur
+    private final PotionEffect DUMMY_EFFECT = new PotionEffect(Potion.moveSpeed.id, 6000, 1);
 
     @Override
     public ScreenPosition getDefaultPos() {
@@ -25,12 +28,17 @@ public class ModPotionStatus extends ModDraggable {
 
     @Override
     public int getWidth() {
-        return 64;
+        return font.getStringWidth(REFERENCE_POTION_WIDTH.getName());
     }
 
     @Override
     public int getHeight() {
-        return 64;
+        Collection<PotionEffect> activePotionEffects = this.mc.thePlayer.getActivePotionEffects();
+        if (activePotionEffects.isEmpty()) {
+            return y_space_between_potion;
+        } else {
+            return activePotionEffects.size() * (y_space_between_potion);
+        }
     }
 
     @Override
@@ -52,7 +60,7 @@ public class ModPotionStatus extends ModDraggable {
 
         if (potion.hasStatusIcon()) {
             int potionPosIndex = potion.getStatusIconIndex();
-            mc.ingameGUI.drawTexturedModalRect(pos.getAbsoluteX(), pos.getAbsoluteY() + defaultPosY, potionPosIndex % 8 * 18, 198 + potionPosIndex / 8 * 18, 18, 18);
+            mc.ingameGUI.drawTexturedModalRect(pos.getAbsoluteX(), pos.getAbsoluteY() + defaultPosY, potionPosIndex % 8 * icon_size, 198 + potionPosIndex / 8 * icon_size, icon_size, icon_size);
         }
 
         String potionName = String.format("%s %s", I18n.format(potion.getName()), getAmplifier(potionEffect));
@@ -84,8 +92,7 @@ public class ModPotionStatus extends ModDraggable {
                 renderPotion(potionEffect, defaultPosY);
             }
         } else {
-            PotionEffect potionEffect = new PotionEffect(Potion.moveSpeed.id, 6000, 1);
-            renderPotion(potionEffect, 0);
+            renderPotion(DUMMY_EFFECT, 0);
         }
     }
 
