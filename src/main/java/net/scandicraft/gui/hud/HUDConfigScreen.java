@@ -22,6 +22,7 @@ public class HUDConfigScreen extends GuiScreen {
 
     public HUDConfigScreen(HUDManager api) {
         Collection<IRenderer> registeredRenderers = api.getRegisteredRenderers();
+        Config.print_debug("HUDConfigScreen size " + registeredRenderers.size());
         for (IRenderer renderer : registeredRenderers) {
             Config.print_debug("HUD Config open " + renderer.getClass());
 

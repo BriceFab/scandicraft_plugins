@@ -15,7 +15,7 @@ public class CheckAutoClick {
     private static final ArrayList<Integer> clicks_history = new ArrayList<>();         //historique des CPS
     private static final ArrayList<Boolean> keyDown_history = new ArrayList<>();        //historique des keyDown de l'attaque
     private static final ArrayList<Integer> suspectClick_history = new ArrayList<>();   //historique des clicks suspects
-    private static final ArrayList<Long> time_history = new ArrayList<>();   //historique du délais entre chaque clicks
+    private static final ArrayList<Long> time_history = new ArrayList<>();              //historique du délais entre chaque clicks
 
     private static int ACT_CPS = 0;
 
@@ -59,7 +59,7 @@ public class CheckAutoClick {
 
             if (max == 0 || result_average >= Config.MAX_SUSPECT_AVERAGE) {
                 Config.print_debug("reason: suspectClicks");
-                // CheatScreen.onCheatDetect(CheatType.AUTOCLICK);
+                CheatScreen.onCheatDetect(CheatType.AUTOCLICK);
             }
         }
         if (countHistoryDown() >= Config.MAX_HISTORY / 2) { //et que le click provient de la souris
@@ -68,7 +68,7 @@ public class CheckAutoClick {
         }
         if (hasIllegalDelta) {
             Config.print_debug("reason: illegal time delta");
-            CheatScreen.onCheatDetect(CheatType.AUTOCLICK);
+            CheatScreen.onCheatDetect(CheatType.BUTTERFLY);
         }
     }
 
