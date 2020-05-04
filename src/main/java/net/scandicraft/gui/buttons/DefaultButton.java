@@ -7,7 +7,6 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import net.scandicraft.Config;
 import net.scandicraft.render.RenderUtils;
 
 import java.awt.*;
@@ -53,10 +52,15 @@ public class DefaultButton extends Gui {
     protected boolean hovered;
 
     private float cut;
-    private float alpha;
+
+    public int packedFGColour; //FML
 
     public DefaultButton(int buttonId, int x, int y, String buttonText) {
         this(buttonId, x, y, 200, 20, buttonText);
+
+        if (packedFGColour != 0) {
+            // j = packedFGColour;
+        }
     }
 
     public DefaultButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
