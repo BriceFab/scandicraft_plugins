@@ -99,22 +99,23 @@ public class DefaultButton extends Gui {
 
             final int delta = RenderUtils.deltaTime;
 
-            Config.print_debug("button hover ? " + hovered);
-
             if (enabled && hovered) {
-                cut += 0.05F * delta;
-                if (cut >= 4) cut = 4;
+                cut += 0.025F * delta;
+                if (cut >= 2) cut = 2;
             } else {
-                cut -= 0.05F * delta;
+                cut -= 0.025F * delta;
                 if (cut <= 0) cut = 0;
             }
 
-            Color buttonColor = new Color(212, 1, 1, 180);
+            Color buttonColor = new Color(13, 13, 13, 180);
+            Color textColor = Color.WHITE;
             if (enabled && hovered) {
-                // buttonColor = new Color(0.5F, 0.5F, 0.5F, 0.5F);
                 buttonColor = new Color(204, 204, 204, 80);
             }
-            Color disabledColor = new Color(25, 25, 25, 200);
+            if (!enabled) {
+                textColor = new Color(128, 128, 128);
+            }
+            Color disabledColor = new Color(191, 191, 191, 30);
 
             Gui.drawRect(
                     this.xPosition + (int) this.cut, this.yPosition + (int) this.cut,
@@ -128,7 +129,7 @@ public class DefaultButton extends Gui {
             fontRenderer.drawStringWithShadow(displayString,
                     (float) ((this.xPosition + this.width / 2) -
                             fontRenderer.getStringWidth(displayString) / 2),
-                    this.yPosition + (this.height - 5) / 2F, Color.WHITE.getRGB());
+                    this.yPosition + (this.height - 5) / 2F, textColor.getRGB());
             GlStateManager.resetColor();
         }
     }
