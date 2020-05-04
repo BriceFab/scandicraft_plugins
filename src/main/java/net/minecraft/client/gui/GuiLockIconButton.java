@@ -31,7 +31,7 @@ public class GuiLockIconButton extends GuiButton
         {
             mc.getTextureManager().bindTexture(GuiButton.buttonTextures);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            boolean flag = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+            boolean flag = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.getWidth() && mouseY < this.yPosition + this.getHeight();
             GuiLockIconButton.Icon guilockiconbutton$icon;
 
             if (this.locked)
@@ -62,7 +62,7 @@ public class GuiLockIconButton extends GuiButton
                 guilockiconbutton$icon = GuiLockIconButton.Icon.UNLOCKED;
             }
 
-            this.drawTexturedModalRect(this.xPosition, this.yPosition, guilockiconbutton$icon.getX(), guilockiconbutton$icon.getY(), this.width, this.height);
+            this.drawTexturedModalRect(this.xPosition, this.yPosition, guilockiconbutton$icon.getX(), guilockiconbutton$icon.getY(), this.getWidth(), this.getHeight());
         }
     }
 

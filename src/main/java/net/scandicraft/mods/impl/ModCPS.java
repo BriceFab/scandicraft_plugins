@@ -40,10 +40,9 @@ public class ModCPS extends ModDraggable {
         }
 
         if (pressed != this.wasPressed) {
-            long lastPressed = System.currentTimeMillis();
             this.wasPressed = pressed;
             if (pressed) {
-                this.clicks.add(lastPressed);
+                this.clicks.add(System.currentTimeMillis());
             }
         }
 
@@ -54,8 +53,7 @@ public class ModCPS extends ModDraggable {
     }
 
     public int getCPS() {
-        final long time = System.currentTimeMillis();
-        this.clicks.removeIf(aLong -> (aLong + 1000L < time));
+        this.clicks.removeIf(aLong -> (aLong < System.currentTimeMillis() - 1000L));
         return this.clicks.size();
     }
 

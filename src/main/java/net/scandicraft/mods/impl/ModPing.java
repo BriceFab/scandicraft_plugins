@@ -45,6 +45,9 @@ public class ModPing extends ModDraggable {
             return;
         }
 
+        //TODO check mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime (ms)
+        Config.print_debug("Ping " + mc.getNetHandler().getPlayerInfo(mc.thePlayer.getUniqueID()).getResponseTime());
+
         //Chaque x secondes
         // Config.print_debug("Current " + Instant.now().toString() + " lastPing + 30s" + lastPing.plusSeconds(30).toString());
         if (lastPing != null) {

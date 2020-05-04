@@ -185,12 +185,12 @@ public class GuiVideoSettings extends GuiScreen
 
     public static int getButtonWidth(GuiButton p_getButtonWidth_0_)
     {
-        return p_getButtonWidth_0_.width;
+        return p_getButtonWidth_0_.getWidth();
     }
 
     public static int getButtonHeight(GuiButton p_getButtonHeight_0_)
     {
-        return p_getButtonHeight_0_.height;
+        return p_getButtonHeight_0_.getHeight();
     }
 
     public static void drawGradientRect(GuiScreen p_drawGradientRect_0_, int p_drawGradientRect_1_, int p_drawGradientRect_2_, int p_drawGradientRect_3_, int p_drawGradientRect_4_, int p_drawGradientRect_5_, int p_drawGradientRect_6_)

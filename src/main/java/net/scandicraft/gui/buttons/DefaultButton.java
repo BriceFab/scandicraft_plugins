@@ -7,11 +7,12 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import net.scandicraft.Config;
 import net.scandicraft.render.RenderUtils;
 
 import java.awt.*;
 
-public class GuiButton extends Gui {
+public class DefaultButton extends Gui {
     protected static final ResourceLocation buttonTextures = new ResourceLocation("textures/gui/widgets.png");
 
     /**
@@ -54,11 +55,11 @@ public class GuiButton extends Gui {
     private float cut;
     private float alpha;
 
-    public GuiButton(int buttonId, int x, int y, String buttonText) {
+    public DefaultButton(int buttonId, int x, int y, String buttonText) {
         this(buttonId, x, y, 200, 20, buttonText);
     }
 
-    public GuiButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
+    public DefaultButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
         this.width = 200;
         this.height = 20;
         this.enabled = true;
@@ -98,6 +99,8 @@ public class GuiButton extends Gui {
 
             final int delta = RenderUtils.deltaTime;
 
+            Config.print_debug("button hover ? " + hovered);
+
             if (enabled && hovered) {
                 cut += 0.05F * delta;
 
@@ -116,9 +119,14 @@ public class GuiButton extends Gui {
                 if (alpha <= 120) alpha = 120;
             }
 
+            Color buttonColor = new Color(0F, 0F, 0F, this.alpha / 255F);
+            if (enabled && hovered) {
+                buttonColor = Color.LIGHT_GRAY;
+            }
+
             Gui.drawRect(this.xPosition + (int) this.cut, this.yPosition,
                     this.xPosition + this.width - (int) this.cut, this.yPosition + this.height,
-                    this.enabled ? new Color(0F, 0F, 0F, this.alpha / 255F).getRGB() :
+                    this.enabled ? buttonColor.getRGB() :
                             new Color(0.5F, 0.5F, 0.5F, 0.5F).getRGB());
 
             mc.getTextureManager().bindTexture(buttonTextures);
@@ -166,11 +174,15 @@ public class GuiButton extends Gui {
         soundHandlerIn.playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
     }
 
-    public int getButtonWidth() {
+    public int getWidth() {
         return this.width;
     }
 
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }
