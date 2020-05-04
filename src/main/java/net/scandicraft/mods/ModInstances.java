@@ -11,6 +11,7 @@ public class ModInstances {
     private static ModCPS modCPS;
     private static ModKeystrokes modKeystrokes;
     private static ModPotionStatus modPotionStatus;
+    private static ModCompass modCompass;
 
     public static void register(HUDManager api) {
         ModArmorStatus modArmorStatus = new ModArmorStatus();
@@ -34,6 +35,9 @@ public class ModInstances {
 
         modPotionStatus = new ModPotionStatus();
         api.register(modPotionStatus);
+
+        modCompass = new ModCompass();
+        api.register(modCompass);
     }
 
     public static ModToggleSprintSneak getModToggleSprintSneak() {
@@ -50,5 +54,9 @@ public class ModInstances {
 
     public static ModKeystrokes getModKeystrokes() {
         return modKeystrokes;
+    }
+
+    public static ModCompass getModCompass() {
+        return modCompass;
     }
 }
