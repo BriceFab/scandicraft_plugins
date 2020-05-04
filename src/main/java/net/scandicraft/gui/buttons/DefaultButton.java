@@ -103,20 +103,10 @@ public class DefaultButton extends Gui {
 
             if (enabled && hovered) {
                 cut += 0.05F * delta;
-
                 if (cut >= 4) cut = 4;
-
-                alpha += 0.3F * delta;
-
-                if (alpha >= 210) alpha = 210;
             } else {
                 cut -= 0.05F * delta;
-
                 if (cut <= 0) cut = 0;
-
-                alpha -= 0.3F * delta;
-
-                if (alpha <= 120) alpha = 120;
             }
 
             Color buttonColor = new Color(212, 1, 1, 180);
@@ -127,8 +117,8 @@ public class DefaultButton extends Gui {
             Color disabledColor = new Color(25, 25, 25, 200);
 
             Gui.drawRect(
-                    this.xPosition + (int) this.cut, this.yPosition,
-                    this.xPosition + this.width - (int) this.cut, this.yPosition + this.height,
+                    this.xPosition + (int) this.cut, this.yPosition + (int) this.cut,
+                    this.xPosition + this.width - (int) this.cut, this.yPosition + this.height - (int) this.cut,
                     this.enabled ? buttonColor.getRGB() : disabledColor.getRGB()
             );
 

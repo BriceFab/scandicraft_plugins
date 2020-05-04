@@ -91,6 +91,7 @@ import net.scandicraft.event.impl.ClientTickEvent;
 import net.scandicraft.gui.MainMenu;
 import net.scandicraft.mods.ModInstances;
 import net.scandicraft.mods.impl.togglesprintsneak.ClientMovementInput;
+import net.scandicraft.render.RenderUtils;
 import net.scandicraft.settings.ScandiCraftSettings;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Validate;
@@ -327,6 +328,14 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Profiler currently displayed in the debug screen pie chart
      */
     private String debugProfilerName = "root";
+
+    //ScandiCraft
+    private long lastFrame = getTime();
+
+    //ScandiCraft
+    public long getTime() {
+        return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+    }
 
     public Minecraft(GameConfiguration gameConfig) {
         theMinecraft = this;
@@ -1023,6 +1032,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             Display.sync(this.getLimitFramerate());
             this.mcProfiler.endSection();
         }
+
+        //ScandiCraft RenderUtils deltaTime
+        final long currentTime = getTime();
+        final int deltaTime = (int) (currentTime - lastFrame);
+        lastFrame = currentTime;
+        RenderUtils.deltaTime = deltaTime;
 
         this.mcProfiler.endSection();
     }
