@@ -119,15 +119,18 @@ public class DefaultButton extends Gui {
                 if (alpha <= 120) alpha = 120;
             }
 
-            Color buttonColor = new Color(0F, 0F, 0F, this.alpha / 255F);
+            Color buttonColor = new Color(212, 1, 1, 180);
             if (enabled && hovered) {
-                buttonColor = Color.LIGHT_GRAY;
+                // buttonColor = new Color(0.5F, 0.5F, 0.5F, 0.5F);
+                buttonColor = new Color(204, 204, 204, 80);
             }
+            Color disabledColor = new Color(25, 25, 25, 200);
 
-            Gui.drawRect(this.xPosition + (int) this.cut, this.yPosition,
+            Gui.drawRect(
+                    this.xPosition + (int) this.cut, this.yPosition,
                     this.xPosition + this.width - (int) this.cut, this.yPosition + this.height,
-                    this.enabled ? buttonColor.getRGB() :
-                            new Color(0.5F, 0.5F, 0.5F, 0.5F).getRGB());
+                    this.enabled ? buttonColor.getRGB() : disabledColor.getRGB()
+            );
 
             mc.getTextureManager().bindTexture(buttonTextures);
             mouseDragged(mc, mouseX, mouseY);
@@ -135,7 +138,7 @@ public class DefaultButton extends Gui {
             fontRenderer.drawStringWithShadow(displayString,
                     (float) ((this.xPosition + this.width / 2) -
                             fontRenderer.getStringWidth(displayString) / 2),
-                    this.yPosition + (this.height - 5) / 2F, 14737632);
+                    this.yPosition + (this.height - 5) / 2F, Color.WHITE.getRGB());
             GlStateManager.resetColor();
         }
     }
