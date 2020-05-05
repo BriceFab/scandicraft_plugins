@@ -22,7 +22,7 @@ public class CheckAutoClick {
     public static void checkCPS(int CPS) {
         //Si dépasse max CPS
         if (CPS >= Config.MAX_CPS) {
-            CheatScreen.onCheatDetect(CheatType.AUTOCLICK);
+            new CheatScreen(CheatType.AUTOCLICK);
         }
     }
 
@@ -45,7 +45,7 @@ public class CheckAutoClick {
         //check if cheating
         if (countHistoryZero() >= Config.MAX_HISTORY / 2) {    //si trop de 0 CPS alors que clické
             Config.print_debug("reason: max 0");
-            CheatScreen.onCheatDetect(CheatType.AUTOCLICK);
+            CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
         }
         if (suspectClick_history.size() >= Config.MAX_HISTORY / 2) {   //si trop de click suspect
             //moyen des clicks suspects
@@ -59,16 +59,16 @@ public class CheckAutoClick {
 
             if (max == 0 || result_average >= Config.MAX_SUSPECT_AVERAGE) {
                 Config.print_debug("reason: suspectClicks");
-                CheatScreen.onCheatDetect(CheatType.AUTOCLICK);
+                CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
             }
         }
         if (countHistoryDown() >= Config.MAX_HISTORY / 2) { //et que le click provient de la souris
             Config.print_debug("reason: max down");
-            CheatScreen.onCheatDetect(CheatType.AUTOCLICK);
+            CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
         }
         if (hasIllegalDelta) {
             Config.print_debug("reason: illegal time delta");
-            CheatScreen.onCheatDetect(CheatType.BUTTERFLY);
+            CheatScreen.onDetectCheat(CheatType.BUTTERFLY);
         }
     }
 

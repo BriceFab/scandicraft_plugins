@@ -13,7 +13,7 @@ public class PackManager implements IResourceManagerReloadListener {
 
         boolean hasIllegal = AntiTransparency.checkTexturePack();
         if (hasIllegal) {
-            CheatScreen.onCheatDetect(CheatType.XRAY);
+            CheatScreen.onDetectCheat(CheatType.XRAY);
         }
     }
 }

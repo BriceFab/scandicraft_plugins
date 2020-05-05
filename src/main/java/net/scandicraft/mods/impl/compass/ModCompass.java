@@ -32,7 +32,7 @@ public class ModCompass extends ModDraggable {
     public void render(ScreenPosition pos) {
 
         if (mc.gameSettings.keyBindLeft.isPressed()) {
-            mc.displayGuiScreen(new GuiCompassHub(ModInstances.getModCompass()));
+            // mc.displayGuiScreen(new GuiCompassHub(ModInstances.getModCompass()));
         }
 
         this.compass.drawCompass(new ScaledResolution(this.mc).getScaledWidth());
