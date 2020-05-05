@@ -5,6 +5,8 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.settings.KeyBinding;
 import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -16,8 +18,8 @@ public class ModKeystrokes extends ModDraggable {
 
         WASD(Key.W, Key.A, Key.S, Key.D),
         WASD_MOUSE(Key.W, Key.A, Key.S, Key.D, Key.LMB, Key.RMB),
-        WASD_JUMP(Key.W, Key.A, Key.S, Key.D, new Key("Jump", Minecraft.getMinecraft().gameSettings.keyBindJump, 1, 41, 58, 18)),
-        WASD_JUMP_MOUSE(Key.W, Key.A, Key.S, Key.D, Key.LMB, Key.RMB, new Key("Jump", Minecraft.getMinecraft().gameSettings.keyBindJump, 1, 61, 58, 18));
+        WASD_JUMP(Key.W, Key.A, Key.S, Key.D, new Key("―", Minecraft.getMinecraft().gameSettings.keyBindJump, 1, 41, 58, 18)),
+        WASD_JUMP_MOUSE(Key.W, Key.A, Key.S, Key.D, Key.LMB, Key.RMB, new Key("―", Minecraft.getMinecraft().gameSettings.keyBindJump, 1, 61, 58, 18));
 
         private final Key[] keys;
         private int width = 0;
@@ -64,7 +66,7 @@ public class ModKeystrokes extends ModDraggable {
         private static final Key D = new Key("D", Minecraft.getMinecraft().gameSettings.keyBindRight, 41, 21, 18, 18);
 
         private static final Key LMB = new Key("LMB", Minecraft.getMinecraft().gameSettings.keyBindAttack, 1, 41, 18 + 18 / 2, 18);
-        private static final Key RMB = new Key("RMB", Minecraft.getMinecraft().gameSettings.keyBindUseItem, 31, 41, 18 + 18 / 2, 18);
+        private static final Key RMB = new Key("RMB", Minecraft.getMinecraft().gameSettings.keyBindUseItem, 32, 41, 18 + 18 / 2, 18);
 
         private final String name;
         private final KeyBinding keyBinding;

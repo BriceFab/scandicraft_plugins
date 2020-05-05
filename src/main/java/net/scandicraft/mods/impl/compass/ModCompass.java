@@ -1,11 +1,10 @@
-package net.scandicraft.mods.impl;
+package net.scandicraft.mods.impl.compass;
 
 import net.minecraft.client.gui.ScaledResolution;
 import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
 import net.scandicraft.mods.ModInstances;
-import net.scandicraft.tmp.compass.FNCompass;
-import net.scandicraft.tmp.compass.gui.GuiCompassHub;
+import net.scandicraft.mods.impl.compass.gui.GuiCompassHub;
 
 public class ModCompass extends ModDraggable {
 

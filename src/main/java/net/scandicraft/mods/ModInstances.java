@@ -2,6 +2,7 @@ package net.scandicraft.mods;
 
 import net.scandicraft.gui.hud.HUDManager;
 import net.scandicraft.mods.impl.*;
+import net.scandicraft.mods.impl.compass.ModCompass;
 import net.scandicraft.mods.impl.togglesprintsneak.ModToggleSprintSneak;
 
 public class ModInstances {

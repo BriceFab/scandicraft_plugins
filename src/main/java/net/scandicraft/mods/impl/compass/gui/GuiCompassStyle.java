@@ -1,9 +1,9 @@
-package net.scandicraft.tmp.compass.gui;
+package net.scandicraft.mods.impl.compass.gui;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.config.GuiSlider;
-import net.scandicraft.mods.impl.ModCompass;
+import net.scandicraft.mods.impl.compass.ModCompass;
 
 import java.io.IOException;
 

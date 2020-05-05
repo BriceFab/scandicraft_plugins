@@ -1,9 +1,10 @@
-package net.scandicraft.tmp.compass.gui;
+package net.scandicraft.mods.impl.compass.gui;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.EnumChatFormatting;
-import net.scandicraft.mods.impl.ModCompass;
-import net.scandicraft.tmp.compass.FNCompass;
+import net.scandicraft.mods.ModInstances;
+import net.scandicraft.mods.impl.compass.FNCompass;
+import net.scandicraft.mods.impl.compass.ModCompass;
 
 import java.io.IOException;
 
@@ -29,7 +30,7 @@ public class GuiCompass extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
-        if (this.compass.enabled)
+        if (ModInstances.getModCompass().isEnabled())
             this.compass.drawCompass(this.width);
         if (this.dragging) {
             this.compass.offX += mouseX - this.lastX;

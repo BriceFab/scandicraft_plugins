@@ -1,4 +1,4 @@
-package net.scandicraft.tmp.compass;
+package net.scandicraft.mods.impl.compass;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -12,9 +12,9 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 
 public class FNCompass {
-    private Minecraft mc;
+    private final Minecraft mc;
 
-    private FontRenderer fr;
+    private final FontRenderer fr;
 
     private final double PRIMARY_CARDINAL_SCALE = 1.5D;
 
@@ -22,21 +22,19 @@ public class FNCompass {
 
     private final double ANGLE_SCALE = 0.75D;
 
-    public boolean enabled;
-
-    public int details;
+    public int details = 1; //Medium
 
     public int offX;
 
     public int offY;
 
-    public int width;
+    public int width = 30;
 
-    public int height = 50;
+    public int height = 22;
 
-    public int cwidth;
+    public int cwidth = 180; //spacing
 
-    public boolean background;
+    public boolean background = true;
 
     public boolean chroma;
 
@@ -64,7 +62,7 @@ public class FNCompass {
         this.offsetAll = this.cwidth * direction / 360;
         this.centerX = screenWidth / 2 + this.offX;
         if (this.background)
-            Gui.drawRect(this.centerX - this.width / 2, this.offY, this.centerX + this.width / 2, this.offY + this.height, -1442840576);
+            Gui.drawRect(this.centerX - this.width * 2, this.offY, this.centerX + this.width * 2, this.offY + this.height, -1442840576);
         if (!this.chroma) {
             if (this.tintMarker != 0) {
                 this.colorMarker = Color.HSBtoRGB(this.tintMarker / 100.0F, 1.0F, 1.0F);
