@@ -3,9 +3,9 @@ package net.scandicraft.client;
 import net.minecraft.client.Minecraft;
 import net.scandicraft.Config;
 import net.scandicraft.discord.DiscordRP;
-import net.scandicraft.event.EventManager;
-import net.scandicraft.event.EventTarget;
-import net.scandicraft.event.impl.ClientTickEvent;
+import net.scandicraft.events.EventManager;
+import net.scandicraft.events.EventTarget;
+import net.scandicraft.events.impl.ClientTickEvent;
 import net.scandicraft.fonts.Fonts;
 import net.scandicraft.gui.hud.HUDManager;
 import net.scandicraft.mods.ModInstances;
@@ -15,7 +15,7 @@ public class ScandiCraftClient {
 
     private static final ScandiCraftClient INSTANCE = new ScandiCraftClient();
     private final DiscordRP discordRP = new DiscordRP();
-    private net.scandicraft.event.ccbluex.EventManager eventManager;
+    private net.scandicraft.events.ccbluex.EventManager eventManager;
 
     private HUDManager hudManager;
 
@@ -31,7 +31,7 @@ public class ScandiCraftClient {
         hudManager = HUDManager.getInstance();
         ModInstances.register(hudManager);
 
-        eventManager = new net.scandicraft.event.ccbluex.EventManager();
+        eventManager = new net.scandicraft.events.ccbluex.EventManager();
         Fonts.loadFonts();
     }
 
@@ -59,7 +59,7 @@ public class ScandiCraftClient {
         return discordRP;
     }
 
-    public net.scandicraft.event.ccbluex.EventManager getEventManager() {
+    public net.scandicraft.events.ccbluex.EventManager getEventManager() {
         return eventManager;
     }
 }

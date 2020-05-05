@@ -87,7 +87,7 @@ import net.scandicraft.Config;
 import net.scandicraft.anti_cheat.auto_click.CheckAutoClick;
 import net.scandicraft.anti_cheat.x_ray.PackManager;
 import net.scandicraft.client.ScandiCraftClient;
-import net.scandicraft.event.impl.ClientTickEvent;
+import net.scandicraft.events.impl.ClientTickEvent;
 import net.scandicraft.gui.MainMenu;
 import net.scandicraft.mods.ModInstances;
 import net.scandicraft.mods.impl.togglesprintsneak.ClientMovementInput;

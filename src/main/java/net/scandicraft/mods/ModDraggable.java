@@ -9,6 +9,7 @@ import java.io.File;
 public abstract class ModDraggable extends Mod implements IRenderer {
 
     protected ScreenPosition pos;
+    protected float scale;
 
     public ModDraggable() {
         pos = loadPositionFromFile();

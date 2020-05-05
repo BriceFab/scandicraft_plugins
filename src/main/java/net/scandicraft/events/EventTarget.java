@@ -1,4 +1,4 @@
-package net.scandicraft.event;
+package net.scandicraft.events;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

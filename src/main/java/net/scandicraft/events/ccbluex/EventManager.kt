@@ -1,4 +1,4 @@
-package net.scandicraft.event.ccbluex
+package net.scandicraft.events.ccbluex
 
 import java.util.*
 

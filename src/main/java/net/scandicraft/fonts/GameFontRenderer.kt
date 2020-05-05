@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.resources.IResourceManager
 import net.minecraft.util.ResourceLocation
 import net.scandicraft.client.ScandiCraftClient
-import net.scandicraft.event.ccbluex.TextEvent
+import net.scandicraft.events.ccbluex.TextEvent
 import net.scandicraft.render.RenderUtils
 import net.scandicraft.utils.ClassUtils
 import net.scandicraft.utils.ColorUtils

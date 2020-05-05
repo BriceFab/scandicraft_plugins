@@ -1,4 +1,4 @@
-package net.scandicraft.event;
+package net.scandicraft.events;
 
 public class EventPriority {
 

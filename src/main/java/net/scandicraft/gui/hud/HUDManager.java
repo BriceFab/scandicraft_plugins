@@ -3,9 +3,9 @@ package net.scandicraft.gui.hud;
 import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
-import net.scandicraft.event.EventManager;
-import net.scandicraft.event.EventTarget;
-import net.scandicraft.event.impl.RenderEvent;
+import net.scandicraft.events.EventManager;
+import net.scandicraft.events.EventTarget;
+import net.scandicraft.events.impl.RenderEvent;
 
 import java.util.Arrays;
 import java.util.Collection;

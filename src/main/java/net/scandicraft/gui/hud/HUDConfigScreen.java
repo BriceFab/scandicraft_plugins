@@ -1,11 +1,12 @@
 package net.scandicraft.gui.hud;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.scandicraft.Config;
 import org.lwjgl.input.Keyboard;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -53,10 +54,18 @@ public class HUDConfigScreen extends GuiScreen {
 
             renderer.renderDummy(pos);
 
-            this.drawHollowRect(pos.getAbsoluteX(), pos.getAbsoluteY(), renderer.getWidth(), renderer.getHeight(), 0xFF00FFFF);
+            final int padding = 5;
+
+            this.drawHollowRect(pos.getAbsoluteX() - padding, pos.getAbsoluteY() - padding, renderer.getWidth() + (padding * 2), renderer.getHeight() + (padding * 2), new Color(0, 0, 0, 50).getRGB());
+            this.drawScaleRect(pos.getAbsoluteX() + renderer.getWidth() + padding, pos.getAbsoluteY() + renderer.getHeight() + padding, 10, 10, Color.GREEN.getRGB());
         }
 
         this.zLevel = zBackup;
+    }
+
+    private void drawScaleRect(int x, int y, int w, int h, int color) {
+        this.drawHollowRect(x - w / 2, y - h / 2, w, h, color);
+        // Gui.drawRect(10, 100, w, h, color);
     }
 
     private void drawHollowRect(int x, int y, int w, int h, int color) {
