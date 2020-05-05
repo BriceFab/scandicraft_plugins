@@ -21,6 +21,9 @@ public class HUDConfigScreen extends GuiScreen {
 
     private int prevX, prevY;
 
+    private final int padding = 5;
+    private final int scaleSize = 5;
+
     public HUDConfigScreen(HUDManager api) {
         Collection<IRenderer> registeredRenderers = api.getRegisteredRenderers();
 
@@ -54,10 +57,8 @@ public class HUDConfigScreen extends GuiScreen {
 
             renderer.renderDummy(pos);
 
-            final int padding = 5;
-
             this.drawHollowRect(pos.getAbsoluteX() - padding, pos.getAbsoluteY() - padding, renderer.getWidth() + (padding * 2), renderer.getHeight() + (padding * 2), new Color(0, 0, 0, 50).getRGB());
-            this.drawScaleRect(pos.getAbsoluteX() + renderer.getWidth() + padding, pos.getAbsoluteY() + renderer.getHeight() + padding, 10, 10, Color.GREEN.getRGB());
+            this.drawScaleRect(pos.getAbsoluteX() + renderer.getWidth() + padding, pos.getAbsoluteY() + renderer.getHeight() + padding, scaleSize, scaleSize, Color.GREEN.getRGB());
         }
 
         this.zLevel = zBackup;
@@ -65,7 +66,7 @@ public class HUDConfigScreen extends GuiScreen {
 
     private void drawScaleRect(int x, int y, int w, int h, int color) {
         this.drawHollowRect(x - w / 2, y - h / 2, w, h, color);
-        // Gui.drawRect(10, 100, w, h, color);
+        Gui.drawRect(x - padding / 2, y - padding / 2, x + padding, y + padding, color);
     }
 
     private void drawHollowRect(int x, int y, int w, int h, int color) {
