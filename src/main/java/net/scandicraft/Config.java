@@ -1,6 +1,9 @@
 package net.scandicraft;
 
+import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.LogManager;
+
+import java.io.File;
 
 public class Config {
     /* Variables */
@@ -13,6 +16,7 @@ public class Config {
     public static String SKINS_PATH = "https://scandicraft-mc.fr/upload/skins/";    //.png only ; TODO user_id + upload
     public static String CAPES_PATH = "https://scandicraft-mc.fr/upload/capes/";    //.png only ; TODO user_id + upload
     public static String DISCORD_CLIENT_ID = "704772787616874617";  //https://discordapp.com/developers
+    public static final File FONT_DIRS = new File(new File(String.valueOf(Minecraft.getMinecraft().mcDataDir), "scandicraft"), "fonts");
 
     /* Anti-Cheat */
     //CPS

@@ -7,6 +7,8 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import net.scandicraft.Config;
+import net.scandicraft.fonts.Fonts;
 import net.scandicraft.render.RenderUtils;
 
 import java.awt.*;
@@ -97,7 +99,10 @@ public class DefaultButton extends Gui {
      */
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         if (visible) {
-            final FontRenderer fontRenderer = mc.fontRendererObj;
+
+            boolean isMcFont = mc.getLanguageManager().isCurrentLocaleUnicode();
+            final FontRenderer fontRenderer = isMcFont ? mc.fontRendererObj : Fonts.fontNormal;
+
             hovered = (mouseX >= this.xPosition && mouseY >= this.yPosition &&
                     mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height);
 
@@ -133,7 +138,7 @@ public class DefaultButton extends Gui {
             fontRenderer.drawStringWithShadow(displayString,
                     (float) ((this.xPosition + this.width / 2) -
                             fontRenderer.getStringWidth(displayString) / 2),
-                    this.yPosition + (this.height - 5) / 2F, textColor.getRGB());
+                    this.yPosition + (this.height + (isMcFont ? -5 : -9)) / 2F, textColor.getRGB());
             GlStateManager.resetColor();
         }
     }

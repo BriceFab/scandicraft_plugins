@@ -6,6 +6,7 @@ import net.scandicraft.discord.DiscordRP;
 import net.scandicraft.event.EventManager;
 import net.scandicraft.event.EventTarget;
 import net.scandicraft.event.impl.ClientTickEvent;
+import net.scandicraft.fonts.Fonts;
 import net.scandicraft.gui.hud.HUDManager;
 import net.scandicraft.mods.ModInstances;
 import net.scandicraft.settings.FileManager;
@@ -14,6 +15,7 @@ public class ScandiCraftClient {
 
     private static final ScandiCraftClient INSTANCE = new ScandiCraftClient();
     private final DiscordRP discordRP = new DiscordRP();
+    private net.scandicraft.event.ccbluex.EventManager eventManager;
 
     private HUDManager hudManager;
 
@@ -28,6 +30,9 @@ public class ScandiCraftClient {
         Config.print_debug("ScandiCraft client start");
         hudManager = HUDManager.getInstance();
         ModInstances.register(hudManager);
+
+        eventManager = new net.scandicraft.event.ccbluex.EventManager();
+        Fonts.loadFonts();
     }
 
     public void shutDown() {
@@ -52,5 +57,9 @@ public class ScandiCraftClient {
 
     public DiscordRP getDiscordRP() {
         return discordRP;
+    }
+
+    public net.scandicraft.event.ccbluex.EventManager getEventManager() {
+        return eventManager;
     }
 }

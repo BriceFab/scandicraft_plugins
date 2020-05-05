@@ -116,6 +116,12 @@ public class TextureUtil {
         uploadTextureImageSub(p_110989_0_, p_110989_1_, 0, 0, p_110989_2_, p_110989_3_);
     }
 
+    //scandicraft
+    public static int uploadTextureImageAllocateInt(int p_110989_0_, BufferedImage p_110989_1_, boolean p_110989_2_, boolean p_110989_3_) {
+        allocateTexture(p_110989_0_, p_110989_1_.getWidth(), p_110989_1_.getHeight());
+        return uploadTextureImageSubInt(p_110989_0_, p_110989_1_, 0, 0, p_110989_2_, p_110989_3_);
+    }
+
     public static void allocateTexture(int p_110991_0_, int p_110991_1_, int p_110991_2_) {
         allocateTextureImpl(p_110991_0_, 0, p_110991_1_, p_110991_2_);
     }
@@ -147,6 +153,13 @@ public class TextureUtil {
     public static void uploadTextureImageSub(int textureId, BufferedImage p_110995_1_, int p_110995_2_, int p_110995_3_, boolean p_110995_4_, boolean p_110995_5_) {
         bindTexture(textureId);
         uploadTextureImageSubImpl(p_110995_1_, p_110995_2_, p_110995_3_, p_110995_4_, p_110995_5_);
+    }
+
+    //scandicraft
+    public static int uploadTextureImageSubInt(int textureId, BufferedImage p_110995_1_, int p_110995_2_, int p_110995_3_, boolean p_110995_4_, boolean p_110995_5_) {
+        bindTexture(textureId);
+        uploadTextureImageSubImpl(p_110995_1_, p_110995_2_, p_110995_3_, p_110995_4_, p_110995_5_);
+        return textureId;
     }
 
     private static void uploadTextureImageSubImpl(BufferedImage p_110993_0_, int p_110993_1_, int p_110993_2_, boolean p_110993_3_, boolean p_110993_4_) {

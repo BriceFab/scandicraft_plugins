@@ -23,3 +23,4 @@ run/scandicraft/
 *.txt
 *.gz
 *.log
+!run/scandicraft/fonts/*
