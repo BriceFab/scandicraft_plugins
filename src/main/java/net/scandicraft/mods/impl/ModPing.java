@@ -6,27 +6,25 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.network.OldServerPinger;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.EnumChatFormatting;
 import net.scandicraft.Config;
 import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
 
-import java.net.UnknownHostException;
 import java.time.Instant;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 public class ModPing extends ModDraggable {
-    private static final ThreadPoolExecutor field_148302_b = new ScheduledThreadPoolExecutor(5, (new ThreadFactoryBuilder()).setNameFormat("Server Pinger #%d").setDaemon(true).build());
-    private final OldServerPinger oldServerPinger = new OldServerPinger();
+    // private static final ThreadPoolExecutor field_148302_b = new ScheduledThreadPoolExecutor(5, (new ThreadFactoryBuilder()).setNameFormat("Server Pinger #%d").setDaemon(true).build());
+    // private final OldServerPinger oldServerPinger = new OldServerPinger();
 
     private final int pingIconWidth = 10;
     private final int pingIconHeight = 8;
 
-    private Instant lastPing = null;
-    private boolean pingingServer = false;
-    private boolean canPing = true;
-    private final int pingEachSeconds = 3;  //TODO put in ScandiCraftSettings
+    // private Instant lastPing = null;
+    // private boolean pingingServer = false;
+    // private boolean canPing = true;
+    // private final int pingEachSeconds = 3;  //TODO put in ScandiCraftSettings
 
     @Override
     public int getWidth() {
@@ -45,8 +43,7 @@ public class ModPing extends ModDraggable {
             return;
         }
 
-        //TODO check mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime (ms)
-        Config.print_debug("Ping " + mc.getNetHandler().getPlayerInfo(mc.thePlayer.getUniqueID()).getResponseTime());
+        /*
 
         //Chaque x secondes
         // Config.print_debug("Current " + Instant.now().toString() + " lastPing + 30s" + lastPing.plusSeconds(30).toString());
@@ -72,32 +69,34 @@ public class ModPing extends ModDraggable {
             lastPing = Instant.now();
             pingingServer = false;
         }
+        */
+
+        String sPing;
+        int ping = mc.getNetHandler().getPlayerInfo(mc.thePlayer.getUniqueID()).getResponseTime();
+        Config.print_debug("ping " + ping + " ms");
 
         int k = 0;
         int l;
-        String s1;
 
-        // Config.print_debug("ModPing pingToServer " + serverData.pingToServer + " " + serverData.pinged + " " + serverData.playerList + " " + serverData.populationInfo + " " + serverData.gameVersion);
-
-        if (serverData.pingToServer != -2L) {
-            if (serverData.pingToServer < 0L) {
+        if (ping > 0L) {
+            if (ping < 0L) {
                 l = 5;
-            } else if (serverData.pingToServer < 150L) {
+            } else if (ping < 150L) {
                 l = 0;
-            } else if (serverData.pingToServer < 300L) {
+            } else if (ping < 300L) {
                 l = 1;
-            } else if (serverData.pingToServer < 600L) {
+            } else if (ping < 600L) {
                 l = 2;
-            } else if (serverData.pingToServer < 1000L) {
+            } else if (ping < 1000L) {
                 l = 3;
             } else {
                 l = 4;
             }
 
-            if (serverData.pingToServer < 0L) {
-                s1 = "(no connection)";
+            if (ping < 0L) {
+                sPing = "(no connection)";
             } else {
-                s1 = serverData.pingToServer + "ms";
+                sPing = ping + " ms";
             }
         } else {
             k = 1;
@@ -107,15 +106,45 @@ public class ModPing extends ModDraggable {
                 l = 8 - l;
             }
 
-            s1 = "Pinging...";
+            sPing = "Pinging...";
         }
 
-        // Config.print_debug("ping: " + s1);
+        /*
+        int k = 0;
+        int l = 0;
+        String sPing = "";
+        int ping = mc.getNetHandler().getPlayerInfo(mc.thePlayer.getUniqueID()).getResponseTime();
+        if (ping > 0) {
+            sPing = String.format("%d ms", ping);
+
+            if (ping < 150L) {
+                l = 0;
+            } else if (ping < 300L) {
+                l = 1;
+            } else if (ping < 600L) {
+                l = 2;
+            } else if (ping < 1000L) {
+                l = 3;
+            } else {
+                l = 4;
+            }
+        } else {
+            sPing = "Pinging...";
+            k = 1;
+            l = (int) (Minecraft.getSystemTime() / 100L + (long) (2) & 7L);
+
+            l = 5;
+
+            if (l > 4) {
+                l = 8 - l;
+            }
+        }
+         */
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(Gui.icons);
         Gui.drawModalRectWithCustomSizedTexture(pos.getAbsoluteX() - 15, pos.getAbsoluteY(), (float) (k * 10), (float) (176 + l * 8), pingIconWidth, pingIconHeight, 256.0F, 256.0F);
-        font.drawString(s1, pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
+        font.drawString(sPing, pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
     }
 
 }
