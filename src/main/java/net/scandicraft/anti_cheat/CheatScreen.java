@@ -45,6 +45,6 @@ public class CheatScreen extends GuiScreen {
     @Override
     public void onGuiClosed() {
         Config.print_debug("exit for cheating..");
-        // this.mc.shutdown();
+        this.mc.shutdown();
     }
 }

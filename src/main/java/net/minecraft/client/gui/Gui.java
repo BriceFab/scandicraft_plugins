@@ -17,7 +17,7 @@ public class Gui
     /**
      * Draw a 1 pixel wide horizontal line. Args: x1, x2, y, color
      */
-    protected void drawHorizontalLine(int startX, int endX, int y, int color)
+    public void drawHorizontalLine(int startX, int endX, int y, int color)
     {
         if (endX < startX)
         {
