@@ -131,14 +131,18 @@ public class HUDConfigScreen extends GuiScreen {
         int screenWidth = res.getScaledWidth();
         int screenHeight = res.getScaledHeight();
 
-        int absoluteX = Math.max(padding * 2, Math.min(pos.getAbsoluteX(), Math.max(screenWidth - (int) ((renderer.getWidth() + padding + 1) * pos.getScale()), 0)));
-        int absoluteY = Math.max(padding * 2, Math.min(pos.getAbsoluteY(), Math.max(screenHeight - (int) ((renderer.getHeight() + padding + 1) * pos.getScale()), 0)));
+        //avec le padding
+//        int absoluteX = Math.max((int) (padding * pos.getScale()), Math.min(pos.getAbsoluteX(), Math.max(screenWidth - (int) ((renderer.getWidth() + padding + 1) * pos.getScale()), 0)));
+//        int absoluteY = Math.max((int) (padding * pos.getScale()), Math.min(pos.getAbsoluteY(), Math.max(screenHeight - (int) ((renderer.getHeight() + padding + 1) * pos.getScale()), 0)));
+
+        int absoluteX = Math.max(0, Math.min(pos.getAbsoluteX(), Math.max(screenWidth - (int) ((renderer.getWidth() + 1) * pos.getScale()), 0)));
+        int absoluteY = Math.max(0, Math.min(pos.getAbsoluteY(), Math.max(screenHeight - (int) ((renderer.getHeight() + 1) * pos.getScale()), 0)));
 
         pos.setAbsolute(absoluteX, absoluteY);
     }
 
     @Override
-    protected void mouseClicked(int x, int y, int mouseButton) throws IOException {
+    protected void mouseClicked(int x, int y, int mouseButton) {
         this.prevX = x;
         this.prevY = y;
 
