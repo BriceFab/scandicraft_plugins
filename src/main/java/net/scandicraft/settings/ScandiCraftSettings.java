@@ -28,7 +28,7 @@ public class ScandiCraftSettings {
     public String language;
     private final String optionsFileName = "sc_options.json";
 
-    public KeyBinding OPEN_HUD_MANAGER = new KeyBinding("ScandiCraft Mod Positioning", Keyboard.KEY_O, "scandicraft.options.categorie.keyboards", KeyBindingType.SCANDICRAFT);
+    public KeyBinding OPEN_HUD_MANAGER = new KeyBinding("ScandiCraft Mod Positioning", Keyboard.KEY_RSHIFT, "scandicraft.options.categorie.keyboards", KeyBindingType.SCANDICRAFT);
     public KeyBinding keyBindTest2 = new KeyBinding("test2", 0, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
 
     public ScandiCraftSettings(Minecraft mcIn) {

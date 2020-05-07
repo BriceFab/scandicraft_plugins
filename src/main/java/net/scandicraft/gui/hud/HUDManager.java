@@ -75,10 +75,15 @@ public class HUDManager {
             pos = ScreenPosition.fromRelativePosition(0.5, 0.5);
         }
 
-//        GL11.glPushMatrix();
-//        GL11.glScalef(pos.getScale(), pos.getScale(), pos.getScale());
+        GL11.glPushMatrix();
+        GL11.glTranslatef(-pos.getAbsoluteX() * (pos.getScale() - 1.0F), -pos.getAbsoluteY() * (pos.getScale() - 1.0F), 0.0F);
+        GL11.glScalef(pos.getScale(), pos.getScale(), 1.0F);
+
         renderer.render(pos);
-//        GL11.glPopMatrix();
+
+        GL11.glScalef(1.0F / pos.getScale(), 1.0F / pos.getScale(), 1.0F);
+        GL11.glTranslatef(pos.getAbsoluteX() * (pos.getScale() - 1.0F), pos.getAbsoluteY() * (pos.getScale() - 1.0F), 0.0F);
+        GL11.glPopMatrix();
     }
 
 }
