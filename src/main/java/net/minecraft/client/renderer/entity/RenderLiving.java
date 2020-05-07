@@ -16,7 +16,7 @@ import shadersmod.client.Shaders;
 
 public abstract class RenderLiving<T extends EntityLiving> extends RendererLivingEntity<T>
 {
-    private static final String __OBFID = "CL_00001015";
+    //private static final String __OBFID = "CL_00001015";
 
     public RenderLiving(RenderManager rendermanagerIn, ModelBase modelbaseIn, float shadowsizeIn)
     {

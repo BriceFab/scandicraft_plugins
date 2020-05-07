@@ -548,7 +548,7 @@ public class GuiIngame extends Gui
         Collection collection = scoreboard.getSortedScores(p_180475_1_);
         ArrayList arraylist = Lists.newArrayList(Iterables.filter(collection, new Predicate()
         {
-            private static final String __OBFID = "CL_00001958";
+            //private static final String __OBFID = "CL_00001958";
             public boolean apply(Score p_apply_1_)
             {
                 return p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#");

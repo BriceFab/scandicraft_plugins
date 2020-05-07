@@ -11,7 +11,6 @@ import optifine.Config;
 public class BlockLeavesBase extends Block
 {
     protected boolean fancyGraphics;
-    private static final String __OBFID = "CL_00000326";
     private static Map mapOriginalOpacity = new IdentityHashMap();
 
     protected BlockLeavesBase(Material materialIn, boolean fancyGraphics)

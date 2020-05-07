@@ -44,7 +44,7 @@ public class IntegratedServer extends MinecraftServer
     private boolean isGamePaused;
     private boolean isPublic;
     private ThreadLanServerPing lanServerPing;
-    private static final String __OBFID = "CL_00001129";
+    //private static final String __OBFID = "CL_00001129";
 
     public IntegratedServer(Minecraft mcIn)
     {
@@ -344,7 +344,7 @@ public class IntegratedServer extends MinecraftServer
         report = super.addServerInfoToCrashReport(report);
         report.getCategory().addCrashSectionCallable("Type", new Callable()
         {
-            private static final String __OBFID = "CL_00001130";
+            //private static final String __OBFID = "CL_00001130";
             public String call() throws Exception
             {
                 return "Integrated Server (map_client.txt)";
@@ -352,7 +352,7 @@ public class IntegratedServer extends MinecraftServer
         });
         report.getCategory().addCrashSectionCallable("Is Modded", new Callable()
         {
-            private static final String __OBFID = "CL_00001131";
+            //private static final String __OBFID = "CL_00001131";
             public String call() throws Exception
             {
                 String s = ClientBrandRetriever.getClientModName();
@@ -454,7 +454,7 @@ public class IntegratedServer extends MinecraftServer
     {
         Futures.getUnchecked(this.addScheduledTask(new Runnable()
         {
-            private static final String __OBFID = "CL_00002380";
+            //private static final String __OBFID = "CL_00002380";
             public void run()
             {
                 for (EntityPlayerMP entityplayermp : Lists.newArrayList(IntegratedServer.this.getConfigurationManager().getPlayers()))

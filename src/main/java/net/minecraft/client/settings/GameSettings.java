@@ -192,7 +192,7 @@ public class GameSettings
     /** Game settings language */
     public String language;
     public boolean forceUnicodeFont;
-    private static final String __OBFID = "CL_00000650";
+    //private static final String __OBFID = "CL_00000650";
     public int ofFogType = 1;
     public float ofFogStart = 0.8F;
     public int ofMipmapType = 0;
@@ -3031,7 +3031,7 @@ public class GameSettings
     static final class GameSettings$2
     {
         static final int[] field_151477_a = new int[GameSettings.Options.values().length];
-        private static final String __OBFID = "CL_00000652";
+        //private static final String __OBFID = "CL_00000652";
 
         static
         {
@@ -3307,7 +3307,7 @@ public class GameSettings
         private float valueMin;
         private float valueMax;
         private static final GameSettings.Options[] $VALUES = new GameSettings.Options[]{INVERT_MOUSE, SENSITIVITY, FOV, GAMMA, SATURATION, RENDER_DISTANCE, VIEW_BOBBING, ANAGLYPH, FRAMERATE_LIMIT, FBO_ENABLE, RENDER_CLOUDS, GRAPHICS, AMBIENT_OCCLUSION, GUI_SCALE, PARTICLES, CHAT_VISIBILITY, CHAT_COLOR, CHAT_LINKS, CHAT_OPACITY, CHAT_LINKS_PROMPT, SNOOPER_ENABLED, USE_FULLSCREEN, ENABLE_VSYNC, USE_VBO, TOUCHSCREEN, CHAT_SCALE, CHAT_WIDTH, CHAT_HEIGHT_FOCUSED, CHAT_HEIGHT_UNFOCUSED, MIPMAP_LEVELS, FORCE_UNICODE_FONT, STREAM_BYTES_PER_PIXEL, STREAM_VOLUME_MIC, STREAM_VOLUME_SYSTEM, STREAM_KBPS, STREAM_FPS, STREAM_COMPRESSION, STREAM_SEND_METADATA, STREAM_CHAT_ENABLED, STREAM_CHAT_USER_FILTER, STREAM_MIC_TOGGLE_BEHAVIOR, BLOCK_ALTERNATIVES, REDUCED_DEBUG_INFO, ENTITY_SHADOWS};
-        private static final String __OBFID = "CL_00000653";
+        //private static final String __OBFID = "CL_00000653";
 
         public static GameSettings.Options getEnumOptions(int p_74379_0_)
         {

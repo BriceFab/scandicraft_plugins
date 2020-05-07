@@ -142,7 +142,7 @@ public class RenderManager
 
     /** whether bounding box should be rendered or not */
     private boolean debugBoundingBox = false;
-    private static final String __OBFID = "CL_00000991";
+    //private static final String __OBFID = "CL_00000991";
 
     public RenderManager(TextureManager renderEngineIn, RenderItem itemRendererIn)
     {

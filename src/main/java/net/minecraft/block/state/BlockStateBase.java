@@ -16,7 +16,6 @@ public abstract class BlockStateBase implements IBlockState
     private static final Joiner COMMA_JOINER = Joiner.on(',');
     private static final Function MAP_ENTRY_TO_STRING = new Function()
     {
-        private static final String __OBFID = "CL_00002031";
         public String apply(Entry p_apply_1_)
         {
             if (p_apply_1_ == null)
@@ -34,7 +33,6 @@ public abstract class BlockStateBase implements IBlockState
             return this.apply((Entry)p_apply_1_);
         }
     };
-    private static final String __OBFID = "CL_00002032";
     private int blockId = -1;
     private int blockStateId = -1;
     private int metadata = -1;

@@ -21,7 +21,7 @@ public class LongHashMap
 
     /** count of times elements have been added/removed */
     private transient volatile int modCount;
-    private static final String __OBFID = "CL_00001492";
+    //private static final String __OBFID = "CL_00001492";
 
     public LongHashMap()
     {
@@ -256,7 +256,7 @@ public class LongHashMap
         Object value;
         LongHashMap.Entry nextEntry;
         final int hash;
-        private static final String __OBFID = "CL_00001493";
+        //private static final String __OBFID = "CL_00001493";
 
         Entry(int p_i1553_1_, long p_i1553_2_, Object p_i1553_4_, LongHashMap.Entry p_i1553_5_)
         {

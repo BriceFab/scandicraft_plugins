@@ -31,7 +31,7 @@ public abstract class MapGenStructure extends MapGenBase
      * placed.
      */
     protected Map structureMap = Maps.newHashMap();
-    private static final String __OBFID = "CL_00000505";
+    //private static final String __OBFID = "CL_00000505";
     private LongHashMap structureLongMap = new LongHashMap();
 
     public abstract String getStructureName();
@@ -63,7 +63,7 @@ public abstract class MapGenStructure extends MapGenBase
                 CrashReportCategory crashreportcategory = crashreport.makeCategory("Feature being prepared");
                 crashreportcategory.addCrashSectionCallable("Is feature chunk", new Callable()
                 {
-                    private static final String __OBFID = "CL_00000506";
+                    //private static final String __OBFID = "CL_00000506";
                     public String call() throws Exception
                     {
                         return MapGenStructure.this.canSpawnStructureAtCoords(chunkX, chunkZ) ? "True" : "False";
@@ -72,7 +72,7 @@ public abstract class MapGenStructure extends MapGenBase
                 crashreportcategory.addCrashSection("Chunk location", String.format("%d,%d", new Object[] {Integer.valueOf(chunkX), Integer.valueOf(chunkZ)}));
                 crashreportcategory.addCrashSectionCallable("Chunk pos hash", new Callable()
                 {
-                    private static final String __OBFID = "CL_00000507";
+                    //private static final String __OBFID = "CL_00000507";
                     public String call() throws Exception
                     {
                         return String.valueOf(ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ));
@@ -80,7 +80,7 @@ public abstract class MapGenStructure extends MapGenBase
                 });
                 crashreportcategory.addCrashSectionCallable("Structure type", new Callable()
                 {
-                    private static final String __OBFID = "CL_00000508";
+                    //private static final String __OBFID = "CL_00000508";
                     public String call() throws Exception
                     {
                         return MapGenStructure.this.getClass().getCanonicalName();

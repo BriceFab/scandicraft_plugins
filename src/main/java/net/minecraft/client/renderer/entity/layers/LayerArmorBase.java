@@ -235,7 +235,7 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
 
     static final class LayerArmorBase$1 {
         static final int[] field_178747_a = new int[ItemArmor.ArmorMaterial.values().length];
-        private static final String __OBFID = "CL_00002427";
+        //private static final String __OBFID = "CL_00002427";
 
         static {
             try {

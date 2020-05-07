@@ -36,7 +36,7 @@ public class MathHelper
     private static final double FRAC_BIAS;
     private static final double[] ASINE_TAB;
     private static final double[] COS_TAB;
-    private static final String __OBFID = "CL_00001496";
+    ////private static final String __OBFID = "CL_00001496";
 
     /**
      * sin looked up in a table

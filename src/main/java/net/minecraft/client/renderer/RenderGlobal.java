@@ -180,7 +180,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
     private double prevRenderSortY;
     private double prevRenderSortZ;
     public boolean displayListEntitiesDirty = true;
-    private static final String __OBFID = "CL_00000954";
+    //private static final String __OBFID = "CL_00000954";
     private CloudRenderer cloudRenderer;
     public Entity renderedEntity;
     public Set<RenderChunk> chunksToResortTransparency = new LinkedHashSet<RenderChunk>();
