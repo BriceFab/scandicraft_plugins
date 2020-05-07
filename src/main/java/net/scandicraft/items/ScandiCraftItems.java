@@ -46,7 +46,6 @@ public class ScandiCraftItems {
     public static final Item pyrite_pie;
 
     static {
-        //ScandiCraft : UZApocalyps
         scandium = Items.getRegisteredItem("scandium");
         pyrite = Items.getRegisteredItem("pyrite");
         lazurite = Items.getRegisteredItem("lazurite");

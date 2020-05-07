@@ -1,7 +1,6 @@
 package net.scandicraft.items;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.item.*;
 import net.minecraft.potion.Potion;
 import net.scandicraft.blocks.ScandiCraftBlocks;
@@ -9,14 +8,11 @@ import net.scandicraft.blocks.ScandiCraftBlocks;
 public class ScandiCraftItem {
 
     public static void registerItems() {
-        //ScandiCraft : new Blocks
-        Item.registerItemBlock(ScandiCraftBlocks.scandium_ore);
-        Item.registerItemBlock(ScandiCraftBlocks.scandium_block);
-        Item.registerItemBlock(ScandiCraftBlocks.pyrite_ore);
-        Item.registerItemBlock(ScandiCraftBlocks.pyrite_block);
-        Item.registerItemBlock(ScandiCraftBlocks.lazurite_ore);
-        Item.registerItemBlock(ScandiCraftBlocks.lazurite_block);
+        splitRegisterBlocks();
+        splitRegisterItems();
+    }
 
+    private static void splitRegisterItems() {
         //ScandiCraft : new Items
         Item.registerItem(3500, "scandium", (new Item()).setUnlocalizedName("scandium").setCreativeTab(CreativeTabs.tabMaterials));
         Item.registerItem(3501, "pyrite", (new Item()).setUnlocalizedName("pyrite").setCreativeTab(CreativeTabs.tabMaterials));
@@ -54,9 +50,19 @@ public class ScandiCraftItem {
         Item.registerItem(3533, "bloody_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 6, 1)).setUnlocalizedName("chestplateBloody"));
         Item.registerItem(3534, "bloody_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 6, 2)).setUnlocalizedName("leggingsBloody"));
         Item.registerItem(3535, "bloody_boots", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 6, 3)).setUnlocalizedName("bootsBloody"));
-        Item.registerItem(3536,"scepter_creeper", (new ItemSpawnScepter(3).setUnlocalizedName("scepterCreeper")));
-        Item.registerItem(3537,"scepter_repair", (new ItemRepairScepter().setUnlocalizedName("scepterRepair")));
-        Item.registerItem(3538, "chest_pyrite", (new ItemMinecart(EntityMinecart.EnumMinecartType.CHEST)).setUnlocalizedName("pyriteChest"));
+        Item.registerItem(3536, "scepter_creeper", (new ItemSpawnScepter(3).setUnlocalizedName("scepterCreeper")));
+        Item.registerItem(3537, "scepter_repair", (new ItemRepairScepter().setUnlocalizedName("scepterRepair")));
+    }
+
+    private static void splitRegisterBlocks() {
+        //ScandiCraft : new Blocks
+        Item.registerItemBlock(ScandiCraftBlocks.scandium_ore);
+        Item.registerItemBlock(ScandiCraftBlocks.scandium_block);
+        Item.registerItemBlock(ScandiCraftBlocks.pyrite_ore);
+        Item.registerItemBlock(ScandiCraftBlocks.pyrite_block);
+        Item.registerItemBlock(ScandiCraftBlocks.lazurite_ore);
+        Item.registerItemBlock(ScandiCraftBlocks.lazurite_block);
+        Item.registerItemBlock(ScandiCraftBlocks.pyrite_chest);
     }
 
 }

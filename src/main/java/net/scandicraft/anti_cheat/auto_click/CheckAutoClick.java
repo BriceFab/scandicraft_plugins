@@ -16,8 +16,10 @@ public class CheckAutoClick {
     private static final ArrayList<Boolean> keyDown_history = new ArrayList<>();        //historique des keyDown de l'attaque
     private static final ArrayList<Integer> suspectClick_history = new ArrayList<>();   //historique des clicks suspects
     private static final ArrayList<Long> time_history = new ArrayList<>();              //historique du délais entre chaque clicks
+    private static final ArrayList<Integer> average_history = new ArrayList<>();          //historique des moyennes de délais entre chaque clicks
 
     private static int ACT_CPS = 0;
+    private static boolean isButterfly = false;
 
     public static void checkCPS(int CPS) {
         //Si dépasse max CPS
@@ -68,7 +70,7 @@ public class CheckAutoClick {
         }
         if (hasIllegalDelta) {
             Config.print_debug("reason: illegal time delta");
-            CheatScreen.onDetectCheat(CheatType.BUTTERFLY);
+            CheatScreen.onDetectCheat(isButterfly ? CheatType.BUTTERFLY : CheatType.AUTOCLICK);
         }
     }
 
@@ -144,7 +146,7 @@ public class CheckAutoClick {
             //converti en tableau de différence entre chaque temps
             ArrayList<Long> diffs = new ArrayList<>();
 
-            int countTimeUnderMin = 0;
+            ArrayList<Boolean> time_under_min = new ArrayList<>();  //true= butterfly; false= autoclick
             for (int i = 1; i < time_history.size(); i++) {
                 long last = time_history.get(i - 1);
                 long current = time_history.get(i);
@@ -153,16 +155,31 @@ public class CheckAutoClick {
 
                 Config.print_debug(String.format("TIME last: %d current: %d diff: %d", last, current, diff));
 
-                if (diff <= Config.MIN_DIFF_TIME && diff != 1) { //TODO test diff de 1 = bug
-                    Config.print_debug("diff under " + Config.MIN_DIFF_TIME + " ms");
-                    countTimeUnderMin++;
+                if (diff != 1) {
+                    double min_diff = Math.min(Config.MIN_DIFF_TIME_BUTTERFLY, Config.MIN_DIFF_TIME_AUTOCLICK);
+                    if (diff <= min_diff) {
+                        isButterfly = diff > Config.MIN_DIFF_TIME_AUTOCLICK;
+                        time_under_min.add(isButterfly);
+                        Config.print_debug("diff under " + min_diff + " ms [" + (isButterfly ? "butterfly" : "autoclick") + "]");
+                    }
                 }
 
                 diffs.add(diff);
             }
 
-            if (countTimeUnderMin >= Config.MAX_SUM_SUSPECT) {
-                Config.print_debug("max 3 moyenne under " + Config.MIN_DIFF_TIME + " ms");
+            time_history.clear();
+
+            //Vérifications
+            if (time_under_min.size() >= Config.MAX_SUM_SUSPECT) {
+                Config.print_debug("max 3 moyenne under " + Math.min(Config.MIN_DIFF_TIME_BUTTERFLY, Config.MIN_DIFF_TIME_AUTOCLICK) + " ms");
+
+                //true= butterfly; false= autoclick
+                int count_buttefly = 0;
+                for (Boolean isButterFly : time_under_min) {
+                    if (isButterFly) count_buttefly++;
+                }
+                isButterfly = count_buttefly >= Config.MAX_SUM_SUSPECT;
+
                 return true;
             }
 
@@ -170,15 +187,37 @@ public class CheckAutoClick {
             double result_average = average.isPresent() ? average.getAsDouble() : 0;
 
             Config.print_debug("moyenne " + result_average);
+            addAverageHistory(result_average);
 
-            if (result_average <= Config.MIN_DIFF_TIME_AVERAGE) {
-                Config.print_debug("moyenne under " + Config.MIN_DIFF_TIME_AVERAGE + " ms");
+            //Si en dessous de la moyenne autoclick et buttefly
+            double min_average = Math.min(Config.MIN_DIFF_TIME_AVERAGE_BUTTERFLY, Config.MIN_DIFF_TIME_AVERAGE_AUTOCLICK);
+            if (result_average <= min_average) {
+                isButterfly = result_average > Config.MIN_DIFF_TIME_AVERAGE_AUTOCLICK;
+                Config.print_debug("moyenne under " + min_average + " ms [" + (isButterfly ? "butterfly" : "autoclick") + "]");
+
                 return true;
             }
-
-            time_history.clear();
         }
         return false;
+    }
+
+    private static void addAverageHistory(double average) {
+        average_history.add(new Double(average).intValue());
+
+        if (average_history.size() >= Config.MAX_HISTORY_FREQUENCY_AVERAGE) {
+
+            average_history.forEach(avg -> {
+                int frequency = Collections.frequency(average_history, avg);
+                Config.print_debug("average " + avg + " freq: " + frequency);
+
+                if (frequency >= Config.MAX_FREQUENCY_AVERAGE) {
+                    Config.print_debug("reason: max " + Config.MAX_FREQUENCY_AVERAGE + " frequency history");
+                    CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
+                }
+            });
+
+            average_history.clear();
+        }
     }
 
     private static boolean isSuspectClick() {

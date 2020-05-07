@@ -11,7 +11,7 @@ public class ScandiCraftBlocks {
     public static final Block pyrite_block;
     public static final Block lazurite_ore;
     public static final Block lazurite_block;
-    public static final PyriteBlockChest chest_pyrite;
+    public static final PyriteBlockChest pyrite_chest;
 
     static {
         scandium_ore = Blocks.getRegisteredBlock("scandium_ore");
@@ -20,7 +20,7 @@ public class ScandiCraftBlocks {
         pyrite_block = Blocks.getRegisteredBlock("pyrite_block");
         lazurite_ore = Blocks.getRegisteredBlock("lazurite_ore");
         lazurite_block = Blocks.getRegisteredBlock("lazurite_block");
-        chest_pyrite = (PyriteBlockChest) Blocks.getRegisteredBlock("chest_pyrite");
+        pyrite_chest = (PyriteBlockChest) Blocks.getRegisteredBlock("pyrite_chest");
     }
 
 }

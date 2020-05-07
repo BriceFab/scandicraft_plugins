@@ -12,6 +12,8 @@ import net.minecraft.tileentity.*;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ReportedException;
 import net.minecraft.world.World;
+import net.scandicraft.tileentity.TileEntityPyriteChest;
+import net.scandicraft.tileentity.TileEntityPyriteChestRenderer;
 
 import java.util.Map;
 
@@ -54,6 +56,7 @@ public class TileEntityRendererDispatcher {
         this.mapSpecialRenderers.put(TileEntityBeacon.class, new TileEntityBeaconRenderer());
         this.mapSpecialRenderers.put(TileEntitySkull.class, new TileEntitySkullRenderer());
         this.mapSpecialRenderers.put(TileEntityBanner.class, new TileEntityBannerRenderer());
+        this.mapSpecialRenderers.put(TileEntityPyriteChest.class, new TileEntityPyriteChestRenderer());
 
         for (TileEntitySpecialRenderer<?> tileentityspecialrenderer : this.mapSpecialRenderers.values()) {
             tileentityspecialrenderer.setRendererDispatcher(this);

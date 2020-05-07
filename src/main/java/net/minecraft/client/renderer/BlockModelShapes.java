@@ -14,6 +14,7 @@ import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
+import net.scandicraft.blocks.ScandiCraftBlocks;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -43,6 +44,11 @@ public class BlockModelShapes {
 
             if (block == Blocks.ender_chest) {
                 return this.modelManager.getTextureMap().getAtlasSprite("minecraft:blocks/obsidian");
+            }
+
+            //ScandiCraft ModelShapes
+            if (block == ScandiCraftBlocks.pyrite_chest) {
+                return this.modelManager.getTextureMap().getAtlasSprite("minecraft:blocks/pyrite_block");
             }
 
             if (block == Blocks.flowing_lava || block == Blocks.lava) {
@@ -100,7 +106,7 @@ public class BlockModelShapes {
     }
 
     private void registerAllBlocks() {
-        this.registerBuiltInBlocks(Blocks.air, Blocks.flowing_water, Blocks.water, Blocks.flowing_lava, Blocks.lava, Blocks.piston_extension, Blocks.chest, Blocks.ender_chest, Blocks.trapped_chest, Blocks.standing_sign, Blocks.skull, Blocks.end_portal, Blocks.barrier, Blocks.wall_sign, Blocks.wall_banner, Blocks.standing_banner);
+        this.registerBuiltInBlocks(Blocks.air, Blocks.flowing_water, Blocks.water, Blocks.flowing_lava, Blocks.lava, Blocks.piston_extension, Blocks.chest, Blocks.ender_chest, Blocks.trapped_chest, ScandiCraftBlocks.pyrite_chest, Blocks.standing_sign, Blocks.skull, Blocks.end_portal, Blocks.barrier, Blocks.wall_sign, Blocks.wall_banner, Blocks.standing_banner);
         this.registerBlockWithStateMapper(Blocks.stone, (new StateMap.Builder()).withName(BlockStone.VARIANT).build());
         this.registerBlockWithStateMapper(Blocks.prismarine, (new StateMap.Builder()).withName(BlockPrismarine.VARIANT).build());
         this.registerBlockWithStateMapper(Blocks.leaves, (new StateMap.Builder()).withName(BlockOldLeaf.VARIANT).withSuffix("_leaves").ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE).build());

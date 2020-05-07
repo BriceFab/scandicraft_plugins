@@ -6,17 +6,13 @@ import net.scandicraft.items.ScandiCraftItems;
 
 public class Item {
 
-    //call by RenderItem.java
+    //ScandiCraft call by RenderItem.java
     public static void registerItems(RenderItem renderItem) {
-        //ScandiCraft : New Blocks
-        renderItem.registerBlock(ScandiCraftBlocks.scandium_ore, "scandium_ore");
-        renderItem.registerBlock(ScandiCraftBlocks.scandium_block, "scandium_block");
-        renderItem.registerBlock(ScandiCraftBlocks.pyrite_ore, "pyrite_ore");
-        renderItem.registerBlock(ScandiCraftBlocks.pyrite_block, "pyrite_block");
-        renderItem.registerBlock(ScandiCraftBlocks.lazurite_ore, "lazurite_ore");
-        renderItem.registerBlock(ScandiCraftBlocks.lazurite_block, "lazurite_block");
+        splitRegisterBlocks(renderItem);
+        splitRegisterItems(renderItem);
+    }
 
-        //ScandiCraft : New Items
+    private static void splitRegisterItems(RenderItem renderItem) {
         renderItem.registerItem(ScandiCraftItems.scandium, "scandium");
         renderItem.registerItem(ScandiCraftItems.pyrite, "pyrite");
         renderItem.registerItem(ScandiCraftItems.lazurite, "lazurite");
@@ -52,8 +48,18 @@ public class Item {
         renderItem.registerItem(ScandiCraftItems.bloody_leggings, "bloody_leggings");
         renderItem.registerItem(ScandiCraftItems.bloody_boots, "bloody_boots");
         renderItem.registerItem(ScandiCraftItems.bloody_sword, "bloody_sword");
-        renderItem.registerItem(ScandiCraftItems.scepter_creeper,"scepter_creeper");
-        renderItem.registerItem(ScandiCraftItems.scepter_repair,"scepter_repair");
+        renderItem.registerItem(ScandiCraftItems.scepter_creeper, "scepter_creeper");
+        renderItem.registerItem(ScandiCraftItems.scepter_repair, "scepter_repair");
+    }
+
+    private static void splitRegisterBlocks(RenderItem renderItem) {
+        renderItem.registerBlock(ScandiCraftBlocks.scandium_ore, "scandium_ore");
+        renderItem.registerBlock(ScandiCraftBlocks.scandium_block, "scandium_block");
+        renderItem.registerBlock(ScandiCraftBlocks.pyrite_ore, "pyrite_ore");
+        renderItem.registerBlock(ScandiCraftBlocks.pyrite_block, "pyrite_block");
+        renderItem.registerBlock(ScandiCraftBlocks.lazurite_ore, "lazurite_ore");
+        renderItem.registerBlock(ScandiCraftBlocks.lazurite_block, "lazurite_block");
+        renderItem.registerBlock(ScandiCraftBlocks.pyrite_chest, "pyrite_chest");
     }
 
 }

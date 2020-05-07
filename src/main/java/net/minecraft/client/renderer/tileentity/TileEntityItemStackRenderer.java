@@ -13,6 +13,8 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityEnderChest;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.EnumFacing;
+import net.scandicraft.blocks.ScandiCraftBlocks;
+import net.scandicraft.tileentity.TileEntityPyriteChest;
 
 import java.util.UUID;
 
@@ -21,6 +23,7 @@ public class TileEntityItemStackRenderer {
     private final TileEntityChest chestBasic = new TileEntityChest(0);
     private final TileEntityChest chestTrap = new TileEntityChest(1);
     private final TileEntityEnderChest enderChest = new TileEntityEnderChest();
+    private final TileEntityPyriteChest chestPyrite = new TileEntityPyriteChest();   //ScandiCraft
     private final TileEntityBanner banner = new TileEntityBanner();
 
     public void renderByItem(ItemStack itemStackIn) {
@@ -59,6 +62,8 @@ public class TileEntityItemStackRenderer {
                 TileEntityRendererDispatcher.instance.renderTileEntityAt(this.enderChest, 0.0D, 0.0D, 0.0D, 0.0F);
             } else if (block == Blocks.trapped_chest) {
                 TileEntityRendererDispatcher.instance.renderTileEntityAt(this.chestTrap, 0.0D, 0.0D, 0.0D, 0.0F);
+            } else if (block == ScandiCraftBlocks.pyrite_chest) {
+                TileEntityRendererDispatcher.instance.renderTileEntityAt(this.chestPyrite, 0.0D, 0.0D, 0.0D, 0.0F);
             } else {
                 TileEntityRendererDispatcher.instance.renderTileEntityAt(this.chestBasic, 0.0D, 0.0D, 0.0D, 0.0F);
             }
