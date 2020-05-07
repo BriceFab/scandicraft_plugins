@@ -4,7 +4,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.scandicraft.Config;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.io.IOException;
@@ -55,10 +57,13 @@ public class HUDConfigScreen extends GuiScreen {
         for (IRenderer renderer : renderers.keySet()) {
             ScreenPosition pos = renderers.get(renderer);
 
+//            GL11.glPushMatrix();
+//            GL11.glScalef(pos.getScale(), pos.getScale(), pos.getScale());
             renderer.renderDummy(pos);
 
             this.drawHollowRect(pos.getAbsoluteX() - padding, pos.getAbsoluteY() - padding, renderer.getWidth() + (padding * 2), renderer.getHeight() + (padding * 2), new Color(0, 0, 0, 50).getRGB());
             this.drawScaleRect(pos.getAbsoluteX() + renderer.getWidth() + padding, pos.getAbsoluteY() + renderer.getHeight() + padding, scaleSize, scaleSize, Color.GREEN.getRGB());
+//            GL11.glPopMatrix();
         }
 
         this.zLevel = zBackup;

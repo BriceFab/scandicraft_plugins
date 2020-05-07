@@ -10,6 +10,7 @@ public class ScreenPosition {
     private static final Minecraft mc = Minecraft.getMinecraft();
 
     private double x, y;
+    private float scale = 1F;
 
     public ScreenPosition(double x, double y) {
         setRelative(x, y);
@@ -57,4 +58,11 @@ public class ScreenPosition {
         this.y = y;
     }
 
+    public float getScale() {
+        return scale;
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
 }

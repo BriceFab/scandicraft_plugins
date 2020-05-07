@@ -101,6 +101,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.scandicraft.render.RenderEntityItem;
 import optifine.PlayerItemsLayer;
 import optifine.Reflector;
 
@@ -263,7 +264,7 @@ public class RenderManager
             IBlockState iblockstate = worldIn.getBlockState(new BlockPos(livingPlayerIn));
             Block block = iblockstate.getBlock();
 
-            if (Reflector.callBoolean(Reflector.ForgeBlock_isBed, new Object[] {worldIn, new BlockPos(livingPlayerIn), (EntityLivingBase)livingPlayerIn}))
+            if (Reflector.callBoolean(Reflector.ForgeBlock_isBed, worldIn, new BlockPos(livingPlayerIn), livingPlayerIn))
             {
                 EnumFacing enumfacing = (EnumFacing)Reflector.call(block, Reflector.ForgeBlock_getBedDirection, new Object[] {worldIn, new BlockPos(livingPlayerIn)});
                 int i = enumfacing.getHorizontalIndex();

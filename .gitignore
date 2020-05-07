@@ -24,3 +24,5 @@ run/scandicraft/
 *.gz
 *.log
 !run/scandicraft/fonts/*
+run/assets/skins/*
+run/screenshots/

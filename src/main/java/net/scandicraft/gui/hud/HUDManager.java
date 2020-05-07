@@ -6,6 +6,7 @@ import net.minecraft.client.gui.GuiChat;
 import net.scandicraft.events.EventManager;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.RenderEvent;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -74,7 +75,10 @@ public class HUDManager {
             pos = ScreenPosition.fromRelativePosition(0.5, 0.5);
         }
 
+//        GL11.glPushMatrix();
+//        GL11.glScalef(pos.getScale(), pos.getScale(), pos.getScale());
         renderer.render(pos);
+//        GL11.glPopMatrix();
     }
 
 }
