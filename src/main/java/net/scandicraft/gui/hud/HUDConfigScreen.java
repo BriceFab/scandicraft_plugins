@@ -160,13 +160,12 @@ public class HUDConfigScreen extends GuiScreen {
 
         @Override
         public boolean test(IRenderer renderer) {
-
             ScreenPosition pos = renderers.get(renderer);
             int absoluteX = pos.getAbsoluteX();
             int absoluteY = pos.getAbsoluteY();
             float scale = pos.getScale();
 
-            return (mouseX > absoluteX - (padding * scale) && mouseY > absoluteY - (padding * scale) && mouseX < absoluteX + renderer.getWidth() + (padding * 2) * scale && mouseY < absoluteY + renderer.getHeight() + (padding * 2) * scale);
+            return (mouseX > absoluteX - (padding * scale) && mouseY > absoluteY - (padding * scale) && mouseX < absoluteX + (renderer.getWidth() + padding) * scale && mouseY < absoluteY + (renderer.getHeight() + padding) * scale);
         }
     }
 }
