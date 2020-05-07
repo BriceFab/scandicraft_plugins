@@ -88,6 +88,8 @@ import net.scandicraft.anti_cheat.auto_click.CheckAutoClick;
 import net.scandicraft.anti_cheat.x_ray.PackManager;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.events.impl.ClientTickEvent;
+import net.scandicraft.events.impl.KeybordEvent;
+import net.scandicraft.events.impl.MouseEvent;
 import net.scandicraft.gui.MainMenu;
 import net.scandicraft.mods.ModInstances;
 import net.scandicraft.mods.impl.togglesprintsneak.ClientMovementInput;
@@ -1557,6 +1559,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                         this.currentScreen.handleMouseInput();
                     }
                 }
+
+                //ScandiCraft Mouse input event
+                new MouseEvent().call();
             }
 
             if (this.leftClickCounter > 0) {
@@ -1696,6 +1701,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                         }
                     }
                 }
+
+                //ScandiCraft Keybord input event
+                new KeybordEvent().call();
             }
 
             for (int l = 0; l < 9; ++l) {

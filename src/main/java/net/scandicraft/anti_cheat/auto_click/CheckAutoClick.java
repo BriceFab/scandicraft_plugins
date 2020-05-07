@@ -18,59 +18,62 @@ public class CheckAutoClick {
     private static final ArrayList<Long> time_history = new ArrayList<>();              //historique du délais entre chaque clicks
     private static final ArrayList<Integer> average_history = new ArrayList<>();          //historique des moyennes de délais entre chaque clicks
 
+    private static final boolean enable = true;
     private static int ACT_CPS = 0;
     private static boolean isButterfly = false;
 
     public static void checkCPS(int CPS) {
         //Si dépasse max CPS
-        if (CPS >= Config.MAX_CPS) {
+        if (CPS >= Config.MAX_CPS && enable) {
             new CheatScreen(CheatType.AUTOCLICK);
         }
     }
 
     public static void checkAsCPS() {
-        //Si action du clic (attack) est lancée mais que n'a 0 clics = auto_click
-        ACT_CPS = ModInstances.getModCPS().getCPS();
+        if (enable) {
+            //Si action du clic (attack) est lancée mais que n'a 0 clics = auto_click
+            ACT_CPS = ModInstances.getModCPS().getCPS();
 
-        addClickHistory(ACT_CPS);
-        boolean attackByMouse = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode() < 0; //souris = plus petit que 0
-        boolean isSuspectClick = isSuspectClick();
-        boolean isKeyDown = !attackByMouse || Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown() || !isSuspectClick;
-        addSuspectHistory(isSuspectClick);
-        addKeyDownHistory(isKeyDown);
-        boolean hasIllegalDelta = addTimeHistory(System.currentTimeMillis());
+            addClickHistory(ACT_CPS);
+            boolean attackByMouse = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode() < 0; //souris = plus petit que 0
+            boolean isSuspectClick = isSuspectClick();
+            boolean isKeyDown = !attackByMouse || Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown() || !isSuspectClick;
+            addSuspectHistory(isSuspectClick);
+            addKeyDownHistory(isKeyDown);
+            boolean hasIllegalDelta = addTimeHistory(System.currentTimeMillis());
 
-        //debug
-        Config.print_debug("act CPS: " + ACT_CPS + " count: " + countHistoryZero() + " size:" + clicks_history.size());
-        Config.print_debug("LMB " + Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown() + " count: " + countHistoryDown() + " size:" + keyDown_history.size() + " currentHistory: " + (isKeyDown) + " attackByMouse: " + attackByMouse);
+            //debug
+            Config.print_debug("act CPS: " + ACT_CPS + " count: " + countHistoryZero() + " size:" + clicks_history.size());
+            Config.print_debug("LMB " + Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown() + " count: " + countHistoryDown() + " size:" + keyDown_history.size() + " currentHistory: " + (isKeyDown) + " attackByMouse: " + attackByMouse);
 
-        //check if cheating
-        if (countHistoryZero() >= Config.MAX_HISTORY / 2) {    //si trop de 0 CPS alors que clické
-            Config.print_debug("reason: max 0");
-            CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
-        }
-        if (suspectClick_history.size() >= Config.MAX_HISTORY / 2) {   //si trop de click suspect
-            //moyen des clicks suspects
-            OptionalDouble average = suspectClick_history.stream().mapToInt(a -> a).average();
-            double result_average = average.isPresent() ? average.getAsDouble() : 0;
-
-            //clicks le plus élevé
-            int max = Collections.max(suspectClick_history);
-
-            Config.print_debug("suspectClicks result: average: " + result_average + " max: " + max);
-
-            if (max == 0 || result_average >= Config.MAX_SUSPECT_AVERAGE) {
-                Config.print_debug("reason: suspectClicks");
+            //check if cheating
+            if (countHistoryZero() >= Config.MAX_HISTORY / 2) {    //si trop de 0 CPS alors que clické
+                Config.print_debug("reason: max 0");
                 CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
             }
-        }
-        if (countHistoryDown() >= Config.MAX_HISTORY / 2) { //et que le click provient de la souris
-            Config.print_debug("reason: max down");
-            CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
-        }
-        if (hasIllegalDelta) {
-            Config.print_debug("reason: illegal time delta");
-            CheatScreen.onDetectCheat(isButterfly ? CheatType.BUTTERFLY : CheatType.AUTOCLICK);
+            if (suspectClick_history.size() >= Config.MAX_HISTORY / 2) {   //si trop de click suspect
+                //moyen des clicks suspects
+                OptionalDouble average = suspectClick_history.stream().mapToInt(a -> a).average();
+                double result_average = average.isPresent() ? average.getAsDouble() : 0;
+
+                //clicks le plus élevé
+                int max = Collections.max(suspectClick_history);
+
+                Config.print_debug("suspectClicks result: average: " + result_average + " max: " + max);
+
+                if (max == 0 || result_average >= Config.MAX_SUSPECT_AVERAGE) {
+                    Config.print_debug("reason: suspectClicks");
+                    CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
+                }
+            }
+            if (countHistoryDown() >= Config.MAX_HISTORY / 2) { //et que le click provient de la souris
+                Config.print_debug("reason: max down");
+                CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
+            }
+            if (hasIllegalDelta) {
+                Config.print_debug("reason: illegal time delta");
+                CheatScreen.onDetectCheat(isButterfly ? CheatType.BUTTERFLY : CheatType.AUTOCLICK);
+            }
         }
     }
 

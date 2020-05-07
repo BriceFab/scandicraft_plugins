@@ -1,8 +1,14 @@
 package net.scandicraft.mods.impl;
 
+import net.minecraft.client.Minecraft;
+import net.scandicraft.Config;
 import net.scandicraft.anti_cheat.auto_click.CheckAutoClick;
+import net.scandicraft.events.EventTarget;
+import net.scandicraft.events.impl.KeybordEvent;
+import net.scandicraft.events.impl.MouseEvent;
 import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
@@ -16,7 +22,6 @@ public class ModCPS extends ModDraggable {
     }
 
     private final List<Long> clicks = new ArrayList<>();
-    private boolean wasPressed;
 
     @Override
     public int getWidth() {
@@ -30,27 +35,27 @@ public class ModCPS extends ModDraggable {
 
     @Override
     public void render(ScreenPosition pos) {
-
-        //0 = left; 1 = right
-        int button = mc.gameSettings.keyBindAttack.getKeyCode() == -100 ? 0 : 1;
-
-        boolean pressed = Mouse.isButtonDown(button);
-        if (!pressed) { //CPS with Key (touche)
-            pressed = mc.gameSettings.keyBindAttack.isKeyDown();
-        }
-
-        if (pressed != this.wasPressed) {
-            long lastPressed = System.currentTimeMillis();
-            this.wasPressed = pressed;
-            if (pressed) {
-                this.clicks.add(lastPressed);
-            }
-        }
-
         int CPS = getCPS();
         CheckAutoClick.checkCPS(CPS);
         font.drawString("CPS: " + CPS, pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
+    }
 
+    @EventTarget
+    public void onMouse(MouseEvent e) {
+        int code = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode();
+        if (Mouse.getEventButtonState() && Mouse.getEventButton() == code + 100) {
+            Config.print_debug("mouse attack click");
+            this.clicks.add(System.currentTimeMillis());
+        }
+    }
+
+    @EventTarget
+    public void onKeybord(KeybordEvent e) {
+        int code = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode();
+        if (Keyboard.getEventKeyState() && Keyboard.getEventKey() == code) {
+            Config.print_debug("keybord attack click");
+            this.clicks.add(System.currentTimeMillis());
+        }
     }
 
     public int getCPS() {

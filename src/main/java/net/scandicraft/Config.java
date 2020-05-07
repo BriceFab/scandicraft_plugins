@@ -21,7 +21,7 @@ public class Config {
     /* Anti-Cheat */
     //CPS
     public static final int MAX_CPS = 20;
-    public static final int MAX_SUSPECT_AVERAGE = 10;
+    public static final int MAX_SUSPECT_AVERAGE = 15;
     public static final int MAX_HISTORY = 14;
     public static final double MIN_DIFF_TIME_BUTTERFLY = 45;            //si plus de 3 clicks sont plus petit que 55 (=butterfly)
     public static final double MIN_DIFF_TIME_AUTOCLICK = 40;            //si plus de 3 clicks sont plus petit que 40 (=autoclick)
