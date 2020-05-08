@@ -11,13 +11,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.InventoryLargeChest;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -25,6 +25,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.ILockableContainer;
 import net.minecraft.world.World;
+import net.scandicraft.tileentity.TileEntityPyriteChest;
+
+import java.util.Random;
 
 public class PyriteBlockChest extends BlockContainer {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -45,6 +48,24 @@ public class PyriteBlockChest extends BlockContainer {
 
     public boolean isFullCube() {
         return false;
+    }
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return Item.getItemFromBlock(ScandiCraftBlocks.pyrite_block);
+    }
+
+    /**
+     * Returns the quantity of items to drop on block destruction.
+     */
+    @Override
+    public int quantityDropped(Random random) {
+        return 8;
+    }
+
+    @Override
+    protected boolean canSilkHarvest() {
+        return true;
     }
 
     /**
@@ -129,20 +150,19 @@ public class PyriteBlockChest extends BlockContainer {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof TileEntityChest) {
-                ((TileEntityChest) tileentity).setCustomName(stack.getDisplayName());
+            if (tileentity instanceof TileEntityPyriteChest) {
+                ((TileEntityPyriteChest) tileentity).setCustomName(stack.getDisplayName());
             }
         }
     }
 
     public void checkForSurroundingChests(World worldIn, BlockPos pos, IBlockState state) {
-        if (worldIn.isRemote) {
-        } else {
+        if (!worldIn.isRemote) {
             IBlockState iblockstate = worldIn.getBlockState(pos.north());
             IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
             IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
             IBlockState iblockstate3 = worldIn.getBlockState(pos.east());
-            EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
+            EnumFacing enumfacing = state.getValue(FACING);
             Block block = iblockstate.getBlock();
             Block block1 = iblockstate1.getBlock();
             Block block2 = iblockstate2.getBlock();
@@ -160,9 +180,9 @@ public class PyriteBlockChest extends BlockContainer {
                     EnumFacing enumfacing2;
 
                     if (block2 == this) {
-                        enumfacing2 = (EnumFacing) iblockstate2.getValue(FACING);
+                        enumfacing2 = iblockstate2.getValue(FACING);
                     } else {
-                        enumfacing2 = (EnumFacing) iblockstate3.getValue(FACING);
+                        enumfacing2 = iblockstate3.getValue(FACING);
                     }
 
                     if (enumfacing2 == EnumFacing.NORTH) {
@@ -188,9 +208,9 @@ public class PyriteBlockChest extends BlockContainer {
                 EnumFacing enumfacing1;
 
                 if (block == this) {
-                    enumfacing1 = (EnumFacing) iblockstate.getValue(FACING);
+                    enumfacing1 = iblockstate.getValue(FACING);
                 } else {
-                    enumfacing1 = (EnumFacing) iblockstate1.getValue(FACING);
+                    enumfacing1 = iblockstate1.getValue(FACING);
                 }
 
                 if (enumfacing1 == EnumFacing.WEST) {
@@ -214,103 +234,6 @@ public class PyriteBlockChest extends BlockContainer {
         }
     }
 
-    public IBlockState correctFacing(World worldIn, BlockPos pos, IBlockState state) {
-        EnumFacing enumfacing = null;
-
-        for (Object enumfacing1 : EnumFacing.Plane.HORIZONTAL) {
-            IBlockState iblockstate = worldIn.getBlockState(pos.offset((EnumFacing) enumfacing1));
-
-            if (iblockstate.getBlock() == this) {
-                return state;
-            }
-
-            if (iblockstate.getBlock().isFullBlock()) {
-                if (enumfacing != null) {
-                    enumfacing = null;
-                    break;
-                }
-
-                enumfacing = (EnumFacing) enumfacing1;
-            }
-        }
-
-        if (enumfacing != null) {
-            return state.withProperty(FACING, enumfacing.getOpposite());
-        } else {
-            EnumFacing enumfacing2 = (EnumFacing) state.getValue(FACING);
-
-            if (worldIn.getBlockState(pos.offset(enumfacing2)).getBlock().isFullBlock()) {
-                enumfacing2 = enumfacing2.getOpposite();
-            }
-
-            if (worldIn.getBlockState(pos.offset(enumfacing2)).getBlock().isFullBlock()) {
-                enumfacing2 = enumfacing2.rotateY();
-            }
-
-            if (worldIn.getBlockState(pos.offset(enumfacing2)).getBlock().isFullBlock()) {
-                enumfacing2 = enumfacing2.getOpposite();
-            }
-
-            return state.withProperty(FACING, enumfacing2);
-        }
-    }
-
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        int i = 0;
-        BlockPos blockpos = pos.west();
-        BlockPos blockpos1 = pos.east();
-        BlockPos blockpos2 = pos.north();
-        BlockPos blockpos3 = pos.south();
-
-        if (worldIn.getBlockState(blockpos).getBlock() == this) {
-            if (this.isDoubleChest(worldIn, blockpos)) {
-                return false;
-            }
-
-            ++i;
-        }
-
-        if (worldIn.getBlockState(blockpos1).getBlock() == this) {
-            if (this.isDoubleChest(worldIn, blockpos1)) {
-                return false;
-            }
-
-            ++i;
-        }
-
-        if (worldIn.getBlockState(blockpos2).getBlock() == this) {
-            if (this.isDoubleChest(worldIn, blockpos2)) {
-                return false;
-            }
-
-            ++i;
-        }
-
-        if (worldIn.getBlockState(blockpos3).getBlock() == this) {
-            if (this.isDoubleChest(worldIn, blockpos3)) {
-                return false;
-            }
-
-            ++i;
-        }
-
-        return i <= 1;
-    }
-
-    private boolean isDoubleChest(World worldIn, BlockPos pos) {
-        if (worldIn.getBlockState(pos).getBlock() != this) {
-            return false;
-        } else {
-            for (Object enumfacing : EnumFacing.Plane.HORIZONTAL) {
-                if (worldIn.getBlockState(pos.offset((EnumFacing) enumfacing)).getBlock() == this) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-    }
-
     /**
      * Called when a neighboring block changes.
      */
@@ -318,7 +241,7 @@ public class PyriteBlockChest extends BlockContainer {
         super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
-        if (tileentity instanceof TileEntityChest) {
+        if (tileentity instanceof TileEntityPyriteChest) {
             tileentity.updateContainingBlockInfo();
         }
     }
@@ -351,36 +274,15 @@ public class PyriteBlockChest extends BlockContainer {
     public ILockableContainer getLockableContainer(World worldIn, BlockPos pos) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
-        if (!(tileentity instanceof TileEntityChest)) {
+        if (!(tileentity instanceof TileEntityPyriteChest)) {
             return null;
         } else {
-            ILockableContainer ilockablecontainer = (TileEntityChest) tileentity;
+            TileEntityPyriteChest tilePyrite = (TileEntityPyriteChest) tileentity;
 
             if (this.isBlocked(worldIn, pos)) {
                 return null;
             } else {
-                for (Object enumfacing : EnumFacing.Plane.HORIZONTAL) {
-                    BlockPos blockpos = pos.offset((EnumFacing) enumfacing);
-                    Block block = worldIn.getBlockState(blockpos).getBlock();
-
-                    if (block == this) {
-                        if (this.isBlocked(worldIn, blockpos)) {
-                            return null;
-                        }
-
-                        TileEntity tileentity1 = worldIn.getTileEntity(blockpos);
-
-                        if (tileentity1 instanceof TileEntityChest) {
-                            if (enumfacing != EnumFacing.WEST && enumfacing != EnumFacing.NORTH) {
-                                ilockablecontainer = new InventoryLargeChest("container.chestDouble", ilockablecontainer, (TileEntityChest) tileentity1);
-                            } else {
-                                ilockablecontainer = new InventoryLargeChest("container.chestDouble", (TileEntityChest) tileentity1, ilockablecontainer);
-                            }
-                        }
-                    }
-                }
-
-                return ilockablecontainer;
+                return tilePyrite;
             }
         }
     }
@@ -389,7 +291,7 @@ public class PyriteBlockChest extends BlockContainer {
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileEntityChest();
+        return new TileEntityPyriteChest();
     }
 
     /**
@@ -406,8 +308,8 @@ public class PyriteBlockChest extends BlockContainer {
             int i = 0;
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof TileEntityChest) {
-                i = ((TileEntityChest) tileentity).numPlayersUsing;
+            if (tileentity instanceof TileEntityPyriteChest) {
+                i = ((TileEntityPyriteChest) tileentity).numPlayersUsing;
             }
 
             return MathHelper.clamp_int(i, 0, 15);
@@ -427,7 +329,7 @@ public class PyriteBlockChest extends BlockContainer {
     }
 
     private boolean isOcelotSittingOnChest(World worldIn, BlockPos pos) {
-        for (Entity entity : worldIn.getEntitiesWithinAABB(EntityOcelot.class, new AxisAlignedBB((double) pos.getX(), (double) (pos.getY() + 1), (double) pos.getZ(), (double) (pos.getX() + 1), (double) (pos.getY() + 2), (double) (pos.getZ() + 1)))) {
+        for (Entity entity : worldIn.getEntitiesWithinAABB(EntityOcelot.class, new AxisAlignedBB(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1))) {
             EntityOcelot entityocelot = (EntityOcelot) entity;
 
             if (entityocelot.isSitting()) {
@@ -463,7 +365,7 @@ public class PyriteBlockChest extends BlockContainer {
      * Convert the BlockState into the correct metadata value
      */
     public int getMetaFromState(IBlockState state) {
-        return ((EnumFacing) state.getValue(FACING)).getIndex();
+        return state.getValue(FACING).getIndex();
     }
 
     protected BlockState createBlockState() {

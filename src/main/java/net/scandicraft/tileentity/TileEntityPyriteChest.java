@@ -1,6 +1,5 @@
 package net.scandicraft.tileentity;
 
-import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -13,6 +12,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ITickable;
+import net.scandicraft.blocks.PyriteBlockChest;
 
 import java.util.Arrays;
 
@@ -109,7 +109,11 @@ public class TileEntityPyriteChest extends TileEntityLockable implements ITickab
      * Gets the name of this command sender (usually username, but possibly "Rcon")
      */
     public String getName() {
-        return this.hasCustomName() ? this.customName : "container.chest";
+        if (numPlayersUsing > 0) {
+            return String.format("%s (%d)", this.hasCustomName() ? this.customName : "Coffre en pyrite", numPlayersUsing);
+        } else {
+            return String.format("%s", this.hasCustomName() ? this.customName : "Coffre en pyrite");
+        }
     }
 
     /**
@@ -265,7 +269,7 @@ public class TileEntityPyriteChest extends TileEntityLockable implements ITickab
     }
 
     public void closeInventory(EntityPlayer player) {
-        if (!player.isSpectator() && this.getBlockType() instanceof BlockChest) {
+        if (!player.isSpectator() && this.getBlockType() instanceof PyriteBlockChest) {
             --this.numPlayersUsing;
             this.worldObj.addBlockEvent(this.pos, this.getBlockType(), 1, this.numPlayersUsing);
             this.worldObj.notifyNeighborsOfStateChange(this.pos, this.getBlockType());
