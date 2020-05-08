@@ -21,6 +21,11 @@ public class ModCPS extends ModDraggable {
         return ScreenPosition.fromRelativePosition(0.00625, 0.011764705882352941);
     }
 
+    @Override
+    public String getName() {
+        return "cps";
+    }
+
     private final List<Long> clicks = new ArrayList<>();
 
     @Override

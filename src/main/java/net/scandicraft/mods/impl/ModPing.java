@@ -18,6 +18,12 @@ public class ModPing extends ModDraggable {
     // private static final ThreadPoolExecutor field_148302_b = new ScheduledThreadPoolExecutor(5, (new ThreadFactoryBuilder()).setNameFormat("Server Pinger #%d").setDaemon(true).build());
     // private final OldServerPinger oldServerPinger = new OldServerPinger();
 
+
+    @Override
+    public String getName() {
+        return "ping";
+    }
+
     private final int pingIconWidth = 10;
     private final int pingIconHeight = 8;
 

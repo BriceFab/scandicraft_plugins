@@ -12,6 +12,11 @@ public class ModToggleSprintSneak extends ModDraggable {
     private String textToRender = "";
 
     @Override
+    public String getName() {
+        return "toggle";
+    }
+
+    @Override
     public int getWidth() {
         return font.getStringWidth(textToRender);
     }

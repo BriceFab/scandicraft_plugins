@@ -2,7 +2,6 @@ package net.scandicraft.items;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
-import net.minecraft.potion.Potion;
 import net.scandicraft.blocks.ScandiCraftBlocks;
 
 public class ScandiCraftItem {
@@ -32,7 +31,7 @@ public class ScandiCraftItem {
         Item.registerItem(3515, "lazurite_pickaxe", (new ItemPickaxe(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("pickaxeLazurite"));
         Item.registerItem(3516, "lazurite_axe", (new ItemAxe(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("hatchetLazurite"));
         Item.registerItem(3517, "lazurite_hoe", (new ItemHoe(Item.ToolMaterial.LAZURITE)).setUnlocalizedName("hoeLazurite"));
-        Item.registerItem(3518, "pyrite_pie", (new ItemAppleGold(4, 1.2F, false)).setAlwaysEdible().setPotionEffect(Potion.nightVision.id, 120, 1, 1.0F).setUnlocalizedName("piePyrite"));
+        Item.registerItem(3518, "pyrite_pie", (new ItemPyritePie(8, 2F, false)).setAlwaysEdible().setUnlocalizedName("piePyrite").setCreativeTab(CreativeTabs.tabFood));
         Item.registerItem(3519, "scandium_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.SCANDIUM, 7, 0)).setUnlocalizedName("helmetScandium"));
         Item.registerItem(3520, "scandium_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.SCANDIUM, 7, 1)).setUnlocalizedName("chestplateScandium"));
         Item.registerItem(3521, "scandium_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.SCANDIUM, 7, 2)).setUnlocalizedName("leggingsScandium"));
@@ -52,6 +51,7 @@ public class ScandiCraftItem {
         Item.registerItem(3535, "bloody_boots", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 6, 3)).setUnlocalizedName("bootsBloody"));
         Item.registerItem(3536, "scepter_creeper", (new ItemSpawnScepter(3).setUnlocalizedName("scepterCreeper")));
         Item.registerItem(3537, "scepter_repair", (new ItemRepairScepter().setUnlocalizedName("scepterRepair")));
+        Item.registerItem(3538, "lazurite_bread", (new ItemLazuriteBread(4, 1.2F, false)).setAlwaysEdible().setUnlocalizedName("breadLazurite").setCreativeTab(CreativeTabs.tabFood));
     }
 
     private static void splitRegisterBlocks() {

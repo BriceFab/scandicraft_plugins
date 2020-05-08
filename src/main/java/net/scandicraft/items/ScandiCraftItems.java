@@ -44,6 +44,7 @@ public class ScandiCraftItems {
     public static final ItemSpawnScepter scepter_creeper;
     public static final ItemRepairScepter scepter_repair;
     public static final Item pyrite_pie;
+    public static final Item lazurite_bread;
 
     static {
         scandium = Items.getRegisteredItem("scandium");
@@ -84,6 +85,7 @@ public class ScandiCraftItems {
         scepter_creeper = (ItemSpawnScepter) Items.getRegisteredItem("scepter_creeper");
         scepter_repair = (ItemRepairScepter) Items.getRegisteredItem("scepter_repair");
         pyrite_pie = Items.getRegisteredItem("pyrite_pie");
+        lazurite_bread = Items.getRegisteredItem("lazurite_bread");
     }
 
 }

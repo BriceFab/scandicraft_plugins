@@ -66,13 +66,13 @@ public class CheckAutoClick {
                     CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
                 }
             }
-            if (countHistoryDown() >= Config.MAX_HISTORY / 2) { //et que le click provient de la souris
-                Config.print_debug("reason: max down");
+            if (countHistoryDown() >= Config.MAX_DOWN) { //et que le click provient de la souris
+                Config.print_debug("reason: max down " + countHistoryDown());
                 CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
             }
             if (hasIllegalDelta) {
                 Config.print_debug("reason: illegal time delta");
-                CheatScreen.onDetectCheat(isButterfly ? CheatType.BUTTERFLY : CheatType.AUTOCLICK);
+                CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
             }
         }
     }
@@ -159,7 +159,7 @@ public class CheckAutoClick {
                 Config.print_debug(String.format("TIME last: %d current: %d diff: %d", last, current, diff));
 
                 if (diff != 1) {
-                    double min_diff = Math.min(Config.MIN_DIFF_TIME_BUTTERFLY, Config.MIN_DIFF_TIME_AUTOCLICK);
+                    double min_diff = Math.max(Config.MIN_DIFF_TIME_BUTTERFLY, Config.MIN_DIFF_TIME_AUTOCLICK);
                     if (diff <= min_diff) {
                         isButterfly = diff > Config.MIN_DIFF_TIME_AUTOCLICK;
                         time_under_min.add(isButterfly);
@@ -174,7 +174,7 @@ public class CheckAutoClick {
 
             //Vérifications
             if (time_under_min.size() >= Config.MAX_SUM_SUSPECT) {
-                Config.print_debug("max 3 moyenne under " + Math.min(Config.MIN_DIFF_TIME_BUTTERFLY, Config.MIN_DIFF_TIME_AUTOCLICK) + " ms");
+                Config.print_debug("max 3 moyenne under " + Math.max(Config.MIN_DIFF_TIME_BUTTERFLY, Config.MIN_DIFF_TIME_AUTOCLICK) + " ms");
 
                 //true= butterfly; false= autoclick
                 int count_buttefly = 0;
@@ -193,7 +193,7 @@ public class CheckAutoClick {
             addAverageHistory(result_average);
 
             //Si en dessous de la moyenne autoclick et buttefly
-            double min_average = Math.min(Config.MIN_DIFF_TIME_AVERAGE_BUTTERFLY, Config.MIN_DIFF_TIME_AVERAGE_AUTOCLICK);
+            double min_average = Math.max(Config.MIN_DIFF_TIME_AVERAGE_BUTTERFLY, Config.MIN_DIFF_TIME_AVERAGE_AUTOCLICK);
             if (result_average <= min_average) {
                 isButterfly = result_average > Config.MIN_DIFF_TIME_AVERAGE_AUTOCLICK;
                 Config.print_debug("moyenne under " + min_average + " ms [" + (isButterfly ? "butterfly" : "autoclick") + "]");

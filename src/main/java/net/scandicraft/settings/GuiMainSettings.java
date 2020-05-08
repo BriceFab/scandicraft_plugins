@@ -1,12 +1,10 @@
 package net.scandicraft.settings;
 
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.scandicraft.Config;
 import net.scandicraft.settings.buttons.BooleanButton;
-import optifine.Lang;
 import optifine.TooltipManager;
 
 import java.io.IOException;
@@ -18,6 +16,14 @@ public class GuiMainSettings extends GuiScreen {
     private static final ScandiCraftSettings.Options[] options = new ScandiCraftSettings.Options[]{
             ScandiCraftSettings.Options.ITEMS_PHYSICS,
             ScandiCraftSettings.Options.INVENTORY_POTIONS,
+            ScandiCraftSettings.Options.MOD_ARMOR,
+            ScandiCraftSettings.Options.MOD_CPS,
+            ScandiCraftSettings.Options.MOD_FPS,
+            ScandiCraftSettings.Options.MOD_PING,
+            ScandiCraftSettings.Options.MOD_POTION,
+            ScandiCraftSettings.Options.MOD_KEYSTROKE,
+            ScandiCraftSettings.Options.MOD_COMPASS,
+            ScandiCraftSettings.Options.MOD_TOGGLE,
     };
 
     private final TooltipManager tooltipManager = new TooltipManager(this);
@@ -50,19 +56,19 @@ public class GuiMainSettings extends GuiScreen {
 
         int l = this.height / 6 + 21 * (4 / 2) - 12;
         int i1 = this.width / 2 - 155;
-        this.buttonList.add(new GuiOptionButton(231, i1, l, Lang.get("of.options.shaders")));
+//        this.buttonList.add(new GuiOptionButton(231, i1, l, Lang.get("of.options.shaders")));
         i1 = this.width / 2 - 155 + 160;
-        this.buttonList.add(new GuiOptionButton(202, i1, l, Lang.get("of.options.quality")));
+//        this.buttonList.add(new GuiOptionButton(202, i1, l, Lang.get("of.options.quality")));
         l = l + 21;
         i1 = this.width / 2 - 155;
-        this.buttonList.add(new GuiOptionButton(201, i1, l, Lang.get("of.options.details")));
+//        this.buttonList.add(new GuiOptionButton(201, i1, l, Lang.get("of.options.details")));
         i1 = this.width / 2 - 155 + 160;
-        this.buttonList.add(new GuiOptionButton(212, i1, l, Lang.get("of.options.performance")));
+//        this.buttonList.add(new GuiOptionButton(212, i1, l, Lang.get("of.options.performance")));
         l = l + 21;
         i1 = this.width / 2 - 155;
-        this.buttonList.add(new GuiOptionButton(211, i1, l, Lang.get("of.options.animations")));
+//        this.buttonList.add(new GuiOptionButton(211, i1, l, Lang.get("of.options.animations")));
         i1 = this.width / 2 - 155 + 160;
-        this.buttonList.add(new GuiOptionButton(222, i1, l, Lang.get("of.options.other")));
+//        this.buttonList.add(new GuiOptionButton(222, i1, l, Lang.get("of.options.other")));
         l = l + 21;
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, I18n.format("gui.done")));
     }

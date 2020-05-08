@@ -2,7 +2,6 @@ package net.minecraft.block;
 
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -1022,7 +1021,7 @@ public class Block {
     }
 
     public static boolean isEqualTo(Block blockIn, Block other) {
-        return blockIn != null && other != null ? (blockIn == other ? true : blockIn.isAssociatedBlock(other)) : false;
+        return (blockIn != null && other != null) && (blockIn == other || blockIn.isAssociatedBlock(other));
     }
 
     public boolean hasComparatorInputOverride() {
@@ -1041,7 +1040,7 @@ public class Block {
     }
 
     protected BlockState createBlockState() {
-        return new BlockState(this, new IProperty[0]);
+        return new BlockState(this);
     }
 
     public BlockState getBlockState() {

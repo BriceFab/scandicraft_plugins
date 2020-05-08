@@ -430,7 +430,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         ScandiCraftClient.getInstance().init();
 
         this.gameSettings = new GameSettings(this, this.mcDataDir);
-        this.scandiCraftSettings = new ScandiCraftSettings(this);
         this.defaultResourcePacks.add(this.mcDefaultResourcePack);
         //ScandiCraft remove this line this.startTimerHackThread();
 
@@ -543,7 +542,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         this.renderGlobal.makeEntityOutlineShader();
+
+        //ScandiCraft client start
         ScandiCraftClient.getInstance().start();
+        this.scandiCraftSettings = new ScandiCraftSettings(this);
     }
 
     private void registerMetadataSerializers() {

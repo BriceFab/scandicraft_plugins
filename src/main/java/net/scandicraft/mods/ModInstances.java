@@ -13,12 +13,14 @@ public class ModInstances {
     private static ModKeystrokes modKeystrokes;
     private static ModPotionStatus modPotionStatus;
     private static ModCompass modCompass;
+    private static ModFPS modFPS;
+    private static ModArmorStatus modArmorStatus;
 
     public static void register(HUDManager api) {
-        ModArmorStatus modArmorStatus = new ModArmorStatus();
+        modArmorStatus = new ModArmorStatus();
         api.register(modArmorStatus);
 
-        ModFPS modFPS = new ModFPS();
+        modFPS = new ModFPS();
         api.register(modFPS);
 
         modCPS = new ModCPS();
@@ -59,5 +61,17 @@ public class ModInstances {
 
     public static ModCompass getModCompass() {
         return modCompass;
+    }
+
+    public static ModArmorStatus getModArmorStatus() {
+        return modArmorStatus;
+    }
+
+    public static ModFPS getModFPS() {
+        return modFPS;
+    }
+
+    public static ModPotionStatus getModPotionStatus() {
+        return modPotionStatus;
     }
 }

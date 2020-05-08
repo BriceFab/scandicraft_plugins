@@ -44,6 +44,11 @@ public class ModCompass extends ModDraggable {
     private int colorDirection;
 
     @Override
+    public String getName() {
+        return "compass";
+    }
+
+    @Override
     public ScreenPosition getDefaultPos() {
         return DEFAULT_POSITION;
     }

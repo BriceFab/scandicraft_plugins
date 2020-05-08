@@ -14,6 +14,11 @@ import java.awt.*;
 public class ModKeystrokes extends ModDraggable {
     private static final ScreenPosition KEYSTROKES_POSITION = ScreenPosition.fromAbsolutePosition(3, 3);
 
+    @Override
+    public String getName() {
+        return "keystrokes";
+    }
+
     public enum KeystrokesMode {
 
         WASD(Key.W, Key.A, Key.S, Key.D),

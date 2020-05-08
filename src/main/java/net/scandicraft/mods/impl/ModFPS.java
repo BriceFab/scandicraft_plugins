@@ -8,6 +8,11 @@ public class ModFPS extends ModDraggable {
     public static ScreenPosition FPS_POSITION = ScreenPosition.fromAbsolutePosition(3, 3);
 
     @Override
+    public String getName() {
+        return "fps";
+    }
+
+    @Override
     public ScreenPosition getDefaultPos() {
         return FPS_POSITION;
     }

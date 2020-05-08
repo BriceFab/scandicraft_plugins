@@ -5,6 +5,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.scandicraft.Config;
+import net.scandicraft.mods.Mod;
+import net.scandicraft.mods.ModInstances;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -124,18 +126,36 @@ public class ScandiCraftSettings {
 
     public enum Options {
         ITEMS_PHYSICS("scandicraft.options.items_physics", true),
-        INVENTORY_POTIONS("scandicraft.options.inventory.potions", false);
+        INVENTORY_POTIONS("scandicraft.options.inventory.potions", false),
+        MOD_ARMOR("scandicraft.options.hud.armor", true, ModInstances.getModArmorStatus()),
+        MOD_CPS("scandicraft.options.hud.cps", true, ModInstances.getModCPS()),
+        MOD_FPS("scandicraft.options.hud.fps", true, ModInstances.getModFPS()),
+        MOD_PING("scandicraft.options.hud.ping", true, ModInstances.getModPing()),
+        MOD_POTION("scandicraft.options.hud.potion", true, ModInstances.getModPotionStatus()),
+        MOD_KEYSTROKE("scandicraft.options.hud.keystroke", true, ModInstances.getModKeystrokes()),
+        MOD_COMPASS("scandicraft.options.hud.compass", true, ModInstances.getModCompass()),
+        MOD_TOGGLE("scandicraft.options.hud.toggle", true, ModInstances.getModToggleSprintSneak()),
+        ;
 
         private final String key;
         private Object value;
+        private final Mod mod;
 
-        Options(String key, Object value) {
+        Options(String key, Object value, Mod mod) {
             this.key = key;
             this.value = value;
+            this.mod = mod;
+        }
+
+        Options(String key, Object value) {
+            this(key, value, null);
         }
 
         public void setOptionValue(Object value) {
             this.value = value;
+            if (this.mod != null && isBoolean()) {
+                mod.setEnabled((Boolean) value);
+            }
         }
 
         public static ScandiCraftSettings.Options getOptionByKey(String key) {

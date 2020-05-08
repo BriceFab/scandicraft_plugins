@@ -27,7 +27,7 @@ public abstract class ModDraggable extends Mod implements IRenderer {
     }
 
     private File getFolder() {
-        File folder = new File(FileManager.getModsDirectory(), this.getClass().getSimpleName().toLowerCase().replaceAll("mod", ""));
+        File folder = new File(FileManager.getModsDirectory(), getName());
         folder.mkdirs();
         return folder;
     }

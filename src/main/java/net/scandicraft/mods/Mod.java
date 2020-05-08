@@ -35,5 +35,8 @@ public class Mod {
         return isEnabled;
     }
 
+    public String getName() {
+        return "default_sc";
+    }
 
 }

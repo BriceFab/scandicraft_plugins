@@ -22,6 +22,11 @@ public class ModPotionStatus extends ModDraggable {
     private final PotionEffect DUMMY_EFFECT = new PotionEffect(Potion.moveSpeed.id, 6000, 1);
 
     @Override
+    public String getName() {
+        return "potion";
+    }
+
+    @Override
     public ScreenPosition getDefaultPos() {
         return ARMOR_STATUS_POSITION;
     }
