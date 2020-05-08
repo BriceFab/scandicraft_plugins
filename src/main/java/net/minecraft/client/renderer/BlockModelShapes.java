@@ -51,6 +51,10 @@ public class BlockModelShapes {
                 return this.modelManager.getTextureMap().getAtlasSprite("minecraft:blocks/pyrite_block");
             }
 
+            if (block == ScandiCraftBlocks.lazurite_ladder) {
+                return this.modelManager.getTextureMap().getAtlasSprite("minecraft:blocks/lazurite_ladder");
+            }
+
             if (block == Blocks.flowing_lava || block == Blocks.lava) {
                 return this.modelManager.getTextureMap().getAtlasSprite("minecraft:blocks/lava_still");
             }

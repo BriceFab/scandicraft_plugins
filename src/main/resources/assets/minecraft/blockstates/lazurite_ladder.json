@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "lazurite_ladder" },
+        "facing=east":  { "model": "lazurite_ladder", "y": 90 },
+        "facing=south": { "model": "lazurite_ladder", "y": 180 },
+        "facing=west":  { "model": "lazurite_ladder", "y": 270 }
+    }
+}

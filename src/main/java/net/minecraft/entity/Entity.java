@@ -46,6 +46,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.scandicraft.blocks.ScandiCraftBlocks;
 
 public abstract class Entity implements ICommandSender
 {
@@ -849,12 +850,12 @@ public abstract class Entity implements ICommandSender
                 double d13 = this.posY - d1;
                 double d14 = this.posZ - d2;
 
-                if (block1 != Blocks.ladder)
+                if (block1 != Blocks.ladder || block1 != ScandiCraftBlocks.lazurite_ladder)
                 {
                     d13 = 0.0D;
                 }
 
-                if (block1 != null && this.onGround)
+                if (this.onGround)
                 {
                     block1.onEntityCollidedWithBlock(this.worldObj, blockpos, this);
                 }

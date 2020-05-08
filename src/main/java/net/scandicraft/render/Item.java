@@ -60,6 +60,7 @@ public class Item {
         renderItem.registerBlock(ScandiCraftBlocks.lazurite_ore, "lazurite_ore");
         renderItem.registerBlock(ScandiCraftBlocks.lazurite_block, "lazurite_block");
         renderItem.registerBlock(ScandiCraftBlocks.pyrite_chest, "pyrite_chest");
+        renderItem.registerBlock(ScandiCraftBlocks.lazurite_ladder, "lazurite_ladder");
     }
 
 }

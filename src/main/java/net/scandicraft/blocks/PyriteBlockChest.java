@@ -11,7 +11,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
@@ -25,6 +24,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.ILockableContainer;
 import net.minecraft.world.World;
+import net.scandicraft.items.ScandiCraftItems;
 import net.scandicraft.tileentity.TileEntityPyriteChest;
 
 import java.util.Random;
@@ -52,7 +52,7 @@ public class PyriteBlockChest extends BlockContainer {
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(ScandiCraftBlocks.pyrite_block);
+        return ScandiCraftItems.pyrite;
     }
 
     /**

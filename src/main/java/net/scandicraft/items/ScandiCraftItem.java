@@ -63,6 +63,7 @@ public class ScandiCraftItem {
         Item.registerItemBlock(ScandiCraftBlocks.lazurite_ore);
         Item.registerItemBlock(ScandiCraftBlocks.lazurite_block);
         Item.registerItemBlock(ScandiCraftBlocks.pyrite_chest);
+        Item.registerItemBlock(ScandiCraftBlocks.lazurite_ladder);
     }
 
 }

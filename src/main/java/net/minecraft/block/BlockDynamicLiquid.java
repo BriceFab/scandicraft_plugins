@@ -9,6 +9,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.scandicraft.blocks.ScandiCraftBlocks;
 
 public class BlockDynamicLiquid extends BlockLiquid
 {
@@ -250,7 +251,7 @@ public class BlockDynamicLiquid extends BlockLiquid
     private boolean isBlocked(World worldIn, BlockPos pos, IBlockState state)
     {
         Block block = worldIn.getBlockState(pos).getBlock();
-        return !(block instanceof BlockDoor) && block != Blocks.standing_sign && block != Blocks.ladder && block != Blocks.reeds ? (block.blockMaterial == Material.portal ? true : block.blockMaterial.blocksMovement()) : true;
+        return block instanceof BlockDoor || block == Blocks.standing_sign || block == Blocks.ladder || block == ScandiCraftBlocks.lazurite_ladder || block == Blocks.reeds || (block.blockMaterial == Material.portal || block.blockMaterial.blocksMovement());
     }
 
     protected int checkAdjacentBlock(World worldIn, BlockPos pos, int currentMinLevel)

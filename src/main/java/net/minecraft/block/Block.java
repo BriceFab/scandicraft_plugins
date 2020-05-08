@@ -298,7 +298,7 @@ public class Block {
      * Sets the light value that the block emits. Returns resulting block instance for constructing convenience. Args:
      * level
      */
-    protected Block setLightLevel(float value) {
+    public Block setLightLevel(float value) {
         this.lightValue = (int) (15.0F * value);
         return this;
     }

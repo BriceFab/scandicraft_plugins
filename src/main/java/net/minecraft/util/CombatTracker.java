@@ -1,19 +1,22 @@
 package net.minecraft.util;
 
 import com.google.common.collect.Lists;
-import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.scandicraft.blocks.ScandiCraftBlocks;
 
-public class CombatTracker
-{
+import java.util.List;
+
+public class CombatTracker {
     private final List<CombatEntry> combatEntries = Lists.<CombatEntry>newArrayList();
 
-    /** The entity tracked. */
+    /**
+     * The entity tracked.
+     */
     private final EntityLivingBase fighter;
     private int lastDamageTime;
     private int combatStartTime;
@@ -22,30 +25,24 @@ public class CombatTracker
     private boolean takingDamage;
     private String fallSuffix;
 
-    public CombatTracker(EntityLivingBase fighterIn)
-    {
+    public CombatTracker(EntityLivingBase fighterIn) {
         this.fighter = fighterIn;
     }
 
-    public void calculateFallSuffix()
-    {
+    public void calculateFallSuffix() {
         this.resetFallSuffix();
 
-        if (this.fighter.isOnLadder())
-        {
+        if (this.fighter.isOnLadder() || this.fighter.isOnLazuriteLadder()) {
             Block block = this.fighter.worldObj.getBlockState(new BlockPos(this.fighter.posX, this.fighter.getEntityBoundingBox().minY, this.fighter.posZ)).getBlock();
 
-            if (block == Blocks.ladder)
-            {
+            if (block == ScandiCraftBlocks.lazurite_ladder) {
+                this.fallSuffix = "lazuriteLadder";
+            } else if (block == Blocks.ladder) {
                 this.fallSuffix = "ladder";
-            }
-            else if (block == Blocks.vine)
-            {
+            } else if (block == Blocks.vine) {
                 this.fallSuffix = "vines";
             }
-        }
-        else if (this.fighter.isInWater())
-        {
+        } else if (this.fighter.isInWater()) {
             this.fallSuffix = "water";
         }
     }
@@ -53,8 +50,7 @@ public class CombatTracker
     /**
      * Adds an entry for the combat tracker
      */
-    public void trackDamage(DamageSource damageSrc, float healthIn, float damageAmount)
-    {
+    public void trackDamage(DamageSource damageSrc, float healthIn, float damageAmount) {
         this.reset();
         this.calculateFallSuffix();
         CombatEntry combatentry = new CombatEntry(damageSrc, this.fighter.ticksExisted, healthIn, damageAmount, this.fallSuffix, this.fighter.fallDistance);
@@ -62,8 +58,7 @@ public class CombatTracker
         this.lastDamageTime = this.fighter.ticksExisted;
         this.takingDamage = true;
 
-        if (combatentry.isLivingDamageSrc() && !this.inCombat && this.fighter.isEntityAlive())
-        {
+        if (combatentry.isLivingDamageSrc() && !this.inCombat && this.fighter.isEntityAlive()) {
             this.inCombat = true;
             this.combatStartTime = this.fighter.ticksExisted;
             this.combatEndTime = this.combatStartTime;
@@ -71,65 +66,44 @@ public class CombatTracker
         }
     }
 
-    public IChatComponent getDeathMessage()
-    {
-        if (this.combatEntries.size() == 0)
-        {
-            return new ChatComponentTranslation("death.attack.generic", new Object[] {this.fighter.getDisplayName()});
-        }
-        else
-        {
+    public IChatComponent getDeathMessage() {
+        if (this.combatEntries.size() == 0) {
+            return new ChatComponentTranslation("death.attack.generic", new Object[]{this.fighter.getDisplayName()});
+        } else {
             CombatEntry combatentry = this.getBestCombatEntry();
-            CombatEntry combatentry1 = (CombatEntry)this.combatEntries.get(this.combatEntries.size() - 1);
+            CombatEntry combatentry1 = (CombatEntry) this.combatEntries.get(this.combatEntries.size() - 1);
             IChatComponent ichatcomponent1 = combatentry1.getDamageSrcDisplayName();
             Entity entity = combatentry1.getDamageSrc().getEntity();
             IChatComponent ichatcomponent;
 
-            if (combatentry != null && combatentry1.getDamageSrc() == DamageSource.fall)
-            {
+            if (combatentry != null && combatentry1.getDamageSrc() == DamageSource.fall) {
                 IChatComponent ichatcomponent2 = combatentry.getDamageSrcDisplayName();
 
-                if (combatentry.getDamageSrc() != DamageSource.fall && combatentry.getDamageSrc() != DamageSource.outOfWorld)
-                {
-                    if (ichatcomponent2 != null && (ichatcomponent1 == null || !ichatcomponent2.equals(ichatcomponent1)))
-                    {
+                if (combatentry.getDamageSrc() != DamageSource.fall && combatentry.getDamageSrc() != DamageSource.outOfWorld) {
+                    if (ichatcomponent2 != null && (ichatcomponent1 == null || !ichatcomponent2.equals(ichatcomponent1))) {
                         Entity entity1 = combatentry.getDamageSrc().getEntity();
-                        ItemStack itemstack1 = entity1 instanceof EntityLivingBase ? ((EntityLivingBase)entity1).getHeldItem() : null;
+                        ItemStack itemstack1 = entity1 instanceof EntityLivingBase ? ((EntityLivingBase) entity1).getHeldItem() : null;
 
-                        if (itemstack1 != null && itemstack1.hasDisplayName())
-                        {
-                            ichatcomponent = new ChatComponentTranslation("death.fell.assist.item", new Object[] {this.fighter.getDisplayName(), ichatcomponent2, itemstack1.getChatComponent()});
+                        if (itemstack1 != null && itemstack1.hasDisplayName()) {
+                            ichatcomponent = new ChatComponentTranslation("death.fell.assist.item", new Object[]{this.fighter.getDisplayName(), ichatcomponent2, itemstack1.getChatComponent()});
+                        } else {
+                            ichatcomponent = new ChatComponentTranslation("death.fell.assist", new Object[]{this.fighter.getDisplayName(), ichatcomponent2});
                         }
-                        else
-                        {
-                            ichatcomponent = new ChatComponentTranslation("death.fell.assist", new Object[] {this.fighter.getDisplayName(), ichatcomponent2});
-                        }
-                    }
-                    else if (ichatcomponent1 != null)
-                    {
-                        ItemStack itemstack = entity instanceof EntityLivingBase ? ((EntityLivingBase)entity).getHeldItem() : null;
+                    } else if (ichatcomponent1 != null) {
+                        ItemStack itemstack = entity instanceof EntityLivingBase ? ((EntityLivingBase) entity).getHeldItem() : null;
 
-                        if (itemstack != null && itemstack.hasDisplayName())
-                        {
-                            ichatcomponent = new ChatComponentTranslation("death.fell.finish.item", new Object[] {this.fighter.getDisplayName(), ichatcomponent1, itemstack.getChatComponent()});
+                        if (itemstack != null && itemstack.hasDisplayName()) {
+                            ichatcomponent = new ChatComponentTranslation("death.fell.finish.item", new Object[]{this.fighter.getDisplayName(), ichatcomponent1, itemstack.getChatComponent()});
+                        } else {
+                            ichatcomponent = new ChatComponentTranslation("death.fell.finish", new Object[]{this.fighter.getDisplayName(), ichatcomponent1});
                         }
-                        else
-                        {
-                            ichatcomponent = new ChatComponentTranslation("death.fell.finish", new Object[] {this.fighter.getDisplayName(), ichatcomponent1});
-                        }
+                    } else {
+                        ichatcomponent = new ChatComponentTranslation("death.fell.killer", new Object[]{this.fighter.getDisplayName()});
                     }
-                    else
-                    {
-                        ichatcomponent = new ChatComponentTranslation("death.fell.killer", new Object[] {this.fighter.getDisplayName()});
-                    }
+                } else {
+                    ichatcomponent = new ChatComponentTranslation("death.fell.accident." + this.getFallSuffix(combatentry), new Object[]{this.fighter.getDisplayName()});
                 }
-                else
-                {
-                    ichatcomponent = new ChatComponentTranslation("death.fell.accident." + this.getFallSuffix(combatentry), new Object[] {this.fighter.getDisplayName()});
-                }
-            }
-            else
-            {
+            } else {
                 ichatcomponent = combatentry1.getDamageSrc().getDeathMessage(this.fighter);
             }
 
@@ -137,115 +111,90 @@ public class CombatTracker
         }
     }
 
-    public EntityLivingBase getBestAttacker()
-    {
+    public EntityLivingBase getBestAttacker() {
         EntityLivingBase entitylivingbase = null;
         EntityPlayer entityplayer = null;
         float f = 0.0F;
         float f1 = 0.0F;
 
-        for (CombatEntry combatentry : this.combatEntries)
-        {
-            if (combatentry.getDamageSrc().getEntity() instanceof EntityPlayer && (entityplayer == null || combatentry.getDamage() > f1))
-            {
+        for (CombatEntry combatentry : this.combatEntries) {
+            if (combatentry.getDamageSrc().getEntity() instanceof EntityPlayer && (entityplayer == null || combatentry.getDamage() > f1)) {
                 f1 = combatentry.getDamage();
-                entityplayer = (EntityPlayer)combatentry.getDamageSrc().getEntity();
+                entityplayer = (EntityPlayer) combatentry.getDamageSrc().getEntity();
             }
 
-            if (combatentry.getDamageSrc().getEntity() instanceof EntityLivingBase && (entitylivingbase == null || combatentry.getDamage() > f))
-            {
+            if (combatentry.getDamageSrc().getEntity() instanceof EntityLivingBase && (entitylivingbase == null || combatentry.getDamage() > f)) {
                 f = combatentry.getDamage();
-                entitylivingbase = (EntityLivingBase)combatentry.getDamageSrc().getEntity();
+                entitylivingbase = (EntityLivingBase) combatentry.getDamageSrc().getEntity();
             }
         }
 
-        if (entityplayer != null && f1 >= f / 3.0F)
-        {
+        if (entityplayer != null && f1 >= f / 3.0F) {
             return entityplayer;
-        }
-        else
-        {
+        } else {
             return entitylivingbase;
         }
     }
 
-    private CombatEntry getBestCombatEntry()
-    {
+    private CombatEntry getBestCombatEntry() {
         CombatEntry combatentry = null;
         CombatEntry combatentry1 = null;
         int i = 0;
         float f = 0.0F;
 
-        for (int j = 0; j < this.combatEntries.size(); ++j)
-        {
-            CombatEntry combatentry2 = (CombatEntry)this.combatEntries.get(j);
-            CombatEntry combatentry3 = j > 0 ? (CombatEntry)this.combatEntries.get(j - 1) : null;
+        for (int j = 0; j < this.combatEntries.size(); ++j) {
+            CombatEntry combatentry2 = (CombatEntry) this.combatEntries.get(j);
+            CombatEntry combatentry3 = j > 0 ? (CombatEntry) this.combatEntries.get(j - 1) : null;
 
-            if ((combatentry2.getDamageSrc() == DamageSource.fall || combatentry2.getDamageSrc() == DamageSource.outOfWorld) && combatentry2.getDamageAmount() > 0.0F && (combatentry == null || combatentry2.getDamageAmount() > f))
-            {
-                if (j > 0)
-                {
+            if ((combatentry2.getDamageSrc() == DamageSource.fall || combatentry2.getDamageSrc() == DamageSource.outOfWorld) && combatentry2.getDamageAmount() > 0.0F && (combatentry == null || combatentry2.getDamageAmount() > f)) {
+                if (j > 0) {
                     combatentry = combatentry3;
-                }
-                else
-                {
+                } else {
                     combatentry = combatentry2;
                 }
 
                 f = combatentry2.getDamageAmount();
             }
 
-            if (combatentry2.getFallSuffix() != null && (combatentry1 == null || combatentry2.getDamage() > (float)i))
-            {
+            if (combatentry2.getFallSuffix() != null && (combatentry1 == null || combatentry2.getDamage() > (float) i)) {
                 combatentry1 = combatentry2;
             }
         }
 
-        if (f > 5.0F && combatentry != null)
-        {
+        if (f > 5.0F && combatentry != null) {
             return combatentry;
-        }
-        else if (i > 5 && combatentry1 != null)
-        {
+        } else if (i > 5 && combatentry1 != null) {
             return combatentry1;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
-    private String getFallSuffix(CombatEntry entry)
-    {
+    private String getFallSuffix(CombatEntry entry) {
         return entry.getFallSuffix() == null ? "generic" : entry.getFallSuffix();
     }
 
-    public int getCombatDuration()
-    {
+    public int getCombatDuration() {
         return this.inCombat ? this.fighter.ticksExisted - this.combatStartTime : this.combatEndTime - this.combatStartTime;
     }
 
-    private void resetFallSuffix()
-    {
+    private void resetFallSuffix() {
         this.fallSuffix = null;
     }
 
     /**
      * Resets this trackers list of combat entries
      */
-    public void reset()
-    {
+    public void reset() {
         int i = this.inCombat ? 300 : 100;
 
-        if (this.takingDamage && (!this.fighter.isEntityAlive() || this.fighter.ticksExisted - this.lastDamageTime > i))
-        {
+        if (this.takingDamage && (!this.fighter.isEntityAlive() || this.fighter.ticksExisted - this.lastDamageTime > i)) {
             boolean flag = this.inCombat;
             this.takingDamage = false;
             this.inCombat = false;
             this.combatEndTime = this.fighter.ticksExisted;
 
-            if (flag)
-            {
+            if (flag) {
                 this.fighter.sendEndCombat();
             }
 
@@ -256,8 +205,7 @@ public class CombatTracker
     /**
      * Returns EntityLivingBase assigned for this CombatTracker
      */
-    public EntityLivingBase getFighter()
-    {
+    public EntityLivingBase getFighter() {
         return this.fighter;
     }
 }

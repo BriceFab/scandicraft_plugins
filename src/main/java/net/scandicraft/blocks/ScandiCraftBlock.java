@@ -17,7 +17,7 @@ public class ScandiCraftBlock {
         Block.registerBlock(2503, "pyrite_block", (new Block(Material.iron, MapColor.diamondColor)).setHardness(8.0F).setResistance(10.0F).setStepSound(Block.soundTypeMetal).setUnlocalizedName("blockPyrite").setCreativeTab(CreativeTabs.tabBlock));
         Block.registerBlock(2504, "lazurite_ore", (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundTypePiston).setUnlocalizedName("oreLazurite"));
         Block.registerBlock(2505, "lazurite_block", (new Block(Material.iron, MapColor.diamondColor)).setHardness(5.0F).setResistance(10.0F).setStepSound(Block.soundTypeMetal).setUnlocalizedName("blockLazurite").setCreativeTab(CreativeTabs.tabBlock));
-        Block.registerBlock(2506, "pyrite_chest", (new PyriteBlockChest()).setHardness(10F).setStepSound(Block.soundTypePiston).setUnlocalizedName("chestPyrite"));
+        Block.registerBlock(2506, "pyrite_chest", (new PyriteBlockChest()).setHardness(10F).setStepSound(Block.soundTypePiston).setUnlocalizedName("chestPyrite").setLightLevel(0.5F));
         Block.registerBlock(2507, "lazurite_ladder", (new BlockLadder()).setHardness(0.4F).setStepSound(Block.soundTypeLadder).setUnlocalizedName("ladderLazurite"));
     }
 
