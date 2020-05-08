@@ -6,6 +6,7 @@ import net.minecraft.client.gui.GuiChat;
 import net.scandicraft.events.EventManager;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.RenderEvent;
+import net.scandicraft.mods.Mod;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Arrays;
@@ -66,7 +67,8 @@ public class HUDManager {
     }
 
     private void callRenderer(IRenderer renderer) {
-        if (!renderer.isEnabled()) {
+        Mod actMod = (Mod) renderer;
+        if (!actMod.isEnabled() || !actMod.isUsable()) {
             return;
         }
 

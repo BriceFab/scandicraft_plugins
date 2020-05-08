@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.scandicraft.mods.Mod;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -29,7 +30,8 @@ public class HUDConfigScreen extends GuiScreen {
         Collection<IRenderer> registeredRenderers = api.getRegisteredRenderers();
 
         for (IRenderer renderer : registeredRenderers) {
-            if (renderer.isEnabled()) {
+            Mod actMod = (Mod) renderer;
+            if (actMod.isEnabled() && actMod.isUsable()) {
                 ScreenPosition pos = renderer.load();
                 if (pos == null) {
                     pos = ScreenPosition.fromRelativePosition(0.5, 0.5);

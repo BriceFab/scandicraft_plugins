@@ -114,6 +114,11 @@ public class CheckAutoClick {
         //false = detect fake click
         keyDown_history.add(isKeyDown);
         if (keyDown_history.size() >= Config.MAX_HISTORY) {
+            int count = 0;
+            for (boolean down : keyDown_history) {
+                if (!down) count++;
+            }
+            Config.print_debug("Result max_down " + count);
             keyDown_history.clear();
         }
     }
@@ -165,6 +170,11 @@ public class CheckAutoClick {
                         time_under_min.add(isButterfly);
                         Config.print_debug("diff under " + min_diff + " ms [" + (isButterfly ? "butterfly" : "autoclick") + "]");
                     }
+                }
+
+                if (diff == 0) {
+                    Config.print_debug("reason: diff 0 => double click --- FPS: " + Minecraft.getDebugFPS());
+                    CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
                 }
 
                 diffs.add(diff);

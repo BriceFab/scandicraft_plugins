@@ -26,6 +26,12 @@ public class ModCPS extends ModDraggable {
         return "cps";
     }
 
+    //Laisse activer les CPS (mais en arrière plan)
+    @Override
+    public boolean canUnregister() {
+        return false;
+    }
+
     private final List<Long> clicks = new ArrayList<>();
 
     @Override
@@ -42,7 +48,10 @@ public class ModCPS extends ModDraggable {
     public void render(ScreenPosition pos) {
         int CPS = getCPS();
         CheckAutoClick.checkCPS(CPS);
-        font.drawString("CPS: " + CPS, pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
+
+        if (isEnabled()) {
+            font.drawString("CPS: " + CPS, pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
+        }
     }
 
     @EventTarget

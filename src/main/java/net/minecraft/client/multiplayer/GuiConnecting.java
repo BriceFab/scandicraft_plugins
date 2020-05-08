@@ -70,7 +70,7 @@ public class GuiConnecting extends GuiScreen
                     GuiConnecting.this.networkManager.sendPacket(new C00PacketLoginStart(GuiConnecting.this.mc.getSession().getProfile()));
 
                     ScandiCraftClient.getInstance().getDiscordRP().update("joue en ligne !");
-                    ModInstances.getModPing().setEnabled(true);
+                    ModInstances.getModPing().setUsable(true);
                 }
                 catch (UnknownHostException unknownhostexception)
                 {

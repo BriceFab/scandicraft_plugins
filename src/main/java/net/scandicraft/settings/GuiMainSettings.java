@@ -44,14 +44,14 @@ public class GuiMainSettings extends GuiScreen {
         for (int i = 0; i < options.length; ++i) {
             ScandiCraftSettings.Options actOption = options[i];
 
-            if (actOption != null) {
-                int x = this.width / 2 - 155 + i % 2 * 160;
-                int y = this.height / 6 + 21 * (i / 2) - 12;
+            int x = this.width / 2 - 155 + i % 2 * 160;
+            int y = this.height / 6 + 21 * (i / 2);
 
-                if (i == 0) y += 10; //espace du haut
-
-                this.buttonList.add(new BooleanButton(actOption.returnEnumOrdinal(), x, y, actOption, this.scandicraftSettings.getKeyBinding(actOption)));
+            if (i != 0 && i != 1) {
+                y += i * 2;
             }
+
+            this.buttonList.add(new BooleanButton(actOption.returnEnumOrdinal(), x, y, actOption, this.scandicraftSettings.getKeyBinding(actOption)));
         }
 
         int l = this.height / 6 + 21 * (4 / 2) - 12;
@@ -77,8 +77,6 @@ public class GuiMainSettings extends GuiScreen {
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
     protected void actionPerformed(GuiButton button) throws IOException {
-        Config.print_debug("actionPerformed !!!");
-
         if (button.enabled) {
             if (button instanceof BooleanButton) {
                 ScandiCraftSettings.Options actOption = ((BooleanButton) button).getOption();

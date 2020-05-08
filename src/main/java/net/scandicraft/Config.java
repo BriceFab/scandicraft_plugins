@@ -29,7 +29,7 @@ public class Config {
     public static final double MIN_DIFF_TIME_AVERAGE_BUTTERFLY = 65;    //différence minimale de la moyenne des temps = 0.06 seconds en moyenne (=butterfly)
     public static final double MIN_DIFF_TIME_AVERAGE_AUTOCLICK = 55;    //différence minimale de la moyenne des temps = 0.06 seconds en moyenne (=autoclick)
     public static final int MAX_HISTORY_FREQUENCY_AVERAGE = 7;          //Historique max de la fréquence (1 moyenne = chaque 14 clicks [MAX_HISTORY])
-    public static final int MAX_FREQUENCY_AVERAGE = 6;                  //Maximum de 5 moyenne les mêmes
+    public static final int MAX_FREQUENCY_AVERAGE = 6;                  //Maximum de 5 moyenne les mêmes    //TODO check value
     public static final int MAX_DOWN = 9;                               //Maxium de click LMB false     //TODO check value
 
     /* Fonctions */

@@ -2,12 +2,14 @@ package net.scandicraft.mods;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.scandicraft.Config;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.events.EventManager;
 
 public class Mod {
 
-    private boolean isEnabled = true;
+    private boolean isEnabled = true;       //est actif
+    private boolean isUsable = true;        //peut-être utilisé
 
     protected final Minecraft mc;
     protected final FontRenderer font;
@@ -18,21 +20,47 @@ public class Mod {
         this.font = mc.fontRendererObj;
         this.client = ScandiCraftClient.getInstance();
 
-        setEnabled(isEnabled);
+        setEnabled(true);
     }
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
 
-        if (isEnabled) {
+        Config.print_debug("isEnabled: " + isEnabled + " isUsable: " + isUsable() + " enable:" + enabled);
+
+        if (isEnabled && isUsable() && !ModInstances.registered_mods.contains(this)) {
+            Config.print_debug("register " + this);
+
+            ModInstances.registered_mods.add(this);
             EventManager.register(this);
         } else {
-            EventManager.unregister(this);
+            if (canUnregister()) {
+                Config.print_debug("unregister " + this);
+
+                EventManager.unregister(this);
+                ModInstances.registered_mods.remove(this);
+            }
         }
     }
 
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+    //Peut-être désenregistré
+    public boolean canUnregister() {
+        return true;
+    }
+
+    //Peut-être utilisé
+    public boolean isUsable() {
+        return isUsable;
+    }
+
+    public void setUsable(boolean usable) {
+        isUsable = usable;
+
+        setEnabled(isEnabled());
     }
 
     public String getName() {

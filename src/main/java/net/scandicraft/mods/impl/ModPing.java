@@ -1,23 +1,14 @@
 package net.scandicraft.mods.impl;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.multiplayer.ServerData;
-import net.minecraft.client.network.OldServerPinger;
 import net.minecraft.client.renderer.GlStateManager;
-import net.scandicraft.Config;
 import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
-
-import java.time.Instant;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class ModPing extends ModDraggable {
     // private static final ThreadPoolExecutor field_148302_b = new ScheduledThreadPoolExecutor(5, (new ThreadFactoryBuilder()).setNameFormat("Server Pinger #%d").setDaemon(true).build());
     // private final OldServerPinger oldServerPinger = new OldServerPinger();
-
 
     @Override
     public String getName() {
@@ -44,12 +35,11 @@ public class ModPing extends ModDraggable {
 
     @Override
     public void render(ScreenPosition pos) {
-        ServerData serverData = mc.getCurrentServerData();
-        if (serverData == null) {
-            return;
-        }
-
         /*
+//        ServerData serverData = mc.getCurrentServerData();
+//        if (serverData == null) {
+//            return;
+//        }
 
         //Chaque x secondes
         // Config.print_debug("Current " + Instant.now().toString() + " lastPing + 30s" + lastPing.plusSeconds(30).toString());
@@ -79,7 +69,7 @@ public class ModPing extends ModDraggable {
 
         String sPing;
         int ping = mc.getNetHandler().getPlayerInfo(mc.thePlayer.getUniqueID()).getResponseTime();
-        Config.print_debug("ping " + ping + " ms");
+//        Config.print_debug("ping " + ping + " ms");
 
         int k = 0;
         int l;

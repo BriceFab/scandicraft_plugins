@@ -54,7 +54,7 @@ public class ScandiCraftSettings {
             Map<?, ?> options = GSON.fromJson(new FileReader(this.optionsFileName), Map.class);
 
             for (Map.Entry<?, ?> entry : options.entrySet()) {
-                Config.print_debug("test " + entry.getKey() + " " + entry.getValue() + " " + entry.getKey().getClass());
+//                Config.print_debug("test " + entry.getKey() + " " + entry.getValue() + " " + entry.getKey().getClass());
                 if (entry.getKey() instanceof String) {
                     ScandiCraftSettings.Options actOption = ScandiCraftSettings.Options.getOptionByKey((String) entry.getKey());
                     if (actOption != null) {

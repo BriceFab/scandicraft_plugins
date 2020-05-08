@@ -5,7 +5,11 @@ import net.scandicraft.mods.impl.*;
 import net.scandicraft.mods.impl.compass.ModCompass;
 import net.scandicraft.mods.impl.togglesprintsneak.ModToggleSprintSneak;
 
+import java.util.ArrayList;
+
 public class ModInstances {
+
+    public static ArrayList<Mod> registered_mods = new ArrayList<>();
 
     private static ModToggleSprintSneak modToggleSprintSneak;
     private static ModPing modPing;
