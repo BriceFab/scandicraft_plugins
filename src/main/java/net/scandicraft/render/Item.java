@@ -51,6 +51,7 @@ public class Item {
         renderItem.registerItem(ScandiCraftItems.scepter_creeper, "scepter_creeper");
         renderItem.registerItem(ScandiCraftItems.scepter_repair, "scepter_repair");
         renderItem.registerItem(ScandiCraftItems.lazurite_bread, "lazurite_bread");
+        renderItem.registerItem(ScandiCraftItems.pyrite_pie, "pyrite_pie");
     }
 
     private static void splitRegisterBlocks(RenderItem renderItem) {
