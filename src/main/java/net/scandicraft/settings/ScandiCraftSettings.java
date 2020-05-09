@@ -30,13 +30,13 @@ public class ScandiCraftSettings {
     public String language;
     private final String optionsFileName = "sc_options.json";
 
-    public KeyBinding OPEN_HUD_MANAGER = new KeyBinding("ScandiCraft Mod Positioning", Keyboard.KEY_RSHIFT, "scandicraft.options.categorie.keyboards", KeyBindingType.SCANDICRAFT);
-    public KeyBinding keyBindTest2 = new KeyBinding("test2", 0, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
+    public static KeyBinding OPEN_HUD_MANAGER = new KeyBinding("ScandiCraft Mod Positioning", Keyboard.KEY_RSHIFT, "scandicraft.options.categorie.keyboards", KeyBindingType.SCANDICRAFT);
+    public static KeyBinding keyBindTest2 = new KeyBinding("test2", 0, "scandicraft.options.categorie.test", KeyBindingType.SCANDICRAFT);
 
     public ScandiCraftSettings(Minecraft mcIn) {
         this.language = "en_US";
         this.mc = mcIn;
-        this.keyBindings = ArrayUtils.addAll(new KeyBinding[]{this.OPEN_HUD_MANAGER, this.keyBindTest2});
+        this.keyBindings = ArrayUtils.addAll(new KeyBinding[]{OPEN_HUD_MANAGER, keyBindTest2});
         this.loadOptions();
     }
 

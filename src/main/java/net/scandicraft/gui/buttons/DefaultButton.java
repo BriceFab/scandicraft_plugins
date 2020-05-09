@@ -188,4 +188,24 @@ public class DefaultButton extends Gui {
     public int getHeight() {
         return height;
     }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setxPosition(int xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public void setyPosition(int yPosition) {
+        this.yPosition = yPosition;
+    }
+
+    public int getxPosition() {
+        return xPosition;
+    }
+
+    public int getyPosition() {
+        return yPosition;
+    }
 }

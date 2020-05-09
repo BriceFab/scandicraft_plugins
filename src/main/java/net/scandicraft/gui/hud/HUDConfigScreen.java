@@ -2,9 +2,13 @@ package net.scandicraft.gui.hud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.scandicraft.Config;
+import net.scandicraft.gui.buttons.GuiSlider;
 import net.scandicraft.mods.Mod;
+import net.scandicraft.settings.ScandiCraftSettings;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -12,6 +16,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -48,6 +53,7 @@ public class HUDConfigScreen extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
 
         final float zBackup = this.zLevel;
         this.zLevel = 200;
@@ -64,7 +70,7 @@ public class HUDConfigScreen extends GuiScreen {
 
             renderer.renderDummy(pos);
             this.drawHollowRect(pos.getAbsoluteX() - padding, pos.getAbsoluteY() - padding, renderer.getWidth() + (padding * 2), renderer.getHeight() + (padding * 2), new Color(0, 0, 0, 50).getRGB());
-            this.drawScaleRect(pos.getAbsoluteX() + renderer.getWidth() + padding, pos.getAbsoluteY() + renderer.getHeight() + padding, scaleSize, scaleSize, Color.GREEN.getRGB());
+//            this.drawScaleRect(pos.getAbsoluteX() + renderer.getWidth() + padding, pos.getAbsoluteY() + renderer.getHeight() + padding, scaleSize, scaleSize, Color.GREEN.getRGB());
 
             GL11.glScalef(1.0F / pos.getScale(), 1.0F / pos.getScale(), 1.0F);
             GL11.glTranslatef(pos.getAbsoluteX() * (pos.getScale() - 1.0F), pos.getAbsoluteY() * (pos.getScale() - 1.0F), 0.0F);
@@ -72,6 +78,49 @@ public class HUDConfigScreen extends GuiScreen {
         }
 
         this.zLevel = zBackup;
+    }
+
+    @Override
+    public void initGui() {
+        int i = 0;
+        for (Iterator<IRenderer> iterator = renderers.keySet().iterator(); iterator.hasNext(); i++) {
+            IRenderer renderer = iterator.next();
+            ScreenPosition pos = renderers.get(renderer);
+            Config.print_debug("init gui renderer " + i + " sacle: " + pos.getScale());
+
+            int currentButton = i;
+            int currentWidth = getSliderWidth(renderer, pos);
+            int currentHeigth = 12;
+            this.buttonList.add(new GuiSlider(i, getSliderX(renderer, pos, currentWidth), getSliderY(renderer, pos), currentWidth, currentHeigth, pos.getScale(), (res) -> {
+                float new_scale = res.floatValue();
+                Config.print_debug("callback result: " + res.floatValue());
+                pos.setScale(new_scale);
+                GuiButton b = this.buttonList.get(currentButton);
+                Config.print_debug("current button " + b);
+            }, (button) -> {
+                Config.print_debug("onfinish scale: " + pos.getScale());
+                button.setWidth(getSliderWidth(renderer, pos));
+                button.setxPosition(getSliderX(renderer, pos, button.getWidth()));
+                button.setyPosition(getSliderY(renderer, pos));
+                button.setSliderValue(pos.getScale());
+            }, 0.0D, 1.0F));
+        }
+    }
+
+    private int getSliderWidth(IRenderer renderer, ScreenPosition pos) {
+        //Center
+//        return (int) ((renderer.getWidth() + padding * 2) * pos.getScale());
+        return (int) ((renderer.getWidth() + padding * 2 + 1) * pos.getScale());
+    }
+
+    private int getSliderX(IRenderer renderer, ScreenPosition pos, int w) {
+        //Centrer
+//        return (int) (pos.getAbsoluteX() + ((renderer.getWidth() / 2 - w / 2) * pos.getScale()));
+        return (int) (pos.getAbsoluteX() - (padding * pos.getScale()));
+    }
+
+    private int getSliderY(IRenderer renderer, ScreenPosition pos) {
+        return (int) (pos.getAbsoluteY() + ((renderer.getHeight() + padding) * pos.getScale()));
     }
 
     private void drawScaleRect(int x, int y, int w, int h, int color) {
@@ -89,7 +138,7 @@ public class HUDConfigScreen extends GuiScreen {
 
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        if (keyCode == Keyboard.KEY_ESCAPE) {
+        if (keyCode == Keyboard.KEY_ESCAPE || keyCode == ScandiCraftSettings.OPEN_HUD_MANAGER.getKeyCode()) {
             renderers.forEach(IRenderConfig::save);
             this.mc.displayGuiScreen(null);
         }
@@ -97,6 +146,8 @@ public class HUDConfigScreen extends GuiScreen {
 
     @Override
     protected void mouseClickMove(int x, int y, int button, long time) {
+        super.mouseClickMove(x, y, button, time);
+
         if (selectedRenderer.isPresent()) {
             moveSelectedRenderBy(x - prevX, y - prevY);
         }
@@ -144,7 +195,9 @@ public class HUDConfigScreen extends GuiScreen {
     }
 
     @Override
-    protected void mouseClicked(int x, int y, int mouseButton) {
+    protected void mouseClicked(int x, int y, int mouseButton) throws IOException {
+        super.mouseClicked(x, y, mouseButton);
+
         this.prevX = x;
         this.prevY = y;
 
