@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.scandicraft.Config;
 import net.scandicraft.anti_cheat.CheatScreen;
 import net.scandicraft.anti_cheat.CheatType;
-import net.scandicraft.mods.ModInstances;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,17 +21,15 @@ public class CheckAutoClick {
     private static int ACT_CPS = 0;
     private static boolean isButterfly = false;
 
-    public static void checkCPS(int CPS) {
-        //Si dépasse max CPS
-        if (CPS >= Config.MAX_CPS && enable) {
-            new CheatScreen(CheatType.AUTOCLICK);
-        }
-    }
-
-    public static void checkAsCPS() {
+    public static void checkCPS(final int CPS) {
         if (enable) {
             //Si action du clic (attack) est lancée mais que n'a 0 clics = auto_click
-            ACT_CPS = ModInstances.getModCPS().getCPS();
+            ACT_CPS = CPS;
+
+            //Si dépasse max CPS
+            if (ACT_CPS >= Config.MAX_CPS && enable) {
+                new CheatScreen(CheatType.AUTOCLICK);
+            }
 
             addClickHistory(ACT_CPS);
             boolean attackByMouse = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode() < 0; //souris = plus petit que 0
@@ -172,23 +169,9 @@ public class CheckAutoClick {
                     }
                 }
 
-                final Minecraft mc = Minecraft.getMinecraft();
-                if (diff == 0 && Minecraft.getDebugFPS() >= 5) {
-                    boolean blockPress = mc.gameSettings.keyBindUseItem.isPressed();
-                    boolean blockDown = mc.gameSettings.keyBindUseItem.isKeyDown();
-                    boolean attackPress = mc.gameSettings.keyBindAttack.isPressed();
-                    boolean attackDown = mc.gameSettings.keyBindAttack.isKeyDown();
-                    Config.print_debug("diff 0 ; click block: " + blockPress + " " + blockDown + " " + attackPress + " " + attackDown);
-
-                    if (blockPress || blockDown) {
-                        //hit and block
-                        Config.print_debug("hit and block -> diff 0 not add");
-                        diff = 100;   //modifiy diff
-                        Config.print_debug("new diff: " + diff + " (CPS: " + ACT_CPS + ")");
-                    } else if (!attackPress && !attackDown) {
-                        Config.print_debug("reason: diff 0 => double click --- FPS: " + Minecraft.getDebugFPS());
-                        CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
-                    }
+                if (diff <= 0 && Minecraft.getDebugFPS() >= 5) {
+                    Config.print_debug("reason: diff 0 => double click --- FPS: " + Minecraft.getDebugFPS());
+                    CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
                 }
 
                 diffs.add(diff);

@@ -1,7 +1,6 @@
 package net.scandicraft.mods.impl;
 
 import net.minecraft.client.Minecraft;
-import net.scandicraft.Config;
 import net.scandicraft.anti_cheat.auto_click.CheckAutoClick;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.KeybordEvent;
@@ -46,11 +45,8 @@ public class ModCPS extends ModDraggable {
 
     @Override
     public void render(ScreenPosition pos) {
-        int CPS = getCPS();
-        CheckAutoClick.checkCPS(CPS);
-
         if (isEnabled()) {
-            font.drawString("CPS: " + CPS, pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
+            font.drawString("CPS: " + getCPS(), pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
         }
     }
 
@@ -58,8 +54,8 @@ public class ModCPS extends ModDraggable {
     public void onMouse(MouseEvent e) {
         int code = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode();
         if (Mouse.getEventButtonState() && Mouse.getEventButton() == code + 100) {
-            Config.print_debug("mouse attack click");
             this.clicks.add(System.currentTimeMillis());
+            CheckAutoClick.checkCPS(getCPS());
         }
     }
 
@@ -67,8 +63,8 @@ public class ModCPS extends ModDraggable {
     public void onKeybord(KeybordEvent e) {
         int code = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode();
         if (Keyboard.getEventKeyState() && Keyboard.getEventKey() == code) {
-            Config.print_debug("keybord attack click");
             this.clicks.add(System.currentTimeMillis());
+            CheckAutoClick.checkCPS(getCPS());
         }
     }
 

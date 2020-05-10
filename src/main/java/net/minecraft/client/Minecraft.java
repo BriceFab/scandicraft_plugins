@@ -84,7 +84,6 @@ import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
 import net.scandicraft.Config;
-import net.scandicraft.anti_cheat.auto_click.CheckAutoClick;
 import net.scandicraft.anti_cheat.x_ray.PackManager;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.events.impl.ClientTickEvent;
@@ -1294,9 +1293,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     private void clickMouse() {
-        //ScandiCraft Action du clic (attack)
-        CheckAutoClick.checkAsCPS();
-
         if (this.leftClickCounter <= 0) {
             this.thePlayer.swingItem();
 
