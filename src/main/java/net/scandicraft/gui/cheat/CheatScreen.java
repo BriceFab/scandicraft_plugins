@@ -1,10 +1,10 @@
-package net.scandicraft.anti_cheat;
+package net.scandicraft.gui.cheat;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.resources.I18n;
 import net.scandicraft.Config;
+import net.scandicraft.anti_cheat.CheatType;
 
 import java.awt.*;
 import java.io.IOException;
@@ -45,6 +45,6 @@ public class CheatScreen extends GuiScreen {
     @Override
     public void onGuiClosed() {
         Config.print_debug("exit for cheating..");
-//        this.mc.shutdown();
+        this.mc.shutdown();
     }
 }

@@ -2,11 +2,8 @@ package net.scandicraft.gui.hud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.scandicraft.Config;
-import net.scandicraft.gui.buttons.GuiSlider;
 import net.scandicraft.mods.Mod;
 import net.scandicraft.settings.ScandiCraftSettings;
 import org.lwjgl.input.Keyboard;
@@ -16,7 +13,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -78,49 +74,6 @@ public class HUDConfigScreen extends GuiScreen {
         }
 
         this.zLevel = zBackup;
-    }
-
-    @Override
-    public void initGui() {
-        int i = 0;
-        for (Iterator<IRenderer> iterator = renderers.keySet().iterator(); iterator.hasNext(); i++) {
-            IRenderer renderer = iterator.next();
-            ScreenPosition pos = renderers.get(renderer);
-            Config.print_debug("init gui renderer " + i + " sacle: " + pos.getScale());
-
-            int currentButton = i;
-            int currentWidth = getSliderWidth(renderer, pos);
-            int currentHeigth = 12;
-            this.buttonList.add(new GuiSlider(i, getSliderX(renderer, pos, currentWidth), getSliderY(renderer, pos), currentWidth, currentHeigth, pos.getScale(), (res) -> {
-                float new_scale = res.floatValue();
-                Config.print_debug("callback result: " + res.floatValue());
-                pos.setScale(new_scale);
-                GuiButton b = this.buttonList.get(currentButton);
-                Config.print_debug("current button " + b);
-            }, (button) -> {
-                Config.print_debug("onfinish scale: " + pos.getScale());
-                button.setWidth(getSliderWidth(renderer, pos));
-                button.setxPosition(getSliderX(renderer, pos, button.getWidth()));
-                button.setyPosition(getSliderY(renderer, pos));
-                button.setSliderValue(pos.getScale());
-            }, 0.0D, 1.0F));
-        }
-    }
-
-    private int getSliderWidth(IRenderer renderer, ScreenPosition pos) {
-        //Center
-//        return (int) ((renderer.getWidth() + padding * 2) * pos.getScale());
-        return (int) ((renderer.getWidth() + padding * 2 + 1) * pos.getScale());
-    }
-
-    private int getSliderX(IRenderer renderer, ScreenPosition pos, int w) {
-        //Centrer
-//        return (int) (pos.getAbsoluteX() + ((renderer.getWidth() / 2 - w / 2) * pos.getScale()));
-        return (int) (pos.getAbsoluteX() - (padding * pos.getScale()));
-    }
-
-    private int getSliderY(IRenderer renderer, ScreenPosition pos) {
-        return (int) (pos.getAbsoluteY() + ((renderer.getHeight() + padding) * pos.getScale()));
     }
 
     private void drawScaleRect(int x, int y, int w, int h, int color) {

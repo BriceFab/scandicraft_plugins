@@ -2676,3 +2676,17 @@ item.banner.straight_cross.lightBlue=Light Blue Cross
 item.banner.straight_cross.magenta=Magenta Cross
 item.banner.straight_cross.orange=Orange Cross
 item.banner.straight_cross.white=White Cross
+
+#=== ScandiCraft ===
+scandicraft.settings.title=ScandiCraft Settings
+options.scandicraft=ScandiCraft
+scandicraft.options.items_physics=Items Physics
+scandicraft.options.inventory.potions=Potions in inventory
+scandicraft.options.hud.armor=Armor HUD
+scandicraft.options.hud.cps=CPS HUD
+scandicraft.options.hud.fps=FPS HUD
+scandicraft.options.hud.ping=Ping HUD
+scandicraft.options.hud.potion=Potions HUD
+scandicraft.options.hud.keystroke=Keystroke HUD
+scandicraft.options.hud.compass=Compass HUD
+scandicraft.options.hud.toggle=Toggle Sprint/Sneak HUD

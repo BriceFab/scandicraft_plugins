@@ -3,7 +3,7 @@ package net.scandicraft.anti_cheat.x_ray;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.scandicraft.Config;
-import net.scandicraft.anti_cheat.CheatScreen;
+import net.scandicraft.gui.cheat.CheatScreen;
 import net.scandicraft.anti_cheat.CheatType;
 
 public class PackManager implements IResourceManagerReloadListener {

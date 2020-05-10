@@ -6,7 +6,6 @@ import net.minecraft.client.gui.GuiChat;
 import net.scandicraft.events.EventManager;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.RenderEvent;
-import net.scandicraft.gui.GuiTest;
 import net.scandicraft.mods.Mod;
 import org.lwjgl.opengl.GL11;
 
@@ -56,7 +55,6 @@ public class HUDManager {
 
     public void openConfigScreen() {
         mc.displayGuiScreen(new HUDConfigScreen(this));
-//        mc.displayGuiScreen(new GuiTest());
     }
 
     @EventTarget

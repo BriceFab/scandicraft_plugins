@@ -89,6 +89,7 @@ import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.events.impl.ClientTickEvent;
 import net.scandicraft.events.impl.KeybordEvent;
 import net.scandicraft.events.impl.MouseEvent;
+import net.scandicraft.gui.IngameMenu;
 import net.scandicraft.gui.MainMenu;
 import net.scandicraft.mods.ModInstances;
 import net.scandicraft.mods.impl.togglesprintsneak.ClientMovementInput;
@@ -1265,7 +1266,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      */
     public void displayInGameMenu() {
         if (this.currentScreen == null) {
-            this.displayGuiScreen(new GuiIngameMenu());
+            this.displayGuiScreen(new IngameMenu());
 
             if (this.isSingleplayer() && !this.theIntegratedServer.getPublic()) {
                 this.mcSoundHandler.pauseSounds();

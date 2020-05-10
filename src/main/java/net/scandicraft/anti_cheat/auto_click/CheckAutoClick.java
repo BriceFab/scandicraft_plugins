@@ -2,7 +2,7 @@ package net.scandicraft.anti_cheat.auto_click;
 
 import net.minecraft.client.Minecraft;
 import net.scandicraft.Config;
-import net.scandicraft.anti_cheat.CheatScreen;
+import net.scandicraft.gui.cheat.CheatScreen;
 import net.scandicraft.anti_cheat.CheatType;
 
 import java.util.ArrayList;
