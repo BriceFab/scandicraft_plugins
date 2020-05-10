@@ -10,8 +10,8 @@ import java.util.List;
 public class Config {
     /* Variables */
     public static final String VERSION = "v1.0.0";
-    public static final String SERVER_NAME = "ScandiCraft";
     public static final ENVIRONNEMENT ENV = ENVIRONNEMENT.DEV;
+    public static final String SERVER_NAME = "ScandiCraft";
     public static final String URL_WEBSITE = "https://scandicraft-mc.fr";
     public static final String TITLE = String.format("%s Reborn - %s (%s)", SERVER_NAME, VERSION, ENV);
     private static final boolean DEBUG = true;
@@ -22,7 +22,8 @@ public class Config {
     public static final String CONF_FILE_NAME = "sc_conf";
     public static final File FONT_DIRS = new File(new File(String.valueOf(Minecraft.getMinecraft().mcDataDir), CONF_FILE_NAME), "fonts");
     public static final List<String> SUPPORTED_LANGS = Arrays.asList("fr_FR", "fr_CA", "en_US", "en_GB");
-    public static final String SC_SETTINGS = "settings.json";
+    public static final String SC_SETTINGS = CONF_FILE_NAME + "\\settings.json";
+    public static final String RESOURCE_DOMAIN = SERVER_NAME.toLowerCase() + ":";
 
     /* Anti-Cheat */
     //CPS
@@ -46,6 +47,19 @@ public class Config {
     }
 
     public enum ENVIRONNEMENT {
-        DEV, TEST, PROD
+        DEV("dev"),
+        TEST("test"),
+        PROD("prod");
+
+        private final String name;
+
+        ENVIRONNEMENT(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 }
