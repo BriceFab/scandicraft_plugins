@@ -1,6 +1,7 @@
 package net.scandicraft.settings;
 
 import com.google.gson.Gson;
+import net.scandicraft.Config;
 
 import java.io.*;
 
@@ -8,7 +9,7 @@ public class FileManager {
 
     private static final Gson gson = new Gson();
 
-    private static final File MODS_DIR = new File("scandicraft");
+    private static final File MODS_DIR = new File(Config.CONF_FILE_NAME);
 
     public static void init() {
         if (!MODS_DIR.exists()) {
