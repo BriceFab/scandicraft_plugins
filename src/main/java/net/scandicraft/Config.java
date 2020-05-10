@@ -11,8 +11,9 @@ public class Config {
     /* Variables */
     public static final String VERSION = "v1.0.0";
     public static final String SERVER_NAME = "ScandiCraft";
+    public static final ENVIRONNEMENT ENV = ENVIRONNEMENT.DEV;
     public static final String URL_WEBSITE = "https://scandicraft-mc.fr";
-    public static final String TITLE = String.format("%s Reborn - %s", SERVER_NAME, VERSION);
+    public static final String TITLE = String.format("%s Reborn - %s (%s)", SERVER_NAME, VERSION, ENV);
     private static final boolean DEBUG = true;
     public static final String COPYRIGHT = "Copyright Mojang AB";
     public static final String SKINS_PATH = "https://scandicraft-mc.fr/upload/skins/";    //.png only ; TODO user_id + upload
@@ -42,5 +43,9 @@ public class Config {
         if (DEBUG) {
             LogManager.getLogger().info(String.format("[%s] %s", SERVER_NAME, message));
         }
+    }
+
+    public enum ENVIRONNEMENT {
+        DEV, TEST, PROD
     }
 }

@@ -26,7 +26,7 @@ public class CheatScreen extends GuiScreen {
 
     @Override
     public void initGui() {
-        this.buttonList.add(new GuiButton(4, this.width / 2 - 60, this.height / 2 + 30, 120, 20, "J'ai compris"));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 60, this.height / 2 + 30, 120, 20, "J'ai compris"));
     }
 
     @Override
@@ -37,14 +37,16 @@ public class CheatScreen extends GuiScreen {
     }
 
     protected void actionPerformed(GuiButton button) throws IOException {
-        if (button.id == 4) {
+        if (button.id == 0) {
             this.mc.displayGuiScreen(null);
         }
     }
 
     @Override
     public void onGuiClosed() {
-        Config.print_debug("exit for cheating..");
-        this.mc.shutdown();
+        if (Config.ENV == Config.ENVIRONNEMENT.PROD) {
+            Config.print_debug("exit for cheating..");
+            this.mc.shutdown();
+        }
     }
 }
