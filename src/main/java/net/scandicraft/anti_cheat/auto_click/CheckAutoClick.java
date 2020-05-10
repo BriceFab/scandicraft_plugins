@@ -172,9 +172,23 @@ public class CheckAutoClick {
                     }
                 }
 
-                if (diff == 0) {
-                    Config.print_debug("reason: diff 0 => double click --- FPS: " + Minecraft.getDebugFPS());
-                    CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
+                final Minecraft mc = Minecraft.getMinecraft();
+                if (diff == 0 && Minecraft.getDebugFPS() >= 5) {
+                    boolean blockPress = mc.gameSettings.keyBindUseItem.isPressed();
+                    boolean blockDown = mc.gameSettings.keyBindUseItem.isKeyDown();
+                    boolean attackPress = mc.gameSettings.keyBindAttack.isPressed();
+                    boolean attackDown = mc.gameSettings.keyBindAttack.isKeyDown();
+                    Config.print_debug("diff 0 ; click block: " + blockPress + " " + blockDown + " " + attackPress + " " + attackDown);
+
+                    if (blockPress || blockDown) {
+                        //hit and block
+                        Config.print_debug("hit and block -> diff 0 not add");
+                        diff = 100;   //modifiy diff
+                        Config.print_debug("new diff: " + diff + " (CPS: " + ACT_CPS + ")");
+                    } else if (!attackPress && !attackDown) {
+                        Config.print_debug("reason: diff 0 => double click --- FPS: " + Minecraft.getDebugFPS());
+                        CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
+                    }
                 }
 
                 diffs.add(diff);
