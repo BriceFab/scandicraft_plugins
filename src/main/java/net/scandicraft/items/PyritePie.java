@@ -7,8 +7,8 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class ItemPyritePie extends ItemFood {
-    public ItemPyritePie(int amount, float saturation, boolean isWolfFood) {
+public class PyritePie extends ItemFood {
+    public PyritePie(int amount, float saturation, boolean isWolfFood) {
         super(amount, saturation, isWolfFood);
     }
 

@@ -5,7 +5,7 @@ import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
-import net.scandicraft.blocks.ScandiCraftBlocks;
+import net.scandicraft.blocks.register.ScandiCraftBlocks;
 
 public class ItemAxe extends ItemTool
 {

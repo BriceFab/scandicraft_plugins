@@ -1,7 +1,8 @@
 package net.scandicraft.blocks;
 
 import net.minecraft.item.Item;
-import net.scandicraft.items.ScandiCraftItems;
+import net.scandicraft.blocks.register.ScandiCraftBlocks;
+import net.scandicraft.items.register.ScandiCraftItems;
 
 public class BlockOre {
 

@@ -12,7 +12,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ITickable;
-import net.scandicraft.blocks.PyriteBlockChest;
+import net.scandicraft.blocks.PyriteChest;
 
 import java.util.Arrays;
 
@@ -269,7 +269,7 @@ public class TileEntityPyriteChest extends TileEntityLockable implements ITickab
     }
 
     public void closeInventory(EntityPlayer player) {
-        if (!player.isSpectator() && this.getBlockType() instanceof PyriteBlockChest) {
+        if (!player.isSpectator() && this.getBlockType() instanceof PyriteChest) {
             --this.numPlayersUsing;
             this.worldObj.addBlockEvent(this.pos, this.getBlockType(), 1, this.numPlayersUsing);
             this.worldObj.notifyNeighborsOfStateChange(this.pos, this.getBlockType());

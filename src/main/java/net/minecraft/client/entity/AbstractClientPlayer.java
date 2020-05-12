@@ -17,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
+import net.scandicraft.items.register.ScandiCraftItems;
 import net.scandicraft.skins.CustomSkin;
 import optifine.CapeUtils;
 import optifine.Config;
@@ -149,7 +150,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer
             f = 1.0F;
         }
 
-        if (this.isUsingItem() && this.getItemInUse().getItem() == Items.bow)
+        if (this.isUsingItem() && (this.getItemInUse().getItem() == Items.bow || this.getItemInUse().getItem() == ScandiCraftItems.scandium_bow))
         {
             int i = this.getItemInUseDuration();
             float f1 = (float)i / 20.0F;
@@ -166,7 +167,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer
             f *= 1.0F - f1 * 0.15F;
         }
 
-        return Reflector.ForgeHooksClient_getOffsetFOV.exists() ? Reflector.callFloat(Reflector.ForgeHooksClient_getOffsetFOV, new Object[] {this, Float.valueOf(f)}): f;
+        return Reflector.ForgeHooksClient_getOffsetFOV.exists() ? Reflector.callFloat(Reflector.ForgeHooksClient_getOffsetFOV, this, f): f;
     }
 
     public String getNameClear()

@@ -164,7 +164,7 @@ object BlockUtils : MinecraftInstance() {
     fun isBlockPassable(block: Block?): Boolean {
         block ?: return false
 
-        val material = block?.material
+        val material = block.material  //scandicraft before block?.material
         return block in passableBlocks || material in passableMaterial
     }
 

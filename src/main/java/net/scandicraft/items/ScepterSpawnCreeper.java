@@ -1,5 +1,6 @@
 package net.scandicraft.items;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -12,10 +13,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class ItemSpawnScepter extends Item {
+public class ScepterSpawnCreeper extends Item {
     private final int CREEPER_METADATA = 50;
 
-    public ItemSpawnScepter(int max_uses) {
+    public ScepterSpawnCreeper(int max_uses) {
         this.setCreativeTab(CreativeTabs.tabCombat);
         this.setMaxDamage(max_uses - 1); //car 0 est pris en compte
         this.setMaxStackSize(1);

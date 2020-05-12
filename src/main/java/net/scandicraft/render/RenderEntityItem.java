@@ -15,7 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import net.scandicraft.items.ScandiCraftItems;
+import net.scandicraft.items.register.ScandiCraftItems;
 import net.scandicraft.settings.ScandiCraftSettings;
 
 import java.util.Random;

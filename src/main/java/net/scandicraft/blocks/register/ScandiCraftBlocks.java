@@ -1,7 +1,8 @@
-package net.scandicraft.blocks;
+package net.scandicraft.blocks.register;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.scandicraft.blocks.PyriteChest;
 
 public class ScandiCraftBlocks {
 
@@ -11,7 +12,7 @@ public class ScandiCraftBlocks {
     public static final Block pyrite_block;
     public static final Block lazurite_ore;
     public static final Block lazurite_block;
-    public static final PyriteBlockChest pyrite_chest;
+    public static final PyriteChest pyrite_chest;
     public static final Block lazurite_ladder;
 
     static {
@@ -21,7 +22,7 @@ public class ScandiCraftBlocks {
         pyrite_block = Blocks.getRegisteredBlock("pyrite_block");
         lazurite_ore = Blocks.getRegisteredBlock("lazurite_ore");
         lazurite_block = Blocks.getRegisteredBlock("lazurite_block");
-        pyrite_chest = (PyriteBlockChest) Blocks.getRegisteredBlock("pyrite_chest");
+        pyrite_chest = (PyriteChest) Blocks.getRegisteredBlock("pyrite_chest");
         lazurite_ladder = Blocks.getRegisteredBlock("lazurite_ladder");
     }
 

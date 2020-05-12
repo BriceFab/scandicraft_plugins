@@ -6,9 +6,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemRepairScepter extends Item {
+public class ScepterNoFall extends Item {
 
-    public ItemRepairScepter() {
+    public ScepterNoFall() {
         this.setCreativeTab(CreativeTabs.tabCombat);
         this.setMaxStackSize(1);
     }
@@ -25,8 +25,7 @@ public class ItemRepairScepter extends Item {
         repairStuff(playerIn.inventory.mainInventory);
         repairStuff(playerIn.inventory.armorInventory);
 
-        if (!playerIn.capabilities.isCreativeMode)
-        {
+        if (!playerIn.capabilities.isCreativeMode) {
             --itemStackIn.stackSize;
         }
 

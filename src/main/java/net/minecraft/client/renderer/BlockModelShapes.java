@@ -14,7 +14,7 @@ import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
-import net.scandicraft.blocks.ScandiCraftBlocks;
+import net.scandicraft.blocks.register.ScandiCraftBlocks;
 
 import java.util.Map;
 import java.util.Map.Entry;

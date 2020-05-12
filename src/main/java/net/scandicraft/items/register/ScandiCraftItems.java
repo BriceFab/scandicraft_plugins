@@ -1,8 +1,11 @@
-package net.scandicraft.items;
+package net.scandicraft.items.register;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
+import net.scandicraft.items.ScandiumBow;
+import net.scandicraft.items.ScepterRepair;
+import net.scandicraft.items.ScepterSpawnCreeper;
 
 public class ScandiCraftItems {
 
@@ -41,10 +44,11 @@ public class ScandiCraftItems {
     public static final ItemArmor bloody_leggings;
     public static final ItemArmor bloody_boots;
     public static final Item bloody_sword;
-    public static final ItemSpawnScepter scepter_creeper;
-    public static final ItemRepairScepter scepter_repair;
+    public static final ScepterSpawnCreeper scepter_creeper;
+    public static final ScepterRepair scepter_repair;
     public static final Item pyrite_pie;
     public static final Item lazurite_bread;
+    public static final ScandiumBow scandium_bow;
 
     static {
         scandium = Items.getRegisteredItem("scandium");
@@ -82,10 +86,11 @@ public class ScandiCraftItems {
         bloody_leggings = (ItemArmor) Items.getRegisteredItem("bloody_leggings");
         bloody_boots = (ItemArmor) Items.getRegisteredItem("bloody_boots");
         bloody_sword = Items.getRegisteredItem("bloody_sword");
-        scepter_creeper = (ItemSpawnScepter) Items.getRegisteredItem("scepter_creeper");
-        scepter_repair = (ItemRepairScepter) Items.getRegisteredItem("scepter_repair");
+        scepter_creeper = (ScepterSpawnCreeper) Items.getRegisteredItem("scepter_creeper");
+        scepter_repair = (ScepterRepair) Items.getRegisteredItem("scepter_repair");
         pyrite_pie = Items.getRegisteredItem("pyrite_pie");
         lazurite_bread = Items.getRegisteredItem("lazurite_bread");
+        scandium_bow = (ScandiumBow) Items.getRegisteredItem("scandium_bow");
     }
 
 }

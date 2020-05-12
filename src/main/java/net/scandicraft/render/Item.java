@@ -1,8 +1,9 @@
 package net.scandicraft.render;
 
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.scandicraft.blocks.ScandiCraftBlocks;
-import net.scandicraft.items.ScandiCraftItems;
+import net.minecraft.init.Items;
+import net.scandicraft.blocks.register.ScandiCraftBlocks;
+import net.scandicraft.items.register.ScandiCraftItems;
 
 public class Item {
 
@@ -52,6 +53,10 @@ public class Item {
         renderItem.registerItem(ScandiCraftItems.scepter_repair, "scepter_repair");
         renderItem.registerItem(ScandiCraftItems.lazurite_bread, "lazurite_bread");
         renderItem.registerItem(ScandiCraftItems.pyrite_pie, "pyrite_pie");
+        renderItem.registerItem(ScandiCraftItems.scandium_bow, 0, "scandium_bow");
+        renderItem.registerItem(ScandiCraftItems.scandium_bow, 1, "scandium_bow_pulling_0");
+        renderItem.registerItem(ScandiCraftItems.scandium_bow, 2, "scandium_bow_pulling_1");
+        renderItem.registerItem(ScandiCraftItems.scandium_bow, 3, "scandium_bow_pulling_2");
     }
 
     private static void splitRegisterBlocks(RenderItem renderItem) {

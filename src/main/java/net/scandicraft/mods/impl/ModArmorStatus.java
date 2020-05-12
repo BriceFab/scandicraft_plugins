@@ -3,7 +3,7 @@ package net.scandicraft.mods.impl;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.scandicraft.gui.hud.ScreenPosition;
-import net.scandicraft.items.ScandiCraftItems;
+import net.scandicraft.items.register.ScandiCraftItems;
 import net.scandicraft.mods.ModDraggable;
 import org.lwjgl.opengl.GL11;
 

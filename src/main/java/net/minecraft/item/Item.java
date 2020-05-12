@@ -20,8 +20,8 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionHelper;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
-import net.scandicraft.items.ScandiCraftItem;
-import net.scandicraft.items.ScandiCraftItems;
+import net.scandicraft.items.register.ScandiCraftItem;
+import net.scandicraft.items.register.ScandiCraftItems;
 
 import java.util.List;
 import java.util.Map;

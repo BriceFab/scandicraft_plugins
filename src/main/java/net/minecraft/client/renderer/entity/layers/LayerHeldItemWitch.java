@@ -11,6 +11,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.scandicraft.items.register.ScandiCraftItems;
 
 public class LayerHeldItemWitch implements LayerRenderer<EntityWitch>
 {
@@ -51,7 +52,7 @@ public class LayerHeldItemWitch implements LayerRenderer<EntityWitch>
                 float f4 = 0.375F;
                 GlStateManager.scale(f4, -f4, f4);
             }
-            else if (item == Items.bow)
+            else if (item == Items.bow || item == ScandiCraftItems.scandium_bow)
             {
                 GlStateManager.translate(0.0F, 0.125F, -0.125F);
                 GlStateManager.rotate(-45.0F, 0.0F, 1.0F, 0.0F);

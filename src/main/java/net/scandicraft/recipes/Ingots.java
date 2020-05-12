@@ -1,8 +1,8 @@
 package net.scandicraft.recipes;
 
 import net.minecraft.item.ItemStack;
-import net.scandicraft.blocks.ScandiCraftBlocks;
-import net.scandicraft.items.ScandiCraftItems;
+import net.scandicraft.blocks.register.ScandiCraftBlocks;
+import net.scandicraft.items.register.ScandiCraftItems;
 
 public class Ingots {
 

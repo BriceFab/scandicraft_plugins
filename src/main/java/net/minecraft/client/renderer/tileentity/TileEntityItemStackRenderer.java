@@ -13,10 +13,8 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityEnderChest;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.EnumFacing;
-import net.scandicraft.blocks.ScandiCraftBlocks;
+import net.scandicraft.blocks.register.ScandiCraftBlocks;
 import net.scandicraft.tileentity.TileEntityPyriteChest;
-
-import java.util.UUID;
 
 public class TileEntityItemStackRenderer {
     public static TileEntityItemStackRenderer instance = new TileEntityItemStackRenderer();

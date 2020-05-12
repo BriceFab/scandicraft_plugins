@@ -24,15 +24,15 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.ILockableContainer;
 import net.minecraft.world.World;
-import net.scandicraft.items.ScandiCraftItems;
+import net.scandicraft.items.register.ScandiCraftItems;
 import net.scandicraft.tileentity.TileEntityPyriteChest;
 
 import java.util.Random;
 
-public class PyriteBlockChest extends BlockContainer {
+public class PyriteChest extends BlockContainer {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
-    protected PyriteBlockChest() {
+    public PyriteChest() {
         super(Material.wood);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         this.setCreativeTab(CreativeTabs.tabDecorations);

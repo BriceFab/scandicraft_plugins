@@ -9,7 +9,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.scandicraft.blocks.ScandiCraftBlocks;
+import net.scandicraft.blocks.register.ScandiCraftBlocks;
 
 public class BlockDynamicLiquid extends BlockLiquid
 {

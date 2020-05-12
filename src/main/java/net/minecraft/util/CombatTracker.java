@@ -7,7 +7,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.scandicraft.blocks.ScandiCraftBlocks;
+import net.scandicraft.blocks.register.ScandiCraftBlocks;
 
 import java.util.List;
 

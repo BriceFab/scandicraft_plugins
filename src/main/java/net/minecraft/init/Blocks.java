@@ -33,7 +33,6 @@ import net.minecraft.block.BlockStaticLiquid;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.BlockTripWireHook;
 import net.minecraft.util.ResourceLocation;
-import net.scandicraft.blocks.PyriteBlockChest;
 
 public class Blocks
 {

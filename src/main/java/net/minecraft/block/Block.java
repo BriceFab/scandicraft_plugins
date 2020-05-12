@@ -20,7 +20,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.scandicraft.blocks.ScandiCraftBlock;
+import net.scandicraft.blocks.register.ScandiCraftBlock;
 
 import java.util.List;
 import java.util.Random;
