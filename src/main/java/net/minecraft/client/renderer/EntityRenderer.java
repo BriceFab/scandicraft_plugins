@@ -1175,11 +1175,6 @@ public class EntityRenderer implements IResourceManagerReloadListener {
         }
     }
 
-    public void renderStreamIndicator() {
-        this.setupOverlayRendering();
-        this.mc.ingameGUI.renderStreamIndicator(new ScaledResolution(this.mc));
-    }
-
     private boolean isDrawBlockOutline() {
         Entity entity = this.mc.getRenderViewEntity();
         boolean flag = entity instanceof EntityPlayer && !this.mc.gameSettings.hideGUI;
