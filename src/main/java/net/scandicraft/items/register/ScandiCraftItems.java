@@ -49,6 +49,8 @@ public class ScandiCraftItems {
     public static final Item pyrite_pie;
     public static final Item lazurite_bread;
     public static final ScandiumBow scandium_bow;
+    public static final Item scandivote;
+    public static final Item scandibox;
 
     static {
         scandium = Items.getRegisteredItem("scandium");
@@ -91,6 +93,8 @@ public class ScandiCraftItems {
         pyrite_pie = Items.getRegisteredItem("pyrite_pie");
         lazurite_bread = Items.getRegisteredItem("lazurite_bread");
         scandium_bow = (ScandiumBow) Items.getRegisteredItem("scandium_bow");
+        scandivote = Items.getRegisteredItem("scandivote");
+        scandibox = Items.getRegisteredItem("scandibox");
     }
 
 }

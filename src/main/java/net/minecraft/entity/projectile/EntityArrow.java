@@ -118,7 +118,7 @@ public class EntityArrow extends Entity implements IProjectile
 
     protected void entityInit()
     {
-        this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
+        this.dataWatcher.addObject(16, (byte) 0);
     }
 
     /**

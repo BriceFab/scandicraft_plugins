@@ -64,6 +64,8 @@ public class ScandiCraftItem {
 
         /*TODO */
         Item.registerItem(3541, "scepter_falling", (new ScepterFalling().setUnlocalizedName("scepterFalling")));
+        Item.registerItem(3542, "scandivote", (new Item().setUnlocalizedName("scandiVote").setMaxStackSize(64).setCreativeTab(CreativeTabs.tabMaterials)));
+        Item.registerItem(3543, "scandibox", (new Item().setUnlocalizedName("scandiBox").setMaxStackSize(64).setCreativeTab(CreativeTabs.tabMaterials)));
     }
 
     private static void splitRegisterBlocks() {

@@ -40,6 +40,7 @@ public class ScandiumBow extends Item {
             }
 
             EntityArrow entityarrow = new EntityArrow(worldIn, playerIn, f * 2.0F);
+            entityarrow.setDamage(entityarrow.getDamage() * 2); //2x plus puissante que la flèche de base
 
             if (f == 1.0F) {
                 entityarrow.setIsCritical(true);

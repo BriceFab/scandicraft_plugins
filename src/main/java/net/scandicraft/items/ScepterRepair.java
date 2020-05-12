@@ -11,7 +11,6 @@ public class ScepterRepair extends Item {
     public ScepterRepair() {
         this.setCreativeTab(CreativeTabs.tabCombat);
         this.setMaxStackSize(1);
-        this.setMaxDamage(1);
     }
 
     @Override

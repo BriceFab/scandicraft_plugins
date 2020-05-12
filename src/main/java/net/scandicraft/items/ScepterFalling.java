@@ -13,7 +13,6 @@ public class ScepterFalling extends Item {
     public ScepterFalling() {
         this.setCreativeTab(CreativeTabs.tabCombat);
         this.setMaxStackSize(1);
-        this.setMaxDamage(1);
     }
 
     @Override
@@ -25,8 +24,9 @@ public class ScepterFalling extends Item {
      * Called when a Block is right-clicked with this Item
      */
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-
-        itemStackIn.damageItem(1, playerIn);
+        if (!playerIn.capabilities.isCreativeMode) {
+            --itemStackIn.stackSize;
+        }
 
         //20 ticks = 1 seconde
         playerIn.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 5 * 60 * 20));    //5 mn

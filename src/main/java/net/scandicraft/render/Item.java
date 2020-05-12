@@ -1,7 +1,6 @@
 package net.scandicraft.render;
 
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.init.Items;
 import net.scandicraft.blocks.register.ScandiCraftBlocks;
 import net.scandicraft.items.register.ScandiCraftItems;
 
@@ -57,6 +56,8 @@ public class Item {
         renderItem.registerItem(ScandiCraftItems.scandium_bow, 1, "scandium_bow_pulling_0");
         renderItem.registerItem(ScandiCraftItems.scandium_bow, 2, "scandium_bow_pulling_1");
         renderItem.registerItem(ScandiCraftItems.scandium_bow, 3, "scandium_bow_pulling_2");
+        renderItem.registerItem(ScandiCraftItems.scandivote, "scandivote");
+        renderItem.registerItem(ScandiCraftItems.scandibox, "scandibox");
     }
 
     private static void splitRegisterBlocks(RenderItem renderItem) {
