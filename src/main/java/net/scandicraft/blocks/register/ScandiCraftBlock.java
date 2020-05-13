@@ -1,6 +1,7 @@
 package net.scandicraft.blocks.register;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLadder;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.material.MapColor;
@@ -21,6 +22,8 @@ public class ScandiCraftBlock {
 
         Block.registerBlock(2506, "pyrite_chest", (new PyriteChest()).setHardness(10F).setStepSound(Block.soundTypePiston).setUnlocalizedName("chestPyrite").setLightLevel(0.5F));
         Block.registerBlock(2507, "lazurite_ladder", (new BlockLadder()).setHardness(0.4F).setStepSound(Block.soundTypeLadder).setUnlocalizedName("ladderLazurite"));
+        Block.registerBlock(2508, "light", (new BlockAir()).setHardness(10.0F).setLightLevel(1.0F).setUnlocalizedName("light").setCreativeTab(CreativeTabs.tabBlock));
+        Block.registerBlock(2500, "dungeon_spawner", (new BlockAir()).setHardness(10.0F).setUnlocalizedName("dungeon_spawner").setCreativeTab(CreativeTabs.tabBlock));
     }
 
 }

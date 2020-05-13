@@ -67,7 +67,7 @@ public class BlockModelShapes {
                 return this.modelManager.getTextureMap().getAtlasSprite("minecraft:blocks/soul_sand");
             }
 
-            if (block == Blocks.barrier) {
+            if (block == Blocks.barrier || block == ScandiCraftBlocks.light || block == ScandiCraftBlocks.dungeon_spawner) {
                 return this.modelManager.getTextureMap().getAtlasSprite("minecraft:items/barrier");
             }
         }

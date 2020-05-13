@@ -69,6 +69,8 @@ public class Item {
         renderItem.registerBlock(ScandiCraftBlocks.lazurite_block, "lazurite_block");
         renderItem.registerBlock(ScandiCraftBlocks.pyrite_chest, "pyrite_chest");
         renderItem.registerBlock(ScandiCraftBlocks.lazurite_ladder, "lazurite_ladder");
+        renderItem.registerBlock(ScandiCraftBlocks.light, "light");
+        renderItem.registerBlock(ScandiCraftBlocks.dungeon_spawner, "dungeon_spawner");
     }
 
 }

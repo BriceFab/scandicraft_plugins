@@ -14,6 +14,8 @@ public class ScandiCraftBlocks {
     public static final Block lazurite_block;
     public static final PyriteChest pyrite_chest;
     public static final Block lazurite_ladder;
+    public static final Block light;
+    public static final Block dungeon_spawner;
 
     static {
         scandium_ore = Blocks.getRegisteredBlock("scandium_ore");
@@ -24,6 +26,8 @@ public class ScandiCraftBlocks {
         lazurite_block = Blocks.getRegisteredBlock("lazurite_block");
         pyrite_chest = (PyriteChest) Blocks.getRegisteredBlock("pyrite_chest");
         lazurite_ladder = Blocks.getRegisteredBlock("lazurite_ladder");
+        light = Blocks.getRegisteredBlock("light");
+        dungeon_spawner = Blocks.getRegisteredBlock("dungeon_spawner");
     }
 
 }

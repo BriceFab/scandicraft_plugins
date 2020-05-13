@@ -8,7 +8,8 @@ import net.minecraft.world.World;
 
 public class BlockAir extends Block
 {
-    protected BlockAir()
+    //scandicraft change protected to public
+    public BlockAir()
     {
         super(Material.air);
     }

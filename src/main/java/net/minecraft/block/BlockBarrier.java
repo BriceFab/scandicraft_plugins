@@ -7,7 +7,8 @@ import net.minecraft.world.World;
 
 public class BlockBarrier extends Block
 {
-    protected BlockBarrier()
+    //ScandiCraft protected to public
+    public BlockBarrier()
     {
         super(Material.barrier);
         this.setBlockUnbreakable();
