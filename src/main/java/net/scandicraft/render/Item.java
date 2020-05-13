@@ -72,6 +72,7 @@ public class Item {
         renderItem.registerBlock(ScandiCraftBlocks.lazurite_ladder, "lazurite_ladder");
         renderItem.registerBlock(ScandiCraftBlocks.light, "light");
         renderItem.registerBlock(ScandiCraftBlocks.dungeon_spawner, "dungeon_spawner");
+        renderItem.registerBlock(ScandiCraftBlocks.random_ore, "random_ore");
     }
 
 }

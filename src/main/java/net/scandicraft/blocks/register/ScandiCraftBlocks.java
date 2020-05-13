@@ -3,6 +3,7 @@ package net.scandicraft.blocks.register;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.scandicraft.blocks.PyriteChest;
+import net.scandicraft.blocks.RandomOre;
 
 public class ScandiCraftBlocks {
 
@@ -16,6 +17,7 @@ public class ScandiCraftBlocks {
     public static final Block lazurite_ladder;
     public static final Block light;
     public static final Block dungeon_spawner;
+    public static final RandomOre random_ore;
 
     static {
         scandium_ore = Blocks.getRegisteredBlock("scandium_ore");
@@ -28,6 +30,7 @@ public class ScandiCraftBlocks {
         lazurite_ladder = Blocks.getRegisteredBlock("lazurite_ladder");
         light = Blocks.getRegisteredBlock("light");
         dungeon_spawner = Blocks.getRegisteredBlock("dungeon_spawner");
+        random_ore = (RandomOre) Blocks.getRegisteredBlock("random_ore");
     }
 
 }

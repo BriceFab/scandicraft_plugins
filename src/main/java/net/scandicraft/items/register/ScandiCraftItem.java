@@ -80,6 +80,7 @@ public class ScandiCraftItem {
         Item.registerItemBlock(ScandiCraftBlocks.lazurite_ladder);
         Item.registerItemBlock(ScandiCraftBlocks.light);
         Item.registerItemBlock(ScandiCraftBlocks.dungeon_spawner);
+        Item.registerItemBlock(ScandiCraftBlocks.random_ore);
     }
 
 }
