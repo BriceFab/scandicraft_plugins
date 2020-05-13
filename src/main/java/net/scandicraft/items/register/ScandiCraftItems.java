@@ -4,6 +4,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.scandicraft.items.ScandiumBow;
+import net.scandicraft.items.ScepterFalling;
 import net.scandicraft.items.ScepterRepair;
 import net.scandicraft.items.ScepterSpawnCreeper;
 
@@ -46,6 +47,7 @@ public class ScandiCraftItems {
     public static final Item bloody_sword;
     public static final ScepterSpawnCreeper scepter_creeper;
     public static final ScepterRepair scepter_repair;
+    public static final ScepterFalling scepter_falling;
     public static final Item pyrite_pie;
     public static final Item lazurite_bread;
     public static final ScandiumBow scandium_bow;
@@ -90,6 +92,7 @@ public class ScandiCraftItems {
         bloody_sword = Items.getRegisteredItem("bloody_sword");
         scepter_creeper = (ScepterSpawnCreeper) Items.getRegisteredItem("scepter_creeper");
         scepter_repair = (ScepterRepair) Items.getRegisteredItem("scepter_repair");
+        scepter_falling = (ScepterFalling) Items.getRegisteredItem("scepter_falling");
         pyrite_pie = Items.getRegisteredItem("pyrite_pie");
         lazurite_bread = Items.getRegisteredItem("lazurite_bread");
         scandium_bow = (ScandiumBow) Items.getRegisteredItem("scandium_bow");

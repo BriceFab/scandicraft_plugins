@@ -50,6 +50,7 @@ public class Item {
         renderItem.registerItem(ScandiCraftItems.bloody_sword, "bloody_sword");
         renderItem.registerItem(ScandiCraftItems.scepter_creeper, "scepter_creeper");
         renderItem.registerItem(ScandiCraftItems.scepter_repair, "scepter_repair");
+        renderItem.registerItem(ScandiCraftItems.scepter_falling, "scepter_falling");
         renderItem.registerItem(ScandiCraftItems.lazurite_bread, "lazurite_bread");
         renderItem.registerItem(ScandiCraftItems.pyrite_pie, "pyrite_pie");
         renderItem.registerItem(ScandiCraftItems.scandium_bow, 0, "scandium_bow");
