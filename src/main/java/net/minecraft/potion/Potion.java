@@ -155,7 +155,8 @@ public class Potion {
     /**
      * Sets the index for the icon displayed in the player's inventory when the status is active.
      */
-    protected Potion setIconIndex(int p_76399_1_, int p_76399_2_) {
+    //scandicraft protected to public
+    public Potion setIconIndex(int p_76399_1_, int p_76399_2_) {
         this.statusIconIndex = p_76399_1_ + p_76399_2_ * 8;
         return this;
     }

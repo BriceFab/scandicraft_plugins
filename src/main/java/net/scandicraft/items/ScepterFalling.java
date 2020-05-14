@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.scandicraft.potions.ScandiPotion;
+import net.scandicraft.utils.MathUtils;
 
 public class ScepterFalling extends Item {
 
@@ -29,7 +30,7 @@ public class ScepterFalling extends Item {
         }
 
         //20 ticks = 1 seconde
-        playerIn.addPotionEffect(new PotionEffect(ScandiPotion.feather_falling.id, 5 * 60 * 20));    //5 mn
+        playerIn.addPotionEffect(new PotionEffect(ScandiPotion.feather_falling.id, MathUtils.convertMinutesToTicks(5)));    //5 mn
 
         return itemStackIn;
     }
