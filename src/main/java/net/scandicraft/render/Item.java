@@ -59,6 +59,7 @@ public class Item {
         renderItem.registerItem(ScandiCraftItems.scandium_bow, 3, "scandium_bow_pulling_2");
         renderItem.registerItem(ScandiCraftItems.scandivote, "scandivote");
         renderItem.registerItem(ScandiCraftItems.scandibox, "scandibox");
+        renderItem.registerItem(ScandiCraftItems.bloody_drip, "bloody_drip");
     }
 
     private static void splitRegisterBlocks(RenderItem renderItem) {

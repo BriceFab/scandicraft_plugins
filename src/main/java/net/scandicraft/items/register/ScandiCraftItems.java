@@ -53,6 +53,7 @@ public class ScandiCraftItems {
     public static final ScandiumBow scandium_bow;
     public static final Item scandivote;
     public static final Item scandibox;
+    public static final Item bloody_drip;
 
     static {
         scandium = Items.getRegisteredItem("scandium");
@@ -98,6 +99,7 @@ public class ScandiCraftItems {
         scandium_bow = (ScandiumBow) Items.getRegisteredItem("scandium_bow");
         scandivote = Items.getRegisteredItem("scandivote");
         scandibox = Items.getRegisteredItem("scandibox");
+        bloody_drip = Items.getRegisteredItem("bloody_drip");
     }
 
 }

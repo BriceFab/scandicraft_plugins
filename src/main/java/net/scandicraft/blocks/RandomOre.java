@@ -33,6 +33,7 @@ public class RandomOre extends BlockOre {
 
     @Override
     public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
+        Config.print_debug("dropBlockAsItemWithChance");
         int nbrXP = MathHelper.getRandomIntegerInRange(worldIn.rand, 1, 3);
         this.dropXpOnBlockBreak(worldIn, pos, nbrXP);
 
@@ -41,17 +42,19 @@ public class RandomOre extends BlockOre {
 
     @Override
     public int quantityDropped(Random random) {
+        Config.print_debug("quantityDropped");
         return MathHelper.getRandomIntegerInRange(random, 1, 2);
     }
 
     @Override
     public int quantityDroppedWithBonus(int fortune, Random random) {
+        Config.print_debug("quantityDroppedWithBonus");
         return MathHelper.getRandomIntegerInRange(random, 1, 3);
     }
 
     @Override
     protected void dropXpOnBlockBreak(World worldIn, BlockPos pos, int amount) {
         Config.print_debug("drop XP");
-        super.dropXpOnBlockBreak(worldIn, pos, amount * 10);    //10x plus d'XP
+        super.dropXpOnBlockBreak(worldIn, pos, amount * 5);    //10x plus d'XP
     }
 }

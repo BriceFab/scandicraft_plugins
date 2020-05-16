@@ -49,8 +49,7 @@ public class ScandiCraftItem {
         Item.registerItem(3529, "scandium_hoe", (new ItemHoe(Item.ToolMaterial.SCANDIUM)).setUnlocalizedName("hoeScandium"));
         Item.registerItem(3530, "scandium_bow", (new ScandiumBow()).setUnlocalizedName("scandiumBow"));
 
-        /*TODO */
-        Item.registerItem(3531, "bloody", (new ItemSword(Item.ToolMaterial.BLOODY)).setUnlocalizedName("bloody"));
+        Item.registerItem(3531, "bloody_drip", (new Item()).setUnlocalizedName("dripBloody").setCreativeTab(CreativeTabs.tabMaterials));
         Item.registerItem(3532, "bloody_sword", (new ItemSword(Item.ToolMaterial.BLOODY)).setUnlocalizedName("swordBloody"));
         Item.registerItem(3533, "bloody_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 6, 0)).setUnlocalizedName("helmetBloody"));
         Item.registerItem(3534, "bloody_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.BLOODY, 6, 1)).setUnlocalizedName("chestplateBloody"));
@@ -61,8 +60,6 @@ public class ScandiCraftItem {
         Item.registerItem(3538, "scepter_repair", (new ScepterRepair().setUnlocalizedName("scepterRepair")));
         Item.registerItem(3539, "pyrite_pie", (new PyritePie(8, 2F, false)).setAlwaysEdible().setUnlocalizedName("piePyrite").setCreativeTab(CreativeTabs.tabFood));
         Item.registerItem(3540, "lazurite_bread", (new LazuriteBread(4, 1.2F, false)).setAlwaysEdible().setUnlocalizedName("breadLazurite").setCreativeTab(CreativeTabs.tabFood));
-
-        /*TODO */
         Item.registerItem(3541, "scepter_falling", (new ScepterFalling().setUnlocalizedName("scepterFalling")));
         Item.registerItem(3542, "scandivote", (new Item().setUnlocalizedName("scandiVote").setMaxStackSize(64).setCreativeTab(CreativeTabs.tabMaterials)));
         Item.registerItem(3543, "scandibox", (new Item().setUnlocalizedName("scandiBox").setMaxStackSize(64).setCreativeTab(CreativeTabs.tabMaterials)));
