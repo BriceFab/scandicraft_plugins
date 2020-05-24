@@ -42,13 +42,13 @@ public class ModPing extends ModDraggable {
 //        }
 
         //Chaque x secondes
-        // Config.print_debug("Current " + Instant.now().toString() + " lastPing + 30s" + lastPing.plusSeconds(30).toString());
+        // LogManagement.info("Current " + Instant.now().toString() + " lastPing + 30s" + lastPing.plusSeconds(30).toString());
         if (lastPing != null) {
             canPing = Instant.now().compareTo(lastPing.plusSeconds(pingEachSeconds)) >= 0;
         }
 
         if (canPing && !pingingServer) {
-            Config.print_debug("ModPing new Runnable");
+            LogManagement.info("ModPing new Runnable");
             pingingServer = true;
             serverData.pingToServer = -2L;
             field_148302_b.submit(() -> {
@@ -69,7 +69,7 @@ public class ModPing extends ModDraggable {
 
         String sPing;
         int ping = mc.getNetHandler().getPlayerInfo(mc.thePlayer.getUniqueID()).getResponseTime();
-//        Config.print_debug("ping " + ping + " ms");
+//        LogManagement.info("ping " + ping + " ms");
 
         int k = 0;
         int l;

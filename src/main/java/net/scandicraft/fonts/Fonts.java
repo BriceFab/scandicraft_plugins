@@ -6,6 +6,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.scandicraft.Config;
+import net.scandicraft.logs.LogManagement;
 
 import java.awt.*;
 import java.io.*;
@@ -35,7 +36,7 @@ public class Fonts {
     public static void loadFonts() {
         long l = System.currentTimeMillis();
 
-        Config.print_debug("Loading Fonts.");
+        LogManagement.info("Loading Fonts.");
 
         // downloadFonts();
 
@@ -75,7 +76,7 @@ public class Fonts {
             e.printStackTrace();
         }
 
-        Config.print_debug("Loaded Fonts. (" + (System.currentTimeMillis() - l) + "ms)");
+        LogManagement.info("Loaded Fonts. (" + (System.currentTimeMillis() - l) + "ms)");
     }
 
     /*
@@ -84,9 +85,9 @@ public class Fonts {
             final File outputFile = new File(Config.FONT_DIRS, "roboto.zip");
 
             if(!outputFile.exists()) {
-                Config.print_debug("Downloading fonts...");
+                LogManagement.info("Downloading fonts...");
                 HttpUtils.download(ScandiCraftClient.CLIENT_CLOUD + "/fonts/Roboto.zip", outputFile);
-                Config.print_debug("Extract fonts...");
+                LogManagement.info("Extract fonts...");
                 extractZip(outputFile.getPath(), Config.FONT_DIRS.getPath());
             }
         }catch(IOException e) {

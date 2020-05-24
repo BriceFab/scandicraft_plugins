@@ -49,6 +49,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.scandicraft.Config;
+import net.scandicraft.logs.LogManagement;
 import net.scandicraft.player.ScandiPlayer;
 
 import java.util.Arrays;
@@ -410,7 +411,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting {
      * Called when the mob's health reaches 0.
      */
     public void onDeath(DamageSource cause) {
-        Config.print_debug("OnDeath : " + this);
+//        LogManagement.info("OnDeath : " + this);
         if (this.worldObj.getGameRules().getBoolean("showDeathMessages")) {
             Team team = this.getTeam();
 
@@ -437,7 +438,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting {
         EntityLivingBase entitylivingbase = this.getAttackingEntity();
 
         if (entitylivingbase != null) {
-            EntityList.EntityEggInfo entitylist$entityegginfo = (EntityList.EntityEggInfo) EntityList.entityEggs.get(Integer.valueOf(EntityList.getEntityID(entitylivingbase)));
+            EntityList.EntityEggInfo entitylist$entityegginfo = (EntityList.EntityEggInfo) EntityList.entityEggs.get(EntityList.getEntityID(entitylivingbase));
 
             if (entitylist$entityegginfo != null) {
                 this.triggerAchievement(entitylist$entityegginfo.field_151513_e);

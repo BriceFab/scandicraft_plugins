@@ -9,6 +9,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.scandicraft.Config;
 import net.scandicraft.items.register.ScandiCraftItems;
+import net.scandicraft.logs.LogManagement;
 
 import java.util.Random;
 
@@ -33,7 +34,7 @@ public class RandomOre extends BlockOre {
 
     @Override
     public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
-        Config.print_debug("dropBlockAsItemWithChance");
+        LogManagement.info("dropBlockAsItemWithChance");
         int nbrXP = MathHelper.getRandomIntegerInRange(worldIn.rand, 1, 3);
         this.dropXpOnBlockBreak(worldIn, pos, nbrXP);
 
@@ -42,19 +43,19 @@ public class RandomOre extends BlockOre {
 
     @Override
     public int quantityDropped(Random random) {
-        Config.print_debug("quantityDropped");
+        LogManagement.info("quantityDropped");
         return MathHelper.getRandomIntegerInRange(random, 1, 2);
     }
 
     @Override
     public int quantityDroppedWithBonus(int fortune, Random random) {
-        Config.print_debug("quantityDroppedWithBonus");
+        LogManagement.info("quantityDroppedWithBonus");
         return MathHelper.getRandomIntegerInRange(random, 1, 3);
     }
 
     @Override
     protected void dropXpOnBlockBreak(World worldIn, BlockPos pos, int amount) {
-        Config.print_debug("drop XP");
+        LogManagement.info("drop XP");
         super.dropXpOnBlockBreak(worldIn, pos, amount * 5);    //10x plus d'XP
     }
 }

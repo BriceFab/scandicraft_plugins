@@ -1,15 +1,16 @@
 package net.scandicraft.client;
 
-import net.minecraft.client.Minecraft;
-import net.scandicraft.Config;
 import net.scandicraft.discord.DiscordRP;
 import net.scandicraft.events.EventManager;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.ClientTickEvent;
 import net.scandicraft.fonts.Fonts;
 import net.scandicraft.gui.hud.HUDManager;
+import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.ModInstances;
+import net.scandicraft.scheduler.Scheduler;
 import net.scandicraft.settings.FileManager;
+import net.scandicraft.settings.ScandiCraftSettings;
 
 public class ScandiCraftClient {
 
@@ -20,23 +21,25 @@ public class ScandiCraftClient {
     private HUDManager hudManager;
 
     public void init() {
-        Config.print_debug("init ScandiCraft Client");
+        LogManagement.info("init ScandiCraft Client");
         discordRP.start();
         FileManager.init();
         EventManager.register(this);
     }
 
     public void start() {
-        Config.print_debug("ScandiCraft client start");
+        LogManagement.info("ScandiCraft client start");
         hudManager = HUDManager.getInstance();
         ModInstances.register(hudManager);
 
         eventManager = new net.scandicraft.events.ccbluex.EventManager();
         Fonts.loadFonts();
+
+//        Scheduler
     }
 
     public void shutDown() {
-        Config.print_debug("shutDown ScandiCraft Client");
+        LogManagement.info("shutDown ScandiCraft Client");
 
         discordRP.shutdown();
         //TODO remove all refresh_token for user
@@ -46,7 +49,7 @@ public class ScandiCraftClient {
 
     @EventTarget
     public void onTick(ClientTickEvent e) {
-        if (Minecraft.getMinecraft().scandiCraftSettings.OPEN_HUD_MANAGER.isPressed()) {
+        if (ScandiCraftSettings.OPEN_HUD_MANAGER.isPressed()) {
             hudManager.openConfigScreen();
         }
     }

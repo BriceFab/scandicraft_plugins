@@ -8,6 +8,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.EnumDifficulty;
 import net.scandicraft.Config;
+import net.scandicraft.logs.LogManagement;
 import net.scandicraft.settings.GuiMainSettings;
 import net.scandicraft.settings.ScandiCraftSettings;
 
@@ -176,7 +177,7 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback {
 
             //ScandiCraft @BriceFab settings
             if (button.id == 300) {
-                Config.print_debug("Open settings gui");
+                LogManagement.info("Open settings gui");
                 this.mc.scandiCraftSettings.saveOptions();
                 this.mc.displayGuiScreen(new GuiMainSettings(this, this.scandiCraftSettings));
             }

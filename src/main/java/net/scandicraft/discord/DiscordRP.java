@@ -4,6 +4,7 @@ import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.scandicraft.Config;
+import net.scandicraft.logs.LogManagement;
 
 public class DiscordRP {
 
@@ -14,7 +15,7 @@ public class DiscordRP {
         this.created = System.currentTimeMillis();
 
         DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler(discordUser -> {
-            Config.print_debug("Discord ScandiCraft " + discordUser.username + " #" + discordUser.discriminator + ".");
+            LogManagement.info("Discord ScandiCraft " + discordUser.username + " #" + discordUser.discriminator + ".");
             update("Chargement..");
         }).build();
 

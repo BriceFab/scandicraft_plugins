@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.scandicraft.Config;
+import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.Mod;
 import net.scandicraft.mods.ModInstances;
 import org.apache.commons.lang3.ArrayUtils;
@@ -41,20 +42,20 @@ public class ScandiCraftSettings {
     }
 
     public void loadOptions() {
-        Config.print_debug("Load scandicraft options");
+        LogManagement.info("Load scandicraft options");
 
         try {
             Path path = Paths.get(this.optionsFileName);
 
             if (!Files.exists(path) || Files.notExists(path)) {
-                Config.print_debug("set default options");
+                LogManagement.info("set default options");
                 return;
             }
 
             Map<?, ?> options = GSON.fromJson(new FileReader(this.optionsFileName), Map.class);
 
             for (Map.Entry<?, ?> entry : options.entrySet()) {
-//                Config.print_debug("test " + entry.getKey() + " " + entry.getValue() + " " + entry.getKey().getClass());
+//                LogManagement.info("test " + entry.getKey() + " " + entry.getValue() + " " + entry.getKey().getClass());
                 if (entry.getKey() instanceof String) {
                     ScandiCraftSettings.Options actOption = ScandiCraftSettings.Options.getOptionByKey((String) entry.getKey());
                     if (actOption != null) {
@@ -70,7 +71,7 @@ public class ScandiCraftSettings {
     }
 
     public void saveOptions() {
-        Config.print_debug("Save scandicraft options");
+        LogManagement.info("Save scandicraft options");
 
         try {
             Map<String, Object> map = new HashMap<>();

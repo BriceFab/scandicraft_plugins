@@ -26,16 +26,16 @@ public class Mod {
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
 
-//        Config.print_debug("isEnabled: " + isEnabled + " isUsable: " + isUsable() + " enable:" + enabled);
+//        LogManagement.info("isEnabled: " + isEnabled + " isUsable: " + isUsable() + " enable:" + enabled);
 
         if (isEnabled && isUsable() && !ModInstances.registered_mods.contains(this)) {
-//            Config.print_debug("register " + this);
+//            LogManagement.info("register " + this);
 
             ModInstances.registered_mods.add(this);
             EventManager.register(this);
         } else {
             if (canUnregister()) {
-//                Config.print_debug("unregister " + this);
+//                LogManagement.info("unregister " + this);
 
                 EventManager.unregister(this);
                 ModInstances.registered_mods.remove(this);

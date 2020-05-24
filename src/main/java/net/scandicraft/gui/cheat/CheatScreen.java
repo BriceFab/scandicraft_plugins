@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.scandicraft.Config;
 import net.scandicraft.anti_cheat.CheatType;
+import net.scandicraft.logs.LogManagement;
 
 import java.awt.*;
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class CheatScreen extends GuiScreen {
     private CheatType currentCheat;
 
     public CheatScreen(CheatType type) {
-        Config.print_debug(String.format("cheat detected for %s..", Minecraft.getMinecraft().thePlayer.getName()));
+        LogManagement.info(String.format("cheat detected for %s..", Minecraft.getMinecraft().thePlayer.getName()));
         if (currentCheat == null) {
             this.currentCheat = type;
         }
@@ -45,7 +46,7 @@ public class CheatScreen extends GuiScreen {
     @Override
     public void onGuiClosed() {
         if (Config.ENV == Config.ENVIRONNEMENT.PROD) {
-            Config.print_debug("exit for cheating..");
+            LogManagement.info("exit for cheating..");
             this.mc.shutdown();
         }
     }

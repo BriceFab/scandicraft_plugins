@@ -267,7 +267,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     public final FrameTimer frameTimer = new FrameTimer();
     long startNanoTime = System.nanoTime();
     private final boolean jvm64bit;
-    private final boolean isDemo;
     private NetworkManager myNetworkManager;
     private boolean integratedServerIsRunning;
 
@@ -344,13 +343,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.launchedVersion = gameConfig.gameInfo.version;
         this.profileProperties = gameConfig.userInfo.profileProperties;
         this.mcDefaultResourcePack = new DefaultResourcePack((new ResourceIndex(gameConfig.folderInfo.assetsDir, gameConfig.folderInfo.assetIndex)).getResourceMap());
-        this.proxy = gameConfig.userInfo.proxy == null ? Proxy.NO_PROXY : gameConfig.userInfo.proxy;
-        assert gameConfig.userInfo.proxy != null;
+        this.proxy = Proxy.NO_PROXY;
         this.sessionService = (new YggdrasilAuthenticationService(gameConfig.userInfo.proxy, UUID.randomUUID().toString())).createMinecraftSessionService();
         this.session = gameConfig.userInfo.session;
         logger.info("Setting user: " + this.session.getUsername());
         // logger.info("(Session ID is " + this.session.getSessionID() + ")");
-        this.isDemo = gameConfig.gameInfo.isDemo;
         this.displayWidth = gameConfig.displayInfo.width > 0 ? gameConfig.displayInfo.width : 1;
         this.displayHeight = gameConfig.displayInfo.height > 0 ? gameConfig.displayInfo.height : 1;
         this.tempDisplayWidth = gameConfig.displayInfo.width;
@@ -2019,7 +2016,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Gets whether this is a demo or not.
      */
     public final boolean isDemo() {
-        return this.isDemo;
+        return false;
     }
 
     public NetHandlerPlayClient getNetHandler() {

@@ -12,16 +12,16 @@ public class Util
         return s.contains("win") ? Util.EnumOS.WINDOWS : (s.contains("mac") ? Util.EnumOS.OSX : (s.contains("solaris") ? Util.EnumOS.SOLARIS : (s.contains("sunos") ? Util.EnumOS.SOLARIS : (s.contains("linux") ? Util.EnumOS.LINUX : (s.contains("unix") ? Util.EnumOS.LINUX : Util.EnumOS.UNKNOWN)))));
     }
 
-    public static <V> void func_181617_a(FutureTask<V> p_181617_0_, Logger p_181617_1_)
+    public static <V> void func_181617_a(FutureTask<V> task, Logger logger)
     {
         try
         {
-            p_181617_0_.run();
-            p_181617_0_.get();
+            task.run();
+            task.get();
         }
         catch (ExecutionException | InterruptedException executionexception)
         {
-            p_181617_1_.fatal("Error executing task", executionexception);
+            logger.fatal("Error executing task", executionexception);
         }
     }
 

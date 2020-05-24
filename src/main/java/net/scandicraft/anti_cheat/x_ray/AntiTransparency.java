@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
+import net.scandicraft.anti_cheat.CheatConfig;
 import net.scandicraft.utils.Checksum;
 
 import javax.imageio.ImageIO;
@@ -14,35 +15,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Map;
+import java.util.Objects;
 
 public class AntiTransparency {
-    private final static String BLOCKS_PATH = "textures/blocks/";
-    private static final List<String> texturesCheck = new ArrayList<>(Arrays.asList(
-            BLOCKS_PATH + "stone.png",
-            BLOCKS_PATH + "cobblestone.png",
-            BLOCKS_PATH + "snow.png",
-            BLOCKS_PATH + "gravel.png",
-            BLOCKS_PATH + "sand.png",
-            BLOCKS_PATH + "furnace_top.png",
-            BLOCKS_PATH + "furnace_side.png",
-            BLOCKS_PATH + "stonebrick.png",
-            BLOCKS_PATH + "brick.png",
-            BLOCKS_PATH + "dirt.png",
-            BLOCKS_PATH + "grass_side.png",
-            BLOCKS_PATH + "grass_side_snowed.png",
-            BLOCKS_PATH + "netherrack.png",
-            BLOCKS_PATH + "red_sand.png",
-            BLOCKS_PATH + "bedrock.png"
-    ));
-
-    private final static String MODELS_PATH = "models/block/";
-    private static final Map<String, String> modelsCheck = Stream.of(
-            new AbstractMap.SimpleEntry<>(MODELS_PATH + "cube.json", "ed43d9b0a87ce1aefd6da424096f3f6593a12016"),
-            new AbstractMap.SimpleEntry<>(MODELS_PATH + "grass.json", "88447d7e37b2450dbaa5646af1c83d6c3cb6e96c"))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     private final static IResourceManager resourceManager = Minecraft.getMinecraft().getResourceManager();
 
     /**
@@ -61,7 +37,7 @@ public class AntiTransparency {
      * @return true == hasIllegalModels
      */
     private static boolean checkModels() {
-        for (Map.Entry<String, String> model : modelsCheck.entrySet()) {
+        for (Map.Entry<String, String> model : CheatConfig.modelsCheck.entrySet()) {
             try {
                 IResource resource = resourceManager.getResource(new ResourceLocation(model.getKey()));
                 InputStream inputStream = resource.getInputStream();
@@ -80,7 +56,7 @@ public class AntiTransparency {
                     }
                 }
 
-                // Config.print_debug("checksum " + model.getKey() + " " + Checksum.getSHA1(jsonModel.toString()) + " " + model.getValue());
+                // LogManagement.info("checksum " + model.getKey() + " " + Checksum.getSHA1(jsonModel.toString()) + " " + model.getValue());
 
                 if (!Objects.equals(Checksum.getSHA1(jsonModel.toString()), model.getValue())) {
                     return true;
@@ -99,7 +75,7 @@ public class AntiTransparency {
      * @return true = hasIllegalTexture
      */
     private static boolean checkTextures() {
-        for (String texture : texturesCheck) {
+        for (String texture : CheatConfig.texturesCheck) {
             try {
                 IResource resource = resourceManager.getResource(new ResourceLocation(texture));
                 InputStream inputStream = resource.getInputStream();

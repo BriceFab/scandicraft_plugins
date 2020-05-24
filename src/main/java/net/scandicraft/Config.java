@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.LogManager;
 
 import java.io.File;
+import java.net.Proxy;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,25 +26,11 @@ public class Config {
     public static final String SC_SETTINGS = CONF_FILE_NAME + "\\settings.json";
     public static final String RESOURCE_DOMAIN = SERVER_NAME.toLowerCase() + ":";
 
-    /* Anti-Cheat */
-    //CPS
-    public static final int MAX_CPS = 20;
-    public static final int MAX_SUSPECT_AVERAGE = 15;
-    public static final int MAX_HISTORY = 14;
-    public static final double MIN_DIFF_TIME_BUTTERFLY = 45;            //si plus de 3 clicks sont plus petit que 45 (=butterfly)
-    public static final double MIN_DIFF_TIME_AUTOCLICK = 40;            //si plus de 3 clicks sont plus petit que 40 (=autoclick)
-    public static final int MAX_SUM_SUSPECT = 3;                        //si plus de x clicks dans la moyenne max
-    public static final double MIN_DIFF_TIME_AVERAGE_BUTTERFLY = 65;    //différence minimale de la moyenne des temps = 0.06 seconds en moyenne (=butterfly)
-    public static final double MIN_DIFF_TIME_AVERAGE_AUTOCLICK = 55;    //différence minimale de la moyenne des temps = 0.06 seconds en moyenne (=autoclick)
-    public static final int MAX_HISTORY_FREQUENCY_AVERAGE = 7;          //Historique max de la fréquence (1 moyenne = chaque 14 clicks [MAX_HISTORY])
-    public static final int MAX_FREQUENCY_AVERAGE = 6;                  //Maximum de 5 moyenne les mêmes    //TODO check value
-    public static final int MAX_DOWN = 9;                               //Maxium de click LMB false     //TODO check value
-
-    /* Fonctions */
-    public static void print_debug(String message) {
-        if (DEBUG) {
-            LogManager.getLogger().info(String.format("[%s] %s", SERVER_NAME, message));
-        }
+    public static class GameConfig {
+        public static final String version = SERVER_NAME.toLowerCase();
+        public static final String assetsDir = "assets";
+        public static final String assetIndex = "1.8";
+        public static final Proxy proxy = Proxy.NO_PROXY;
     }
 
     public enum ENVIRONNEMENT {

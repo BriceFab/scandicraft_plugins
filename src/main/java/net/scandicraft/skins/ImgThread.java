@@ -1,6 +1,7 @@
 package net.scandicraft.skins;
 
 import net.scandicraft.Config;
+import net.scandicraft.logs.LogManagement;
 import org.apache.logging.log4j.LogManager;
 
 import javax.imageio.ImageIO;
@@ -20,7 +21,7 @@ public class ImgThread extends Thread {
     }
 
     public void run() {
-        Config.print_debug("Download " + this.skin.getPseudo() + " skin...");
+        LogManagement.info("Download " + this.skin.getPseudo() + " skin...");
 
         try {
             URL url = new URL(Config.SKINS_PATH + this.skin.getPseudo() + ".png");
@@ -35,7 +36,7 @@ public class ImgThread extends Thread {
             e.printStackTrace();
         }
 
-        Config.print_debug("Download " + this.skin.getPseudo() + " skin successful.");
+        LogManagement.info("Download " + this.skin.getPseudo() + " skin successful.");
     }
 
 }

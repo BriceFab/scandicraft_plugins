@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.scandicraft.Config;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.gui.settings.GuiOptions;
+import net.scandicraft.logs.LogManagement;
 
 import java.io.IOException;
 
@@ -44,7 +45,7 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
                     this.mc.shutdown();
                     break;
                 default:
-                    Config.print_debug("no action");
+                    LogManagement.info("no action");
                     break;
             }
         }
