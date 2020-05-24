@@ -5,8 +5,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.scandicraft.events.EventManager;
 import net.scandicraft.events.EventTarget;
+import net.scandicraft.events.impl.ClientTickEvent;
 import net.scandicraft.events.impl.RenderEvent;
 import net.scandicraft.mods.Mod;
+import net.scandicraft.settings.ScandiCraftSettings;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Arrays;
@@ -86,6 +88,13 @@ public class HUDManager {
         GL11.glScalef(1.0F / pos.getScale(), 1.0F / pos.getScale(), 1.0F);
         GL11.glTranslatef(pos.getAbsoluteX() * (pos.getScale() - 1.0F), pos.getAbsoluteY() * (pos.getScale() - 1.0F), 0.0F);
         GL11.glPopMatrix();
+    }
+
+    @EventTarget
+    public void onTick(ClientTickEvent e) {
+        if (ScandiCraftSettings.OPEN_HUD_MANAGER.isPressed()) {
+            openConfigScreen();
+        }
     }
 
 }

@@ -19,6 +19,30 @@ public class CheatConfig {
     public static final int MAX_DOWN = 9;                               //Maxium de click LMB false     //TODO check value
     //TODO Add max down
 
+    /* Anti illegal process */
+    public static final int initialDelay = 60;    //en secondes
+    public static final int periodicDelay = 30;   //en secondes
+    public static final List<String> ILLEGAL_PROCESS = Arrays.asList(
+            "zenkey.exe*",
+            "wonderkeys.exe*",
+            "autohotkey.exe*",
+            "auto*clic*.exe*",
+            "auto*clique*.exe*",
+            "auto*klic*.exe*",
+            "cheat*engine*.exe*",
+            "klick.exe*",
+            "click.exe*",
+            "clic.exe*",
+            "clicker.exe*",
+            "cliqueur.exe*",
+            "super*rapid*fire*.exe*",
+            "speed.exe*",
+            "speedhack.exe*",
+            "speeder.exe*",
+            "speedcheat.exe*",
+            "cheatspeed.exe*"
+    );
+
     /* Anti x-ray */
     private final static String BLOCKS_PATH = "textures/blocks/";
     public static final List<String> texturesCheck = new ArrayList<>(Arrays.asList(

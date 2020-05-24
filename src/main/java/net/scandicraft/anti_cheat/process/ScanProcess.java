@@ -1,70 +1,52 @@
 package net.scandicraft.anti_cheat.process;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.Util;
+import net.scandicraft.Config;
+import net.scandicraft.anti_cheat.CheatConfig;
+import net.scandicraft.anti_cheat.CheatType;
+import net.scandicraft.gui.cheat.CheatScreen;
+import net.scandicraft.logs.LogManagement;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.List;
 
 public class ScanProcess implements Runnable {
-    private final List<String> CHEAT_PROCESS = Arrays.asList(
-            "zenkey.exe*",
-            "wonderkeys.exe*",
-            "autohotkey.exe*",
-            "auto*clic*.exe*",
-            "auto*clique*.exe*",
-            "auto*klic*.exe*",
-            "cheat*engine*.exe*",
-            "klick.exe*",
-            "click.exe*",
-            "clic.exe*",
-            "clicker.exe*",
-            "cliqueur.exe*",
-            "super*rapid*fire*.exe*",
-            "speed.exe*",
-            "speedhack.exe*",
-            "speeder.exe*",
-            "speedcheat.exe*",
-            "cheatspeed.exe*"
-    );
 
-    private Minecraft mc;
+    private long startAt = 0L;
 
-    private boolean cheating = false;
+    @Override
+    public void run() {
+        if (isDebug()) {
+            startAt = System.currentTimeMillis();
+            LogManagement.info("Start scanning process");
+        }
+        try {
+            Process tasklist = (new ProcessBuilder("tasklist", "-fo", "csv", "-nh")).redirectErrorStream(true).start();
+            BufferedReader in = new BufferedReader(new InputStreamReader(tasklist.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                String name = line.split("\"")[1];
+                if (contains(name.toLowerCase())) {
+                    if (isDebug()) {
+                        LogManagement.warn("Cheat detect: " + name.toLowerCase());
+                    } else {
+                        CheatScreen.onDetectCheat(CheatType.ILLEGAL_PROCESS);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            if (isDebug()) {
+                LogManagement.error("cannot check process");
+            }
+            e.printStackTrace();
+        }
+        if (isDebug()) {
+            LogManagement.info("Stop scanning process in " + (System.currentTimeMillis() - startAt) + " ms");
+        }
+    }
 
-//    public void postInit() {
-//        (new Thread("Dcac") {
-//            public void run() {
-//                while (true) {
-//                    if (Util.getOSType() == Util.EnumOS.WINDOWS)
-//                        try {
-//                            Process tasklist = (new ProcessBuilder("tasklist", "-fo", "csv", "-nh")).redirectErrorStream(true).start();
-//                            BufferedReader in = new BufferedReader(new InputStreamReader(tasklist.getInputStream()));
-//                            String line;
-//                            while ((line = in.readLine()) != null) {
-//                                String name = line.split("\"")[1];
-//                                if (contains(CHEAT_PROCESS, name.toLowerCase())) {
-//                                    cheating = true;
-//                                }
-//                            }
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    try {
-//                        sleep(5000L);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }).start();
-//    }
-
-    private boolean contains(List<String> list, String input) {
-        for (String entry : list) {
+    private boolean contains(String input) {
+        for (String entry : CheatConfig.ILLEGAL_PROCESS) {
             boolean inStar = false;
             int n = 0;
             int lastN = 0;
@@ -98,33 +80,7 @@ public class ScanProcess implements Runnable {
         return false;
     }
 
-    public void handleCheat() {
-//        String[] erreur = {"Ok !"};
-//        JOptionPane ferreur = new JOptionPane();
-//        int rang = JOptionPane.showOptionDialog(null, "Les cheats sont interdit sur SparksMC !", "SparksMC - Anti Cheat!", 0, 0, null, (Object[]) erreur, erreur[0]);
-        System.exit(0);
-    }
-
-    public boolean isCheating() {
-        return this.cheating;
-    }
-
-    @Override
-    public void run() {
-        if (Util.getOSType() == Util.EnumOS.WINDOWS) {
-            try {
-                Process tasklist = (new ProcessBuilder("tasklist", "-fo", "csv", "-nh")).redirectErrorStream(true).start();
-                BufferedReader in = new BufferedReader(new InputStreamReader(tasklist.getInputStream()));
-                String line;
-                while ((line = in.readLine()) != null) {
-                    String name = line.split("\"")[1];
-                    if (contains(CHEAT_PROCESS, name.toLowerCase())) {
-                        cheating = true;
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    private boolean isDebug() {
+        return Config.ENV == Config.ENVIRONNEMENT.DEV;
     }
 }

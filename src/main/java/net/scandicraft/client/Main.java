@@ -12,7 +12,6 @@ import net.minecraft.client.main.GameConfiguration;
 import net.minecraft.util.Session;
 
 import java.io.File;
-import java.net.Proxy;
 import java.util.List;
 
 public class Main {
@@ -46,27 +45,6 @@ public class Main {
         if (!list.isEmpty()) {
             System.out.println("Completely ignored arguments: " + list);
         }
-
-//        String s = optionset.valueOf(optionspec5);
-//        Proxy proxy = Proxy.NO_PROXY;
-//
-//        if (s != null) {
-//            try {
-//                proxy = new Proxy(Type.SOCKS, new InetSocketAddress(s, optionset.valueOf(optionspec6)));
-//            } catch (Exception ignored) {
-//            }
-//        }
-//
-//        final String s1 = optionset.valueOf(optionspec7);
-//        final String s2 = optionset.valueOf(optionspec8);
-//
-//        if (!proxy.equals(Proxy.NO_PROXY) && isNullOrEmpty(s1) && isNullOrEmpty(s2)) {
-//            Authenticator.setDefault(new Authenticator() {
-//                protected PasswordAuthentication getPasswordAuthentication() {
-//                    return new PasswordAuthentication(s1, s2.toCharArray());
-//                }
-//            });
-//        }
 
         int i = optionset.valueOf(optionWidth);
         int j = optionset.valueOf(optionHeight);
