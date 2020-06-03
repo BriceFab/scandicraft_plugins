@@ -18,6 +18,8 @@ import net.minecraft.network.status.server.S00PacketServerInfo;
 import net.minecraft.network.status.server.S01PacketPong;
 import net.scandicraft.Config;
 import net.scandicraft.logs.LogManagement;
+import net.scandicraft.packets.SCPacket;
+import net.scandicraft.packets.client.CPacketMoreData;
 import net.scandicraft.packets.server.SPacketHelloWorld;
 import org.apache.logging.log4j.LogManager;
 
@@ -138,6 +140,7 @@ public enum EnumConnectionState {
                 Sent from client = ServerBound
              */
             this.registerPacket(EnumPacketDirection.CLIENTBOUND, SPacketHelloWorld.class);
+            this.registerPacket(EnumPacketDirection.SERVERBOUND, CPacketMoreData.class);
         }
     },
     STATUS(1) {
@@ -184,10 +187,12 @@ public enum EnumConnectionState {
             LogManager.getLogger().fatal(s);
             throw new IllegalArgumentException(s);
         } else {
-            if (Config.ENV == Config.ENVIRONNEMENT.DEV) {
-                LogManagement.warn("Put packet: " + bimap.size() + " " + packetClass.getName());
+            final boolean isSCPacket = packetClass.getSuperclass() != Object.class && packetClass.getSuperclass().getSuperclass().getSimpleName().equals(SCPacket.class.getSimpleName());
+            final int packetId = bimap.size() + (isSCPacket ? 100 : 0);
+            if (isSCPacket && Config.ENV == Config.ENVIRONNEMENT.DEV) {
+                LogManagement.warn("Register packet: " + packetId + " " + packetClass.getName());
             }
-            bimap.put(Integer.valueOf(bimap.size()), packetClass);
+            bimap.put(packetId, packetClass);
             return this;
         }
     }

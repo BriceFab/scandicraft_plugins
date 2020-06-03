@@ -1,8 +1,10 @@
 package net.scandicraft.packets.server;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.scandicraft.logs.LogManagement;
+import net.scandicraft.packets.client.CPacketMoreData;
 
 import java.io.IOException;
 
@@ -26,6 +28,9 @@ public class SPacketHelloWorld extends SPacket {
      */
     @Override
     public void processPacket(INetHandlerPlayClient handler) {
-        LogManagement.warn("The server says hello !");
+        LogManagement.info("The server says hello !");
+
+        //Send CPacketMoreData
+        Minecraft.getMinecraft().getNetHandler().addToSendQueue(new CPacketMoreData());
     }
 }

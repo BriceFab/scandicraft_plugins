@@ -16,6 +16,11 @@ public abstract class CPacket extends SCPacket {
     @Override
     public void processPacket(INetHandlerPlayClient handler) {
         //Sending from the client (don't need process)
-
     }
+
+    public void writeString(PacketBuffer buffer, String toWrite) {
+        buffer.writeInt(toWrite.length());
+        buffer.writeString(toWrite);
+    }
+
 }
