@@ -9,19 +9,29 @@ public class LogManagement {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static void info(String message) {
-        LOGGER.info(format(message));
+        if (canLog()) {
+            LOGGER.info(format(message));
+        }
     }
 
     public static void warn(String message) {
-        LOGGER.warn(format(message));
+        if (canLog()) {
+            LOGGER.warn(format(message));
+        }
     }
 
     public static void error(String message) {
-        LOGGER.error(format(message));
+        if (canLog()) {
+            LOGGER.error(format(message));
+        }
     }
 
     private static String format(String messsage) {
         return String.format("[%s] %s", Config.SERVER_NAME, messsage);
+    }
+
+    private static boolean canLog() {
+        return Config.ENV != Config.ENVIRONNEMENT.PROD;
     }
 
 }
