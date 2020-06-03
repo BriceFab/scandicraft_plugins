@@ -1,6 +1,5 @@
 package net.scandicraft.items;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -69,7 +68,7 @@ public class ScepterSpawnCreeper extends Item {
         for (int i = 0; i < 1; ++i) {
             entity = EntityList.createEntityByID(entityID, worldIn);
 
-            if (entity != null && entity instanceof EntityLivingBase) {
+            if (entity instanceof EntityLivingBase) {
                 EntityLiving entityliving = (EntityLiving) entity;
                 entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(worldIn.rand.nextFloat() * 360.0F), 0.0F);
                 entityliving.rotationYawHead = entityliving.rotationYaw;

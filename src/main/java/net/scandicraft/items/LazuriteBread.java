@@ -9,8 +9,8 @@ import net.minecraft.world.World;
 import net.scandicraft.utils.MathUtils;
 
 public class LazuriteBread extends ItemFood {
-    public LazuriteBread(int amount, float saturation, boolean isWolfFood) {
-        super(amount, saturation, isWolfFood);
+    public LazuriteBread(int amount, float saturation) {
+        super(amount, saturation, false);
     }
 
     @Override

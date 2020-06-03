@@ -129,7 +129,7 @@ public class Potion {
     private double effectiveness;
     private boolean usable;
 
-    protected Potion(int potionID, ResourceLocation location, boolean badEffect, int potionColor) {
+    public Potion(int potionID, ResourceLocation location, boolean badEffect, int potionColor) {
         this.id = potionID;
         potionTypes[potionID] = this;
         field_180150_I.put(location, this);

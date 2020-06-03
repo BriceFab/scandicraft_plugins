@@ -55,7 +55,8 @@ public class ModCPS extends ModDraggable {
         int code = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode();
         if (Mouse.getEventButtonState() && Mouse.getEventButton() == code + 100) {
             this.clicks.add(System.currentTimeMillis());
-            CheckAutoClick.checkCPS(getCPS());
+            new CheckAutoClick().run();
+//            CheckAutoClick.checkCPS(getCPS());
         }
     }
 
@@ -64,7 +65,8 @@ public class ModCPS extends ModDraggable {
         int code = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode();
         if (Keyboard.getEventKeyState() && Keyboard.getEventKey() == code) {
             this.clicks.add(System.currentTimeMillis());
-            CheckAutoClick.checkCPS(getCPS());
+            new CheckAutoClick().run();
+//            CheckAutoClick.checkCPS(getCPS());
         }
     }
 

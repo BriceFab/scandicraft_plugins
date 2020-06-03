@@ -58,9 +58,9 @@ public class ScandiCraftItem {
 
         Item.registerItem(3537, "scepter_creeper", (new ScepterSpawnCreeper(3).setUnlocalizedName("scepterCreeper")));
         Item.registerItem(3538, "scepter_repair", (new ScepterRepair().setUnlocalizedName("scepterRepair")));
-        Item.registerItem(3539, "pyrite_pie", (new PyritePie(8, 2F, false)).setAlwaysEdible().setUnlocalizedName("piePyrite").setCreativeTab(CreativeTabs.tabFood));
-        Item.registerItem(3540, "lazurite_bread", (new LazuriteBread(4, 1.2F, false)).setAlwaysEdible().setUnlocalizedName("breadLazurite").setCreativeTab(CreativeTabs.tabFood));
-        Item.registerItem(3541, "scepter_falling", (new ScepterFalling().setUnlocalizedName("scepterFalling")));
+        Item.registerItem(3539, "pyrite_pie", (new PyritePie(8, 2F)).setAlwaysEdible().setUnlocalizedName("piePyrite").setCreativeTab(CreativeTabs.tabFood));
+        Item.registerItem(3540, "lazurite_bread", (new LazuriteBread(4, 1.2F)).setAlwaysEdible().setUnlocalizedName("breadLazurite").setCreativeTab(CreativeTabs.tabFood));
+        Item.registerItem(3541, "scepter_falling", (new ScepterFalling().setUnlocalizedName("scepterFalling").setMaxStackSize(1)));
         Item.registerItem(3542, "scandivote", (new Item().setUnlocalizedName("scandiVote").setMaxStackSize(64).setCreativeTab(CreativeTabs.tabMaterials)));
         Item.registerItem(3543, "scandibox", (new Item().setUnlocalizedName("scandiBox").setMaxStackSize(64).setCreativeTab(CreativeTabs.tabMaterials)));
     }

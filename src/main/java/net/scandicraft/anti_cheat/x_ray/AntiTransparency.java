@@ -8,6 +8,9 @@ import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.scandicraft.anti_cheat.CheatConfig;
+import net.scandicraft.anti_cheat.CheatType;
+import net.scandicraft.gui.cheat.CheatScreen;
+import net.scandicraft.logs.LogManagement;
 import net.scandicraft.utils.Checksum;
 
 import javax.imageio.ImageIO;
@@ -18,7 +21,7 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.Objects;
 
-public class AntiTransparency {
+public class AntiTransparency implements Runnable {
     private final static IResourceManager resourceManager = Minecraft.getMinecraft().getResourceManager();
 
     /**
@@ -115,5 +118,18 @@ public class AntiTransparency {
         }
 
         return pixnb;
+    }
+
+    @Override
+    public void run() {
+        long startAt = System.currentTimeMillis();
+        LogManagement.info("Start check x-ray..");
+
+        boolean hasIllegal = checkTexturePack();
+        if (hasIllegal) {
+            CheatScreen.onDetectCheat(CheatType.XRAY);
+        }
+
+        LogManagement.info("Stop check x-ray in " + (System.currentTimeMillis() - startAt) + " ms");
     }
 }

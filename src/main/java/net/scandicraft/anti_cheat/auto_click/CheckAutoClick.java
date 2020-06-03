@@ -5,12 +5,13 @@ import net.scandicraft.anti_cheat.CheatConfig;
 import net.scandicraft.anti_cheat.CheatType;
 import net.scandicraft.gui.cheat.CheatScreen;
 import net.scandicraft.logs.LogManagement;
+import net.scandicraft.mods.ModInstances;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.OptionalDouble;
 
-public class CheckAutoClick {
+public class CheckAutoClick implements Runnable {
 
     private static final ArrayList<Integer> clicks_history = new ArrayList<>();         //historique des CPS
     private static final ArrayList<Boolean> keyDown_history = new ArrayList<>();        //historique des keyDown de l'attaque
@@ -21,6 +22,15 @@ public class CheckAutoClick {
     private static final boolean enable = true;
     private static int ACT_CPS = 0;
     private static boolean isButterfly = false;
+
+    @Override
+    public void run() {
+        long startAt = System.currentTimeMillis();
+        LogManagement.info("Start check autoclick..");
+        //TODO test analyse CPS que à partir de 8 CPS
+        checkCPS(ModInstances.getModCPS().getCPS());
+        LogManagement.info("Stop check autoclick in " + (System.currentTimeMillis() - startAt) + " ms");
+    }
 
     public static void checkCPS(final int CPS) {
         if (enable) {
@@ -247,5 +257,4 @@ public class CheckAutoClick {
         }
         return false;
     }
-
 }

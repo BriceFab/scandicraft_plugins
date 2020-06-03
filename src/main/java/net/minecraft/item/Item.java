@@ -886,9 +886,9 @@ public class Item {
         IRON(2, 250, 6.0F, 2.0F, 14),
         EMERALD(3, 1561, 8.0F, 3.0F, 10),// = AUSSI DIAMANT
         GOLD(0, 32, 12.0F, 0.0F, 22),
-        SCANDIUM(3, 2500, 14.0F, 6.0F, 10),
-        PYRITE(3, 2000, 13.0F, 5.0F, 10),
         LAZURITE(3, 1750, 12.0F, 4.0F, 10),
+        PYRITE(3, 2000, 13.0F, 5.0F, 10),
+        SCANDIUM(3, 2500, 14.0F, 6.0F, 10),
         BLOODY(3, 3500, 15.0F, 8.0F, 10);
 
         private final int harvestLevel;
