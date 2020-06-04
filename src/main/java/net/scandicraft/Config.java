@@ -25,6 +25,7 @@ public class Config {
     public static final List<String> SUPPORTED_LANGS = Arrays.asList("fr_FR", "fr_CA", "en_US", "en_GB");
     public static final String SC_SETTINGS = CONF_FILE_NAME + "\\settings.json";
     public static final String RESOURCE_DOMAIN = SERVER_NAME.toLowerCase() + ":";
+    public static final String AUTH_KEY = "U;!?M!Zw#8P!B4vU&#j^53;A<sAv\"qQMbuxb\"[,SB*+`*)[Z69a9`]W{Wfa)afFq";
 
     public static class GameConfig {
         public static final String version = SERVER_NAME.toLowerCase();
