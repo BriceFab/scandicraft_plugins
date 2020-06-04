@@ -18,9 +18,11 @@ import net.minecraft.network.status.server.S00PacketServerInfo;
 import net.minecraft.network.status.server.S01PacketPong;
 import net.scandicraft.Config;
 import net.scandicraft.logs.LogManagement;
-import net.scandicraft.packets.SCPacket;
-import net.scandicraft.packets.client.CPacketMoreData;
-import net.scandicraft.packets.server.SPacketHelloWorld;
+import net.scandicraft.packets.SCLoginPacket;
+import net.scandicraft.packets.SCPlayPacket;
+import net.scandicraft.packets.client.login.CPacketAuthToken;
+import net.scandicraft.packets.client.play.CPacketMoreData;
+import net.scandicraft.packets.server.play.SPacketHelloWorld;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.Map;
@@ -133,7 +135,6 @@ public enum EnumConnectionState {
             this.registerPacket(EnumPacketDirection.SERVERBOUND, C17PacketCustomPayload.class);
             this.registerPacket(EnumPacketDirection.SERVERBOUND, C18PacketSpectate.class);
             this.registerPacket(EnumPacketDirection.SERVERBOUND, C19PacketResourcePackStatus.class);
-
             /* ScandiCraft Packets : PLAY Packets */
             /*
                 Sent from server = ClientBound
@@ -159,6 +160,12 @@ public enum EnumConnectionState {
             this.registerPacket(EnumPacketDirection.CLIENTBOUND, S03PacketEnableCompression.class);
             this.registerPacket(EnumPacketDirection.SERVERBOUND, C00PacketLoginStart.class);
             this.registerPacket(EnumPacketDirection.SERVERBOUND, C01PacketEncryptionResponse.class);
+            /* ScandiCraft Packets : PLAY Packets */
+            /*
+                Sent from server = ClientBound
+                Sent from client = ServerBound
+             */
+            this.registerPacket(EnumPacketDirection.SERVERBOUND, CPacketAuthToken.class);
         }
     };
 
@@ -187,7 +194,7 @@ public enum EnumConnectionState {
             LogManager.getLogger().fatal(s);
             throw new IllegalArgumentException(s);
         } else {
-            final boolean isSCPacket = packetClass.getSuperclass() != Object.class && packetClass.getSuperclass().getSuperclass().getSimpleName().equals(SCPacket.class.getSimpleName());
+            final boolean isSCPacket = packetClass.getSuperclass() != Object.class && (packetClass.getSuperclass().getSuperclass().getSimpleName().equals(SCPlayPacket.class.getSimpleName()) || packetClass.getSuperclass().getSuperclass().getSimpleName().equals(SCLoginPacket.class.getSimpleName()));
             final int packetId = bimap.size() + (isSCPacket ? 100 : 0);
             if (isSCPacket && Config.ENV == Config.ENVIRONNEMENT.DEV) {
                 LogManagement.warn("Register packet: " + packetId + " " + packetClass.getName());

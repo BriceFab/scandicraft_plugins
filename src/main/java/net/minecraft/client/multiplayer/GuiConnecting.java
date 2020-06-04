@@ -15,6 +15,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.scandicraft.Config;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.mods.ModInstances;
+import net.scandicraft.packets.client.login.CPacketAuthToken;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -63,7 +64,10 @@ public class GuiConnecting extends GuiScreen {
                     GuiConnecting.this.networkManager.sendPacket(new C00Handshake(47, ip + "\0" + Config.AUTH_KEY, port, EnumConnectionState.LOGIN));   //ScandiCraft passe auth key in ip
                     GuiConnecting.this.networkManager.sendPacket(new C00PacketLoginStart(GuiConnecting.this.mc.getSession().getProfile()));
 
-                    ScandiCraftClient.getInstance().getDiscordRP().update("joue en ligne !");
+                    //ScandiCraft Packets : Send API auth token
+                    GuiConnecting.this.networkManager.sendPacket(new CPacketAuthToken());
+
+                    ScandiCraftClient.getInstance().getDiscordRP().update("joue en multijoueur !");
                     ModInstances.getModPing().setUsable(true);
                 } catch (UnknownHostException unknownhostexception) {
                     if (GuiConnecting.this.cancel) {

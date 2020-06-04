@@ -1,12 +1,13 @@
-package net.scandicraft.packets.client;
+package net.scandicraft.packets.client.login;
 
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.login.INetHandlerLoginClient;
 import net.minecraft.network.play.INetHandlerPlayClient;
-import net.scandicraft.packets.SCPacket;
+import net.scandicraft.packets.SCLoginPacket;
 
 import java.io.IOException;
 
-public abstract class CPacket extends SCPacket {
+public abstract class CLoginPacket extends SCLoginPacket {
 
     @Override
     public void readPacketData(PacketBuffer buf) throws IOException {
@@ -14,7 +15,7 @@ public abstract class CPacket extends SCPacket {
     }
 
     @Override
-    public void processPacket(INetHandlerPlayClient handler) {
+    public void processPacket(INetHandlerLoginClient handler) {
         //Sending from the client (don't need process)
     }
 

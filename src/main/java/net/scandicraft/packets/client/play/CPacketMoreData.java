@@ -1,4 +1,4 @@
-package net.scandicraft.packets.client;
+package net.scandicraft.packets.client.play;
 
 import net.minecraft.entity.item.EntityPainting;
 import net.minecraft.init.Blocks;
@@ -10,7 +10,7 @@ import net.minecraft.util.BlockPos;
 import java.io.IOException;
 import java.util.UUID;
 
-public class CPacketMoreData extends CPacket {
+public class CPacketMoreData extends CPlayPacket {
 
     @Override
     public void writePacketData(PacketBuffer buf) throws IOException {
