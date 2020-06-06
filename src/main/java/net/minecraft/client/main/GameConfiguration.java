@@ -2,6 +2,7 @@ package net.minecraft.client.main;
 
 import com.mojang.authlib.properties.PropertyMap;
 import net.minecraft.util.Session;
+import net.scandicraft.ScandiCraftSession;
 
 import java.io.File;
 import java.net.Proxy;
@@ -12,13 +13,15 @@ public class GameConfiguration {
     public final GameConfiguration.FolderInformation folderInfo;
     public final GameConfiguration.GameInformation gameInfo;
     public final GameConfiguration.ServerInformation serverInfo;
+    public final ScandiCraftSession sc_session;
 
-    public GameConfiguration(GameConfiguration.UserInformation userInfoIn, GameConfiguration.DisplayInformation displayInfoIn, GameConfiguration.FolderInformation folderInfoIn, GameConfiguration.GameInformation gameInfoIn, GameConfiguration.ServerInformation serverInfoIn) {
+    public GameConfiguration(GameConfiguration.UserInformation userInfoIn, GameConfiguration.DisplayInformation displayInfoIn, GameConfiguration.FolderInformation folderInfoIn, GameConfiguration.GameInformation gameInfoIn, GameConfiguration.ServerInformation serverInfoIn, ScandiCraftSession sc_session) {
         this.userInfo = userInfoIn;
         this.displayInfo = displayInfoIn;
         this.folderInfo = folderInfoIn;
         this.gameInfo = gameInfoIn;
         this.serverInfo = serverInfoIn;
+        this.sc_session = sc_session;
     }
 
     public static class DisplayInformation {
@@ -79,5 +82,9 @@ public class GameConfiguration {
             this.profileProperties = profilePropertiesIn;
             this.proxy = Proxy.NO_PROXY;
         }
+    }
+
+    public ScandiCraftSession getScandiCraftSession() {
+        return sc_session;
     }
 }

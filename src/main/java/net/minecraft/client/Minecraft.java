@@ -83,6 +83,7 @@ import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
 import net.scandicraft.Config;
+import net.scandicraft.ScandiCraftSession;
 import net.scandicraft.anti_cheat.x_ray.PackManager;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.events.impl.ClientTickEvent;
@@ -335,6 +336,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         return (Sys.getTime() * 1000) / Sys.getTimerResolution();
     }
 
+    //ScandiCraft session
+    private final ScandiCraftSession sc_session;
+
     public Minecraft(GameConfiguration gameConfig) {
         theMinecraft = this;
         this.mcDataDir = gameConfig.folderInfo.mcDataDir;
@@ -360,6 +364,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             this.serverName = gameConfig.serverInfo.serverName;
             this.serverPort = gameConfig.serverInfo.serverPort;
         }
+
+        this.sc_session = gameConfig.sc_session;
 
         ImageIO.setUseCache(false);
         Bootstrap.register();
@@ -2584,4 +2590,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         return map;
     }
 
+    //ScandiCraft
+    public ScandiCraftSession getScandiCraftSession() {
+        return this.sc_session;
+    }
 }

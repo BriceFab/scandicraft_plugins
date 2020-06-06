@@ -50,6 +50,7 @@ task runclient(type: JavaExec) {
     classpath sourceSets.main.runtimeClasspath
     args '--gameDir', '.'
     args '--username', 'BriceFab'
+    args '--apiToken', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1OTE0NTc4MzksImV4cCI6MTU5MTQ2ODYzOSwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IkJyaWNlRmFiIn0.p_SJn9TYNnB0l_F1kES5xnr4HLT_L4q6s7jbb-O5cImW4okktERbDj7jccR_ROX3AQ4SA4wrVs8MVQjgcQ14FcpU_-Q3ty-fk4zndi9lM91r3IvAymATLKHulDX9vW2Ocd7MnBzvy0KjZMFeW9AG4UrxJrL5ez-kxsTfNwA4gzcVMXqZTLH4-uSIJBycAvmmCD_YZEz3jcTKPSB1PpgkD-GvKVCm5Km9M6senNMhj1cOfrODJ2jQhT58gteUtkIvdAbhj4KmUSOtoE_sFWFO6Y4uW5OkvVkZmZhZrKuyx6qigzHfOvvpMflqAygCzimlP8J1FS4AiANujmbTC7jPt3VUnSFXq0LeGe6NK9hamDXUCeWoGkMN9X-LKToyZy5o_eRelyZYVGSpHfzNpN9U94ZehnEN353DgygERZATU5cVJvV1j5yVvKtON8JGQh9LiRWXlB9ctRqiHFmG17xptFuctjbOrgzE85j8J6smb9u0dtuf77892SZSaiuvUIoFpltFw2fbDRQ0kxu2UDM1xrXpe2cQtQylWArv7OvG---nD0_S8FsBt45Ltbvq45kArzde4Cf211g_uDfPA_ABLkDhGu2QIsbYooupouVKelVrZNjvp4U3NNc70RMl1dA4Aomx28GRxh9ESnIss6Yfpio6ceceJUP4u_sphklksnY'
     main 'Start'
     workingDir 'run'
     systemProperty "java.library.path", 'natives'

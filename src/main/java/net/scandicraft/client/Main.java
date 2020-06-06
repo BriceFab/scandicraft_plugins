@@ -10,6 +10,7 @@ import joptsimple.OptionSpec;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.main.GameConfiguration;
 import net.minecraft.util.Session;
+import net.scandicraft.ScandiCraftSession;
 
 import java.io.File;
 import java.util.List;
@@ -32,11 +33,7 @@ public class Main {
         OptionSpec<Integer> optionHeight = optionparser.accepts("height").withRequiredArg().ofType(Integer.class).defaultsTo(480);
         OptionSpec<String> optionAssetIndex = optionparser.accepts("assetIndex").withRequiredArg();
         OptionSpec<String> optionUserType = optionparser.accepts("userType").withRequiredArg().defaultsTo("legacy");
-
-        OptionSpec<String> optionspec5 = optionparser.accepts("proxyHost").withRequiredArg();
-        OptionSpec<Integer> optionspec6 = optionparser.accepts("proxyPort").withRequiredArg().defaultsTo("8080", new String[0]).ofType(Integer.class);
-        OptionSpec<String> optionspec7 = optionparser.accepts("proxyUser").withRequiredArg();
-        OptionSpec<String> optionspec8 = optionparser.accepts("proxyPass").withRequiredArg();
+        OptionSpec<String> optionApiToken = optionparser.accepts("apiToken").withRequiredArg();
 
         OptionSpec<String> nonOptions = optionparser.nonOptions();
         OptionSet optionset = optionparser.parse(args);
@@ -62,7 +59,10 @@ public class Main {
         String s6 = optionset.valueOf(optionServer);
         Integer integer = optionset.valueOf(optionPort);
         Session session = new Session(optionUsername.value(optionset), username, optionUserType.value(optionset));
-        GameConfiguration gameconfiguration = new GameConfiguration(new GameConfiguration.UserInformation(session, propertymap, propertymap1), new GameConfiguration.DisplayInformation(i, j, isFullscreen, checkGlErrors), new GameConfiguration.FolderInformation(gameDir, resourcepacksDir, assetsDir, assetIndex), new GameConfiguration.GameInformation(s3), new GameConfiguration.ServerInformation(s6, integer));
+        //ScandiCraft session
+        ScandiCraftSession sc_session = new ScandiCraftSession(optionUsername.value(optionset), optionApiToken.value(optionset));
+        GameConfiguration gameconfiguration = new GameConfiguration(new GameConfiguration.UserInformation(session, propertymap, propertymap1), new GameConfiguration.DisplayInformation(i, j, isFullscreen, checkGlErrors), new GameConfiguration.FolderInformation(gameDir, resourcepacksDir, assetsDir, assetIndex), new GameConfiguration.GameInformation(s3), new GameConfiguration.ServerInformation(s6, integer), sc_session);
+
         Runtime.getRuntime().addShutdownHook(new Thread("Client Shutdown Thread") {
             public void run() {
                 Minecraft.stopIntegratedServer();
