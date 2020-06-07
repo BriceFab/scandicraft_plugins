@@ -26,6 +26,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.Chunk;
+import net.scandicraft.logs.LogManagement;
 import optifine.Reflector;
 
 import org.lwjgl.opengl.Display;
@@ -33,8 +34,8 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiOverlayDebug extends Gui
 {
-    private final Minecraft mc;
-    private final FontRenderer fontRenderer;
+    protected final Minecraft mc;
+    protected final FontRenderer fontRenderer;
     //private static final String __OBFID = "CL_00001956";
 
     public GuiOverlayDebug(Minecraft mc)
@@ -53,7 +54,7 @@ public class GuiOverlayDebug extends Gui
         this.mc.mcProfiler.endSection();
     }
 
-    private boolean isReducedDebug()
+    protected boolean isReducedDebug()
     {
         return this.mc.thePlayer.hasReducedDebug() || this.mc.gameSettings.reducedDebugInfo;
     }
@@ -284,7 +285,7 @@ public class GuiOverlayDebug extends Gui
         return i2 << 24 | j2 << 16 | k2 << 8 | l2;
     }
 
-    private static long bytesToMb(long bytes)
+    protected static long bytesToMb(long bytes)
     {
         return bytes / 1024L / 1024L;
     }

@@ -31,6 +31,7 @@ import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.*;
 import net.minecraft.world.border.WorldBorder;
+import net.scandicraft.overlay.GuiDebug;
 import optifine.Config;
 import optifine.CustomColors;
 
@@ -106,7 +107,9 @@ public class GuiIngame extends Gui {
     public GuiIngame(Minecraft mcIn) {
         this.mc = mcIn;
         this.itemRenderer = mcIn.getRenderItem();
-        this.overlayDebug = new GuiOverlayDebug(mcIn);
+//        this.overlayDebug = new GuiOverlayDebug(mcIn);
+        //ScandiCraft
+        this.overlayDebug = new GuiDebug(mcIn);
         this.spectatorGui = new GuiSpectator(mcIn);
         this.persistantChatGUI = new GuiNewChat(mcIn);
         this.overlayPlayerList = new GuiPlayerTabOverlay(mcIn, this);
