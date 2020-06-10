@@ -1,6 +1,7 @@
 package net.scandicraft.scheduler;
 
 import net.minecraft.util.Util;
+import net.scandicraft.Config;
 import net.scandicraft.anti_cheat.CheatConfig;
 import net.scandicraft.anti_cheat.process.ScanProcess;
 
@@ -16,7 +17,7 @@ public class Schedulers {
     }
 
     public void registerScanProcess() {
-        if (Util.getOSType() == Util.EnumOS.WINDOWS) {
+        if (Util.getOSType() == Util.EnumOS.WINDOWS && Config.ENV != Config.ENVIRONNEMENT.DEV) {
             scheduler.scheduleAtFixedRate(new ScanProcess(), CheatConfig.initialDelay, CheatConfig.periodicDelay, TimeUnit.SECONDS);
         }
     }

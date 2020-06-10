@@ -7,7 +7,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import net.scandicraft.Config;
+import net.scandicraft.Theme;
 import net.scandicraft.fonts.Fonts;
 import net.scandicraft.render.RenderUtils;
 
@@ -56,6 +56,7 @@ public class DefaultButton extends Gui {
     private float cut;
 
     public int packedFGColour; //FML
+    private final int lineWidth = 3;  //ScandiCraft red line width
 
     public DefaultButton(int buttonId, int x, int y, String buttonText) {
         this(buttonId, x, y, 200, 20, buttonText);
@@ -116,29 +117,33 @@ public class DefaultButton extends Gui {
                 if (cut <= 0) cut = 0;
             }
 
-            Color buttonColor = new Color(13, 13, 13, 180);
+            Color buttonColor = Theme.SECONDARY_COLOR;
             Color textColor = Color.WHITE;
             if (enabled && hovered) {
-                buttonColor = new Color(204, 204, 204, 80);
+                buttonColor = Theme.HOVER_COLOR;
             }
             if (!enabled) {
-                textColor = new Color(128, 128, 128);
+                textColor = Theme.DISABLED_TEXT_COLOR;
             }
-            Color disabledColor = new Color(191, 191, 191, 30);
 
             Gui.drawRect(
                     this.xPosition + (int) this.cut, this.yPosition + (int) this.cut,
                     this.xPosition + this.width - (int) this.cut, this.yPosition + this.height - (int) this.cut,
-                    this.enabled ? buttonColor.getRGB() : disabledColor.getRGB()
+                    this.enabled ? buttonColor.getRGB() : Theme.DISABLED_COLOR.getRGB()
             );
 
-            mc.getTextureManager().bindTexture(buttonTextures);
+            //draw vertical line
+            if (enabled && hovered) {
+                this.drawVerticalLine((int) (this.xPosition + cut), (int) (this.yPosition - 1 + cut), (int) (this.yPosition + this.height - cut), Theme.PRIMARY_COLOR.getRGB(), lineWidth);
+            } else {
+                this.drawVerticalLine(this.xPosition, this.yPosition - 1, this.yPosition + this.height, Theme.PRIMARY_COLOR.getRGB(), lineWidth);
+            }
+
             mouseDragged(mc, mouseX, mouseY);
 
-            fontRenderer.drawStringWithShadow(displayString,
-                    (float) ((this.xPosition + this.width / 2) -
-                            fontRenderer.getStringWidth(displayString) / 2),
-                    this.yPosition + (this.height + (isMcFont ? -5 : -9)) / 2F, textColor.getRGB());
+            fontRenderer.drawString(displayString,
+                    (this.xPosition + this.width / 2) - fontRenderer.getStringWidth(displayString) / 2,
+                    (int) (this.yPosition + (this.height + (isMcFont ? -5 : -9)) / 2F), textColor.getRGB());
             GlStateManager.resetColor();
         }
     }

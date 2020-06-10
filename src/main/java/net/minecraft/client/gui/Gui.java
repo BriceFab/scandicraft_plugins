@@ -34,6 +34,11 @@ public class Gui
      */
     protected void drawVerticalLine(int x, int startY, int endY, int color)
     {
+        drawVerticalLine(x, startY, endY, color, 1);
+    }
+
+    //ScandiCraft
+    protected void drawVerticalLine(int x, int startY, int endY, int color, int width) {
         if (endY < startY)
         {
             int i = startY;
@@ -41,7 +46,7 @@ public class Gui
             endY = i;
         }
 
-        drawRect(x, startY + 1, x + 1, endY, color);
+        drawRect(x, startY + 1, x + width, endY, color);
     }
 
     /**
