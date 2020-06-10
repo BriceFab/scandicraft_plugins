@@ -9,4 +9,7 @@ public class Theme {
     public static Color TEXT_COLOR = Color.WHITE;
     public static Color DISABLED_COLOR = new Color(191, 191, 191, 30);
     public static Color DISABLED_TEXT_COLOR = new Color(128, 128, 128);
+
+    public static int DEFAULT_BUTTON_WIDTH = 200;
+    public static int DEFAULT_BUTTON_HEIGHT = 20;
 }

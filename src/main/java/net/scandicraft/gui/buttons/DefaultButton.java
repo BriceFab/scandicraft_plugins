@@ -59,7 +59,7 @@ public class DefaultButton extends Gui {
     private final int lineWidth = 3;  //ScandiCraft red line width
 
     public DefaultButton(int buttonId, int x, int y, String buttonText) {
-        this(buttonId, x, y, 200, 20, buttonText);
+        this(buttonId, x, y, Theme.DEFAULT_BUTTON_WIDTH, Theme.DEFAULT_BUTTON_HEIGHT, buttonText);
 
         if (packedFGColour != 0) {
             // j = packedFGColour;
@@ -104,8 +104,7 @@ public class DefaultButton extends Gui {
             boolean isMcFont = mc.getLanguageManager().isCurrentLocaleUnicode();
             final FontRenderer fontRenderer = isMcFont ? mc.fontRendererObj : Fonts.fontNormal;
 
-            hovered = (mouseX >= this.xPosition && mouseY >= this.yPosition &&
-                    mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height);
+            hovered = (mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height);
 
             final int delta = RenderUtils.deltaTime;
 
@@ -133,17 +132,19 @@ public class DefaultButton extends Gui {
             );
 
             //draw vertical line
-            if (enabled && hovered) {
-                this.drawVerticalLine((int) (this.xPosition + cut), (int) (this.yPosition - 1 + cut), (int) (this.yPosition + this.height - cut), Theme.PRIMARY_COLOR.getRGB(), lineWidth);
-            } else {
-                this.drawVerticalLine(this.xPosition, this.yPosition - 1, this.yPosition + this.height, Theme.PRIMARY_COLOR.getRGB(), lineWidth);
+            if (enabled) {
+                if (hovered) {
+                    this.drawVerticalLine((int) (this.xPosition + cut), (int) (this.yPosition - 1 + cut), (int) (this.yPosition + this.height - cut), Theme.PRIMARY_COLOR.getRGB(), lineWidth);
+                } else {
+                    this.drawVerticalLine(this.xPosition, this.yPosition - 1, this.yPosition + this.height, Theme.PRIMARY_COLOR.getRGB(), lineWidth);
+                }
             }
 
             mouseDragged(mc, mouseX, mouseY);
 
             fontRenderer.drawString(displayString,
                     (this.xPosition + this.width / 2) - fontRenderer.getStringWidth(displayString) / 2,
-                    (int) (this.yPosition + (this.height + (isMcFont ? -5 : -9)) / 2F), textColor.getRGB());
+                    (int) (this.yPosition + (this.height + (isMcFont ? -5 : -7)) / 2F), textColor.getRGB());
             GlStateManager.resetColor();
         }
     }
