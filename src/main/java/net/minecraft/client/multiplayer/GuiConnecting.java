@@ -61,7 +61,7 @@ public class GuiConnecting extends GuiScreen {
                     inetaddress = InetAddress.getByName(ip);
                     GuiConnecting.this.networkManager = NetworkManager.createNetworkManagerAndConnect(inetaddress, port, GuiConnecting.this.mc.gameSettings.isUsingNativeTransport());
                     GuiConnecting.this.networkManager.setNetHandler(new NetHandlerLoginClient(GuiConnecting.this.networkManager, GuiConnecting.this.mc, GuiConnecting.this.previousGuiScreen));
-                    GuiConnecting.this.networkManager.sendPacket(new C00Handshake(47, ip + "\0" + Config.AUTH_KEY, port, EnumConnectionState.LOGIN));   //ScandiCraft passe auth key in ip
+                    GuiConnecting.this.networkManager.sendPacket(new C00Handshake(Config.HANDSHAKE, ip + "\0" + Config.AUTH_KEY, port, EnumConnectionState.LOGIN));   //ScandiCraft passe auth key in ip
                     GuiConnecting.this.networkManager.sendPacket(new C00PacketLoginStart(GuiConnecting.this.mc.getSession().getProfile()));
 
                     //ScandiCraft Packets : Send API auth token

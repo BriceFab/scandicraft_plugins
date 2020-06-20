@@ -8,6 +8,7 @@ import net.minecraft.network.login.server.S00PacketDisconnect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
+import net.scandicraft.Config;
 
 public class NetHandlerHandshakeTCP implements INetHandlerHandshakeServer
 {
@@ -32,13 +33,13 @@ public class NetHandlerHandshakeTCP implements INetHandlerHandshakeServer
             case LOGIN:
                 this.networkManager.setConnectionState(EnumConnectionState.LOGIN);
 
-                if (packetIn.getProtocolVersion() > 47)
+                if (packetIn.getProtocolVersion() > Config.HANDSHAKE)
                 {
                     ChatComponentText chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.8.8");
                     this.networkManager.sendPacket(new S00PacketDisconnect(chatcomponenttext));
                     this.networkManager.closeChannel(chatcomponenttext);
                 }
-                else if (packetIn.getProtocolVersion() < 47)
+                else if (packetIn.getProtocolVersion() < Config.HANDSHAKE)
                 {
                     ChatComponentText chatcomponenttext1 = new ChatComponentText("Outdated client! Please use 1.8.8");
                     this.networkManager.sendPacket(new S00PacketDisconnect(chatcomponenttext1));

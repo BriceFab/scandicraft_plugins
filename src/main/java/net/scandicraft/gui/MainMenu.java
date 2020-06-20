@@ -1,6 +1,8 @@
 package net.scandicraft.gui;
 
 import net.minecraft.client.gui.*;
+import net.minecraft.client.multiplayer.GuiConnecting;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
@@ -17,17 +19,18 @@ import java.util.ArrayList;
 
 public class MainMenu extends GuiScreen implements GuiYesNoCallback {
     private static final ResourceLocation backgroundPath = new ResourceLocation("textures/gui/background.png");
-    private ArrayList<ButtonTemplate> templateButtons = new ArrayList<>();
+    private final ArrayList<ButtonTemplate> templateButtons = new ArrayList<>();
+    private final ServerData server = new ServerData("ScandiCraft", Config.SERVER_IP_AND_PORT, false);
 
     public MainMenu() {
-        templateButtons.add(new ButtonTemplate(I18n.format("menu.singleplayer")));
-        templateButtons.add(new ButtonTemplate(I18n.format("menu.multiplayer")));
-        templateButtons.add(new ButtonTemplate(I18n.format("menu.multiplayer")));
-        templateButtons.add(new ButtonTemplate(I18n.format("menu.multiplayer")));
-        templateButtons.add(new ButtonTemplate(I18n.format("menu.multiplayer")));
-        templateButtons.add(new ButtonTemplate(I18n.format("menu.multiplayer")));
-        templateButtons.add(new ButtonTemplate(I18n.format("menu.options"), Theme.DEFAULT_BUTTON_WIDTH / 2, 0));
-        templateButtons.add(new ButtonTemplate(I18n.format("menu.quit"), Theme.DEFAULT_BUTTON_WIDTH / 2, 1));
+        templateButtons.add(new ButtonTemplate(0, I18n.format("menu.singleplayer")));
+        if (Config.ENV == Config.ENVIRONNEMENT.DEV) {
+            templateButtons.add(new ButtonTemplate(1, I18n.format("menu.multiplayer")));
+        }
+        templateButtons.add(new ButtonTemplate(4, I18n.format("ScandiCraft")));
+        templateButtons.add(new ButtonTemplate(2, I18n.format("menu.options"), Theme.DEFAULT_BUTTON_WIDTH / 2, 0));
+        templateButtons.add(new ButtonTemplate(3, I18n.format("menu.quit"), Theme.DEFAULT_BUTTON_WIDTH / 2, 1));
+        LogManagement.info("test server data: " + server.serverIP + " - " + server.populationInfo);
     }
 
     public boolean doesGuiPauseGame() {
@@ -65,7 +68,7 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
             }
             int x = this.width / 2 - shiftX;
             int y = (startHeight + ySpace * i) + shiftY;
-            this.buttonList.add(new GuiButton(i, x, y, buttonTemplate.getWidth(), buttonTemplate.getHeight(), buttonTemplate.getText()));
+            this.buttonList.add(new GuiButton(buttonTemplate.getId(), x, y, buttonTemplate.getWidth(), buttonTemplate.getHeight(), buttonTemplate.getText()));
         }
     }
 
@@ -84,8 +87,11 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
                 case 3: //quitter
                     this.mc.shutdown();
                     break;
+                case 4: //scandicraft server
+                    this.mc.displayGuiScreen(new GuiConnecting(this, this.mc, this.server));
+                    break;
                 default:
-                    LogManagement.info("no action");
+                    LogManagement.warn("no action");
                     break;
             }
         }
