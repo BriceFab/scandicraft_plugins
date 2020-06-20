@@ -35,13 +35,13 @@ public class NetHandlerHandshakeTCP implements INetHandlerHandshakeServer
 
                 if (packetIn.getProtocolVersion() > Config.HANDSHAKE)
                 {
-                    ChatComponentText chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.8.8");
+                    ChatComponentText chatcomponenttext = new ChatComponentText(Config.OUTDATED_MESSAGE);
                     this.networkManager.sendPacket(new S00PacketDisconnect(chatcomponenttext));
                     this.networkManager.closeChannel(chatcomponenttext);
                 }
                 else if (packetIn.getProtocolVersion() < Config.HANDSHAKE)
                 {
-                    ChatComponentText chatcomponenttext1 = new ChatComponentText("Outdated client! Please use 1.8.8");
+                    ChatComponentText chatcomponenttext1 = new ChatComponentText(Config.OUTDATED_MESSAGE);
                     this.networkManager.sendPacket(new S00PacketDisconnect(chatcomponenttext1));
                     this.networkManager.closeChannel(chatcomponenttext1);
                 }

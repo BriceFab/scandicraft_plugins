@@ -1,6 +1,7 @@
 package net.scandicraft;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 
 import java.io.File;
 import java.net.Proxy;
@@ -28,6 +29,7 @@ public class Config {
     public static final String SERVER_IP = "217.182.205.69";
     public static final String SERVER_IP_AND_PORT = String.format("%s:%d", SERVER_IP, SERVER_PORT);
     public static final Integer HANDSHAKE = -20062020;  //real = 47
+    public static final String OUTDATED_MESSAGE = EnumChatFormatting.RED + "Télécharge le launcher sur https://scandicraft-mc.fr/";
 
     public static class GameConfig {
         public static final String version = SERVER_NAME.toLowerCase();
