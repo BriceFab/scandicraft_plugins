@@ -39,12 +39,12 @@ public class ModFPS extends ModDraggable {
 
     @Override
     public void render(ScreenPosition pos) {
-        renderCapacity(capacity1, 0, 0);
-        renderCapacity(capacity2, 100, 0);
-        renderCapacity(capacity3, 200, 0);
-        renderCapacity(capacity4, 200, 100);
-        renderCapacity(capacity5, 300, 0);
-        renderCapacity(capacity6, 300, 100);
+//        renderCapacity(capacity1, 0, 0);
+//        renderCapacity(capacity2, 100, 0);
+//        renderCapacity(capacity3, 200, 0);
+//        renderCapacity(capacity4, 200, 100);
+//        renderCapacity(capacity5, 300, 0);
+//        renderCapacity(capacity6, 300, 100);
         font.drawString("FPS: " + Minecraft.getDebugFPS(), pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
     }
 

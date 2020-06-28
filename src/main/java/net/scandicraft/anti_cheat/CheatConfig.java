@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 public class CheatConfig {
     /* Anti auto-click */
+    public static final boolean CHECK_AUTOCLICK = true;
     public static final int MAX_CPS = 18;
     public static final int MAX_SUSPECT_AVERAGE = 15;
     public static final int MAX_HISTORY = 14;

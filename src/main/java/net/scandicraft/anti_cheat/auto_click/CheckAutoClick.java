@@ -13,82 +13,102 @@ import java.util.OptionalDouble;
 
 public class CheckAutoClick implements Runnable {
 
-    private static final ArrayList<Integer> clicks_history = new ArrayList<>();         //historique des CPS
-    private static final ArrayList<Boolean> keyDown_history = new ArrayList<>();        //historique des keyDown de l'attaque
-    private static final ArrayList<Integer> suspectClick_history = new ArrayList<>();   //historique des clicks suspects
-    private static final ArrayList<Long> time_history = new ArrayList<>();              //historique du délais entre chaque clicks
-    private static final ArrayList<Integer> average_history = new ArrayList<>();          //historique des moyennes de délais entre chaque clicks
+    private final ArrayList<Integer> clicks_history = new ArrayList<>();         //historique des CPS
+    private final ArrayList<Boolean> keyDown_history = new ArrayList<>();        //historique des keyDown de l'attaque
+    private final ArrayList<Integer> suspectClick_history = new ArrayList<>();   //historique des clicks suspects
+    private final ArrayList<Long> time_history = new ArrayList<>();              //historique du délais entre chaque clicks
+    private final ArrayList<Integer> average_history = new ArrayList<>();        //historique des moyennes de délais entre chaque clicks
 
-    private static final boolean enable = true;
-    private static int ACT_CPS = 0;
-    private static boolean isButterfly = false;
+    private int CURRENT_CPS = 0;
+    private boolean isButterfly = false;
 
     @Override
     public void run() {
-        long startAt = System.currentTimeMillis();
-        LogManagement.info("Start check autoclick..");
-        //TODO test analyse CPS que à partir de 8 CPS
-        checkCPS(ModInstances.getModCPS().getCPS());
-        LogManagement.info("Stop check autoclick in " + (System.currentTimeMillis() - startAt) + " ms");
+        if (CheatConfig.CHECK_AUTOCLICK) {
+            long startAt = System.currentTimeMillis();
+            LogManagement.info("Start check autoclick..");
+
+            final int CPS = ModInstances.getModCPS().getCPS();
+            final int FPS = Minecraft.getDebugFPS();
+
+            this.CURRENT_CPS = CPS;
+
+            this.minimalCPSCheck();
+            if (FPS >= 20) {
+                this.allCPSCheck();
+            }
+
+            LogManagement.info("Stop check autoclick in " + (System.currentTimeMillis() - startAt) + " ms");
+        }
     }
 
-    public static void checkCPS(final int CPS) {
-        if (enable) {
-            //Si action du clic (attack) est lancée mais que n'a 0 clics = auto_click
-            ACT_CPS = CPS;
+    /**
+     * Minimal check seulement quand le client a moins de 20 FPS
+     */
+    private void minimalCPSCheck() {
+        LogManagement.info("autoclick minimal check");
 
-            //Si dépasse max CPS
-            if (ACT_CPS >= CheatConfig.MAX_CPS && enable) {
-                new CheatScreen(CheatType.AUTOCLICK);
-            }
+        //Check si le MAX CPS a été atteint
+        if (this.CURRENT_CPS >= CheatConfig.MAX_CPS) {
+            new CheatScreen(CheatType.AUTOCLICK);
+        }
+    }
 
-            addClickHistory(ACT_CPS);
-            boolean attackByMouse = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode() < 0; //souris = plus petit que 0
-            boolean isSuspectClick = isSuspectClick();
-            boolean isKeyDown = !attackByMouse || Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown() || !isSuspectClick;
-            addSuspectHistory(isSuspectClick);
-            addKeyDownHistory(isKeyDown);
-            boolean hasIllegalDelta = addTimeHistory(System.currentTimeMillis());
+    /**
+     * All check quand le client a >= 20 FPS
+     * + minimal check
+     */
+    private void allCPSCheck() {
+        LogManagement.info("autoclick all check");
 
-            //debug
-            LogManagement.info("act CPS: " + ACT_CPS + " count: " + countHistoryZero() + " size:" + clicks_history.size());
-            LogManagement.info("LMB " + Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown() + " count: " + countHistoryDown() + " size:" + keyDown_history.size() + " currentHistory: " + (isKeyDown) + " attackByMouse: " + attackByMouse);
+        //TODO test analyse CPS que à partir de 8 CPS && FPS > 20
 
-            //check if cheating
-            if (countHistoryZero() >= CheatConfig.MAX_HISTORY / 2) {    //si trop de 0 CPS alors que clické
-                LogManagement.info("reason: max 0");
+        addClickHistory(this.CURRENT_CPS);
+        boolean attackByMouse = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode() < 0; //souris = plus petit que 0
+        boolean isSuspectClick = isSuspectClick();
+        boolean isKeyDown = !attackByMouse || Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown() || !isSuspectClick;
+        addSuspectHistory(isSuspectClick);
+        addKeyDownHistory(isKeyDown);
+        boolean hasIllegalDelta = addTimeHistory(System.currentTimeMillis());
+
+        //debug
+        LogManagement.info("act CPS: " + this.CURRENT_CPS + " count: " + countHistoryZero() + " size:" + clicks_history.size());
+        LogManagement.info("LMB " + Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown() + " count: " + countHistoryDown() + " size:" + keyDown_history.size() + " currentHistory: " + (isKeyDown) + " attackByMouse: " + attackByMouse);
+
+        //check if cheating
+        if (countHistoryZero() >= CheatConfig.MAX_HISTORY / 2) {    //si trop de 0 CPS alors que clické
+            LogManagement.info("reason: max 0");
+            CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
+        }
+        if (suspectClick_history.size() >= CheatConfig.MAX_HISTORY / 2) {   //si trop de click suspect
+            //moyen des clicks suspects
+            OptionalDouble average = suspectClick_history.stream().mapToInt(a -> a).average();
+            double result_average = average.isPresent() ? average.getAsDouble() : 0;
+
+            //clicks le plus élevé
+            int max = Collections.max(suspectClick_history);
+
+            LogManagement.info("suspectClicks result: average: " + result_average + " max: " + max);
+
+            if (max == 0 || result_average >= CheatConfig.MAX_SUSPECT_AVERAGE) {
+                LogManagement.info("reason: suspectClicks");
                 CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
             }
-            if (suspectClick_history.size() >= CheatConfig.MAX_HISTORY / 2) {   //si trop de click suspect
-                //moyen des clicks suspects
-                OptionalDouble average = suspectClick_history.stream().mapToInt(a -> a).average();
-                double result_average = average.isPresent() ? average.getAsDouble() : 0;
-
-                //clicks le plus élevé
-                int max = Collections.max(suspectClick_history);
-
-                LogManagement.info("suspectClicks result: average: " + result_average + " max: " + max);
-
-                if (max == 0 || result_average >= CheatConfig.MAX_SUSPECT_AVERAGE) {
-                    LogManagement.info("reason: suspectClicks");
-                    CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
-                }
-            }
-            if (countHistoryDown() >= CheatConfig.MAX_DOWN) { //et que le click provient de la souris
-                LogManagement.info("reason: max down " + countHistoryDown());
-                CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
-            }
-            if (hasIllegalDelta) {
-                LogManagement.info("reason: illegal time delta");
-                CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
-            }
+        }
+        if (countHistoryDown() >= CheatConfig.MAX_DOWN) { //et que le click provient de la souris
+            LogManagement.info("reason: max down " + countHistoryDown());
+            CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
+        }
+        if (hasIllegalDelta) {
+            LogManagement.info("reason: illegal time delta");
+            CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
         }
     }
 
     /*
     Compte le nombre de 0 CPS
      */
-    private static int countHistoryZero() {
+    private int countHistoryZero() {
         int total = 0;
         for (int click : clicks_history) {
             if (click == 0) {
@@ -101,7 +121,7 @@ public class CheckAutoClick implements Runnable {
     /*
     Compte le nombre de false KeyDown (attack)
      */
-    private static int countHistoryDown() {
+    private int countHistoryDown() {
         int total = 0;
         for (Boolean click : keyDown_history) {
             if (!click) {
@@ -111,14 +131,14 @@ public class CheckAutoClick implements Runnable {
         return total;
     }
 
-    private static void addClickHistory(int actCPS) {
+    private void addClickHistory(int actCPS) {
         clicks_history.add(actCPS);
         if (clicks_history.size() >= CheatConfig.MAX_HISTORY) {
             clicks_history.clear();
         }
     }
 
-    private static void addKeyDownHistory(boolean isKeyDown) {
+    private void addKeyDownHistory(boolean isKeyDown) {
         //false = detect fake click
         keyDown_history.add(isKeyDown);
         if (keyDown_history.size() >= CheatConfig.MAX_HISTORY) {
@@ -131,11 +151,11 @@ public class CheckAutoClick implements Runnable {
         }
     }
 
-    private static void addSuspectHistory(boolean isSuspectClick) {
+    private void addSuspectHistory(boolean isSuspectClick) {
         if (isSuspectClick) {
-            suspectClick_history.add(ACT_CPS);
+            suspectClick_history.add(this.CURRENT_CPS);
 
-            LogManagement.info("click suspect CPS:" + ACT_CPS + " total:" + suspectClick_history.size());
+            LogManagement.info("click suspect CPS:" + this.CURRENT_CPS + " total:" + suspectClick_history.size());
         } else {
             LogManagement.info("not suspect");
         }
@@ -152,7 +172,7 @@ public class CheckAutoClick implements Runnable {
      * @param time temps
      * @return boolean (true = cheat | false = no cheat)
      */
-    private static boolean addTimeHistory(long time) {
+    private boolean addTimeHistory(long time) {
         if (Minecraft.getDebugFPS() >= 20) { //Sinon enregistre ms trop bas
             time_history.add(time);
         }
@@ -222,7 +242,7 @@ public class CheckAutoClick implements Runnable {
         return false;
     }
 
-    private static void addAverageHistory(double average) {
+    private void addAverageHistory(double average) {
         average_history.add(new Double(average).intValue());
 
         if (average_history.size() >= CheatConfig.MAX_HISTORY_FREQUENCY_AVERAGE) {
@@ -241,15 +261,15 @@ public class CheckAutoClick implements Runnable {
         }
     }
 
-    private static boolean isSuspectClick() {
+    private boolean isSuspectClick() {
         if (keyDown_history.size() > 0 && clicks_history.size() > 1) {
             boolean current_down = Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown();
             int last_cps = clicks_history.get(clicks_history.size() - 2);
 
-            LogManagement.info("current_down: " + current_down + " last_cps: " + last_cps + " current CPS: " + ACT_CPS);
+            LogManagement.info("current_down: " + current_down + " last_cps: " + last_cps + " current CPS: " + this.CURRENT_CPS);
 
             //Si l'ancien CPS est le même et que l'actuel et que CPS == 0
-            if (!current_down && (last_cps != ACT_CPS || ACT_CPS == 0)) { //if (last_down == false && last_cps = current)
+            if (!current_down && (last_cps != this.CURRENT_CPS || this.CURRENT_CPS == 0)) { //if (last_down == false && last_cps = current)
                 return true;
             } else {
                 return false;
