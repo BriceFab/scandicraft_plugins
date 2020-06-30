@@ -9,7 +9,7 @@ import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
 
 public class ModFPS extends ModDraggable {
-    public static ScreenPosition FPS_POSITION = ScreenPosition.fromAbsolutePosition(3, 3);
+    public static ScreenPosition FPS_POSITION = ScreenPosition.fromRelativePosition(0.8416666666666667, 0.0392156862745098);
     private final ResourceLocation capacity1 = new ResourceLocation("scandicraft/capacities/guerrier_2.png");
     private final ResourceLocation capacity2 = new ResourceLocation("scandicraft/capacities/guerrier_2_test2.png");
     private final ResourceLocation capacity3 = new ResourceLocation("scandicraft/capacities/guerrier_1.png");
@@ -29,7 +29,7 @@ public class ModFPS extends ModDraggable {
 
     @Override
     public int getWidth() {
-        return 50;
+        return font.getStringWidth("FPS: 000");
     }
 
     @Override

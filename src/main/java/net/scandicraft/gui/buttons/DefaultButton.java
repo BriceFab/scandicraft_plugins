@@ -102,7 +102,7 @@ public class DefaultButton extends Gui {
         if (visible) {
 
             boolean isMcFont = mc.getLanguageManager().isCurrentLocaleUnicode();
-            final FontRenderer fontRenderer = isMcFont ? mc.fontRendererObj : Fonts.fontNormal;
+            FontRenderer fontRenderer = isMcFont ? mc.fontRendererObj : Fonts.fontNormal;
 
             hovered = (mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height);
 
@@ -117,9 +117,11 @@ public class DefaultButton extends Gui {
             }
 
             Color buttonColor = Theme.SECONDARY_COLOR;
-            Color textColor = Color.WHITE;
+            Color textColor = Theme.TEXT_COLOR;
             if (enabled && hovered) {
                 buttonColor = Theme.HOVER_COLOR;
+                textColor = Theme.HOVER_TEXT_COLOR;
+                fontRenderer = Fonts.fontSemiBold;
             }
             if (!enabled) {
                 textColor = Theme.DISABLED_TEXT_COLOR;

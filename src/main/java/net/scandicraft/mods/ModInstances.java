@@ -45,6 +45,9 @@ public class ModInstances {
 
         modCompass = new ModCompass();
         api.register(modCompass);
+
+        ModCopyright modCopyright = new ModCopyright();
+        api.register(modCopyright);
     }
 
     public static ModToggleSprintSneak getModToggleSprintSneak() {

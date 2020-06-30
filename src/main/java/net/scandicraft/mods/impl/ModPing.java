@@ -7,6 +7,10 @@ import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
 
 public class ModPing extends ModDraggable {
+    @Override
+    public ScreenPosition getDefaultPos() {
+        return ScreenPosition.fromRelativePosition(0.8337236533957846, 0.5083333333333333);
+    }
     // private static final ThreadPoolExecutor field_148302_b = new ScheduledThreadPoolExecutor(5, (new ThreadFactoryBuilder()).setNameFormat("Server Pinger #%d").setDaemon(true).build());
     // private final OldServerPinger oldServerPinger = new OldServerPinger();
 

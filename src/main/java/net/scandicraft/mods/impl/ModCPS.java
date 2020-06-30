@@ -17,7 +17,7 @@ public class ModCPS extends ModDraggable {
 
     @Override
     public ScreenPosition getDefaultPos() {
-        return ScreenPosition.fromRelativePosition(0.00625, 0.011764705882352941);
+        return ScreenPosition.fromRelativePosition(0.7291666666666666, 0.0392156862745098);
     }
 
     @Override

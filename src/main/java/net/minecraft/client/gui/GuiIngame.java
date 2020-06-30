@@ -450,7 +450,7 @@ public class GuiIngame extends Gui {
         if (this.mc.theWorld.getTotalWorldTime() >= 120500L) {
             s = I18n.format("demo.demoExpired", new Object[0]);
         } else {
-            s = I18n.format("demo.remainingTime", new Object[]{StringUtils.ticksToElapsedTime((int) (120500L - this.mc.theWorld.getTotalWorldTime()))});
+            s = I18n.format("demo.remainingTime", StringUtils.ticksToElapsedTime((int) (120500L - this.mc.theWorld.getTotalWorldTime())));
         }
 
         int i = this.getFontRenderer().getStringWidth(s);
@@ -459,7 +459,8 @@ public class GuiIngame extends Gui {
     }
 
     protected boolean showCrosshair() {
-        if (this.mc.gameSettings.showDebugInfo && !this.mc.thePlayer.hasReducedDebug() && !this.mc.gameSettings.reducedDebugInfo) {
+// ScandiCraft show attack icon in F3
+        if (net.scandicraft.Config.ENV == net.scandicraft.Config.ENVIRONNEMENT.TEST && (this.mc.gameSettings.showDebugInfo && !this.mc.thePlayer.hasReducedDebug() && !this.mc.gameSettings.reducedDebugInfo)) {
             return false;
         } else if (this.mc.playerController.isSpectator()) {
             if (this.mc.pointedEntity != null) {

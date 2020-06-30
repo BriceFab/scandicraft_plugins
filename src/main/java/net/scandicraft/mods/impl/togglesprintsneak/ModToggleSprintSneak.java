@@ -5,6 +5,10 @@ import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
 
 public class ModToggleSprintSneak extends ModDraggable {
+    @Override
+    public ScreenPosition getDefaultPos() {
+        return ScreenPosition.fromRelativePosition(0.7145833333333333, 0.9294117647058824);
+    }
 
     //settings
     public int keyHoldTicks = 7;

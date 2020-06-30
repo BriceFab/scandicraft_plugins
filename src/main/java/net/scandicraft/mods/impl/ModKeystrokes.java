@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 
 public class ModKeystrokes extends ModDraggable {
-    private static final ScreenPosition KEYSTROKES_POSITION = ScreenPosition.fromAbsolutePosition(3, 3);
+    private static final ScreenPosition KEYSTROKES_POSITION = ScreenPosition.fromRelativePosition(0.0, 0.1803921568627451);
 
     @Override
     public String getName() {

@@ -18,6 +18,7 @@ run/resourcepacks
 run/logs
 run/tmp
 run/sc_conf
+run/sc_config
 *.dat
 *.txt
 *.gz

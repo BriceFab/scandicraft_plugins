@@ -25,7 +25,10 @@ public class Fonts {
     @FontDetails(fontName = "OpenSans-Regular", fontSize = 40)
     public static GameFontRenderer fontNormal;
 
-    @FontDetails(fontName = "OpenSans-Bold", fontSize = 60)
+    @FontDetails(fontName = "OpenSans-Bold", fontSize = 43)
+    public static GameFontRenderer fontSemiBold;
+
+    @FontDetails(fontName = "OpenSans-Bold", fontSize = 50)
     public static GameFontRenderer fontBold;
 
     @FontDetails(fontName = "Minecraft Font")
@@ -42,7 +45,8 @@ public class Fonts {
 
         fontSmall = new GameFontRenderer(getFont("OpenSans-Regular.ttf", 35));
         fontNormal = new GameFontRenderer(getFont("OpenSans-Regular.ttf", 40));
-        fontBold = new GameFontRenderer(getFont("OpenSans-Bold.ttf", 60));
+        fontSemiBold = new GameFontRenderer(getFont("OpenSans-Bold.ttf", 43));
+        fontBold = new GameFontRenderer(getFont("OpenSans-Bold.ttf", 50));
 
         try {
             CUSTOM_FONT_RENDERERS.clear();

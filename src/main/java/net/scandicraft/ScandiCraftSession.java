@@ -7,7 +7,7 @@ import java.util.UUID;
 public class ScandiCraftSession {
 
     private final String username;
-    private String api_token;
+    private final String api_token;
 
     public ScandiCraftSession(String username, String api_token) {
         this.username = username;

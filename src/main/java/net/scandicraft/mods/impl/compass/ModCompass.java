@@ -13,7 +13,7 @@ import java.awt.*;
 
 public class ModCompass extends ModDraggable {
 
-    public static ScreenPosition DEFAULT_POSITION = ScreenPosition.fromAbsolutePosition(3, 3);
+    public static ScreenPosition DEFAULT_POSITION = ScreenPosition.fromRelativePosition(0.34791666666666665, 0.0);
 
     private ScreenPosition pos;
 

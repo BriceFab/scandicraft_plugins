@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ModArmorStatus extends ModDraggable {
-    public static ScreenPosition ARMOR_STATUS_POSITION = ScreenPosition.fromRelativePosition(0.004166666666666667, 0.337037037037037);
+    public static ScreenPosition ARMOR_STATUS_POSITION = ScreenPosition.fromRelativePosition(0.0, 0.5137254901960784);
 
     @Override
     public String getName() {

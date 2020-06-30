@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class ModPotionStatus extends ModDraggable {
-    public static ScreenPosition ARMOR_STATUS_POSITION = ScreenPosition.fromRelativePosition(0.004166666666666667, 0.337037037037037);
+    public static ScreenPosition ARMOR_STATUS_POSITION = ScreenPosition.fromRelativePosition(0.7791666666666667, 0.27058823529411763);
     private static final ResourceLocation inventoryBackground = new ResourceLocation("textures/gui/container/inventory.png");
     private final int right_shift = 22;             //décalage du texte à gauche (de la texture potion)
     private final int y_space_between_potion = 20;  //espacement entre chaque potion (Y)

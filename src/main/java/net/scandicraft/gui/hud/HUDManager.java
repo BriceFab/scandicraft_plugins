@@ -7,6 +7,7 @@ import net.scandicraft.events.EventManager;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.ClientTickEvent;
 import net.scandicraft.events.impl.RenderEvent;
+import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.Mod;
 import net.scandicraft.settings.ScandiCraftSettings;
 import org.lwjgl.opengl.GL11;
@@ -61,7 +62,7 @@ public class HUDManager {
 
     @EventTarget
     public void onRender(RenderEvent e) {
-        if (mc.currentScreen == null || mc.currentScreen instanceof GuiChat) {
+        if ((mc.currentScreen == null || mc.currentScreen instanceof GuiChat) && !mc.gameSettings.showDebugInfo) {
             for (IRenderer renderer : registeredRenderers) {
                 callRenderer(renderer);
             }

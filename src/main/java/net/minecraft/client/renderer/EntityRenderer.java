@@ -1571,7 +1571,10 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 this.renderHand(partialTicks, pass);
             }
 
-            this.renderWorldDirections(partialTicks);
+            //ScandiCraft F3 disable show directs
+            if (net.scandicraft.Config.ENV == net.scandicraft.Config.ENVIRONNEMENT.TEST) {
+                this.renderWorldDirections(partialTicks);
+            }
         }
 
         if (flag) {
