@@ -125,7 +125,7 @@ public class ScandiCraftSettings {
         }
     }
 
-    public enum Options {
+    public enum Options implements IOptionsSettings {
         ITEMS_PHYSICS("scandicraft.options.items_physics", true),
         INVENTORY_POTIONS("scandicraft.options.inventory.potions", false),
         MOD_ARMOR("scandicraft.options.hud.armor", true, ModInstances.getModArmorStatus()),

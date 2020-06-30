@@ -1,8 +1,9 @@
-package net.scandicraft.settings;
+package net.scandicraft.settings.menu;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
+import net.scandicraft.settings.ScandiCraftSettings;
 import net.scandicraft.settings.buttons.BooleanButton;
 import optifine.TooltipManager;
 

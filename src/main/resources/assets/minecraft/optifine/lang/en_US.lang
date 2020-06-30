@@ -35,7 +35,6 @@ of.message.openglError=§eOpenGL Error§f: %s (%s)
 of.message.shaders.loading=Loading shaders: %s
 
 of.message.other.reset=Reset all video settings to their default values?
- 
 # Video settings
 
 options.graphics.tooltip.1=Visual quality

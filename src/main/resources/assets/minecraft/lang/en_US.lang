@@ -2690,3 +2690,6 @@ scandicraft.options.hud.potion=Potions HUD
 scandicraft.options.hud.keystroke=Keystroke HUD
 scandicraft.options.hud.compass=Compass HUD
 scandicraft.options.hud.toggle=Toggle Sprint/Sneak HUD
+
+#HUD Settings Tooltips
+scandicraft.options.items_physics.tooltip.1=Physiques Test Tooltips

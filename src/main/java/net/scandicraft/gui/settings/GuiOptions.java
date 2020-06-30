@@ -7,9 +7,8 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.EnumDifficulty;
-import net.scandicraft.Config;
 import net.scandicraft.logs.LogManagement;
-import net.scandicraft.settings.GuiMainSettings;
+import net.scandicraft.settings.menu.GuiMainSettings;
 import net.scandicraft.settings.ScandiCraftSettings;
 
 import java.io.IOException;

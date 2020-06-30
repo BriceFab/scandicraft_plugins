@@ -23,14 +23,14 @@ public class Lang
     {
         Map map = I18n.getLocaleProperties();
         List<String> list = new ArrayList();
-        String s = "optifine/lang/";
+        String langPath = "optifine/lang/";
         String s1 = "en_US";
         String s2 = ".lang";
-        list.add(s + s1 + s2);
+        list.add(langPath + s1 + s2);
 
         if (!Config.getGameSettings().language.equals(s1))
         {
-            list.add(s + Config.getGameSettings().language + s2);
+            list.add(langPath + Config.getGameSettings().language + s2);
         }
 
         String[] astring = (String[])((String[])list.toArray(new String[list.size()]));

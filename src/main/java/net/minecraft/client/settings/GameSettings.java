@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.network.play.client.C15PacketClientSettings;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumDifficulty;
+import net.scandicraft.settings.IOptionsSettings;
 import net.scandicraft.settings.KeyBindingType;
 import optifine.*;
 import org.apache.commons.lang3.ArrayUtils;
@@ -2459,7 +2460,7 @@ public class GameSettings {
         }
     }
 
-    public static enum Options {
+    public static enum Options implements IOptionsSettings {
         INVERT_MOUSE("INVERT_MOUSE", 0, "options.invertMouse", false, true),
         SENSITIVITY("SENSITIVITY", 1, "options.sensitivity", true, false),
         FOV("FOV", 2, "options.fov", true, false, 30.0F, 110.0F, 1.0F),
