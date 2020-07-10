@@ -1,7 +1,7 @@
 package net.scandicraft.scheduler;
 
 import net.minecraft.util.Util;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import net.scandicraft.anti_cheat.CheatConfig;
 import net.scandicraft.anti_cheat.process.ScanProcess;
 

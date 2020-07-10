@@ -6,7 +6,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiVideoSettings;
 import net.minecraft.client.settings.GameSettings;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.settings.IOptionsSettings;
 import net.scandicraft.settings.ScandiCraftSettings;

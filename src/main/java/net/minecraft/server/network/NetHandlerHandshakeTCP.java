@@ -8,7 +8,7 @@ import net.minecraft.network.login.server.S00PacketDisconnect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 
 public class NetHandlerHandshakeTCP implements INetHandlerHandshakeServer
 {

@@ -1,6 +1,6 @@
 package net.scandicraft.skins;
 
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import net.scandicraft.logs.LogManagement;
 import org.apache.logging.log4j.LogManager;
 

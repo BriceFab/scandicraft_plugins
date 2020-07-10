@@ -6,7 +6,7 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import net.scandicraft.Theme;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.gui.buttons.ButtonTemplate;
@@ -30,7 +30,7 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
         templateButtons.add(new ButtonTemplate(4, I18n.format("ScandiCraft")));
         templateButtons.add(new ButtonTemplate(2, I18n.format("menu.options"), Theme.DEFAULT_BUTTON_WIDTH / 2, 0));
         templateButtons.add(new ButtonTemplate(3, I18n.format("menu.quit"), Theme.DEFAULT_BUTTON_WIDTH / 2, 1));
-        LogManagement.info("test server data: " + server.serverIP + " - " + server.populationInfo);
+//        LogManagement.info("test server data: " + server.serverIP + " - " + server.populationInfo);
     }
 
     public boolean doesGuiPauseGame() {

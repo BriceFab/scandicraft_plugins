@@ -16,7 +16,7 @@ import net.minecraft.network.status.client.C00PacketServerQuery;
 import net.minecraft.network.status.client.C01PacketPing;
 import net.minecraft.network.status.server.S00PacketServerInfo;
 import net.minecraft.network.status.server.S01PacketPong;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.packets.SCLoginPacket;
 import net.scandicraft.packets.SCPlayPacket;

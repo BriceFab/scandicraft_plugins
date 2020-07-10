@@ -6,7 +6,6 @@ import net.minecraft.client.gui.GuiListExtended;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.EnumChatFormatting;
-import net.scandicraft.Config;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;

@@ -48,8 +48,6 @@ import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
-import net.scandicraft.Config;
-import net.scandicraft.logs.LogManagement;
 import net.scandicraft.player.ScandiPlayer;
 
 import java.util.Arrays;

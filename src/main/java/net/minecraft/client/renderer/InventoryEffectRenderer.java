@@ -5,8 +5,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.scandicraft.Config;
-import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.settings.ScandiCraftSettings;
 
 import java.util.Collection;

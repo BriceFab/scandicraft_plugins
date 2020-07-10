@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.IntHashMap;
-import net.scandicraft.Config;
 import net.scandicraft.settings.KeyBindingType;
 
 import java.util.List;

@@ -8,7 +8,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.chunk.Chunk;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package net.scandicraft.logs;
 
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

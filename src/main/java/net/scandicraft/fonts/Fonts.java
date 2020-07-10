@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import net.scandicraft.logs.LogManagement;
 
 import java.awt.*;

@@ -1,6 +1,6 @@
 package net.scandicraft.mods.impl.togglesprintsneak;
 
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import net.scandicraft.gui.hud.ScreenPosition;
 import net.scandicraft.mods.ModDraggable;
 

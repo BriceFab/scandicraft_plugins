@@ -460,7 +460,7 @@ public class GuiIngame extends Gui {
 
     protected boolean showCrosshair() {
 // ScandiCraft show attack icon in F3
-        if (net.scandicraft.Config.ENV == net.scandicraft.Config.ENVIRONNEMENT.TEST && (this.mc.gameSettings.showDebugInfo && !this.mc.thePlayer.hasReducedDebug() && !this.mc.gameSettings.reducedDebugInfo)) {
+        if (net.scandicraft.config.Config.ENV == net.scandicraft.config.Config.ENVIRONNEMENT.TEST && (this.mc.gameSettings.showDebugInfo && !this.mc.thePlayer.hasReducedDebug() && !this.mc.gameSettings.reducedDebugInfo)) {
             return false;
         } else if (this.mc.playerController.isSpectator()) {
             if (this.mc.pointedEntity != null) {

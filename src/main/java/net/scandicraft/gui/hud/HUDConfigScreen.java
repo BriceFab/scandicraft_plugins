@@ -6,6 +6,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.scandicraft.mods.Mod;
 import net.scandicraft.settings.ScandiCraftSettings;
+import net.scandicraft.utils.GuiUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -65,7 +66,7 @@ public class HUDConfigScreen extends GuiScreen {
             GL11.glScalef(pos.getScale(), pos.getScale(), 1.0F);
 
             renderer.renderDummy(pos);
-            this.drawHollowRect(pos.getAbsoluteX() - padding, pos.getAbsoluteY() - padding, renderer.getWidth() + (padding * 2), renderer.getHeight() + (padding * 2), new Color(0, 0, 0, 50).getRGB());
+            GuiUtils.drawHollowRect(pos.getAbsoluteX() - padding, pos.getAbsoluteY() - padding, renderer.getWidth() + (padding * 2), renderer.getHeight() + (padding * 2), new Color(0, 0, 0, 50).getRGB());
 //            this.drawScaleRect(pos.getAbsoluteX() + renderer.getWidth() + padding, pos.getAbsoluteY() + renderer.getHeight() + padding, scaleSize, scaleSize, Color.GREEN.getRGB());
 
             GL11.glScalef(1.0F / pos.getScale(), 1.0F / pos.getScale(), 1.0F);
@@ -77,16 +78,8 @@ public class HUDConfigScreen extends GuiScreen {
     }
 
     private void drawScaleRect(int x, int y, int w, int h, int color) {
-        this.drawHollowRect(x - w / 2, y - h / 2, w, h, color);
+        GuiUtils.drawHollowRect(x - w / 2, y - h / 2, w, h, color);
         Gui.drawRect(x - padding / 2, y - padding / 2, x + padding, y + padding, color);
-    }
-
-    private void drawHollowRect(int x, int y, int w, int h, int color) {
-        this.drawHorizontalLine(x, x + w, y, color);
-        this.drawHorizontalLine(x, x + w, y + h, color);
-
-        this.drawVerticalLine(x, y + h, y, color);
-        this.drawVerticalLine(x + w, y + h, y, color);
     }
 
     @Override

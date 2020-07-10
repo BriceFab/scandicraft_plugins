@@ -1,6 +1,6 @@
 package net.scandicraft.anti_cheat.process;
 
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import net.scandicraft.anti_cheat.CheatConfig;
 import net.scandicraft.anti_cheat.CheatType;
 import net.scandicraft.gui.cheat.CheatScreen;

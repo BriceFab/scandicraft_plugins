@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.Mod;
 import net.scandicraft.mods.ModInstances;

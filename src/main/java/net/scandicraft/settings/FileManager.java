@@ -1,7 +1,7 @@
 package net.scandicraft.settings;
 
 import com.google.gson.Gson;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 
 import java.io.*;
 

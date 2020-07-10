@@ -12,7 +12,7 @@ import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.mods.ModInstances;
 import net.scandicraft.packets.client.login.CPacketAuthToken;
@@ -65,7 +65,9 @@ public class GuiConnecting extends GuiScreen {
                     GuiConnecting.this.networkManager.sendPacket(new C00PacketLoginStart(GuiConnecting.this.mc.getSession().getProfile()));
 
                     //ScandiCraft Packets : Send API auth token
-                    GuiConnecting.this.networkManager.sendPacket(new CPacketAuthToken());
+                    if (Config.SEND_AUTH_PACKET) {
+                        GuiConnecting.this.networkManager.sendPacket(new CPacketAuthToken());
+                    }
 
                     ScandiCraftClient.getInstance().getDiscordRP().update("joue en multijoueur !");
                     ModInstances.getModPing().setUsable(true);

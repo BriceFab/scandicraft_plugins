@@ -2,7 +2,6 @@ package net.scandicraft.mods;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.scandicraft.Config;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.events.EventManager;
 

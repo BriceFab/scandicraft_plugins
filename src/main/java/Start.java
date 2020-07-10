@@ -1,4 +1,4 @@
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import net.scandicraft.client.Main;
 import net.scandicraft.utils.ArrayUtils;
 

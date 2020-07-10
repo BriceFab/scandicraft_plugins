@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.ThreadDownloadImageData;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import org.apache.commons.io.FilenameUtils;
 
 public class CapeUtils

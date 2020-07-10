@@ -6,7 +6,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.client.resources.data.IMetadataSerializer;
 import net.minecraft.client.resources.data.LanguageMetadataSection;
 import net.minecraft.util.StringTranslate;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -3,7 +3,7 @@ package net.minecraft.client.multiplayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 
 public class ServerData
 {

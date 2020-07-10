@@ -1,0 +1,30 @@
+package net.scandicraft.capacities.impl;
+
+import net.minecraft.util.ResourceLocation;
+import net.scandicraft.capacities.BaseCapacity;
+import net.scandicraft.config.ClassesConfig;
+
+/**
+ * speed 3 pendant 5 secondes et 5 coeurs d'absorption
+ */
+public class GuerrierCapacity3 extends BaseCapacity {
+    @Override
+    public ResourceLocation getCapacityIcon() {
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return "fuyard";
+    }
+
+    @Override
+    public int getCooldownTime() {
+        return ClassesConfig.COOLDOWN_CAPACITY_3;
+    }
+
+    @Override
+    public void onUse() {
+        //TODO
+    }
+}

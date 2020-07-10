@@ -1,5 +1,8 @@
 package net.scandicraft.client;
 
+import net.scandicraft.capacities.listeners.CapacitiesListener;
+import net.scandicraft.classes.ClasseManager;
+import net.scandicraft.classes.ClasseType;
 import net.scandicraft.discord.DiscordRP;
 import net.scandicraft.events.EventManager;
 import net.scandicraft.fonts.Fonts;
@@ -18,19 +21,31 @@ public class ScandiCraftClient {
 
     public void init() {
         LogManagement.info("init ScandiCraft Client");
+
         discordRP.start();
         FileManager.init();
+
+        //Register des événements
         EventManager.register(this);
+        EventManager.register(new CapacitiesListener());
     }
 
     public void start() {
         LogManagement.info("ScandiCraft client start");
+
         ModInstances.register(HUDManager.getInstance());
 
         eventManager = new net.scandicraft.events.ccbluex.EventManager();
         Fonts.loadFonts();
 
         schedulers.registerAll();
+
+        //On enregistre la classe du joueur
+        final int playerClasse = 0; //TODO from API
+        ClasseType classeType = ClasseType.getClasseTypeFromId(playerClasse);
+        if (classeType != null) {
+            ClasseManager.getInstance().setPlayerClasse(classeType.getIClasse());
+        }
     }
 
     public void shutDown() {

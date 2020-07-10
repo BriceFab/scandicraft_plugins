@@ -3,7 +3,7 @@ package net.scandicraft.gui.cheat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import net.scandicraft.anti_cheat.CheatType;
 import net.scandicraft.logs.LogManagement;
 

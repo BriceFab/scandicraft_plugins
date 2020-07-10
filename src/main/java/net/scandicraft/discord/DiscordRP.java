@@ -3,7 +3,7 @@ package net.scandicraft.discord;
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
-import net.scandicraft.Config;
+import net.scandicraft.config.Config;
 import net.scandicraft.logs.LogManagement;
 
 public class DiscordRP {
