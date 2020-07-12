@@ -7,7 +7,7 @@ import net.scandicraft.config.KeyCodes;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.KeybordEvent;
 import net.scandicraft.logs.LogManagement;
-import net.scandicraft.packets.client.capacities.CPacketChangeCapacity;
+import net.scandicraft.packets.client.play.CPacketChangeCapacity;
 import org.lwjgl.input.Keyboard;
 
 public class CapacitiesListener {

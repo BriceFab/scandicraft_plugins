@@ -5,6 +5,9 @@ import net.minecraft.network.PacketBuffer;
 
 import java.io.IOException;
 
+/**
+ * Packet qui gère l'authentification avec le token de l'API
+ */
 public class CPacketAuthToken extends CLoginPacket {
     @Override
     public void writePacketData(PacketBuffer buf) throws IOException {

@@ -1,5 +1,6 @@
 package net.scandicraft.capacities;
 
+import net.scandicraft.classes.ClasseManager;
 import net.scandicraft.logs.LogManagement;
 
 /**
@@ -26,6 +27,21 @@ public class CapacityManager {
 
     public ICapacity getPlayerCurrentCapacity() {
         return playerCurrentCapacity;
+    }
+
+    /**
+     * Trouve la capacité selon un ID de capacité
+     *
+     * @param capacityID id de capacité
+     * @return capacité correspondante
+     */
+    public ICapacity getCapacityFromCapacityID(String capacityID) {
+        for (ICapacity capacity : ClasseManager.getInstance().getPlayerClasse().getCapacities()) {
+            if (capacity.getUniqueIdentifier().equals(capacityID)) {
+                return capacity;
+            }
+        }
+        return null;
     }
 
     public static CapacityManager getInstance() {

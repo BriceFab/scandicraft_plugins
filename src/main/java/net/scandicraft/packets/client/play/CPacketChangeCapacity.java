@@ -1,12 +1,14 @@
-package net.scandicraft.packets.client.capacities;
+package net.scandicraft.packets.client.play;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;
 import net.scandicraft.capacities.ICapacity;
-import net.scandicraft.packets.client.play.CPlayPacket;
 
 import java.io.IOException;
 
+/**
+ * Packet qui envoie au serveur le changement de capacité
+ */
 public class CPacketChangeCapacity extends CPlayPacket {
     private ICapacity nextCapacity = null;
 
