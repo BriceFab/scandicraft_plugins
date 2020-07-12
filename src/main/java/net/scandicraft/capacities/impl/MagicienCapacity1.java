@@ -25,6 +25,11 @@ public class MagicienCapacity1 extends BaseCapacity {
     }
 
     @Override
+    public String getUniqueIdentifier() {
+        return "MagicienCapacity1";
+    }
+
+    @Override
     public void onUse() throws CapacityException {
         //TODO
     }

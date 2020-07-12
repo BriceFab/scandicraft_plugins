@@ -20,6 +20,7 @@ import net.scandicraft.config.Config;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.packets.SCLoginPacket;
 import net.scandicraft.packets.SCPlayPacket;
+import net.scandicraft.packets.client.capacities.CPacketChangeCapacity;
 import net.scandicraft.packets.client.login.CPacketAuthToken;
 import org.apache.logging.log4j.LogManager;
 
@@ -140,6 +141,7 @@ public enum EnumConnectionState {
              */
 //            this.registerPacket(EnumPacketDirection.CLIENTBOUND, SPacketHelloWorld.class);
 //            this.registerPacket(EnumPacketDirection.SERVERBOUND, CPacketMoreData.class);
+            this.registerPacket(EnumPacketDirection.SERVERBOUND, CPacketChangeCapacity.class);
         }
     },
     STATUS(1) {
@@ -167,9 +169,9 @@ public enum EnumConnectionState {
         }
     };
 
-    private static int field_181136_e = -1;
-    private static int field_181137_f = 2;
-    private static final EnumConnectionState[] STATES_BY_ID = new EnumConnectionState[field_181137_f - field_181136_e + 1];
+    private static final int minProtocolId = -1;
+    private static final int maxProtocolId = 2;
+    private static final EnumConnectionState[] STATES_BY_ID = new EnumConnectionState[maxProtocolId - minProtocolId + 1];
     private static final Map<Class<? extends Packet>, EnumConnectionState> STATES_BY_CLASS = Maps.<Class<? extends Packet>, EnumConnectionState>newHashMap();
     private final int id;
     private final Map<EnumPacketDirection, BiMap<Integer, Class<? extends Packet>>> directionMaps;
@@ -216,7 +218,7 @@ public enum EnumConnectionState {
     }
 
     public static EnumConnectionState getById(int stateId) {
-        return stateId >= field_181136_e && stateId <= field_181137_f ? STATES_BY_ID[stateId - field_181136_e] : null;
+        return stateId >= minProtocolId && stateId <= maxProtocolId ? STATES_BY_ID[stateId - minProtocolId] : null;
     }
 
     public static EnumConnectionState getFromPacket(Packet packetIn) {
@@ -227,11 +229,11 @@ public enum EnumConnectionState {
         for (EnumConnectionState enumconnectionstate : values()) {
             int i = enumconnectionstate.getId();
 
-            if (i < field_181136_e || i > field_181137_f) {
+            if (i < minProtocolId || i > maxProtocolId) {
                 throw new Error("Invalid protocol ID " + Integer.toString(i));
             }
 
-            STATES_BY_ID[i - field_181136_e] = enumconnectionstate;
+            STATES_BY_ID[i - minProtocolId] = enumconnectionstate;
 
             for (EnumPacketDirection enumpacketdirection : enumconnectionstate.directionMaps.keySet()) {
                 for (Class<? extends Packet> oclass : (enumconnectionstate.directionMaps.get(enumpacketdirection)).values()) {

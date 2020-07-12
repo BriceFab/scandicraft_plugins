@@ -24,6 +24,11 @@ public class GuerrierCapacity1 extends BaseCapacity {
     }
 
     @Override
+    public String getUniqueIdentifier() {
+        return "GuerrierCapacity1";
+    }
+
+    @Override
     public void onUse() {
         //TODO
     }

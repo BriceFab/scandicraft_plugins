@@ -24,6 +24,11 @@ public class ArcherCapacity2 extends BaseCapacity {
     }
 
     @Override
+    public String getUniqueIdentifier() {
+        return "ArcherCapacity2";
+    }
+
+    @Override
     public void onUse() {
         //TODO
     }

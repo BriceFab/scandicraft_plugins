@@ -1,10 +1,13 @@
 package net.scandicraft.capacities.listeners;
 
+import net.minecraft.client.Minecraft;
 import net.scandicraft.capacities.CapacityManager;
+import net.scandicraft.capacities.impl.ArcherCapacity1;
 import net.scandicraft.config.KeyCodes;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.KeybordEvent;
 import net.scandicraft.logs.LogManagement;
+import net.scandicraft.packets.client.capacities.CPacketChangeCapacity;
 import org.lwjgl.input.Keyboard;
 
 public class CapacitiesListener {
@@ -33,7 +36,7 @@ public class CapacitiesListener {
      * On envoie un packet au serveur pour sélectionner la prochaine capacité de la liste
      */
     private void changeNextCapacity() {
-        LogManagement.warn("change la capacité sélectionnée");
+        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new CPacketChangeCapacity());
     }
 
     /**
@@ -41,6 +44,7 @@ public class CapacitiesListener {
      */
     private void changeSpecificCapacity() {
         LogManagement.warn("change la capacité sélectionnée");
+        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new CPacketChangeCapacity(new ArcherCapacity1()));
     }
 
 }

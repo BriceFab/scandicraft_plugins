@@ -13,6 +13,12 @@ public interface ICapacity {
     String getName();
 
     /**
+     * Identifiant unique d'une capacités
+     * @return id
+     */
+    String getUniqueIdentifier();
+
+    /**
      * Temps entre chaque lancement de la capacité (SECONDES)
      *
      * @return temps

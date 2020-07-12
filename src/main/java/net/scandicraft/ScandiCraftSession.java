@@ -19,7 +19,7 @@ public class ScandiCraftSession {
     }
 
     public UUID getUuid() {
-        return UUID.fromString(Minecraft.getMinecraft().getSession().getPlayerID());
+        return Minecraft.getMinecraft().thePlayer.getUniqueID();
     }
 
     public String getToken() {
