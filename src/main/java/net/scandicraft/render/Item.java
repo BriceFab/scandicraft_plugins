@@ -60,6 +60,7 @@ public class Item {
         renderItem.registerItem(ScandiCraftItems.scandivote, "scandivote");
         renderItem.registerItem(ScandiCraftItems.scandibox, "scandibox");
         renderItem.registerItem(ScandiCraftItems.bloody_drip, "bloody_drip");
+        renderItem.registerItem(ScandiCraftItems.scepter_capacity, "scepter_capacity");
     }
 
     private static void splitRegisterBlocks(RenderItem renderItem) {

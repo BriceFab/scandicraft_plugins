@@ -54,6 +54,7 @@ public class ScandiCraftItems {
     public static final Item scandivote;
     public static final Item scandibox;
     public static final Item bloody_drip;
+    public static final Item scepter_capacity;
 
     static {
         scandium = Items.getRegisteredItem("scandium");
@@ -100,6 +101,7 @@ public class ScandiCraftItems {
         scandivote = Items.getRegisteredItem("scandivote");
         scandibox = Items.getRegisteredItem("scandibox");
         bloody_drip = Items.getRegisteredItem("bloody_drip");
+        scepter_capacity = Items.getRegisteredItem("scepter_capacity");
     }
 
 }
