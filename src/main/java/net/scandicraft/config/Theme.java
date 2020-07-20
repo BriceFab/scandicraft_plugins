@@ -1,4 +1,4 @@
-package net.scandicraft;
+package net.scandicraft.config;
 
 import java.awt.*;
 

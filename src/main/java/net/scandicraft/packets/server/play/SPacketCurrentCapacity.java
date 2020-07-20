@@ -4,6 +4,8 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.scandicraft.capacities.CapacityManager;
 import net.scandicraft.capacities.ICapacity;
+import net.scandicraft.classes.ClasseManager;
+import net.scandicraft.logs.LogManagement;
 
 import java.io.IOException;
 
@@ -22,7 +24,11 @@ public class SPacketCurrentCapacity extends SPlayPacket {
     public void readPacketData(PacketBuffer buf) throws IOException {
         String currentCapacityID = readString(buf);
 
-        this.currentCapacity = CapacityManager.getInstance().getCapacityFromCapacityID(currentCapacityID);
+        if (ClasseManager.getInstance().getPlayerClasse() != null) {
+            this.currentCapacity = CapacityManager.getInstance().getCapacityFromCapacityID(currentCapacityID);
+        } else {
+            LogManagement.warn("player classe null, cannot set capacity");
+        }
     }
 
     /**

@@ -1,6 +1,6 @@
 package net.scandicraft.gui.buttons;
 
-import net.scandicraft.Theme;
+import net.scandicraft.config.Theme;
 
 public class ButtonTemplate {
 

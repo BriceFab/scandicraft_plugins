@@ -25,6 +25,10 @@ public class ClasseManager {
         CapacityManager.getInstance().setPlayerCurrentCapacity(playerClasse.getCapacities().get(0));
     }
 
+    public void removePlayerClasse() {
+        this.playerClasse = null;
+    }
+
     public IClasse getPlayerClasse() {
         return playerClasse;
     }

@@ -4,7 +4,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import net.scandicraft.Theme;
+import net.scandicraft.config.Theme;
 import net.scandicraft.capacities.CapacityManager;
 import net.scandicraft.capacities.ICapacity;
 import net.scandicraft.classes.ClasseManager;

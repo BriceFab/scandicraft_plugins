@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.scandicraft.config.Config;
-import net.scandicraft.Theme;
+import net.scandicraft.config.Theme;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.gui.buttons.ButtonTemplate;
 import net.scandicraft.gui.settings.GuiOptions;

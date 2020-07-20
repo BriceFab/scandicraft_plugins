@@ -1,5 +1,6 @@
 package net.scandicraft.mods.listeners;
 
+import net.scandicraft.classes.ClasseManager;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.ConnectServerEvent;
 import net.scandicraft.events.impl.DisconnectServerEvent;
@@ -13,6 +14,7 @@ public class ModEventListeners {
         LogManagement.info("Event: on disconnect server");
 
         ModInstances.getModCapacities().setEnabled(false);
+        ClasseManager.getInstance().removePlayerClasse();
         ModInstances.getModPing().setUsable(false);
     }
 

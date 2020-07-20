@@ -7,7 +7,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import net.scandicraft.Theme;
+import net.scandicraft.config.Theme;
 import net.scandicraft.fonts.Fonts;
 import net.scandicraft.render.RenderUtils;
 
