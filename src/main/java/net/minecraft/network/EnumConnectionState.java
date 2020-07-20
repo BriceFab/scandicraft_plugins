@@ -23,6 +23,7 @@ import net.scandicraft.packets.SCPlayPacket;
 import net.scandicraft.packets.client.play.CPacketChangeCapacity;
 import net.scandicraft.packets.client.login.CPacketAuthToken;
 import net.scandicraft.packets.server.play.SPacketCurrentCapacity;
+import net.scandicraft.packets.server.play.SPacketCurrentClasse;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.Map;
@@ -140,10 +141,9 @@ public enum EnumConnectionState {
                 Sent from server = ClientBound
                 Sent from client = ServerBound
              */
-//            this.registerPacket(EnumPacketDirection.CLIENTBOUND, SPacketHelloWorld.class);
-//            this.registerPacket(EnumPacketDirection.SERVERBOUND, CPacketMoreData.class);
             this.registerPacket(EnumPacketDirection.SERVERBOUND, CPacketChangeCapacity.class);
             this.registerPacket(EnumPacketDirection.CLIENTBOUND, SPacketCurrentCapacity.class);
+            this.registerPacket(EnumPacketDirection.CLIENTBOUND, SPacketCurrentClasse.class);
         }
     },
     STATUS(1) {

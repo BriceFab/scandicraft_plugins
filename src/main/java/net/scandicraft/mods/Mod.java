@@ -7,8 +7,8 @@ import net.scandicraft.events.EventManager;
 
 public class Mod {
 
-    private boolean isEnabled = true;       //est actif
-    private boolean isUsable = true;        //peut-être utilisé
+    private boolean isEnabled = true;               //est actif
+    private boolean isUsable = true;                //peut-être utilisé
 
     protected final Minecraft mc;
     protected final FontRenderer font;
@@ -19,6 +19,7 @@ public class Mod {
         this.font = mc.fontRendererObj;
         this.client = ScandiCraftClient.getInstance();
 
+        //Active le mod
         setEnabled(true);
     }
 
@@ -33,7 +34,7 @@ public class Mod {
             ModInstances.registered_mods.add(this);
             EventManager.register(this);
         } else {
-            if (canUnregister()) {
+            if (canBeUnregister()) {
 //                LogManagement.info("unregister " + this);
 
                 EventManager.unregister(this);
@@ -47,7 +48,7 @@ public class Mod {
     }
 
     //Peut-être désenregistré
-    public boolean canUnregister() {
+    public boolean canBeUnregister() {
         return true;
     }
 
@@ -59,7 +60,7 @@ public class Mod {
     public void setUsable(boolean usable) {
         isUsable = usable;
 
-        setEnabled(isEnabled());
+        setEnabled(isEnabled()); //TODO check if usable ?
     }
 
     public String getName() {

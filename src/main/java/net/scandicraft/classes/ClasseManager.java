@@ -1,6 +1,7 @@
 package net.scandicraft.classes;
 
 import net.scandicraft.capacities.CapacityManager;
+import net.scandicraft.logs.LogManagement;
 
 /**
  * Stocke la classe actuelle du joueur
@@ -14,6 +15,9 @@ public class ClasseManager {
     }
 
     public void setPlayerClasse(IClasse playerClasse) {
+        //debug
+        LogManagement.info("register player classe " + playerClasse.getDisplayClasseName());
+
         //Sauvegarde la classe du joueur
         this.playerClasse = playerClasse;
 

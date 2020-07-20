@@ -27,7 +27,7 @@ public class ModCPS extends ModDraggable {
 
     //Laisse activer les CPS (mais en arrière plan)
     @Override
-    public boolean canUnregister() {
+    public boolean canBeUnregister() {
         return false;
     }
 

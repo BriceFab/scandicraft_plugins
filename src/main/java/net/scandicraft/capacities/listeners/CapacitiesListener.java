@@ -7,6 +7,7 @@ import net.scandicraft.config.KeyCodes;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.KeybordEvent;
 import net.scandicraft.logs.LogManagement;
+import net.scandicraft.mods.ModInstances;
 import net.scandicraft.packets.client.play.CPacketChangeCapacity;
 import org.lwjgl.input.Keyboard;
 
@@ -14,9 +15,7 @@ public class CapacitiesListener {
 
     @EventTarget
     public void onKeybord(KeybordEvent e) {
-//        LogManagement.info("Key tapped " + Keyboard.getEventKey());
-
-        if (Keyboard.getEventKeyState()) {
+        if (Keyboard.getEventKeyState() && ModInstances.getModCapacities().isEnabled()) {
             switch (Keyboard.getEventKey()) {
                 case KeyCodes.KEY_R: {  //R
                     //Lance la capacité

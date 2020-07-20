@@ -21,6 +21,12 @@ public class ModCapacities extends ModDraggable {
     private final int y_padding = 10;
     private final int select_padding = 2;
 
+    //Laisse activer le mod (mais en arrière plan)
+    @Override
+    public boolean canBeUnregister() {
+        return false;
+    }
+
     @Override
     public String getName() {
         return "capacities";
@@ -43,6 +49,11 @@ public class ModCapacities extends ModDraggable {
 
     @Override
     public void render(ScreenPosition pos) {
+        //TODO disable mod if no classe
+        if (ClasseManager.getInstance().getPlayerClasse() == null) {
+            return;
+        }
+
         final ArrayList<ICapacity> playerCapacities = ClasseManager.getInstance().getPlayerClasse().getCapacities();
         final ICapacity playerCurrentCapacity = CapacityManager.getInstance().getPlayerCurrentCapacity();
         for (int i = 0; i < playerCapacities.size(); i++) {
@@ -70,5 +81,4 @@ public class ModCapacities extends ModDraggable {
             GuiUtils.drawHollowRect(pos.getAbsoluteX() - select_padding, (pos.getAbsoluteY() - select_padding) + yAdd, icon_width + (select_padding * 2), icon_height + (select_padding * 2), Theme.PRIMARY_COLOR.getRGB());
         }
     }
-
 }

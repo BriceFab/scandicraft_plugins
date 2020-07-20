@@ -3,7 +3,12 @@ package net.scandicraft.mods.impl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
+import net.scandicraft.events.EventManager;
+import net.scandicraft.events.EventTarget;
+import net.scandicraft.events.impl.ConnectServerEvent;
+import net.scandicraft.events.impl.DisconnectServerEvent;
 import net.scandicraft.gui.hud.ScreenPosition;
+import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.ModDraggable;
 
 public class ModPing extends ModDraggable {
@@ -146,5 +151,4 @@ public class ModPing extends ModDraggable {
         Gui.drawModalRectWithCustomSizedTexture(pos.getAbsoluteX() - 15, pos.getAbsoluteY(), (float) (k * 10), (float) (176 + l * 8), pingIconWidth, pingIconHeight, 256.0F, 256.0F);
         font.drawString(sPing, pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
     }
-
 }

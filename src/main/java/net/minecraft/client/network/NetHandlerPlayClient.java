@@ -59,7 +59,10 @@ import net.minecraft.world.WorldProviderSurface;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.MapData;
+import net.scandicraft.events.impl.DisconnectServerEvent;
+import net.scandicraft.events.impl.MouseEvent;
 import net.scandicraft.gui.MainMenu;
+import net.scandicraft.logs.LogManagement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -547,6 +550,9 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
      */
     public void onDisconnect(IChatComponent reason) {
         this.gameController.loadWorld((WorldClient) null);
+
+        //ScandiCraft event
+        new DisconnectServerEvent().call();
 
         if (this.guiScreenServer != null) {
             this.gameController.displayGuiScreen(new GuiDisconnected(this.guiScreenServer, "disconnect.lost", reason));

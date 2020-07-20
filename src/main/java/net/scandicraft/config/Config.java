@@ -32,7 +32,7 @@ public class Config {
     //    public static final Integer HANDSHAKE = -20062020;  //real = 47
     public static final Integer HANDSHAKE = 47;  //real = 47
     public static final String OUTDATED_MESSAGE = EnumChatFormatting.RED + "Télécharge le launcher sur https://scandicraft-mc.fr/";
-    public static final boolean SEND_AUTH_PACKET = false;   //envoie ou non le pack de vérification de connexion
+    public static final boolean SEND_AUTH_PACKET = ENV != ENVIRONNEMENT.DEV;   //envoie ou non le pack de vérification de connexion
 
     public static class GameConfig {
         public static final String version = SERVER_NAME.toLowerCase();

@@ -14,6 +14,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.scandicraft.config.Config;
 import net.scandicraft.client.ScandiCraftClient;
+import net.scandicraft.events.impl.ConnectServerEvent;
 import net.scandicraft.mods.ModInstances;
 import net.scandicraft.packets.client.login.CPacketAuthToken;
 import org.apache.logging.log4j.LogManager;
@@ -70,7 +71,11 @@ public class GuiConnecting extends GuiScreen {
                     }
 
                     ScandiCraftClient.getInstance().getDiscordRP().update("joue en multijoueur !");
-                    ModInstances.getModPing().setUsable(true);
+
+                    //ScandiCraft event
+                    new ConnectServerEvent().call();
+
+//                    ModInstances.getModPing().setUsable(true);
                 } catch (UnknownHostException unknownhostexception) {
                     if (GuiConnecting.this.cancel) {
                         return;

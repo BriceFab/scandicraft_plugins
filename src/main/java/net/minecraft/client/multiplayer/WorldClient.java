@@ -28,6 +28,7 @@ import net.minecraft.world.storage.SaveDataMemoryStorage;
 import net.minecraft.world.storage.SaveHandlerMP;
 import net.minecraft.world.storage.WorldInfo;
 import net.scandicraft.blocks.register.ScandiCraftBlocks;
+import net.scandicraft.events.impl.DisconnectServerEvent;
 import optifine.*;
 
 import java.util.Random;
@@ -259,6 +260,9 @@ public class WorldClient extends World {
      */
     public void sendQuittingDisconnectingPacket() {
         this.sendQueue.getNetworkManager().closeChannel(new ChatComponentText("Quitting"));
+
+        //ScandiCraft event
+        new DisconnectServerEvent().call();
     }
 
     /**

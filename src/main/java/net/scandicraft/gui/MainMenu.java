@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainMenu extends GuiScreen implements GuiYesNoCallback {
-    private static final ResourceLocation backgroundPath = new ResourceLocation("textures/gui/background.png");
+    private static final ResourceLocation backgroundPath = new ResourceLocation("scandicraft/menu/main_background.png");
     private final ArrayList<ButtonTemplate> templateButtons = new ArrayList<>();
     private final ServerData server = new ServerData("ScandiCraft", Config.SERVER_IP_AND_PORT, false);
 

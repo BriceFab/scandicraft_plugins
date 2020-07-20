@@ -9,6 +9,7 @@ import net.scandicraft.fonts.Fonts;
 import net.scandicraft.gui.hud.HUDManager;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.ModInstances;
+import net.scandicraft.mods.listeners.ModEventListeners;
 import net.scandicraft.scheduler.Schedulers;
 import net.scandicraft.settings.FileManager;
 
@@ -28,6 +29,7 @@ public class ScandiCraftClient {
         //Register des événements
         EventManager.register(this);
         EventManager.register(new CapacitiesListener());
+        EventManager.register(new ModEventListeners());
     }
 
     public void start() {
@@ -41,11 +43,11 @@ public class ScandiCraftClient {
         schedulers.registerAll();
 
         //On enregistre la classe du joueur
-        final int playerClasse = 0; //TODO from API
-        ClasseType classeType = ClasseType.getClasseTypeFromId(playerClasse);
-        if (classeType != null) {
-            ClasseManager.getInstance().setPlayerClasse(classeType.getIClasse());
-        }
+//        final int playerClasse = 0; //TODO from API
+//        ClasseType classeType = ClasseType.getClasseTypeFromId(playerClasse);
+//        if (classeType != null) {
+//            ClasseManager.getInstance().setPlayerClasse(classeType.getIClasse());
+//        }
     }
 
     public void shutDown() {

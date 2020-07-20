@@ -2,16 +2,19 @@ package net.scandicraft.packets.server.play;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
-import net.scandicraft.capacities.CapacityManager;
-import net.scandicraft.capacities.ICapacity;
+import net.scandicraft.classes.ClasseManager;
+import net.scandicraft.classes.ClasseType;
+import net.scandicraft.classes.IClasse;
+import net.scandicraft.logs.LogManagement;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Packet qui reçoit un changement de capacité depuis le serveur
  */
-public class SPacketCurrentCapacity extends SPlayPacket {
-    private ICapacity currentCapacity = null;
+public class SPacketCurrentClasse extends SPlayPacket {
+    private IClasse currentClasse = null;
 
     /**
      * Reads the raw packet data from the data stream.
@@ -20,9 +23,12 @@ public class SPacketCurrentCapacity extends SPlayPacket {
      */
     @Override
     public void readPacketData(PacketBuffer buf) throws IOException {
-        String currentCapacityID = readString(buf);
+        int currentClasseID = buf.readInt();
+        ClasseType classeType = ClasseType.getClasseTypeFromId(currentClasseID);
 
-        this.currentCapacity = CapacityManager.getInstance().getCapacityFromCapacityID(currentCapacityID);
+        if (classeType != null) {
+            this.currentClasse = classeType.getIClasse();
+        }
     }
 
     /**
@@ -32,8 +38,8 @@ public class SPacketCurrentCapacity extends SPlayPacket {
      */
     @Override
     public void processPacket(INetHandlerPlayClient handler) {
-        if (this.currentCapacity != null) {
-            CapacityManager.getInstance().setPlayerCurrentCapacity(this.currentCapacity);
+        if (this.currentClasse != null) {
+            ClasseManager.getInstance().setPlayerClasse(this.currentClasse);
         }
     }
 }

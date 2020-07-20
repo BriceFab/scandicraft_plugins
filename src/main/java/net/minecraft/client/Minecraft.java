@@ -1908,7 +1908,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.myNetworkManager = networkmanager;
 
         ScandiCraftClient.getInstance().getDiscordRP().update("Joue en solo");
-        ModInstances.getModPing().setUsable(false);
+//        ModInstances.getModPing().setUsable(false);
     }
 
     /**
