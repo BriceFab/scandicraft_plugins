@@ -3,7 +3,7 @@ package net.scandicraft.config;
 import java.awt.*;
 
 public class Theme {
-    public static Color PRIMARY_COLOR = new Color(190, 0, 0);
+    public static Color PRIMARY_COLOR = new Color(198, 1, 1);
     public static Color SECONDARY_COLOR = new Color(13, 13, 13, 180);
     public static Color HOVER_COLOR = new Color(204, 204, 204, 80);
     public static Color HOVER_TEXT_COLOR = new Color(236, 236, 236);

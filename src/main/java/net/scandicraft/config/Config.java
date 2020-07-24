@@ -10,13 +10,14 @@ import java.util.List;
 
 public class Config {
     /* Variables */
-    public static final String VERSION = "v1.0.0";
+    public static final String VERSION = "v1.0.1";
     public static final ENVIRONNEMENT ENV = ENVIRONNEMENT.DEV;
     public static final String SERVER_NAME = "ScandiCraft";
     public static final String SC_COPYRIGHT = "ScandiCraft-mc.fr";
     public static final String URL_WEBSITE = "https://scandicraft-mc.fr";
     public static final String TITLE = String.format("%s Reborn - %s (%s)", SERVER_NAME, VERSION, ENV);
-    public static final String COPYRIGHT = "Copyright Mojang AB";
+    public static final String MOJANG_COPYRIGHT = "Copyright Mojang AB";
+    public static final String SCANDICRAFT_COPYRIGHT = "Développé par ScandiCraft";
     public static final String SKINS_PATH = "https://scandicraft-mc.fr/uploads/skins/";
     public static final String CAPES_PATH = "https://scandicraft-mc.fr/uploads/capes/";
     public static final String DISCORD_CLIENT_ID = "704772787616874617";  //https://discordapp.com/developers

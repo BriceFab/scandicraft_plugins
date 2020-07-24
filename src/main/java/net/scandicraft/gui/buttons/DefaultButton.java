@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.scandicraft.config.Theme;
 import net.scandicraft.fonts.Fonts;
+import net.scandicraft.fonts.GameFontRenderer;
 import net.scandicraft.render.RenderUtils;
 
 import java.awt.*;
@@ -16,45 +17,29 @@ import java.awt.*;
 public class DefaultButton extends Gui {
     protected static final ResourceLocation buttonTextures = new ResourceLocation("textures/gui/widgets.png");
 
-    /**
-     * Button width in pixels
-     */
+    protected Color buttonColor = Theme.SECONDARY_COLOR;
+    protected Color textColor = Theme.TEXT_COLOR;
+    protected Color hoverButtonColor = Theme.HOVER_COLOR;
+    protected Color hoverTextColor = Theme.HOVER_TEXT_COLOR;
+    protected Color disabledButtonColor = Theme.DISABLED_COLOR;
+    protected Color disabledTextColor = Theme.DISABLED_TEXT_COLOR;
+    protected Color lineColor = Theme.PRIMARY_COLOR;
+    protected GameFontRenderer fontSize = Fonts.fontNormal;
+    protected GameFontRenderer hoverFontSize = Fonts.fontSemiBold;
+    protected int shiftFontHeight = -7;
+    protected int shiftHoverFontHeight = -7;
+
     protected int width;
-
-    /**
-     * Button height in pixels
-     */
     protected int height;
-
-    /**
-     * The x position of this control.
-     */
     public int xPosition;
-
-    /**
-     * The y position of this control.
-     */
     public int yPosition;
-
-    /**
-     * The string displayed on this control.
-     */
     public String displayString;
     public int id;
-
-    /**
-     * True if this control is enabled, false to disable.
-     */
     public boolean enabled;
-
-    /**
-     * Hides the button completely if false.
-     */
     public boolean visible;
     protected boolean hovered;
 
     private float cut;
-
     public int packedFGColour; //FML
     private final int lineWidth = 3;  //ScandiCraft red line width
 
@@ -103,6 +88,9 @@ public class DefaultButton extends Gui {
 
             boolean isMcFont = mc.getLanguageManager().isCurrentLocaleUnicode();
             FontRenderer fontRenderer = isMcFont ? mc.fontRendererObj : Fonts.fontNormal;
+            if (!isMcFont && this.fontSize != null) {
+                fontRenderer = this.fontSize;
+            }
 
             hovered = (mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height);
 
@@ -116,29 +104,31 @@ public class DefaultButton extends Gui {
                 if (cut <= 0) cut = 0;
             }
 
-            Color buttonColor = Theme.SECONDARY_COLOR;
-            Color textColor = Theme.TEXT_COLOR;
+            Color renderButtonColor = this.buttonColor;
+            Color renderTextColor = this.textColor;
             if (enabled && hovered) {
-                buttonColor = Theme.HOVER_COLOR;
-                textColor = Theme.HOVER_TEXT_COLOR;
-                fontRenderer = Fonts.fontSemiBold;
+                renderButtonColor = hoverButtonColor;
+                renderTextColor = hoverTextColor;
+                if (hoverFontSize != null) {
+                    fontRenderer = hoverFontSize;
+                }
             }
             if (!enabled) {
-                textColor = Theme.DISABLED_TEXT_COLOR;
+                renderTextColor = disabledTextColor;
             }
 
             Gui.drawRect(
                     this.xPosition + (int) this.cut, this.yPosition + (int) this.cut,
                     this.xPosition + this.width - (int) this.cut, this.yPosition + this.height - (int) this.cut,
-                    this.enabled ? buttonColor.getRGB() : Theme.DISABLED_COLOR.getRGB()
+                    this.enabled ? renderButtonColor.getRGB() : disabledButtonColor.getRGB()
             );
 
             //draw vertical line
             if (enabled) {
                 if (hovered) {
-                    this.drawVerticalLine((int) (this.xPosition + cut), (int) (this.yPosition - 1 + cut), (int) (this.yPosition + this.height - cut), Theme.PRIMARY_COLOR.getRGB(), lineWidth);
+                    this.drawVerticalLine((int) (this.xPosition + cut), (int) (this.yPosition - 1 + cut), (int) (this.yPosition + this.height - cut), lineColor.getRGB(), lineWidth);
                 } else {
-                    this.drawVerticalLine(this.xPosition, this.yPosition - 1, this.yPosition + this.height, Theme.PRIMARY_COLOR.getRGB(), lineWidth);
+                    this.drawVerticalLine(this.xPosition, this.yPosition - 1, this.yPosition + this.height, lineColor.getRGB(), lineWidth);
                 }
             }
 
@@ -146,7 +136,7 @@ public class DefaultButton extends Gui {
 
             fontRenderer.drawString(displayString,
                     (this.xPosition + this.width / 2) - fontRenderer.getStringWidth(displayString) / 2,
-                    (int) (this.yPosition + (this.height + (isMcFont ? -5 : -7)) / 2F), textColor.getRGB());
+                    (int) (this.yPosition + (this.height + (isMcFont ? -5 : hovered ? this.shiftHoverFontHeight : this.shiftFontHeight)) / 2F), renderTextColor.getRGB());
             GlStateManager.resetColor();
         }
     }
