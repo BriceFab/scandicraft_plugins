@@ -1,12 +1,19 @@
 package net.scandicraft.client;
 
+import com.google.gson.JsonObject;
+import net.minecraft.client.Minecraft;
+import net.scandicraft.ScandiCraftSession;
 import net.scandicraft.capacities.listeners.CapacitiesListener;
-import net.scandicraft.classes.ClasseManager;
-import net.scandicraft.classes.ClasseType;
+import net.scandicraft.config.Config;
 import net.scandicraft.discord.DiscordRP;
 import net.scandicraft.events.EventManager;
 import net.scandicraft.fonts.Fonts;
 import net.scandicraft.gui.hud.HUDManager;
+import net.scandicraft.http.HTTPClient;
+import net.scandicraft.http.HTTPEndpoints;
+import net.scandicraft.http.HTTPReply;
+import net.scandicraft.http.HttpStatus;
+import net.scandicraft.http.entity.LoginEntity;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.ModInstances;
 import net.scandicraft.mods.listeners.ModEventListeners;
@@ -30,6 +37,23 @@ public class ScandiCraftClient {
         EventManager.register(this);
         EventManager.register(new CapacitiesListener());
         EventManager.register(new ModEventListeners());
+
+        if (Config.ENV == Config.ENVIRONNEMENT.DEV) {
+            //Get Auth token
+            ScandiCraftSession scandiCraftSession = Minecraft.getMinecraft().getScandiCraftSession();
+            LoginEntity entity = new LoginEntity(scandiCraftSession.getUsername(), scandiCraftSession.getPassword());
+
+            HTTPClient httpClient = new HTTPClient();
+            HTTPReply httpReply = httpClient.post(HTTPEndpoints.LOGIN, entity);
+            if (httpReply.getStatusCode() == HttpStatus.HTTP_OK) {
+                JsonObject response = httpReply.getJsonResponse();
+                String api_token = response.get("token").getAsString();
+                LogManagement.info("API LOGIN: success - token: " + api_token);
+                scandiCraftSession.setToken(api_token);
+            } else {
+                LogManagement.error("API LOGIN: bad credentials");
+            }
+        }
     }
 
     public void start() {
@@ -41,13 +65,6 @@ public class ScandiCraftClient {
         Fonts.loadFonts();
 
         schedulers.registerAll();
-
-        //On enregistre la classe du joueur
-//        final int playerClasse = 0; //TODO from API
-//        ClasseType classeType = ClasseType.getClasseTypeFromId(playerClasse);
-//        if (classeType != null) {
-//            ClasseManager.getInstance().setPlayerClasse(classeType.getIClasse());
-//        }
     }
 
     public void shutDown() {

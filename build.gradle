@@ -51,6 +51,7 @@ task runclient(type: JavaExec) {
     args '--gameDir', '.'
     args '--username', 'BriceFab'
     args '--apiToken', 'null'
+    args '--password', 'c196675b713d641521be98e0d5623867'
     main 'Start'
     workingDir 'run'
     systemProperty "java.library.path", 'natives'

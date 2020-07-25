@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.main.GameConfiguration;
 import net.minecraft.util.Session;
 import net.scandicraft.ScandiCraftSession;
+import net.scandicraft.config.Config;
 
 import java.io.File;
 import java.util.List;
@@ -22,6 +23,7 @@ public class Main {
         optionparser.allowsUnrecognizedOptions();
         optionparser.accepts("fullscreen");
         optionparser.accepts("checkGlErrors");
+        optionparser.accepts("password");
         OptionSpec<String> optionServer = optionparser.accepts("server").withRequiredArg();
         OptionSpec<Integer> optionPort = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(25565);
         OptionSpec<File> optionGameDir = optionparser.accepts("gameDir").withRequiredArg().ofType(File.class).defaultsTo(new File("."));
@@ -34,6 +36,7 @@ public class Main {
         OptionSpec<String> optionAssetIndex = optionparser.accepts("assetIndex").withRequiredArg();
         OptionSpec<String> optionUserType = optionparser.accepts("userType").withRequiredArg().defaultsTo("legacy");
         OptionSpec<String> optionApiToken = optionparser.accepts("apiToken").withRequiredArg();
+        OptionSpec<String> optionPassword = optionparser.accepts("password").withOptionalArg();
 
         OptionSpec<String> nonOptions = optionparser.nonOptions();
         OptionSet optionset = optionparser.parse(args);
@@ -61,6 +64,9 @@ public class Main {
         Session session = new Session(optionUsername.value(optionset), username, optionUserType.value(optionset));
         //ScandiCraft session
         ScandiCraftSession sc_session = new ScandiCraftSession(optionUsername.value(optionset), optionApiToken.value(optionset));
+        if (optionset.has("password")) {
+            sc_session.setPassword(optionPassword.value(optionset));
+        }
         GameConfiguration gameconfiguration = new GameConfiguration(new GameConfiguration.UserInformation(session, propertymap, propertymap1), new GameConfiguration.DisplayInformation(i, j, isFullscreen, checkGlErrors), new GameConfiguration.FolderInformation(gameDir, resourcepacksDir, assetsDir, assetIndex), new GameConfiguration.GameInformation(s3), new GameConfiguration.ServerInformation(s6, integer), sc_session);
 
         Runtime.getRuntime().addShutdownHook(new Thread("Client Shutdown Thread") {

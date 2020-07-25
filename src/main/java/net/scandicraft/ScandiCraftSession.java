@@ -7,7 +7,8 @@ import java.util.UUID;
 public class ScandiCraftSession {
 
     private final String username;
-    private final String api_token;
+    private String api_token;
+    private String password;
 
     public ScandiCraftSession(String username, String api_token) {
         this.username = username;
@@ -24,5 +25,17 @@ public class ScandiCraftSession {
 
     public String getToken() {
         return api_token;
+    }
+
+    public void setToken(String api_token) {
+        this.api_token = api_token;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
