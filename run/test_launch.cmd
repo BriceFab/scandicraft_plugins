@@ -43,6 +43,7 @@ set main_jar=./build/out.jar
 %libs_path%\vecmath.jar;^
 %libs_path%\discord-rpc.jar;^
 %extra_libs_path%\kotlin-stdlib-1.3.61.jar;^
+%extra_libs_path%\annotations-13.0.jar;^
 %main_jar% net.scandicraft.client.Main --username=BriceFab123 --accessToken null --version 1.8 --gameDir . --assetsDir ./assets --assetIndex 1.8 --userProperties {} --uuid null --userType legacy
 
 ::PAUSE
