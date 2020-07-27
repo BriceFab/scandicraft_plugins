@@ -15,7 +15,7 @@ public class CapacitiesListener {
 
     @EventTarget
     public void onKeybord(KeybordEvent e) {
-        if (Keyboard.getEventKeyState() && ModInstances.getModCapacities().isEnabled()) {
+        if (Keyboard.getEventKeyState() && ModInstances.getModCapacities().isEnabled() && ModInstances.getModCapacities().isUsable()) {
             switch (Keyboard.getEventKey()) {
                 case KeyCodes.KEY_R: {  //R
                     //Lance la capacité
@@ -42,7 +42,6 @@ public class CapacitiesListener {
      * On envoie un packet au serveur pour sélectionne une capacité de notre classe en particulier
      */
     private void changeSpecificCapacity() {
-        LogManagement.warn("change la capacité sélectionnée");
         Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new CPacketChangeCapacity(new ArcherCapacity1()));
     }
 

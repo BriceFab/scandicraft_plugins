@@ -145,7 +145,7 @@ public class ServerData
 
         private ServerResourceMode(String name)
         {
-            this.motd = new ChatComponentTranslation("addServer.resourcePack." + name, new Object[0]);
+            this.motd = new ChatComponentTranslation("addServer.resourcePack." + name);
         }
 
         public IChatComponent getMotd()

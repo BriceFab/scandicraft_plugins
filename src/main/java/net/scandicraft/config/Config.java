@@ -11,7 +11,7 @@ import java.util.List;
 public class Config {
     /* Variables */
     public static final String VERSION = "v1.0.1";
-    public static final ENVIRONNEMENT ENV = ENVIRONNEMENT.DEV;
+    public static final ENVIRONNEMENT ENV = ENVIRONNEMENT.PROD;
     public static final String SERVER_NAME = "ScandiCraft";
     public static final String SC_COPYRIGHT = "ScandiCraft-mc.fr";
     public static final String URL_WEBSITE = "https://scandicraft-mc.fr";
@@ -30,8 +30,7 @@ public class Config {
     public static final Integer SERVER_PORT = 25565;
     public static final String SERVER_IP = "217.182.205.69";
     public static final String SERVER_IP_AND_PORT = String.format("%s:%d", SERVER_IP, SERVER_PORT);
-    //    public static final Integer HANDSHAKE = -20062020;  //real = 47
-    public static final Integer HANDSHAKE = 47;  //real = 47
+    public static final Integer HANDSHAKE = -20062020;  //1.8.8 = 47
     public static final String OUTDATED_MESSAGE = EnumChatFormatting.RED + "Télécharge le launcher sur https://scandicraft-mc.fr/";
     public static final boolean SEND_AUTH_PACKET = true || ENV != ENVIRONNEMENT.DEV;   //envoie ou non le pack de vérification de connexion
 

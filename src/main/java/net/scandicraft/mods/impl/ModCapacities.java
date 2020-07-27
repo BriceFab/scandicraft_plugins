@@ -4,11 +4,14 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import net.scandicraft.config.Theme;
 import net.scandicraft.capacities.CapacityManager;
 import net.scandicraft.capacities.ICapacity;
 import net.scandicraft.classes.ClasseManager;
+import net.scandicraft.config.Theme;
+import net.scandicraft.events.EventTarget;
+import net.scandicraft.events.impl.ClientTickEvent;
 import net.scandicraft.gui.hud.ScreenPosition;
+import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.ModDraggable;
 import net.scandicraft.utils.GuiUtils;
 
@@ -80,5 +83,11 @@ public class ModCapacities extends ModDraggable {
         if (isSelected) {
             GuiUtils.drawHollowRect(pos.getAbsoluteX() - select_padding, (pos.getAbsoluteY() - select_padding) + yAdd, icon_width + (select_padding * 2), icon_height + (select_padding * 2), Theme.PRIMARY_COLOR.getRGB());
         }
+    }
+
+    @EventTarget
+    public void onTick(ClientTickEvent e) {
+        this.setUsable(false);  //TODO REMOVE
+//        LogManagement.warn("capacity on tick " + mc.getCurrentServerData().serverName);
     }
 }
