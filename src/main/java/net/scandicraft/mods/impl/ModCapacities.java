@@ -11,7 +11,6 @@ import net.scandicraft.config.Theme;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.ClientTickEvent;
 import net.scandicraft.gui.hud.ScreenPosition;
-import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.ModDraggable;
 import net.scandicraft.utils.GuiUtils;
 
@@ -71,7 +70,7 @@ public class ModCapacities extends ModDraggable {
         final ScaledResolution scaledResolution = new ScaledResolution(mc);
 
         if (resourceLocationCapacity == null) {
-            resourceLocationCapacity = new ResourceLocation("scandicraft/capacities/archer_2.png");
+            resourceLocationCapacity = new ResourceLocation("scandicraft/capacities/guerrier_1.png");
         }
 
         int yAdd = (icon_height + y_padding) * index;    //4= le nombre d'éléments à afficher
@@ -87,7 +86,7 @@ public class ModCapacities extends ModDraggable {
 
     @EventTarget
     public void onTick(ClientTickEvent e) {
-        this.setUsable(false);  //TODO REMOVE
+//        this.setUsable(false);  //TODO REMOVE
 //        LogManagement.warn("capacity on tick " + mc.getCurrentServerData().serverName);
     }
 }

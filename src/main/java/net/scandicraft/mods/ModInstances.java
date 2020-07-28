@@ -1,12 +1,6 @@
 package net.scandicraft.mods;
 
-import net.scandicraft.events.EventManager;
-import net.scandicraft.events.EventTarget;
-import net.scandicraft.events.impl.ConnectServerEvent;
-import net.scandicraft.events.impl.DisconnectServerEvent;
-import net.scandicraft.events.impl.KeybordEvent;
 import net.scandicraft.gui.hud.HUDManager;
-import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.impl.*;
 import net.scandicraft.mods.impl.compass.ModCompass;
 import net.scandicraft.mods.impl.togglesprintsneak.ModToggleSprintSneak;
@@ -57,7 +51,7 @@ public class ModInstances {
         api.register(modCopyright);
 
         modCapacities = new ModCapacities();
-        modCapacities.setEnabled(false);
+        modCapacities.setEnabled(true);
         api.register(modCapacities);
     }
 

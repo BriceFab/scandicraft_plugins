@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.scandicraft.ScandiCraftSession;
 import net.scandicraft.capacities.listeners.CapacitiesListener;
+import net.scandicraft.classes.ClasseManager;
+import net.scandicraft.classes.impl.Magicien;
 import net.scandicraft.config.Config;
 import net.scandicraft.discord.DiscordRP;
 import net.scandicraft.events.EventManager;
@@ -65,6 +67,9 @@ public class ScandiCraftClient {
         Fonts.loadFonts();
 
         schedulers.registerAll();
+
+        //Temp set classe
+        ClasseManager.getInstance().setPlayerClasse(new Magicien());
     }
 
     public void shutDown() {

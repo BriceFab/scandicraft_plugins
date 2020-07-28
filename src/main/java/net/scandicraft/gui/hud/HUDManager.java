@@ -7,6 +7,7 @@ import net.scandicraft.events.EventManager;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.ClientTickEvent;
 import net.scandicraft.events.impl.RenderEvent;
+import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.Mod;
 import net.scandicraft.settings.ScandiCraftSettings;
 import org.lwjgl.opengl.GL11;
@@ -77,6 +78,11 @@ public class HUDManager {
         ScreenPosition pos = renderer.load();
         if (pos == null) {
             pos = ScreenPosition.fromRelativePosition(0.5, 0.5);
+        }
+
+        if (pos.getScale() <= 0.0F) {
+            LogManagement.warn("HUDManager callREnderer scale under 0, reset scale to 1.");
+            pos.setScale(1.0F);
         }
 
         GL11.glPushMatrix();
