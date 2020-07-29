@@ -11,7 +11,7 @@ import net.scandicraft.config.ClassesConfig;
 public class ArcherCapacity1 extends BaseCapacity {
     @Override
     public ResourceLocation getCapacityIcon() {
-        return null;
+        return new ResourceLocation("scandicraft/capacities/archer_1.png");
     }
 
     @Override

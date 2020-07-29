@@ -10,7 +10,7 @@ import net.scandicraft.config.ClassesConfig;
 public class GuerrierCapacity3 extends BaseCapacity {
     @Override
     public ResourceLocation getCapacityIcon() {
-        return null;
+        return new ResourceLocation("scandicraft/capacities/guerrier_3.png");
     }
 
     @Override

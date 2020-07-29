@@ -11,7 +11,7 @@ import net.scandicraft.config.ClassesConfig;
 public class MagicienCapacity2 extends BaseCapacity {
     @Override
     public ResourceLocation getCapacityIcon() {
-        return null;
+        return new ResourceLocation("scandicraft/capacities/magicien_2.png");
     }
 
     @Override

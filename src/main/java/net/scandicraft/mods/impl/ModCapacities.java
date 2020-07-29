@@ -70,11 +70,12 @@ public class ModCapacities extends ModDraggable {
         final ScaledResolution scaledResolution = new ScaledResolution(mc);
 
         if (resourceLocationCapacity == null) {
-            resourceLocationCapacity = new ResourceLocation("scandicraft/capacities/guerrier_1.png");
+            resourceLocationCapacity = new ResourceLocation("scandicraft/capacities/unknown.png");
         }
 
         int yAdd = (icon_height + y_padding) * index;    //4= le nombre d'éléments à afficher
 
+        GlStateManager.enableAlpha();
         mc.getTextureManager().bindTexture(resourceLocationCapacity);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         Gui.drawScaledCustomSizeModalRect(pos.getAbsoluteX(), pos.getAbsoluteY() + yAdd, 0.0F, 0.0F, icon_width, icon_height, icon_width, icon_height, icon_width, icon_height);

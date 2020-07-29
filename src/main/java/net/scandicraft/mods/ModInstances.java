@@ -1,5 +1,6 @@
 package net.scandicraft.mods;
 
+import net.scandicraft.config.Config;
 import net.scandicraft.gui.hud.HUDManager;
 import net.scandicraft.mods.impl.*;
 import net.scandicraft.mods.impl.compass.ModCompass;
@@ -51,7 +52,7 @@ public class ModInstances {
         api.register(modCopyright);
 
         modCapacities = new ModCapacities();
-        modCapacities.setEnabled(true);
+        modCapacities.setEnabled(Config.DEMO_PLAYER_CLASSE);    //si démo, enabled sinon disabled
         api.register(modCapacities);
     }
 

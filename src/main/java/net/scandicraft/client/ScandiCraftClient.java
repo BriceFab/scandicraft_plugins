@@ -68,15 +68,18 @@ public class ScandiCraftClient {
 
         schedulers.registerAll();
 
-        //Temp set classe
-        ClasseManager.getInstance().setPlayerClasse(new Magicien());
+        if (Config.DEMO_PLAYER_CLASSE) {
+            //Temp set classe
+            ClasseManager.getInstance().setPlayerClasse(new Magicien());
+        }
     }
 
     public void shutDown() {
         LogManagement.info("shutDown ScandiCraft Client");
 
         discordRP.shutdown();
-        //TODO remove all refresh_token for user
+
+        //TODO remove all refresh_token for user (from server)
 
         EventManager.unregister(this);
     }
