@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
 import net.scandicraft.gui.MainMenu;
+import net.scandicraft.gui.buttons.helper.BaseButton;
 
 import java.io.IOException;
 
@@ -46,7 +47,7 @@ public class GuiGameOver extends GuiScreen implements GuiYesNoCallback
             }
         }
 
-        for (GuiButton guibutton : this.buttonList)
+        for (BaseButton guibutton : this.buttonList)
         {
             guibutton.enabled = false;
         }
@@ -63,13 +64,13 @@ public class GuiGameOver extends GuiScreen implements GuiYesNoCallback
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void actionPerformed(GuiButton button) throws IOException
+    protected void actionPerformed(BaseButton button) throws IOException
     {
         switch (button.id)
         {
             case 0:
                 this.mc.thePlayer.respawnPlayer();
-                this.mc.displayGuiScreen((GuiScreen)null);
+                this.mc.displayGuiScreen(null);
                 break;
 
             case 1:
@@ -141,7 +142,7 @@ public class GuiGameOver extends GuiScreen implements GuiYesNoCallback
 
         if (this.enableButtonsTimer == 20)
         {
-            for (GuiButton guibutton : this.buttonList)
+            for (BaseButton guibutton : this.buttonList)
             {
                 guibutton.enabled = true;
             }

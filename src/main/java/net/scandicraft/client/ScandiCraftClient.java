@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.scandicraft.ScandiCraftSession;
 import net.scandicraft.capacities.listeners.CapacitiesListener;
 import net.scandicraft.classes.ClasseManager;
-import net.scandicraft.classes.impl.Magicien;
+import net.scandicraft.classes.impl.Archer;
 import net.scandicraft.config.Config;
 import net.scandicraft.discord.DiscordRP;
 import net.scandicraft.events.EventManager;
@@ -70,7 +70,7 @@ public class ScandiCraftClient {
 
         if (Config.DEMO_PLAYER_CLASSE) {
             //Temp set classe
-            ClasseManager.getInstance().setPlayerClasse(new Magicien());
+            ClasseManager.getInstance().setPlayerClasse(new Archer());
         }
     }
 

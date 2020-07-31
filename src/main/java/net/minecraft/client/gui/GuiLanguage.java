@@ -2,13 +2,15 @@ package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import java.io.IOException;
-import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.resources.Language;
 import net.minecraft.client.resources.LanguageManager;
 import net.minecraft.client.settings.GameSettings;
+import net.scandicraft.gui.buttons.helper.BaseButton;
+
+import java.io.IOException;
+import java.util.Map;
 
 public class GuiLanguage extends GuiScreen
 {
@@ -63,7 +65,7 @@ public class GuiLanguage extends GuiScreen
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void actionPerformed(GuiButton button) throws IOException
+    protected void actionPerformed(BaseButton button) throws IOException
     {
         if (button.enabled)
         {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.WorldInfo;
+import net.scandicraft.gui.buttons.helper.BaseButton;
 import org.lwjgl.input.Keyboard;
 
 public class GuiRenameWorld extends GuiScreen
@@ -55,7 +56,7 @@ public class GuiRenameWorld extends GuiScreen
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void actionPerformed(GuiButton button) throws IOException
+    protected void actionPerformed(BaseButton button) throws IOException
     {
         if (button.enabled)
         {

@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.scandicraft.gui.buttons.helper.BaseButton;
 
 public class GuiInventory extends InventoryEffectRenderer
 {
@@ -136,7 +137,7 @@ public class GuiInventory extends InventoryEffectRenderer
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void actionPerformed(GuiButton button) throws IOException
+    protected void actionPerformed(BaseButton button) throws IOException
     {
         if (button.id == 0)
         {

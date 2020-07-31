@@ -3,6 +3,7 @@ package net.scandicraft.settings.menu;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
+import net.scandicraft.gui.buttons.helper.BaseButton;
 import net.scandicraft.settings.ScandiCraftSettings;
 import net.scandicraft.settings.buttons.BooleanButton;
 import optifine.TooltipManager;
@@ -76,7 +77,7 @@ public class GuiMainSettings extends GuiScreen {
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(BaseButton button) throws IOException {
         if (button.enabled) {
             if (button instanceof BooleanButton) {
                 ScandiCraftSettings.Options actOption = ((BooleanButton) button).getOption();

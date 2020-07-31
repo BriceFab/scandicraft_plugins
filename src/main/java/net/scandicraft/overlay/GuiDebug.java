@@ -55,8 +55,7 @@ public class GuiDebug extends GuiOverlayDebug {
         long currentMemory = totalMemory - freeMemory;
 
         return Lists.newArrayList(
-                EnumChatFormatting.GREEN + String.format("Mémoire: % 2d%% %03d/%03dMB", currentMemory * 100L / maxMemory, bytesToMb(currentMemory), bytesToMb(maxMemory)),
-                String.format("Mémoire allouée: % 2d%% %03dMB", totalMemory * 100L / maxMemory, bytesToMb(totalMemory))
+                EnumChatFormatting.GREEN + String.format("Mémoire: % 2d%% %03d/%03dMB", currentMemory * 100L / maxMemory, bytesToMb(currentMemory), bytesToMb(maxMemory))
         );
     }
 }

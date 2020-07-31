@@ -2,8 +2,6 @@ package net.minecraft.client.gui;
 
 import com.google.common.base.Predicate;
 import com.google.common.primitives.Floats;
-import java.io.IOException;
-import java.util.Random;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -12,6 +10,10 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.ChunkProviderSettings;
+import net.scandicraft.gui.buttons.helper.BaseButton;
+
+import java.io.IOException;
+import java.util.Random;
 
 public class GuiCustomizeWorldScreen extends GuiScreen implements GuiSlider.FormatHelper, GuiPageButtonList.GuiResponder
 {
@@ -727,7 +729,7 @@ public class GuiCustomizeWorldScreen extends GuiScreen implements GuiSlider.Form
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void actionPerformed(GuiButton button) throws IOException
+    protected void actionPerformed(BaseButton button) throws IOException
     {
         if (button.enabled)
         {

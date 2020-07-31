@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.MathHelper;
+import net.scandicraft.gui.buttons.helper.BaseButton;
 import org.lwjgl.input.Mouse;
 
 public abstract class GuiSlot
@@ -200,7 +201,7 @@ public abstract class GuiSlot
         this.initialClickY = -2;
     }
 
-    public void actionPerformed(GuiButton button)
+    public void actionPerformed(BaseButton button)
     {
         if (button.enabled)
         {

@@ -19,16 +19,16 @@ import java.util.zip.ZipInputStream;
 @SideOnly(Side.CLIENT)
 public class Fonts {
 
-    @FontDetails(fontName = "OpenSans-Regular", fontSize = 35)
+    @FontDetails(fontName = "Signika-Light", fontSize = 35)
     public static GameFontRenderer fontSmall;
 
-    @FontDetails(fontName = "OpenSans-Regular", fontSize = 40)
+    @FontDetails(fontName = "Signika-Regular", fontSize = 40)
     public static GameFontRenderer fontNormal;
 
-    @FontDetails(fontName = "OpenSans-Bold", fontSize = 43)
+    @FontDetails(fontName = "Signika-SemiBold", fontSize = 43)
     public static GameFontRenderer fontSemiBold;
 
-    @FontDetails(fontName = "OpenSans-Bold", fontSize = 50)
+    @FontDetails(fontName = "Signika-Bold", fontSize = 50)
     public static GameFontRenderer fontBold;
 
     @FontDetails(fontName = "Minecraft Font")
@@ -43,10 +43,10 @@ public class Fonts {
 
         // downloadFonts();
 
-        fontSmall = new GameFontRenderer(getFont("OpenSans-Regular.ttf", 35));
-        fontNormal = new GameFontRenderer(getFont("OpenSans-Regular.ttf", 40));
-        fontSemiBold = new GameFontRenderer(getFont("OpenSans-Bold.ttf", 43));
-        fontBold = new GameFontRenderer(getFont("OpenSans-Bold.ttf", 50));
+        fontSmall = new GameFontRenderer(getFont("Signika-Light.ttf", 35));
+        fontNormal = new GameFontRenderer(getFont("Signika-Regular.ttf", 40));
+        fontSemiBold = new GameFontRenderer(getFont("Signika-Bold.ttf", 43));
+        fontBold = new GameFontRenderer(getFont("Signika-SemiBold.ttf", 50));
 
         try {
             CUSTOM_FONT_RENDERERS.clear();

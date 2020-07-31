@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiShareToLan;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.resources.I18n;
+import net.scandicraft.gui.buttons.helper.BaseButton;
 import net.scandicraft.gui.settings.GuiOptions;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class IngameMenu extends GuiScreen {
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(BaseButton button) throws IOException {
         switch (button.id) {
             case 0:
                 this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings, this.mc.scandiCraftSettings));

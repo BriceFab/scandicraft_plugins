@@ -1,6 +1,7 @@
 package net.scandicraft.gui.buttons;
 
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.util.ResourceLocation;
 import net.scandicraft.config.Theme;
 
 public class ButtonTemplate {
@@ -8,11 +9,12 @@ public class ButtonTemplate {
     private final Integer id;
     private final String text;
     private final Boolean fullWidth;
-    private final int width;
-    private final int height;
+    private int width;
+    private int height;
     private int columnIndex;  //Column: 0 | 1 | 2 | 3
     private int x, y = 0;
     private Class<? extends GuiButton> guiButtonTemplate = GuiButton.class;
+    private ResourceLocation texture;
 
     public ButtonTemplate(Integer id, String text) {
         this(id, text, true);
@@ -88,5 +90,24 @@ public class ButtonTemplate {
 
     public Integer getId() {
         return id;
+    }
+
+    public ButtonTemplate setTexture(ResourceLocation texture) {
+        this.texture = texture;
+        return this;
+    }
+
+    public ResourceLocation getTexture() {
+        return texture;
+    }
+
+    public ButtonTemplate setWidth(int width) {
+        this.width = width;
+        return this;
+    }
+
+    public ButtonTemplate setHeight(int height) {
+        this.height = height;
+        return this;
     }
 }

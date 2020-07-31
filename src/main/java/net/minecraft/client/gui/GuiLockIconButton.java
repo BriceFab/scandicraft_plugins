@@ -2,6 +2,7 @@ package net.minecraft.client.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.scandicraft.gui.Textures;
 
 public class GuiLockIconButton extends GuiButton
 {
@@ -29,7 +30,7 @@ public class GuiLockIconButton extends GuiButton
     {
         if (this.visible)
         {
-            mc.getTextureManager().bindTexture(GuiButton.buttonTextures);
+            mc.getTextureManager().bindTexture(Textures.WIDGETS_TEXTURE);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             boolean flag = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.getWidth() && mouseY < this.yPosition + this.getHeight();
             GuiLockIconButton.Icon guilockiconbutton$icon;

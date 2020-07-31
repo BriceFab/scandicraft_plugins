@@ -1,7 +1,9 @@
 package net.minecraft.client.gui;
 
-import java.io.IOException;
 import net.minecraft.client.resources.I18n;
+import net.scandicraft.gui.buttons.helper.BaseButton;
+
+import java.io.IOException;
 
 public class GuiErrorScreen extends GuiScreen
 {
@@ -46,8 +48,8 @@ public class GuiErrorScreen extends GuiScreen
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void actionPerformed(GuiButton button) throws IOException
+    protected void actionPerformed(BaseButton button) throws IOException
     {
-        this.mc.displayGuiScreen((GuiScreen)null);
+        this.mc.displayGuiScreen(null);
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.EnumDifficulty;
+import net.scandicraft.gui.buttons.helper.BaseButton;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.settings.menu.GuiMainSettings;
 import net.scandicraft.settings.ScandiCraftSettings;
@@ -23,9 +24,9 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback {
     protected String screenTitle = "Options";
     private final ScandiCraftSettings scandiCraftSettings;
 
-    public GuiOptions(GuiScreen p_i1046_1_, GameSettings p_i1046_2_, ScandiCraftSettings scandiCraftSettings) {
-        this.lastScreen = p_i1046_1_;
-        this.gameSettings = p_i1046_2_;
+    public GuiOptions(GuiScreen guiScreen, GameSettings gameSettings, ScandiCraftSettings scandiCraftSettings) {
+        this.lastScreen = guiScreen;
+        this.gameSettings = gameSettings;
         this.scandiCraftSettings = scandiCraftSettings;
     }
 
@@ -108,7 +109,7 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback {
         }
     }
 
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(BaseButton button) throws IOException {
         if (button.enabled) {
             if (button.id < 100 && button instanceof GuiOptionButton) {
                 GameSettings.Options gamesettings$options = ((GuiOptionButton) button).returnEnumOptions();

@@ -15,6 +15,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.scandicraft.config.Config;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.events.impl.ConnectServerEvent;
+import net.scandicraft.gui.buttons.helper.BaseButton;
 import net.scandicraft.mods.ModInstances;
 import net.scandicraft.packets.client.login.CPacketAuthToken;
 import org.apache.logging.log4j.LogManager;
@@ -134,7 +135,7 @@ public class GuiConnecting extends GuiScreen {
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(BaseButton button) throws IOException {
         if (button.id == 0) {
             this.cancel = true;
 

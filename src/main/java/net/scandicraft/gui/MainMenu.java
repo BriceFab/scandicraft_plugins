@@ -4,17 +4,16 @@ import net.minecraft.client.gui.*;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.config.Config;
 import net.scandicraft.config.Theme;
 import net.scandicraft.gui.buttons.ButtonTemplate;
-import net.scandicraft.gui.buttons.menu.MenuPrimaryButton;
-import net.scandicraft.gui.buttons.menu.MenuSecondaryButton;
+import net.scandicraft.gui.buttons.DefaultButton;
+import net.scandicraft.gui.buttons.TexturedButton;
+import net.scandicraft.gui.buttons.helper.BaseButton;
 import net.scandicraft.gui.settings.GuiOptions;
 import net.scandicraft.logs.LogManagement;
-import net.scandicraft.utils.ArrayUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +25,6 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
 
     public MainMenu() {
         ScandiCraftClient.getInstance().getDiscordRP().update("Menu principal");
-//        this.addButtons();
     }
 
     public boolean doesGuiPauseGame() {
@@ -34,71 +32,45 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
     }
 
     public void initGui() {
-        this.addButtons();
-        this.drawButtons();
-    }
-
-    private void addButtons() {
-        templateButtons.clear();
-
         if (Config.ENV == Config.ENVIRONNEMENT.DEV) {
             String string_multiplayer = "Dev";
-            templateButtons.add(new ButtonTemplate(1, 2, 2, string_multiplayer, this.fontRendererObj.getStringWidth(string_multiplayer) + 20, Theme.DEFAULT_BUTTON_HEIGHT));
+            this.buttonList.add(new DefaultButton(1, 2, 2, this.fontRendererObj.getStringWidth(string_multiplayer) + 20, Theme.DEFAULT_BUTTON_HEIGHT, string_multiplayer));
         }
 
-        templateButtons.add(new ButtonTemplate(0, I18n.format("menu.singleplayer")));
-        templateButtons.add(new ButtonTemplate(4, "Multijoueur").setGuiButtonTemplate(MenuPrimaryButton.class));
-        templateButtons.add(new ButtonTemplate(2, I18n.format("menu.options"), Theme.DEFAULT_BUTTON_WIDTH / 2, 0).setGuiButtonTemplate(MenuSecondaryButton.class));
-        templateButtons.add(new ButtonTemplate(3, I18n.format("menu.quit"), Theme.DEFAULT_BUTTON_WIDTH / 2, 1).setGuiButtonTemplate(MenuSecondaryButton.class));
+        TexturedButton btnSolo = new TexturedButton(0, 36, 72, 0.2F,
+                new ResourceLocation(Config.BASE_SC_BUTTONS_RESSOURCES + "solo.png"),
+                new ResourceLocation(Config.BASE_SC_BUTTONS_RESSOURCES + "solo_hover.png")
+        );
+        btnSolo.setWidth(450);
+        btnSolo.setHeight(200);
+        this.buttonList.add(btnSolo);
+
+        TexturedButton btnPlay = new TexturedButton(4, 37, 118, 0.2F,
+                new ResourceLocation(Config.BASE_SC_BUTTONS_RESSOURCES + "play.png"),
+                new ResourceLocation(Config.BASE_SC_BUTTONS_RESSOURCES + "play_hover.png")
+        );
+        btnPlay.setWidth(450);
+        btnPlay.setHeight(200);
+        this.buttonList.add(btnPlay);
+
+        TexturedButton btnExit = new TexturedButton(3, 84, 190, 0.04F,
+                new ResourceLocation(Config.BASE_SC_BUTTONS_RESSOURCES + "exit.png"),
+                new ResourceLocation(Config.BASE_SC_BUTTONS_RESSOURCES + "exit_hover.png")
+        );
+        btnExit.setWidth(512);
+        btnExit.setHeight(512);
+        this.buttonList.add(btnExit);
+
+        TexturedButton btnSettings = new TexturedButton(2, 58, 190, 0.04F,
+                new ResourceLocation(Config.BASE_SC_BUTTONS_RESSOURCES + "settings.png"),
+                new ResourceLocation(Config.BASE_SC_BUTTONS_RESSOURCES + "settings_hover.png")
+        );
+        btnSettings.setWidth(512);
+        btnSettings.setHeight(512);
+        this.buttonList.add(btnSettings);
     }
 
-    private void drawButtons() {
-        final int totalNbrButtons = templateButtons.size();
-        int totalNbrFullButton = ArrayUtils.filter(ButtonTemplate::getFullWidth, templateButtons).size() / 2;
-        final int ySpace = 24;
-        final int startHeight = (this.height / 2) - (ySpace * (totalNbrButtons - totalNbrFullButton) / 2);
-        for (int i = 0; i < totalNbrButtons; i++) {
-            ButtonTemplate buttonTemplate = templateButtons.get(i);
-            int x, y;
-            if (!buttonTemplate.hasXYPosition()) {
-                int shiftX = 0;
-                int shiftY = 0;
-                if (buttonTemplate.getFullWidth()) {    //button normal
-                    shiftX = buttonTemplate.getWidth() / 2;
-                } else {    //button column
-                    shiftX = (buttonTemplate.getWidth() / 2) * ((buttonTemplate.getColumnIndex() + 1) * 2);
-                    if (buttonTemplate.getColumnIndex() > 0) {
-                        shiftX -= (buttonTemplate.getColumnIndex() + 1) * buttonTemplate.getWidth();
-                        shiftX -= 2 * buttonTemplate.getColumnIndex();  //espace entre les 2 buttons sur la même ligne
-                        shiftY -= ySpace * buttonTemplate.getColumnIndex();
-                    }
-                }
-                x = this.width / 2 - shiftX;
-                y = (startHeight + ySpace * i) + shiftY;
-            } else {
-                x = buttonTemplate.getX();
-                y = buttonTemplate.getY();
-            }
-
-            GuiButton displayButton = this.getButton(buttonTemplate, x, y);
-            if (displayButton != null) {
-                this.buttonList.add(displayButton);
-            }
-        }
-    }
-
-    private GuiButton getButton(ButtonTemplate buttonTemplate, int x, int y) {
-        if (GuiButton.class.equals(buttonTemplate.getGuiButtonTemplate())) {
-            return new GuiButton(buttonTemplate.getId(), x, y, buttonTemplate.getWidth(), buttonTemplate.getHeight(), buttonTemplate.getText());
-        } else if (MenuSecondaryButton.class.equals(buttonTemplate.getGuiButtonTemplate())) {
-            return new MenuSecondaryButton(buttonTemplate.getId(), x, y, buttonTemplate.getWidth(), buttonTemplate.getHeight(), buttonTemplate.getText());
-        } else if (MenuPrimaryButton.class.equals(buttonTemplate.getGuiButtonTemplate())) {
-            return new MenuPrimaryButton(buttonTemplate.getId(), x, y, buttonTemplate.getWidth(), buttonTemplate.getHeight(), buttonTemplate.getText());
-        }
-        return null;
-    }
-
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(BaseButton button) throws IOException {
         if (button.enabled) {
             switch (button.id) {
                 case 0: //singleplayer

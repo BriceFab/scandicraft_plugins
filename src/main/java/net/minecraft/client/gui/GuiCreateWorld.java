@@ -1,15 +1,17 @@
 package net.minecraft.client.gui;
 
-import java.io.IOException;
-import java.util.Random;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.WorldInfo;
+import net.scandicraft.gui.buttons.helper.BaseButton;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Keyboard;
+
+import java.io.IOException;
+import java.util.Random;
 
 public class GuiCreateWorld extends GuiScreen
 {
@@ -181,7 +183,7 @@ public class GuiCreateWorld extends GuiScreen
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void actionPerformed(GuiButton button) throws IOException
+    protected void actionPerformed(BaseButton button) throws IOException
     {
         if (button.enabled)
         {
@@ -419,7 +421,7 @@ public class GuiCreateWorld extends GuiScreen
 
         if (keyCode == 28 || keyCode == 156)
         {
-            this.actionPerformed((GuiButton)this.buttonList.get(0));
+            this.actionPerformed(this.buttonList.get(0));
         }
 
         ((GuiButton)this.buttonList.get(0)).enabled = this.worldNameField.getText().length() > 0;

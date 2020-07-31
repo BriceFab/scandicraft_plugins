@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
+import net.scandicraft.gui.buttons.helper.BaseButton;
 
 public class GuiPerformanceSettingsOF extends GuiScreen
 {
@@ -51,7 +52,7 @@ public class GuiPerformanceSettingsOF extends GuiScreen
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void actionPerformed(GuiButton button)
+    protected void actionPerformed(BaseButton button)
     {
         if (button.enabled)
         {

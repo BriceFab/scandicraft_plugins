@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiYesNo;
 import net.minecraft.client.gui.GuiYesNoCallback;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
+import net.scandicraft.gui.buttons.helper.BaseButton;
 
 public class GuiOtherSettingsOF extends GuiScreen implements GuiYesNoCallback
 {
@@ -54,7 +55,7 @@ public class GuiOtherSettingsOF extends GuiScreen implements GuiYesNoCallback
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void actionPerformed(GuiButton button)
+    protected void actionPerformed(BaseButton button)
     {
         if (button.enabled)
         {

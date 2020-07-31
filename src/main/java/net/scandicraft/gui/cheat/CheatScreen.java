@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.scandicraft.config.Config;
 import net.scandicraft.anti_cheat.CheatType;
+import net.scandicraft.gui.buttons.helper.BaseButton;
 import net.scandicraft.logs.LogManagement;
 
 import java.awt.*;
@@ -37,7 +38,7 @@ public class CheatScreen extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(BaseButton button) throws IOException {
         if (button.id == 0) {
             this.mc.displayGuiScreen(null);
         }
