@@ -38,29 +38,6 @@ public class TexturedButton extends BaseButton {
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-//            if (this.texture.getResourcePath().contains("play")) {
-//                this.xPosition = 37;
-//                this.yPosition = 118;
-//            }
-//            if (this.texture.getResourcePath().contains("solo")) {
-//                this.xPosition = 36;
-//                this.yPosition = 72;
-//            }
-//
-//            final ScaledResolution scaledResolution = new ScaledResolution(mc);
-//
-//            if (this.texture.getResourcePath().contains("exit")) {
-//                this.scale = 0.04F;
-//                this.xPosition = 84;
-//                this.yPosition = 190;
-//            }
-//
-//            if (this.texture.getResourcePath().contains("settings")) {
-//                this.scale = 0.04F;
-//                this.xPosition = 58;
-//                this.yPosition = 190;
-//            }
-
             Gui.drawModalRectWithCustomSizedTexture(this.xPosition, this.yPosition, 0.0F, 0.0F, (int) (this.width * this.scale), (int) (this.height * this.scale), this.width * this.scale, this.height * this.scale);
         }
     }

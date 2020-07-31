@@ -21,6 +21,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ResourceLocation;
 import net.scandicraft.gui.Textures;
 import net.scandicraft.gui.buttons.helper.BaseButton;
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +41,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public abstract class GuiScreen extends Gui implements GuiYesNoCallback {
@@ -89,6 +91,13 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback {
     private int touchValue;
     private URI clickedLinkURI;
 
+    private int background_number;
+
+    public GuiScreen() {
+        Random random = new Random();
+        this.background_number = random.nextInt(Textures.NUMBER_GUI_BACKGROUNDS);
+    }
+
     /**
      * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
      */
@@ -121,7 +130,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback {
      */
     public static String getClipboardString() {
         try {
-            Transferable transferable = Toolkit.getDefaultToolkit().getSystemClipboard().getContents((Object) null);
+            Transferable transferable = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
 
             if (transferable != null && transferable.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                 return (String) transferable.getTransferData(DataFlavor.stringFlavor);
@@ -541,7 +550,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback {
         final int width = scaledResolution.getScaledWidth();
         final int height = scaledResolution.getScaledHeight();
 
-        mc.getTextureManager().bindTexture(Textures.SETTINGS_BACKGROUND);
+        mc.getTextureManager().bindTexture(new ResourceLocation(Textures.GUI_BACKGROUNDS.replace("{{number}}", String.valueOf(this.background_number))));
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, width, height, width, height, width, height);
     }

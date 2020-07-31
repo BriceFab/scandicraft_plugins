@@ -30,10 +30,11 @@ public class Config {
     public static final Integer SERVER_PORT = 25565;
     public static final String SERVER_IP = "217.182.205.69";
     public static final String SERVER_IP_AND_PORT = String.format("%s:%d", SERVER_IP, SERVER_PORT);
-    public static final Integer HANDSHAKE = -20062020;  //1.8.8 = 47
+//    public static final Integer HANDSHAKE = -20062020;  //1.8.8 = 47
+    public static final Integer HANDSHAKE = 47;  //1.8.8 = 47
     public static final String OUTDATED_MESSAGE = EnumChatFormatting.RED + "Télécharge le launcher sur https://scandicraft-mc.fr/";
     public static final boolean SEND_AUTH_PACKET = true;   //envoie ou non le pack de vérification de connexion
-    public static final boolean DEMO_PLAYER_CLASSE = true;   //Si capacity and classe demo debug
+    public static final boolean DEMO_PLAYER_CLASSE = false;   //Si capacity and classe demo debug
     public static final String BASE_SC_BUTTONS_RESSOURCES = "scandicraft/buttons/";
 
     public static class GameConfig {
