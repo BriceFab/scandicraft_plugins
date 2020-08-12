@@ -409,6 +409,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback {
                     this.selectedButton = guibutton;
                     guibutton.playPressSound(this.mc.getSoundHandler());
                     this.actionPerformed(guibutton);
+                    return;
                 }
             }
         }

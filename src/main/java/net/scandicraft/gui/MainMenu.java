@@ -1,5 +1,6 @@
 package net.scandicraft.gui;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
@@ -8,7 +9,6 @@ import net.minecraft.util.ResourceLocation;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.config.Config;
 import net.scandicraft.config.Theme;
-import net.scandicraft.gui.buttons.ButtonTemplate;
 import net.scandicraft.gui.buttons.DefaultButton;
 import net.scandicraft.gui.buttons.TexturedButton;
 import net.scandicraft.gui.buttons.helper.BaseButton;
@@ -16,15 +16,17 @@ import net.scandicraft.gui.settings.GuiOptions;
 import net.scandicraft.logs.LogManagement;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class MainMenu extends GuiScreen implements GuiYesNoCallback {
-    private static final ResourceLocation backgroundPath = new ResourceLocation("scandicraft/menu/main_background.png");
-    private final ArrayList<ButtonTemplate> templateButtons = new ArrayList<>();
+    private static final ResourceLocation backgroundPath = new ResourceLocation("scandicraft/menu/main_background.jpg");
     private final ServerData server = new ServerData("ScandiCraft", Config.SERVER_IP_AND_PORT, false);
+    private final int previous_guiScale;
+    private boolean hasUpdateScale = false;
 
     public MainMenu() {
         ScandiCraftClient.getInstance().getDiscordRP().update("Menu principal");
+
+        previous_guiScale = Minecraft.getMinecraft().gameSettings.guiScale;
     }
 
     public boolean doesGuiPauseGame() {
@@ -32,6 +34,9 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
     }
 
     public void initGui() {
+        //scale auto
+        mc.gameSettings.guiScale = 0;
+
         if (Config.ENV == Config.ENVIRONNEMENT.DEV) {
             String string_multiplayer = "Dev";
             this.buttonList.add(new DefaultButton(1, 2, 2, this.fontRendererObj.getStringWidth(string_multiplayer) + 20, Theme.DEFAULT_BUTTON_HEIGHT, string_multiplayer));
@@ -70,6 +75,7 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
         this.buttonList.add(btnSettings);
     }
 
+    @Override
     protected void actionPerformed(BaseButton button) throws IOException {
         if (button.enabled) {
             switch (button.id) {
@@ -95,6 +101,14 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
         }
     }
 
+    @Override
+    public void onGuiClosed() {
+        super.onGuiClosed();
+
+        //reset gui scale to previous
+        Minecraft.getMinecraft().gameSettings.guiScale = this.previous_guiScale;
+    }
+
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         GlStateManager.disableAlpha();
         this.renderBackGround();
@@ -105,7 +119,21 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
         String copyright_scandicraft = Config.SCANDICRAFT_COPYRIGHT;
         this.drawString(this.fontRendererObj, copyright_scandicraft, 2, this.height - 10, -1);
 
+        this.updateScale();
+
         super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+
+    private void updateScale() {
+        if (!hasUpdateScale && previous_guiScale != 0) {
+            //Met à jour le Gui Scale
+            ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+            int width = scaledresolution.getScaledWidth();
+            int height = scaledresolution.getScaledHeight();
+            this.setWorldAndResolution(Minecraft.getMinecraft(), width, height);
+
+            hasUpdateScale = true;
+        }
     }
 
     private void renderBackGround() {
