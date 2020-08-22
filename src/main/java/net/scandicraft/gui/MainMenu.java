@@ -20,6 +20,7 @@ import java.io.IOException;
 public class MainMenu extends GuiScreen implements GuiYesNoCallback {
     private static final ResourceLocation backgroundPath = new ResourceLocation("scandicraft/menu/main_background.jpg");
     private final ServerData server = new ServerData("ScandiCraft", Config.SERVER_IP_AND_PORT, false);
+    private final ServerData local_server = new ServerData("localhost", "127.0.0.1:25565", true);
     private final int previous_guiScale;
     private boolean hasUpdateScale = false;
 
@@ -40,6 +41,8 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
         if (Config.ENV == Config.ENVIRONNEMENT.DEV) {
             String string_multiplayer = "Dev";
             this.buttonList.add(new DefaultButton(1, 2, 2, this.fontRendererObj.getStringWidth(string_multiplayer) + 20, Theme.DEFAULT_BUTTON_HEIGHT, string_multiplayer));
+            String string_localhost = "Local";
+            this.buttonList.add(new DefaultButton(5, 2, 2 + Theme.DEFAULT_BUTTON_HEIGHT, this.fontRendererObj.getStringWidth(string_localhost) + 20, Theme.DEFAULT_BUTTON_HEIGHT, string_localhost));
         }
 
         TexturedButton btnSolo = new TexturedButton(0, 36, 72, 0.2F,
@@ -92,7 +95,10 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
                     this.mc.shutdown();
                     break;
                 case 4: //scandicraft server
-                    this.mc.displayGuiScreen(new GuiConnecting(this, this.mc, this.server));
+                    this.mc.displayGuiScreen(new GuiConnecting(this, this.mc, this.server, true));
+                    break;
+                case 5: //localhost server
+                    this.mc.displayGuiScreen(new GuiConnecting(this, this.mc, this.local_server, true));
                     break;
                 default:
                     LogManagement.warn("no action");

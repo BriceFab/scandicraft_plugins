@@ -2,8 +2,6 @@ package net.minecraft.client.gui;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
-import java.io.IOException;
-import java.util.List;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerList;
@@ -14,6 +12,9 @@ import net.scandicraft.gui.buttons.helper.BaseButton;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
+
+import java.io.IOException;
+import java.util.List;
 
 public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 {
@@ -397,7 +398,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 
     private void connectToServer(ServerData server)
     {
-        this.mc.displayGuiScreen(new GuiConnecting(this, this.mc, server));
+        this.mc.displayGuiScreen(new GuiConnecting(this, this.mc, server, false));
     }
 
     public void selectServer(int index)

@@ -12,11 +12,11 @@ import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
-import net.scandicraft.config.Config;
 import net.scandicraft.client.ScandiCraftClient;
+import net.scandicraft.config.Config;
 import net.scandicraft.events.impl.ConnectServerEvent;
 import net.scandicraft.gui.buttons.helper.BaseButton;
-import net.scandicraft.mods.ModInstances;
+import net.scandicraft.logs.LogManagement;
 import net.scandicraft.packets.client.login.CPacketAuthToken;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,6 +24,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GuiConnecting extends GuiScreen {
@@ -33,24 +35,27 @@ public class GuiConnecting extends GuiScreen {
     private boolean cancel;
     private final GuiScreen previousGuiScreen;
 
-    public GuiConnecting(GuiScreen parent, Minecraft mcIn, ServerData serverDataIn) {
+    public GuiConnecting(GuiScreen parent, Minecraft mcIn, ServerData serverDataIn, boolean must_use_scandicraft_client) {
         this.mc = mcIn;
         this.previousGuiScreen = parent;
         ServerAddress serveraddress = ServerAddress.fromString(serverDataIn.serverIP);
         mcIn.loadWorld((WorldClient) null);
         mcIn.setServerData(serverDataIn);
-        this.connect(serveraddress.getIP(), serveraddress.getPort());
+        this.connect(serveraddress.getIP(), serveraddress.getPort(), must_use_scandicraft_client);
     }
 
-    public GuiConnecting(GuiScreen parent, Minecraft mcIn, String hostName, int port) {
+    public GuiConnecting(GuiScreen parent, Minecraft mcIn, String hostName, int port, boolean must_use_scandicraft_client) {
         this.mc = mcIn;
         this.previousGuiScreen = parent;
         mcIn.loadWorld((WorldClient) null);
-        this.connect(hostName, port);
+        this.connect(hostName, port, must_use_scandicraft_client);
     }
 
-    private void connect(final String ip, final int port) {
-        //ScandiCraft hide: logger.info("Connecting to " + ip + ", " + port);
+    private void connect(final String ip, final int port, boolean must_use_scandicraft_client) {
+        if (Config.ENV == Config.ENVIRONNEMENT.DEV) {
+            LogManagement.info("Connecting to server: " + ip + ":" + port);
+        }
+
         (new Thread("Server Connector #" + CONNECTION_ID.incrementAndGet()) {
             public void run() {
                 InetAddress inetaddress = null;
@@ -63,7 +68,14 @@ public class GuiConnecting extends GuiScreen {
                     inetaddress = InetAddress.getByName(ip);
                     GuiConnecting.this.networkManager = NetworkManager.createNetworkManagerAndConnect(inetaddress, port, GuiConnecting.this.mc.gameSettings.isUsingNativeTransport());
                     GuiConnecting.this.networkManager.setNetHandler(new NetHandlerLoginClient(GuiConnecting.this.networkManager, GuiConnecting.this.mc, GuiConnecting.this.previousGuiScreen));
-                    GuiConnecting.this.networkManager.sendPacket(new C00Handshake(Config.HANDSHAKE, ip + "\0" + Config.AUTH_KEY, port, EnumConnectionState.LOGIN));   //ScandiCraft passe auth key in ip
+                    String handshake_ip_packet = ip;
+                    if (must_use_scandicraft_client) {
+                        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Zurich"));
+                        int day = calendar.get(Calendar.DAY_OF_WEEK);
+                        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                        handshake_ip_packet = ip + "\0" + Config.AUTH_KEY + day + hour + "\0" + Minecraft.getMinecraft().getScandiCraftSession().getToken();
+                    }
+                    GuiConnecting.this.networkManager.sendPacket(new C00Handshake(Config.HANDSHAKE, handshake_ip_packet, port, EnumConnectionState.LOGIN));
                     GuiConnecting.this.networkManager.sendPacket(new C00PacketLoginStart(GuiConnecting.this.mc.getSession().getProfile()));
 
                     //ScandiCraft Packets : Send API auth token

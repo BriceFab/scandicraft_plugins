@@ -82,16 +82,15 @@ import net.minecraft.world.chunk.storage.AnvilSaveConverter;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
-import net.scandicraft.config.Config;
 import net.scandicraft.ScandiCraftSession;
 import net.scandicraft.anti_cheat.x_ray.PackManager;
 import net.scandicraft.client.ScandiCraftClient;
+import net.scandicraft.config.Config;
 import net.scandicraft.events.impl.ClientTickEvent;
 import net.scandicraft.events.impl.KeybordEvent;
 import net.scandicraft.events.impl.MouseEvent;
 import net.scandicraft.gui.IngameMenu;
 import net.scandicraft.gui.MainMenu;
-import net.scandicraft.mods.ModInstances;
 import net.scandicraft.mods.impl.togglesprintsneak.ClientMovementInput;
 import net.scandicraft.render.RenderUtils;
 import net.scandicraft.settings.ScandiCraftSettings;
@@ -519,7 +518,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.ingameGUI = new GuiIngame(this);
 
         if (this.serverName != null) {
-            this.displayGuiScreen(new GuiConnecting(new MainMenu(), this, this.serverName, this.serverPort));
+            this.displayGuiScreen(new GuiConnecting(new MainMenu(), this, this.serverName, this.serverPort, false));
         } else {
             this.displayGuiScreen(new MainMenu());
         }
