@@ -1,6 +1,5 @@
 package net.scandicraft.packets.client.play;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;
 import net.scandicraft.capacities.ICapacity;
 
@@ -26,7 +25,6 @@ public class CPacketChangeCapacity extends CPlayPacket {
      */
     @Override
     public void writePacketData(PacketBuffer buf) throws IOException {
-        buf.writeUuid(Minecraft.getMinecraft().getScandiCraftSession().getUuid());                      //Player uuid
         writeString(buf, this.nextCapacity != null ? this.nextCapacity.getName() : "next_from_list");   //next capacity id
     }
 }
