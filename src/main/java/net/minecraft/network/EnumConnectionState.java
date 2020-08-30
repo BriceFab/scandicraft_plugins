@@ -20,8 +20,8 @@ import net.scandicraft.config.Config;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.packets.SCLoginPacket;
 import net.scandicraft.packets.SCPlayPacket;
-import net.scandicraft.packets.client.play.CPacketChangeCapacity;
 import net.scandicraft.packets.client.login.CPacketAuthToken;
+import net.scandicraft.packets.client.play.capacities.impl.CPacketChangeCapacity;
 import net.scandicraft.packets.server.play.SPacketCurrentCapacity;
 import net.scandicraft.packets.server.play.SPacketCurrentClasse;
 import org.apache.logging.log4j.LogManager;
@@ -198,7 +198,7 @@ public enum EnumConnectionState {
         } else {
             final boolean isSCPacket = packetClass.getSuperclass() != Object.class && (packetClass.getSuperclass().getSuperclass().getSimpleName().equals(SCPlayPacket.class.getSimpleName()) || packetClass.getSuperclass().getSuperclass().getSimpleName().equals(SCLoginPacket.class.getSimpleName()));
             final int packetId = bimap.size() + (isSCPacket ? 100 : 0);
-            if (isSCPacket && Config.ENV == Config.ENVIRONNEMENT.DEV) {
+            if (Config.ENV == Config.ENVIRONNEMENT.DEV) {
                 LogManagement.warn("Register packet: " + packetId + " " + packetClass.getName());
             }
             bimap.put(packetId, packetClass);

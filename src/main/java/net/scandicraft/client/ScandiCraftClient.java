@@ -37,7 +37,9 @@ public class ScandiCraftClient {
 
         //Register des événements
         EventManager.register(this);
-        EventManager.register(new CapacitiesListener());
+        if (Config.DEMO_PLAYER_CLASSE) {
+            EventManager.register(new CapacitiesListener());
+        }
         EventManager.register(new ModEventListeners());
 
         if (Config.ENV == Config.ENVIRONNEMENT.DEV) {

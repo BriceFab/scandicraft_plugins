@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.scandicraft.capacities.CapacityManager;
 import net.scandicraft.capacities.ICapacity;
 import net.scandicraft.classes.ClasseManager;
+import net.scandicraft.classes.IClasse;
 import net.scandicraft.config.Theme;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.ClientTickEvent;
@@ -15,6 +16,7 @@ import net.scandicraft.mods.ModDraggable;
 import net.scandicraft.utils.GuiUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ModCapacities extends ModDraggable {
     public static ScreenPosition FPS_POSITION = ScreenPosition.fromRelativePosition(0.8416666666666667, 0.0392156862745098);
@@ -47,6 +49,22 @@ public class ModCapacities extends ModDraggable {
     @Override
     public int getHeight() {
         return ((icon_height + y_padding - (select_padding / 2)) * ClasseManager.getInstance().getPlayerClasse().getCapacities().size() - select_padding + 1);
+    }
+
+    @Override
+    public boolean isEnabled() {
+        boolean isEnable = super.isEnabled();
+
+        //Si mod actif, on contrôle que le joueur a une classe avec des capacités
+        if (isEnable) {
+            IClasse playerClasse = ClasseManager.getInstance().getPlayerClasse();
+            if (playerClasse != null) {
+                List<ICapacity> playerCapacities = playerClasse.getCapacities();
+                return playerCapacities != null && playerCapacities.size() > 0;
+            }
+        }
+
+        return false;
     }
 
     @Override

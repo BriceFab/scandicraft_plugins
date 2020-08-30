@@ -6,16 +6,17 @@ import net.scandicraft.capacities.impl.ArcherCapacity1;
 import net.scandicraft.config.KeyCodes;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.KeybordEvent;
-import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.ModInstances;
-import net.scandicraft.packets.client.play.CPacketChangeCapacity;
+import net.scandicraft.mods.impl.ModCapacities;
+import net.scandicraft.packets.client.play.capacities.impl.CPacketChangeCapacity;
 import org.lwjgl.input.Keyboard;
 
 public class CapacitiesListener {
 
     @EventTarget
     public void onKeybord(KeybordEvent e) {
-        if (Keyboard.getEventKeyState() && ModInstances.getModCapacities().isEnabled() && ModInstances.getModCapacities().isUsable()) {
+        ModCapacities modCapacities = ModInstances.getModCapacities();
+        if (Keyboard.getEventKeyState() && modCapacities.isEnabled() && modCapacities.isUsable()) {
             switch (Keyboard.getEventKey()) {
                 case KeyCodes.KEY_R: {  //R
                     //Lance la capacité
@@ -35,6 +36,7 @@ public class CapacitiesListener {
      * On envoie un packet au serveur pour sélectionner la prochaine capacité de la liste
      */
     private void changeNextCapacity() {
+//        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new CPacketChangeCapacity());
         Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new CPacketChangeCapacity());
     }
 
