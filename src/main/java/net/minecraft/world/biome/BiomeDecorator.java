@@ -1,6 +1,5 @@
 package net.minecraft.world.biome;
 
-import java.util.Random;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.material.Material;
@@ -9,19 +8,10 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.ChunkProviderSettings;
 import net.minecraft.world.gen.GeneratorBushFeature;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenBigMushroom;
-import net.minecraft.world.gen.feature.WorldGenCactus;
-import net.minecraft.world.gen.feature.WorldGenClay;
-import net.minecraft.world.gen.feature.WorldGenDeadBush;
-import net.minecraft.world.gen.feature.WorldGenFlowers;
-import net.minecraft.world.gen.feature.WorldGenLiquids;
-import net.minecraft.world.gen.feature.WorldGenMinable;
-import net.minecraft.world.gen.feature.WorldGenPumpkin;
-import net.minecraft.world.gen.feature.WorldGenReed;
-import net.minecraft.world.gen.feature.WorldGenSand;
-import net.minecraft.world.gen.feature.WorldGenWaterlily;
-import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraft.world.gen.feature.*;
+import net.scandicraft.blocks.register.ScandiCraftBlocks;
+
+import java.util.Random;
 
 public class BiomeDecorator
 {
@@ -55,6 +45,9 @@ public class BiomeDecorator
     protected WorldGenerator goldGen;
     protected WorldGenerator redstoneGen;
     protected WorldGenerator diamondGen;
+    protected WorldGenerator lazuriteGen;
+    protected WorldGenerator pyriteGen;
+    protected WorldGenerator scandiumGen;
 
     /** Field that holds Lapis WorldGenMinable */
     protected WorldGenerator lapisGen;
@@ -171,6 +164,10 @@ public class BiomeDecorator
             this.redstoneGen = new WorldGenMinable(Blocks.redstone_ore.getDefaultState(), this.chunkProviderSettings.redstoneSize);
             this.diamondGen = new WorldGenMinable(Blocks.diamond_ore.getDefaultState(), this.chunkProviderSettings.diamondSize);
             this.lapisGen = new WorldGenMinable(Blocks.lapis_ore.getDefaultState(), this.chunkProviderSettings.lapisSize);
+            this.lazuriteGen = new WorldGenMinable(ScandiCraftBlocks.lazurite_ore.getDefaultState(), this.chunkProviderSettings.lazuriteSize);
+            this.pyriteGen = new WorldGenMinable(ScandiCraftBlocks.pyrite_ore.getDefaultState(), this.chunkProviderSettings.pyriteSize);
+            this.scandiumGen = new WorldGenMinable(ScandiCraftBlocks.scandium_ore.getDefaultState(), this.chunkProviderSettings.scandiumSize);
+
             this.genDecorations(p_180292_3_);
             this.currentWorld = null;
             this.randomGenerator = null;
@@ -491,5 +488,8 @@ public class BiomeDecorator
         this.genStandardOre1(this.chunkProviderSettings.redstoneCount, this.redstoneGen, this.chunkProviderSettings.redstoneMinHeight, this.chunkProviderSettings.redstoneMaxHeight);
         this.genStandardOre1(this.chunkProviderSettings.diamondCount, this.diamondGen, this.chunkProviderSettings.diamondMinHeight, this.chunkProviderSettings.diamondMaxHeight);
         this.genStandardOre2(this.chunkProviderSettings.lapisCount, this.lapisGen, this.chunkProviderSettings.lapisCenterHeight, this.chunkProviderSettings.lapisSpread);
+        this.genStandardOre1(this.chunkProviderSettings.lazuriteCount, this.lazuriteGen, this.chunkProviderSettings.lazuriteMinHeight, this.chunkProviderSettings.lazuriteMaxHeight);
+        this.genStandardOre1(this.chunkProviderSettings.pyriteCount, this.pyriteGen, this.chunkProviderSettings.pyriteMinHeight, this.chunkProviderSettings.pyriteMaxHeight);
+        this.genStandardOre1(this.chunkProviderSettings.scandiumCount, this.scandiumGen, this.chunkProviderSettings.scandiumMinHeight, this.chunkProviderSettings.scandiumMaxHeight);
     }
 }
