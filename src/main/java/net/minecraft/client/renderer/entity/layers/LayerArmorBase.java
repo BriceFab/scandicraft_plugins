@@ -12,8 +12,6 @@ import net.minecraft.util.ResourceLocation;
 import optifine.Config;
 import optifine.CustomItems;
 import optifine.Reflector;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import shadersmod.client.Shaders;
 import shadersmod.client.ShadersRender;
 
@@ -221,8 +219,8 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
             s = s.substring(i + 1);
         }
 
-        String s2 = String.format("%s:textures/models/armor/%s_layer_%d%s.png", new Object[]{s1, s, Integer.valueOf(p_getArmorResource_3_ == 2 ? 2 : 1), p_getArmorResource_4_ == null ? "" : String.format("_%s", new Object[]{p_getArmorResource_4_})});
-        s2 = Reflector.callString(Reflector.ForgeHooksClient_getArmorTexture, new Object[]{p_getArmorResource_1_, p_getArmorResource_2_, s2, Integer.valueOf(p_getArmorResource_3_), p_getArmorResource_4_});
+        String s2 = String.format("%s:textures/models/armor/%s_layer_%d%s.png", s1, s, p_getArmorResource_3_ == 2 ? 2 : 1, p_getArmorResource_4_ == null ? "" : String.format("_%s", new Object[]{p_getArmorResource_4_}));
+        s2 = Reflector.callString(Reflector.ForgeHooksClient_getArmorTexture, p_getArmorResource_1_, p_getArmorResource_2_, s2, p_getArmorResource_3_, p_getArmorResource_4_);
         ResourceLocation resourcelocation = (ResourceLocation) ARMOR_TEXTURE_RES_MAP.get(s2);
 
         if (resourcelocation == null) {
@@ -264,6 +262,30 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
 
             try {
                 field_178747_a[ItemArmor.ArmorMaterial.DIAMOND.ordinal()] = 5;
+            } catch (NoSuchFieldError var1) {
+                ;
+            }
+
+            try {
+                field_178747_a[ItemArmor.ArmorMaterial.LAZURITE.ordinal()] = 6;
+            } catch (NoSuchFieldError var1) {
+                ;
+            }
+
+            try {
+                field_178747_a[ItemArmor.ArmorMaterial.PYRITE.ordinal()] = 7;
+            } catch (NoSuchFieldError var1) {
+                ;
+            }
+
+            try {
+                field_178747_a[ItemArmor.ArmorMaterial.SCANDIUM.ordinal()] = 8;
+            } catch (NoSuchFieldError var1) {
+                ;
+            }
+
+            try {
+                field_178747_a[ItemArmor.ArmorMaterial.BLOODY.ordinal()] = 9;
             } catch (NoSuchFieldError var1) {
                 ;
             }

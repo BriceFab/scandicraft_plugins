@@ -15,6 +15,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.world.World;
+import net.scandicraft.items.register.ScandiCraftItems;
 
 import java.util.List;
 
@@ -204,23 +205,32 @@ public class ItemArmor extends Item {
         return itemStackIn;
     }
 
-    public static enum ArmorMaterial {
+    public enum ArmorMaterial {
         LEATHER("leather", 5, new int[]{1, 3, 2, 1}, 15),
         CHAIN("chainmail", 15, new int[]{2, 5, 4, 1}, 12),
         IRON("iron", 15, new int[]{2, 6, 5, 2}, 9),
         GOLD("gold", 7, new int[]{2, 5, 3, 1}, 25),
         DIAMOND("diamond", 33, new int[]{3, 8, 6, 3}, 10),
-        LAZURITE("lazurite", 33, new int[]{4, 9, 7, 4}, 10),
-        PYRITE("pyrite", 33, new int[]{5, 10, 8, 5}, 10),
-        SCANDIUM("scandium", 33, new int[]{6, 11, 9, 6}, 10),
-        BLOODY("bloody", 40, new int[]{8, 13, 11, 8}, 10);
+        LAZURITE("lazurite", 35, new int[]{4, 8, 6, 4}, 10),
+        PYRITE("pyrite", 45, new int[]{4, 8, 7, 4}, 10),
+        SCANDIUM("scandium", 50, new int[]{5, 9, 8, 5}, 10),
+        BLOODY("bloody", 70, new int[]{5, 9, 8, 5}, 12);
 
         private final String name;
+
+        /**
+         * Durabilité
+         */
         private final int maxDamageFactor;
+
+        /**
+         * Résitance
+         */
         private final int[] damageReductionAmountArray;
+
         private final int enchantability;
 
-        private ArmorMaterial(String name, int maxDamage, int[] reductionAmounts, int enchantability) {
+        ArmorMaterial(String name, int maxDamage, int[] reductionAmounts, int enchantability) {
             this.name = name;
             this.maxDamageFactor = maxDamage;
             this.damageReductionAmountArray = reductionAmounts;
@@ -240,7 +250,16 @@ public class ItemArmor extends Item {
         }
 
         public Item getRepairItem() {
-            return this == LEATHER ? Items.leather : (this == CHAIN ? Items.iron_ingot : (this == GOLD ? Items.gold_ingot : (this == IRON ? Items.iron_ingot : (this == DIAMOND ? Items.diamond : null))));
+            return
+                    this == LEATHER ? Items.leather :
+                            (this == CHAIN ? Items.iron_ingot :
+                                    (this == GOLD ? Items.gold_ingot :
+                                            (this == IRON ? Items.iron_ingot :
+                                                    (this == DIAMOND ? Items.diamond :
+                                                            (this == LAZURITE ? ScandiCraftItems.lazurite :
+                                                                    (this == PYRITE ? ScandiCraftItems.pyrite :
+                                                                            (this == SCANDIUM ? ScandiCraftItems.scandium :
+                                                                                    (this == BLOODY ? ScandiCraftItems.bloody_drip : null))))))));
         }
 
         public String getName() {

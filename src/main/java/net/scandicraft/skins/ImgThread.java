@@ -2,7 +2,6 @@ package net.scandicraft.skins;
 
 import net.scandicraft.config.Config;
 import net.scandicraft.logs.LogManagement;
-import org.apache.logging.log4j.LogManager;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -31,7 +30,7 @@ public class ImgThread extends Thread {
 
             this.skin.setBuffer(img);
         } catch (FileNotFoundException e) {
-            LogManager.getLogger().warn("[ScandiCraft] Skin not found for " + this.skin.getPseudo());
+            LogManagement.warn("Skin not found for " + this.skin.getPseudo());
         } catch (IOException e) {
             e.printStackTrace();
         }
