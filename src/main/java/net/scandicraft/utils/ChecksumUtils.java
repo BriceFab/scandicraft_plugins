@@ -3,7 +3,7 @@ package net.scandicraft.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Checksum {
+public class ChecksumUtils {
 
     public static String getSHA1(String fileContent) {
         try {

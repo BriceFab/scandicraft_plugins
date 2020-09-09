@@ -86,6 +86,7 @@ import net.scandicraft.ScandiCraftSession;
 import net.scandicraft.anti_cheat.x_ray.PackManager;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.config.Config;
+import net.scandicraft.config.SecurityConfig;
 import net.scandicraft.events.impl.ClientTickEvent;
 import net.scandicraft.events.impl.KeybordEvent;
 import net.scandicraft.events.impl.MouseEvent;
@@ -1902,7 +1903,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         SocketAddress socketaddress = this.theIntegratedServer.getNetworkSystem().addLocalEndpoint();
         NetworkManager networkmanager = NetworkManager.provideLocalClient(socketaddress);
         networkmanager.setNetHandler(new NetHandlerLoginClient(networkmanager, this, null));
-        networkmanager.sendPacket(new C00Handshake(Config.HANDSHAKE, socketaddress.toString(), 0, EnumConnectionState.LOGIN));
+        networkmanager.sendPacket(new C00Handshake(SecurityConfig.HANDSHAKE, socketaddress.toString(), 0, EnumConnectionState.LOGIN));
         networkmanager.sendPacket(new C00PacketLoginStart(this.getSession().getProfile()));
         this.myNetworkManager = networkmanager;
 

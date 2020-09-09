@@ -3,6 +3,7 @@ package net.scandicraft.gui.cheat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.scandicraft.Environnement;
 import net.scandicraft.config.Config;
 import net.scandicraft.anti_cheat.CheatType;
 import net.scandicraft.gui.buttons.helper.BaseButton;
@@ -46,7 +47,7 @@ public class CheatScreen extends GuiScreen {
 
     @Override
     public void onGuiClosed() {
-        if (Config.ENV == Config.ENVIRONNEMENT.PROD) {
+        if (Config.ENV == Environnement.PROD) {
             LogManagement.info("exit for cheating..");
             this.mc.shutdown();
         }

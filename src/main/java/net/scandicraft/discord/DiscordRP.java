@@ -4,6 +4,7 @@ import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.scandicraft.config.Config;
+import net.scandicraft.config.ServicesConfig;
 import net.scandicraft.logs.LogManagement;
 
 public class DiscordRP {
@@ -19,7 +20,7 @@ public class DiscordRP {
             update("Chargement..");
         }).build();
 
-        DiscordRPC.discordInitialize(Config.DISCORD_CLIENT_ID, handlers, true);
+        DiscordRPC.discordInitialize(ServicesConfig.DISCORD_CLIENT_ID, handlers, true);
 
         new Thread("Discord RPC Callback") {
             @Override

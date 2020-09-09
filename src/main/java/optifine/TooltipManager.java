@@ -6,6 +6,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiVideoSettings;
 import net.minecraft.client.settings.GameSettings;
+import net.scandicraft.Environnement;
 import net.scandicraft.config.Config;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.settings.IOptionsSettings;
@@ -104,7 +105,7 @@ public class TooltipManager {
         for (int i = 0; i < 10; ++i) {
             String s = p_getTooltipLines_0_ + ".tooltip." + (i + 1);
             String tooltipMessage = Lang.get(s, null);
-            if (Config.ENV == Config.ENVIRONNEMENT.DEV) {
+            if (Config.ENV == Environnement.DEV) {
 //                LogManagement.info("show exist tooltip: " + s);
                 if (tooltipMessage == null) {
                     LogManagement.warn("unable to find tooltip: " + s);

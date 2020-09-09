@@ -31,6 +31,7 @@ import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.*;
 import net.minecraft.world.border.WorldBorder;
+import net.scandicraft.Environnement;
 import net.scandicraft.overlay.GuiDebug;
 import optifine.Config;
 import optifine.CustomColors;
@@ -460,7 +461,7 @@ public class GuiIngame extends Gui {
 
     protected boolean showCrosshair() {
 // ScandiCraft show attack icon in F3
-        if (net.scandicraft.config.Config.ENV == net.scandicraft.config.Config.ENVIRONNEMENT.TEST && (this.mc.gameSettings.showDebugInfo && !this.mc.thePlayer.hasReducedDebug() && !this.mc.gameSettings.reducedDebugInfo)) {
+        if (net.scandicraft.config.Config.ENV == Environnement.TEST && (this.mc.gameSettings.showDebugInfo && !this.mc.thePlayer.hasReducedDebug() && !this.mc.gameSettings.reducedDebugInfo)) {
             return false;
         } else if (this.mc.playerController.isSpectator()) {
             if (this.mc.pointedEntity != null) {

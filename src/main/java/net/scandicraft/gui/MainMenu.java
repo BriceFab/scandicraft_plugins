@@ -6,6 +6,7 @@ import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import net.scandicraft.Environnement;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.config.Config;
 import net.scandicraft.config.Theme;
@@ -38,7 +39,7 @@ public class MainMenu extends GuiScreen implements GuiYesNoCallback {
         //scale auto
         mc.gameSettings.guiScale = 0;
 
-        if (Config.ENV == Config.ENVIRONNEMENT.DEV) {
+        if (Config.ENV == Environnement.DEV) {
             String string_multiplayer = "Dev";
             this.buttonList.add(new DefaultButton(1, 2, 2, this.fontRendererObj.getStringWidth(string_multiplayer) + 20, Theme.DEFAULT_BUTTON_HEIGHT, string_multiplayer));
             String string_localhost = "Local";

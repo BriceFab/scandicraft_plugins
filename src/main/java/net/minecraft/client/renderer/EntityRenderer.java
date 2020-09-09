@@ -47,6 +47,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.scandicraft.Environnement;
 import net.scandicraft.events.impl.RenderEvent;
 import optifine.*;
 import org.apache.logging.log4j.LogManager;
@@ -1572,7 +1573,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             }
 
             //ScandiCraft F3 disable show directs
-            if (net.scandicraft.config.Config.ENV == net.scandicraft.config.Config.ENVIRONNEMENT.TEST) {
+            if (net.scandicraft.config.Config.ENV == Environnement.TEST) {
                 this.renderWorldDirections(partialTicks);
             }
         }

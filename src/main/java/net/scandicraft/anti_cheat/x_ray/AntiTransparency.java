@@ -11,7 +11,7 @@ import net.scandicraft.anti_cheat.CheatConfig;
 import net.scandicraft.anti_cheat.CheatType;
 import net.scandicraft.gui.cheat.CheatScreen;
 import net.scandicraft.logs.LogManagement;
-import net.scandicraft.utils.Checksum;
+import net.scandicraft.utils.ChecksumUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -61,7 +61,7 @@ public class AntiTransparency implements Runnable {
 
                 // LogManagement.info("checksum " + model.getKey() + " " + Checksum.getSHA1(jsonModel.toString()) + " " + model.getValue());
 
-                if (!Objects.equals(Checksum.getSHA1(jsonModel.toString()), model.getValue())) {
+                if (!Objects.equals(ChecksumUtils.getSHA1(jsonModel.toString()), model.getValue())) {
                     return true;
                 }
             } catch (IOException e) {

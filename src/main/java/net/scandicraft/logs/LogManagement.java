@@ -1,5 +1,6 @@
 package net.scandicraft.logs;
 
+import net.scandicraft.Environnement;
 import net.scandicraft.config.Config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,7 +32,7 @@ public class LogManagement {
     }
 
     private static boolean canLog() {
-        return Config.ENV != Config.ENVIRONNEMENT.PROD;
+        return Config.ENV != Environnement.PROD;
     }
 
 }

@@ -2,6 +2,7 @@ package net.scandicraft.client;
 
 import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
+import net.scandicraft.Environnement;
 import net.scandicraft.ScandiCraftSession;
 import net.scandicraft.capacities.listeners.CapacitiesListener;
 import net.scandicraft.classes.ClasseManager;
@@ -42,7 +43,7 @@ public class ScandiCraftClient {
         }
         EventManager.register(new ModEventListeners());
 
-        if (Config.ENV == Config.ENVIRONNEMENT.DEV) {
+        if (Config.ENV == Environnement.DEV) {
             //Get Auth token
             ScandiCraftSession scandiCraftSession = Minecraft.getMinecraft().getScandiCraftSession();
             LoginEntity entity = new LoginEntity(scandiCraftSession.getUsername(), scandiCraftSession.getPassword());

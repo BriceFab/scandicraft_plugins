@@ -8,7 +8,7 @@ import net.minecraft.network.login.server.S00PacketDisconnect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
-import net.scandicraft.config.Config;
+import net.scandicraft.config.SecurityConfig;
 
 public class NetHandlerHandshakeTCP implements INetHandlerHandshakeServer
 {
@@ -33,15 +33,15 @@ public class NetHandlerHandshakeTCP implements INetHandlerHandshakeServer
             case LOGIN:
                 this.networkManager.setConnectionState(EnumConnectionState.LOGIN);
 
-                if (packetIn.getProtocolVersion() > Config.HANDSHAKE)
+                if (packetIn.getProtocolVersion() > SecurityConfig.HANDSHAKE)
                 {
-                    ChatComponentText chatcomponenttext = new ChatComponentText(Config.OUTDATED_MESSAGE);
+                    ChatComponentText chatcomponenttext = new ChatComponentText(SecurityConfig.OUTDATED_MESSAGE);
                     this.networkManager.sendPacket(new S00PacketDisconnect(chatcomponenttext));
                     this.networkManager.closeChannel(chatcomponenttext);
                 }
-                else if (packetIn.getProtocolVersion() < Config.HANDSHAKE)
+                else if (packetIn.getProtocolVersion() < SecurityConfig.HANDSHAKE)
                 {
-                    ChatComponentText chatcomponenttext1 = new ChatComponentText(Config.OUTDATED_MESSAGE);
+                    ChatComponentText chatcomponenttext1 = new ChatComponentText(SecurityConfig.OUTDATED_MESSAGE);
                     this.networkManager.sendPacket(new S00PacketDisconnect(chatcomponenttext1));
                     this.networkManager.closeChannel(chatcomponenttext1);
                 }

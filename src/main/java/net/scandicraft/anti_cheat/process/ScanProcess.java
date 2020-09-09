@@ -1,5 +1,6 @@
 package net.scandicraft.anti_cheat.process;
 
+import net.scandicraft.Environnement;
 import net.scandicraft.config.Config;
 import net.scandicraft.anti_cheat.CheatConfig;
 import net.scandicraft.anti_cheat.CheatType;
@@ -81,6 +82,6 @@ public class ScanProcess implements Runnable {
     }
 
     private boolean isDebug() {
-        return Config.ENV == Config.ENVIRONNEMENT.DEV;
+        return Config.ENV == Environnement.DEV;
     }
 }

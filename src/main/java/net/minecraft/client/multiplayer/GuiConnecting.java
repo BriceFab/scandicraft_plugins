@@ -12,8 +12,10 @@ import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
+import net.scandicraft.Environnement;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.config.Config;
+import net.scandicraft.config.SecurityConfig;
 import net.scandicraft.events.impl.ConnectServerEvent;
 import net.scandicraft.gui.buttons.helper.BaseButton;
 import net.scandicraft.logs.LogManagement;
@@ -52,7 +54,7 @@ public class GuiConnecting extends GuiScreen {
     }
 
     private void connect(final String ip, final int port, boolean must_use_scandicraft_client) {
-        if (Config.ENV == Config.ENVIRONNEMENT.DEV) {
+        if (Config.ENV == Environnement.DEV) {
             LogManagement.info("Connecting to server: " + ip + ":" + port);
         }
 
@@ -73,13 +75,13 @@ public class GuiConnecting extends GuiScreen {
                         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Zurich"));
                         int day = calendar.get(Calendar.DAY_OF_WEEK);
                         int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                        handshake_ip_packet = ip + "\0" + Config.AUTH_KEY + day + hour + "\0" + Minecraft.getMinecraft().getScandiCraftSession().getToken();
+                        handshake_ip_packet = ip + "\0" + SecurityConfig.AUTH_KEY + day + hour + "\0" + Minecraft.getMinecraft().getScandiCraftSession().getToken();
                     }
-                    GuiConnecting.this.networkManager.sendPacket(new C00Handshake(Config.HANDSHAKE, handshake_ip_packet, port, EnumConnectionState.LOGIN));
+                    GuiConnecting.this.networkManager.sendPacket(new C00Handshake(SecurityConfig.HANDSHAKE, handshake_ip_packet, port, EnumConnectionState.LOGIN));
                     GuiConnecting.this.networkManager.sendPacket(new C00PacketLoginStart(GuiConnecting.this.mc.getSession().getProfile()));
 
                     //ScandiCraft Packets : Send API auth token
-                    if (Config.SEND_AUTH_PACKET) {
+                    if (SecurityConfig.SEND_AUTH_PACKET) {
                         GuiConnecting.this.networkManager.sendPacket(new CPacketAuthToken());
                     }
 

@@ -3,7 +3,7 @@ package net.minecraft.client.multiplayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
-import net.scandicraft.config.Config;
+import net.scandicraft.config.SecurityConfig;
 
 public class ServerData
 {
@@ -24,7 +24,7 @@ public class ServerData
 
     /** last server ping that showed up in the server browser */
     public long pingToServer;
-    public int version = Config.HANDSHAKE;
+    public int version = SecurityConfig.HANDSHAKE;
 
     /** Game version for this server. */
     public String gameVersion = "1.8.8";
