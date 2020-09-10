@@ -12,6 +12,7 @@ import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.EnumChatFormatting;
 import net.scandicraft.Environnement;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.config.Config;
@@ -59,12 +60,6 @@ public class GuiConnecting extends GuiScreen {
             LogManagement.info("Connecting to server: " + ip + ":" + port);
         }
 
-        if (must_use_scandicraft_client) {
-            //Vérification du token côté client
-            boolean isExpired = VerifyToken.isExpired();
-            LogManagement.warn("token expired ? " + isExpired);
-        }
-
         (new Thread("Server Connector #" + CONNECTION_ID.incrementAndGet()) {
             public void run() {
                 InetAddress inetaddress = null;
@@ -72,6 +67,22 @@ public class GuiConnecting extends GuiScreen {
                 try {
                     if (GuiConnecting.this.cancel) {
                         return;
+                    }
+
+                    if (must_use_scandicraft_client) {
+                        //Vérification du token côté client (expiration)
+                        boolean isExpired = VerifyToken.isExpired();
+                        if (isExpired) {
+                            LogManagement.warn("token has expired");
+
+                            if (GuiConnecting.this.networkManager != null) {
+                                GuiConnecting.this.networkManager.closeChannel(new ChatComponentText("Aborted"));
+                            }
+
+                            GuiConnecting.this.mc.displayGuiScreen(new GuiDisconnected(GuiConnecting.this.previousGuiScreen, "connect.failed", new ChatComponentTranslation("disconnect.genericReason", EnumChatFormatting.RED + "Votre session a expiré, relancez le launcher.")));
+
+                            return;
+                        }
                     }
 
                     inetaddress = InetAddress.getByName(ip);
@@ -103,14 +114,19 @@ public class GuiConnecting extends GuiScreen {
                         return;
                     }
 
-                    GuiConnecting.logger.error("Couldn't connect to server", unknownhostexception);
-                    GuiConnecting.this.mc.displayGuiScreen(new GuiDisconnected(GuiConnecting.this.previousGuiScreen, "connect.failed", new ChatComponentTranslation("disconnect.genericReason", new Object[]{"Unknown host"})));
+                    if (Config.ENV == Environnement.DEV) {
+                        GuiConnecting.logger.error("Couldn't connect to server", unknownhostexception);
+                    }
+
+                    GuiConnecting.this.mc.displayGuiScreen(new GuiDisconnected(GuiConnecting.this.previousGuiScreen, "connect.failed", new ChatComponentTranslation("disconnect.genericReason", "Unknown host")));
                 } catch (Exception exception) {
                     if (GuiConnecting.this.cancel) {
                         return;
                     }
 
-                    GuiConnecting.logger.error((String) "Couldn\'t connect to server", (Throwable) exception);
+                    if (Config.ENV == Environnement.DEV) {
+                        GuiConnecting.logger.error("Couldn't connect to server", exception);
+                    }
                     String s = exception.toString();
 
                     if (inetaddress != null) {
@@ -118,7 +134,7 @@ public class GuiConnecting extends GuiScreen {
                         s = s.replaceAll(s1, "");
                     }
 
-                    GuiConnecting.this.mc.displayGuiScreen(new GuiDisconnected(GuiConnecting.this.previousGuiScreen, "connect.failed", new ChatComponentTranslation("disconnect.genericReason", new Object[]{s})));
+                    GuiConnecting.this.mc.displayGuiScreen(new GuiDisconnected(GuiConnecting.this.previousGuiScreen, "connect.failed", new ChatComponentTranslation("disconnect.genericReason", Config.ENV == Environnement.DEV ? s : "Couldn't connect to server")));
                 }
             }
         }).start();
