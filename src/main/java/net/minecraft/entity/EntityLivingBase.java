@@ -30,7 +30,6 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.scandicraft.blocks.register.ScandiCraftBlocks;
-import net.scandicraft.potions.ScandiPotion;
 
 import java.util.*;
 
@@ -997,7 +996,7 @@ public abstract class EntityLivingBase extends Entity {
         float f = potioneffect != null ? (float) (potioneffect.getAmplifier() + 1) : 0.0F;
         int damage = MathHelper.ceiling_float_int((distance - 3.0F - f) * damageMultiplier);
 
-        if (this.getActivePotionEffect(ScandiPotion.feather_falling) != null) {
+        if (this.getActivePotionEffect(Potion.feather_falling) != null) {
             //ScandiCraft potion no fall
             damage = 0;
         }

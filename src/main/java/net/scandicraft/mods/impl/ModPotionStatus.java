@@ -6,6 +6,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.scandicraft.gui.hud.ScreenPosition;
+import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.ModDraggable;
 
 import java.awt.*;
@@ -60,6 +61,11 @@ public class ModPotionStatus extends ModDraggable {
 
     private void renderPotion(PotionEffect potionEffect, int defaultPosY) {
         Potion potion = Potion.potionTypes[potionEffect.getPotionID()];
+        if (potion == null) {
+            LogManagement.warn("Potion " + potionEffect.getPotionID() + " is null");
+            return;
+        }
+
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(inventoryBackground);
 

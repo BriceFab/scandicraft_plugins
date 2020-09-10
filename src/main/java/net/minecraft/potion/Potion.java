@@ -13,6 +13,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 
+import java.awt.*;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -100,6 +101,11 @@ public class Potion {
      * The saturation Potion object.
      */
     public static final Potion saturation = (new PotionHealth(23, new ResourceLocation("saturation"), false, 16262179)).setPotionName("potion.saturation");
+
+    //ScandiCraft Start ID 24
+    public static final Potion feather_falling = (new Potion(24, new ResourceLocation("feather_falling"), false, Color.YELLOW.getRGB()))
+            .setIconIndex(3, 2)
+            .setPotionName("potion.feather_falling");
 
     /**
      * The Id of a Potion object.
