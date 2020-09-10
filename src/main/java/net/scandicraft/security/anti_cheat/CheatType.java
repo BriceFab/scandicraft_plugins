@@ -1,4 +1,4 @@
-package net.scandicraft.anti_cheat;
+package net.scandicraft.security.anti_cheat;
 
 public enum CheatType {
     XRAY("La triche est interdite sur ScandiCraft. Veuillez supprimer votre ressource pack X-RAY !"),

@@ -24,7 +24,7 @@ repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
@@ -36,7 +36,10 @@ dependencies {
 
     // Use all .jar files in lib dir as libraries
     compile fileTree(dir: 'run/libraries', include: ['*.jar'])
+
+    //Libraries implementation
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation 'com.auth0:java-jwt:3.10.3'
 }
 
 application {

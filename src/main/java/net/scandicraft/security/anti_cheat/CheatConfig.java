@@ -1,4 +1,4 @@
-package net.scandicraft.anti_cheat;
+package net.scandicraft.security.anti_cheat;
 
 import java.util.*;
 import java.util.stream.Collectors;

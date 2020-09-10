@@ -20,6 +20,7 @@ import net.scandicraft.events.impl.ConnectServerEvent;
 import net.scandicraft.gui.buttons.helper.BaseButton;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.packets.client.login.CPacketAuthToken;
+import net.scandicraft.security.jwt.VerifyToken;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -56,6 +57,12 @@ public class GuiConnecting extends GuiScreen {
     private void connect(final String ip, final int port, boolean must_use_scandicraft_client) {
         if (Config.ENV == Environnement.DEV) {
             LogManagement.info("Connecting to server: " + ip + ":" + port);
+        }
+
+        if (must_use_scandicraft_client) {
+            //Vérification du token côté client
+            boolean isExpired = VerifyToken.isExpired();
+            LogManagement.warn("token expired ? " + isExpired);
         }
 
         (new Thread("Server Connector #" + CONNECTION_ID.incrementAndGet()) {

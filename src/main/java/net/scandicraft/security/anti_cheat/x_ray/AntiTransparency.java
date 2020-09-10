@@ -1,4 +1,4 @@
-package net.scandicraft.anti_cheat.x_ray;
+package net.scandicraft.security.anti_cheat.x_ray;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -7,8 +7,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
-import net.scandicraft.anti_cheat.CheatConfig;
-import net.scandicraft.anti_cheat.CheatType;
+import net.scandicraft.security.anti_cheat.CheatConfig;
+import net.scandicraft.security.anti_cheat.CheatType;
 import net.scandicraft.gui.cheat.CheatScreen;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.utils.ChecksumUtils;

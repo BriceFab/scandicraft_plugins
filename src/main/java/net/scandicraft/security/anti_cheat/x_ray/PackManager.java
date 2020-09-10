@@ -1,4 +1,4 @@
-package net.scandicraft.anti_cheat.x_ray;
+package net.scandicraft.security.anti_cheat.x_ray;
 
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;

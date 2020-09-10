@@ -83,7 +83,7 @@ import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
 import net.scandicraft.ScandiCraftSession;
-import net.scandicraft.anti_cheat.x_ray.PackManager;
+import net.scandicraft.security.anti_cheat.x_ray.PackManager;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.config.Config;
 import net.scandicraft.config.SecurityConfig;

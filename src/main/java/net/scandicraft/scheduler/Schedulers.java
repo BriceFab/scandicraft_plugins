@@ -3,8 +3,8 @@ package net.scandicraft.scheduler;
 import net.minecraft.util.Util;
 import net.scandicraft.Environnement;
 import net.scandicraft.config.Config;
-import net.scandicraft.anti_cheat.CheatConfig;
-import net.scandicraft.anti_cheat.process.ScanProcess;
+import net.scandicraft.security.anti_cheat.CheatConfig;
+import net.scandicraft.security.anti_cheat.process.ScanProcess;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

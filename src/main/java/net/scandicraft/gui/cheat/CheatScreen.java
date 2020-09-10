@@ -5,7 +5,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.scandicraft.Environnement;
 import net.scandicraft.config.Config;
-import net.scandicraft.anti_cheat.CheatType;
+import net.scandicraft.security.anti_cheat.CheatType;
 import net.scandicraft.gui.buttons.helper.BaseButton;
 import net.scandicraft.logs.LogManagement;
 

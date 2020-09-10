@@ -1,7 +1,7 @@
 package net.scandicraft.mods.impl;
 
 import net.minecraft.client.Minecraft;
-import net.scandicraft.anti_cheat.auto_click.CheckAutoClick;
+import net.scandicraft.security.anti_cheat.auto_click.CheckAutoClick;
 import net.scandicraft.events.EventTarget;
 import net.scandicraft.events.impl.KeybordEvent;
 import net.scandicraft.events.impl.MouseEvent;

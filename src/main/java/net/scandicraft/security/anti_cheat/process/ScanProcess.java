@@ -1,11 +1,11 @@
-package net.scandicraft.anti_cheat.process;
+package net.scandicraft.security.anti_cheat.process;
 
 import net.scandicraft.Environnement;
 import net.scandicraft.config.Config;
-import net.scandicraft.anti_cheat.CheatConfig;
-import net.scandicraft.anti_cheat.CheatType;
 import net.scandicraft.gui.cheat.CheatScreen;
 import net.scandicraft.logs.LogManagement;
+import net.scandicraft.security.anti_cheat.CheatConfig;
+import net.scandicraft.security.anti_cheat.CheatType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,10 +13,10 @@ import java.io.InputStreamReader;
 
 public class ScanProcess implements Runnable {
 
-    private long startAt = 0L;
-
     @Override
     public void run() {
+        long startAt = 0L;
+
         if (isDebug()) {
             startAt = System.currentTimeMillis();
             LogManagement.info("Start scanning process");

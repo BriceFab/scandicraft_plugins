@@ -1,11 +1,11 @@
-package net.scandicraft.anti_cheat.auto_click;
+package net.scandicraft.security.anti_cheat.auto_click;
 
 import net.minecraft.client.Minecraft;
-import net.scandicraft.anti_cheat.CheatConfig;
-import net.scandicraft.anti_cheat.CheatType;
 import net.scandicraft.gui.cheat.CheatScreen;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.ModInstances;
+import net.scandicraft.security.anti_cheat.CheatConfig;
+import net.scandicraft.security.anti_cheat.CheatType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,25 +13,25 @@ import java.util.OptionalDouble;
 
 public class CheckAutoClick implements Runnable {
 
-    private final ArrayList<Integer> clicks_history = new ArrayList<>();         //historique des CPS
-    private final ArrayList<Boolean> keyDown_history = new ArrayList<>();        //historique des keyDown de l'attaque
-    private final ArrayList<Integer> suspectClick_history = new ArrayList<>();   //historique des clicks suspects
-    private final ArrayList<Long> time_history = new ArrayList<>();              //historique du délais entre chaque clicks
-    private final ArrayList<Integer> average_history = new ArrayList<>();        //historique des moyennes de délais entre chaque clicks
+    protected static final ArrayList<Integer> clicks_history = new ArrayList<>();         //historique des CPS
+    protected static final ArrayList<Boolean> keyDown_history = new ArrayList<>();        //historique des keyDown de l'attaque
+    protected static final ArrayList<Integer> suspectClick_history = new ArrayList<>();   //historique des clicks suspects
+    protected static final ArrayList<Long> time_history = new ArrayList<>();              //historique du délais entre chaque clicks
+    protected static final ArrayList<Integer> average_history = new ArrayList<>();        //historique des moyennes de délais entre chaque clicks
 
-    private int CURRENT_CPS = 0;
-    private boolean isButterfly = false;
+    protected static int CURRENT_CPS = 0;
+    protected static boolean isButterfly = false;
 
     @Override
     public void run() {
         if (CheatConfig.CHECK_AUTOCLICK) {
             long startAt = System.currentTimeMillis();
-            LogManagement.info("Start check autoclick..");
+            LogManagement.info("Start check autoclick.." + clicks_history.size());
 
             final int CPS = ModInstances.getModCPS().getCPS();
             final int FPS = Minecraft.getDebugFPS();
 
-            this.CURRENT_CPS = CPS;
+            CURRENT_CPS = CPS;
 
             this.minimalCPSCheck();
             if (FPS >= 20) {
@@ -49,8 +49,8 @@ public class CheckAutoClick implements Runnable {
         LogManagement.info("autoclick minimal check");
 
         //Check si le MAX CPS a été atteint
-        if (this.CURRENT_CPS >= CheatConfig.MAX_CPS) {
-            new CheatScreen(CheatType.AUTOCLICK);
+        if (CURRENT_CPS >= CheatConfig.MAX_CPS) {
+            CheatScreen.onDetectCheat(CheatType.AUTOCLICK);
         }
     }
 
@@ -63,7 +63,7 @@ public class CheckAutoClick implements Runnable {
 
         //TODO test analyse CPS que à partir de 8 CPS && FPS > 20
 
-        addClickHistory(this.CURRENT_CPS);
+        addClickHistory(CURRENT_CPS);
         boolean attackByMouse = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode() < 0; //souris = plus petit que 0
         boolean isSuspectClick = isSuspectClick();
         boolean isKeyDown = !attackByMouse || Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown() || !isSuspectClick;
@@ -72,7 +72,7 @@ public class CheckAutoClick implements Runnable {
         boolean hasIllegalDelta = addTimeHistory(System.currentTimeMillis());
 
         //debug
-        LogManagement.info("act CPS: " + this.CURRENT_CPS + " count: " + countHistoryZero() + " size:" + clicks_history.size());
+        LogManagement.info("act CPS: " + CURRENT_CPS + " count: " + countHistoryZero() + " size:" + clicks_history.size());
         LogManagement.info("LMB " + Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown() + " count: " + countHistoryDown() + " size:" + keyDown_history.size() + " currentHistory: " + (isKeyDown) + " attackByMouse: " + attackByMouse);
 
         //check if cheating
@@ -153,9 +153,9 @@ public class CheckAutoClick implements Runnable {
 
     private void addSuspectHistory(boolean isSuspectClick) {
         if (isSuspectClick) {
-            suspectClick_history.add(this.CURRENT_CPS);
+            suspectClick_history.add(CURRENT_CPS);
 
-            LogManagement.info("click suspect CPS:" + this.CURRENT_CPS + " total:" + suspectClick_history.size());
+            LogManagement.info("click suspect CPS:" + CURRENT_CPS + " total:" + suspectClick_history.size());
         } else {
             LogManagement.info("not suspect");
         }
@@ -266,10 +266,10 @@ public class CheckAutoClick implements Runnable {
             boolean current_down = Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown();
             int last_cps = clicks_history.get(clicks_history.size() - 2);
 
-            LogManagement.info("current_down: " + current_down + " last_cps: " + last_cps + " current CPS: " + this.CURRENT_CPS);
+            LogManagement.info("current_down: " + current_down + " last_cps: " + last_cps + " current CPS: " + CURRENT_CPS);
 
             //Si l'ancien CPS est le même et que l'actuel et que CPS == 0
-            if (!current_down && (last_cps != this.CURRENT_CPS || this.CURRENT_CPS == 0)) { //if (last_down == false && last_cps = current)
+            if (!current_down && (last_cps != CURRENT_CPS || CURRENT_CPS == 0)) { //if (last_down == false && last_cps = current)
                 return true;
             } else {
                 return false;
