@@ -48,6 +48,7 @@ public class BiomeDecorator
     protected WorldGenerator lazuriteGen;
     protected WorldGenerator pyriteGen;
     protected WorldGenerator scandiumGen;
+    protected WorldGenerator randomOreGen;
 
     /** Field that holds Lapis WorldGenMinable */
     protected WorldGenerator lapisGen;
@@ -167,6 +168,7 @@ public class BiomeDecorator
             this.lazuriteGen = new WorldGenMinable(ScandiCraftBlocks.lazurite_ore.getDefaultState(), this.chunkProviderSettings.lazuriteSize);
             this.pyriteGen = new WorldGenMinable(ScandiCraftBlocks.pyrite_ore.getDefaultState(), this.chunkProviderSettings.pyriteSize);
             this.scandiumGen = new WorldGenMinable(ScandiCraftBlocks.scandium_ore.getDefaultState(), this.chunkProviderSettings.scandiumSize);
+            this.randomOreGen = new WorldGenMinable(ScandiCraftBlocks.random_ore.getDefaultState(), this.chunkProviderSettings.randomOreSize);
 
             this.genDecorations(p_180292_3_);
             this.currentWorld = null;
@@ -491,5 +493,6 @@ public class BiomeDecorator
         this.genStandardOre1(this.chunkProviderSettings.lazuriteCount, this.lazuriteGen, this.chunkProviderSettings.lazuriteMinHeight, this.chunkProviderSettings.lazuriteMaxHeight);
         this.genStandardOre1(this.chunkProviderSettings.pyriteCount, this.pyriteGen, this.chunkProviderSettings.pyriteMinHeight, this.chunkProviderSettings.pyriteMaxHeight);
         this.genStandardOre1(this.chunkProviderSettings.scandiumCount, this.scandiumGen, this.chunkProviderSettings.scandiumMinHeight, this.chunkProviderSettings.scandiumMaxHeight);
+        this.genStandardOre1(this.chunkProviderSettings.randomOreCount, this.randomOreGen, this.chunkProviderSettings.randomOreMinHeight, this.chunkProviderSettings.randomOreMaxHeight);
     }
 }

@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.scandicraft.blocks.register.ScandiCraftBlocks;
 
 import java.util.Random;
 
@@ -75,7 +76,7 @@ public class BlockOre extends Block {
 
             if (this == Blocks.coal_ore) {
                 i = MathHelper.getRandomIntegerInRange(worldIn.rand, 0, 2);
-            } else if (this == Blocks.diamond_ore) {
+            } else if (this == Blocks.diamond_ore || this == ScandiCraftBlocks.lazurite_ore || this == ScandiCraftBlocks.pyrite_ore || this == ScandiCraftBlocks.scandium_ore) {
                 i = MathHelper.getRandomIntegerInRange(worldIn.rand, 3, 7);
             } else if (this == Blocks.emerald_ore) {
                 i = MathHelper.getRandomIntegerInRange(worldIn.rand, 3, 7);
