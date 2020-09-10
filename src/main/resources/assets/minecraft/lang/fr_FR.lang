@@ -2597,3 +2597,6 @@ item.dripBloody.name=§4Goutte de sang
 
 item.scandiVote.name=§6Clé ScandiVote
 item.scandiBox.name=§dClé ScandiBox
+
+#Potions
+potion.feather_falling=§fAnti-chute

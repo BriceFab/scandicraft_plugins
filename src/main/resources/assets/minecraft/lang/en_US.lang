@@ -2760,3 +2760,6 @@ item.dripBloody.name=§4Bloody Drip
 
 item.scandiVote.name=§6ScandiVote Key
 item.scandiBox.name=§dScandiBox Key
+
+#Potions
+potion.feather_falling=§fAnti-fall

@@ -79,6 +79,10 @@ public class GuiMainSettings extends GuiScreen {
      */
     protected void actionPerformed(BaseButton button) throws IOException {
         if (button.enabled) {
+
+            //TODO add settings change mc font
+//            mc.fontRendererObj = Fonts.fontNormal;
+
             if (button instanceof BooleanButton) {
                 ScandiCraftSettings.Options actOption = ((BooleanButton) button).getOption();
                 if (actOption.isBoolean()) {

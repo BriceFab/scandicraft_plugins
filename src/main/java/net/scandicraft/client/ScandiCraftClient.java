@@ -1,8 +1,8 @@
 package net.scandicraft.client;
 
 import com.google.gson.JsonObject;
-import net.minecraft.client.Minecraft;
 import net.scandicraft.Environnement;
+import net.scandicraft.MinecraftInstance;
 import net.scandicraft.ScandiCraftSession;
 import net.scandicraft.capacities.listeners.CapacitiesListener;
 import net.scandicraft.classes.ClasseManager;
@@ -23,7 +23,7 @@ import net.scandicraft.mods.listeners.ModEventListeners;
 import net.scandicraft.scheduler.Schedulers;
 import net.scandicraft.settings.FileManager;
 
-public class ScandiCraftClient {
+public class ScandiCraftClient extends MinecraftInstance {
 
     private static final ScandiCraftClient INSTANCE = new ScandiCraftClient();
     private final DiscordRP discordRP = new DiscordRP();
@@ -45,7 +45,7 @@ public class ScandiCraftClient {
 
         if (Config.ENV == Environnement.DEV) {
             //Get Auth token
-            ScandiCraftSession scandiCraftSession = Minecraft.getMinecraft().getScandiCraftSession();
+            ScandiCraftSession scandiCraftSession = mc.getScandiCraftSession();
             LoginEntity entity = new LoginEntity(scandiCraftSession.getUsername(), scandiCraftSession.getPassword());
 
             HTTPClient httpClient = new HTTPClient();
@@ -64,10 +64,15 @@ public class ScandiCraftClient {
     public void start() {
         LogManagement.info("ScandiCraft client start");
 
+        //Load custom fonts
+        Fonts.loadFonts();
+
+        //Change MC Fonts
+        mc.fontRendererObj = Fonts.fontNormal;
+
         ModInstances.register(HUDManager.getInstance());
 
         eventManager = new net.scandicraft.events.ccbluex.EventManager();
-        Fonts.loadFonts();
 
         schedulers.registerAll();
 

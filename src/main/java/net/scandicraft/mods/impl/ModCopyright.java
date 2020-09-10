@@ -27,6 +27,6 @@ public class ModCopyright extends ModDraggable {
 
     @Override
     public void render(ScreenPosition pos) {
-        mc.fontRendererObj.drawString(Config.SC_COPYRIGHT, 10, 10, -1);
+        mc.fontRendererObj.drawString(Config.SC_COPYRIGHT, pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
     }
 }
