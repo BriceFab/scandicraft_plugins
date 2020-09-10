@@ -10,7 +10,7 @@ import java.util.List;
 public class Config {
 
     /* Variables */
-    public static final String VERSION = "v1.0.2";
+    public static final String VERSION = "v1.0.3";
     public static final Environnement ENV = Environnement.DEV;
     public static final String SERVER_NAME = "ScandiCraft";
     public static final String SC_COPYRIGHT = "ScandiCraft-mc.fr";

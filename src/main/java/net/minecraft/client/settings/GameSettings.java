@@ -15,6 +15,8 @@ import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.network.play.client.C15PacketClientSettings;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumDifficulty;
+import net.scandicraft.logs.LogManagement;
+import net.scandicraft.radio.RadioPlayer;
 import net.scandicraft.settings.IOptionsSettings;
 import net.scandicraft.settings.KeyBindingType;
 import optifine.*;
@@ -1009,9 +1011,22 @@ public class GameSettings {
         return this.mapSoundLevels.containsKey(p_151438_1_) ? (Float) this.mapSoundLevels.get(p_151438_1_) : 1.0F;
     }
 
-    public void setSoundLevel(SoundCategory p_151439_1_, float p_151439_2_) {
-        this.mc.getSoundHandler().setSoundLevel(p_151439_1_, p_151439_2_);
-        this.mapSoundLevels.put(p_151439_1_, p_151439_2_);
+    public void setSoundLevel(SoundCategory soundCategory, float volume) {
+        this.mc.getSoundHandler().setSoundLevel(soundCategory, volume);
+        this.mapSoundLevels.put(soundCategory, volume);
+
+        //ScandiCraft callback for radio volume
+        if (soundCategory.equals(SoundCategory.RADIO)) {
+            RadioPlayer radioPlayer = RadioPlayer.getInstance();
+            if (radioPlayer.isPlaying()) {
+                LogManagement.warn("Radio set volume " + volume);
+                if (volume > 0.0F) {
+                    radioPlayer.setVolume(volume);
+                } else {
+                    radioPlayer.stop();
+                }
+            }
+        }
     }
 
     /**

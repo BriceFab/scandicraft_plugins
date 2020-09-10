@@ -20,7 +20,9 @@ import net.scandicraft.http.entity.LoginEntity;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.ModInstances;
 import net.scandicraft.mods.listeners.ModEventListeners;
+import net.scandicraft.radio.TestRadio;
 import net.scandicraft.scheduler.Schedulers;
+import net.scandicraft.security.reflexion.ReflexionSecurity;
 import net.scandicraft.settings.FileManager;
 
 public class ScandiCraftClient extends MinecraftInstance {
@@ -32,6 +34,11 @@ public class ScandiCraftClient extends MinecraftInstance {
 
     public void init() {
         LogManagement.info("init ScandiCraft Client");
+
+        //Reflexion security
+        if (Config.ENV == Environnement.TEST) {
+            System.setSecurityManager(new ReflexionSecurity());
+        }
 
         discordRP.start();
         FileManager.init();
@@ -80,6 +87,8 @@ public class ScandiCraftClient extends MinecraftInstance {
             //Temp set classe
             ClasseManager.getInstance().setPlayerClasse(new Archer());
         }
+
+        TestRadio.test();
     }
 
     public void shutDown() {
