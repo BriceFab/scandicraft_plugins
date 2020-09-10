@@ -2529,3 +2529,71 @@ scandicraft.options.hud.potion=Potions HUD
 scandicraft.options.hud.keystroke=Keystroke HUD
 scandicraft.options.hud.compass=Compas HUD
 scandicraft.options.hud.toggle=Toggle Sprint/Sneak HUD
+
+#Armures & outils
+item.helmetLazurite.name=§1Casque en lazurite
+item.chestplateLazurite.name=§1Plastron en lazurite
+item.leggingsLazurite.name=§1Jambières en lazurite
+item.bootsLazurite.name=§1Bottes en lazurite
+item.swordLazurite.name=§1Épée en lazurite
+item.pickaxeLazurite.name=§1Pioche en lazurite
+item.hatchetLazurite.name=§1Hache en lazurite
+item.shovelLazurite.name=§1Pelle en lazurite
+item.hoeLazurite.name=§1Houe en lazurite
+
+item.helmetPyrite.name=§eCasque en pyrite
+item.chestplatePyrite.name=§ePlastron en pyrite
+item.leggingsPyrite.name=§eJambières en pyrite
+item.bootsPyrite.name=§eBottes en pyrite
+item.swordPyrite.name=§eÉpée en pyrite
+item.pickaxePyrite.name=§ePioche en pyrite
+item.hatchetPyrite.name=§eHache en pyrite
+item.shovelPyrite.name=§ePelle en pyrite
+item.hoePyrite.name=§eHoue en pyrite
+
+item.helmetScandium.name=§5Casque en scandium
+item.chestplateScandium.name=§5Plastron en scandium
+item.leggingsScandium.name=§5Jambières en scandium
+item.bootsScandium.name=§5Bottes en scandium
+item.swordScandium.name=§5Épée en scandium
+item.pickaxeScandium.name=§5Pioche en scandium
+item.hatchetScandium.name=§5Hache en scandium
+item.shovelScandium.name=§5Pelle en scandium
+item.hoeScandium.name=§5Houe en scandium
+item.scandiumBow.name=§5Arc en scandium
+
+item.helmetBloody.name=§4Casque de sang
+item.chestplateBloody.name=§4Plastron de sang
+item.leggingsBloody.name=§4Jambières de sang
+item.bootsBloody.name=§4Bottes de sang
+item.swordBloody.name=§4Épée de sang
+
+#Blocks
+tile.oreLazurite.name=§1Minerai de lazurite
+tile.blockLazurite.name=§1Bloc de lazurite
+
+tile.orePyrite.name=§eMinerai de pyrite
+tile.blockPyrite.name=§eBloc de pyrite
+
+tile.oreScandium.name=§5Minerai de scandium
+tile.blockScandium.name=§5Bloc de scandium
+
+tile.oreRandom.name=§bMinerais aléatoires
+
+tile.chestPyrite.name=§eCoffre en pyrite
+tile.ladderLazurite.name=§1Échelle en lazurite
+tile.light.name=§bLumière invisible
+tile.dungeon_spawner.name=§bSpawner des donjons
+
+#Items
+item.scepterCreeper.name=§2Sceptre de creeper
+item.scepterRepair.name=§dSceptre de réparation
+item.scepterFalling.name=§fSceptre anti-chute
+item.scepter_capacity.name=§bSceptre de capacités
+
+item.piePyrite.name=§eTarte en pyrite
+item.breadLazurite.name=§1Pain en lazurite
+item.dripBloody.name=§4Goutte de sang
+
+item.scandiVote.name=§6Clé ScandiVote
+item.scandiBox.name=§dClé ScandiBox

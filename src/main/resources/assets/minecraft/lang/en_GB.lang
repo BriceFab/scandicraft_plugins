@@ -2526,3 +2526,71 @@ scandicraft.options.hud.potion=Potions HUD
 scandicraft.options.hud.keystroke=Keystroke HUD
 scandicraft.options.hud.compass=Compass HUD
 scandicraft.options.hud.toggle=Toggle Sprint/Sneak HUD
+
+#Armures & outils
+item.helmetLazurite.name=§1Lazurite Helmet
+item.chestplateLazurite.name=§1Lazurite Chestplate
+item.leggingsLazurite.name=§1Lazurite Leggings
+item.bootsLazurite.name=§1Lazurite Boots
+item.swordLazurite.name=§1Lazurite Sword
+item.pickaxeLazurite.name=§1Lazurite Pickaxe
+item.hatchetLazurite.name=§1Lazurite Axe
+item.shovelLazurite.name=§1Lazurite Shovel
+item.hoeLazurite.name=§1Lazurite Hoe
+
+item.helmetPyrite.name=§ePyrite Helmet
+item.chestplatePyrite.name=§ePyrite Chestplate
+item.leggingsPyrite.name=§ePyrite Leggings
+item.bootsPyrite.name=§ePyrite Boots
+item.swordPyrite.name=§ePyrite Sword
+item.pickaxePyrite.name=§ePyrite Pickaxe
+item.hatchetPyrite.name=§ePyrite Axe
+item.shovelPyrite.name=§ePyrite Shovel
+item.hoePyrite.name=§ePyrite Hoe
+
+item.helmetScandium.name=§5Scandium Helmet
+item.chestplateScandium.name=§5Scandium Chestplate
+item.leggingsScandium.name=§5Scandium Leggings
+item.bootsScandium.name=§5Scandium Boots
+item.swordScandium.name=§5Scandium Sword
+item.pickaxeScandium.name=§5Scandium Pickaxe
+item.hatchetScandium.name=§5Scandium Axe
+item.shovelScandium.name=§5Scandium Shovel
+item.hoeScandium.name=§5Scandium Hoe
+item.scandiumBow.name=§5Scandium Bow
+
+item.helmetBloody.name=§4Bloody Helmet
+item.chestplateBloody.name=§4Bloody Chestplate
+item.leggingsBloody.name=§4Bloody Leggings
+item.bootsBloody.name=§4Bloody Boots
+item.swordBloody.name=§4Bloody Sword
+
+#Blocks
+tile.oreLazurite.name=§1Lazurite Ore
+tile.blockLazurite.name=§1Lazurite Block
+
+tile.orePyrite.name=§ePyrite Ore
+tile.blockPyrite.name=§ePyrite Block
+
+tile.oreScandium.name=§5Scandium Ore
+tile.blockScandium.name=§5Scandium Block
+
+tile.oreRandom.name=§bRandom Ore
+
+tile.chestPyrite.name=§ePyrite Cjest
+tile.ladderLazurite.name=§1Lazurite Ladder
+tile.light.name=§bInvisible Light
+tile.dungeon_spawner.name=§bDungeon Spawner
+
+#Items
+item.scepterCreeper.name=§2Creeper Scepter
+item.scepterRepair.name=§dRepair Scepter
+item.scepterFalling.name=§fAnti-fall Scepter
+item.scepter_capacity.name=§bCapacity Scepter
+
+item.piePyrite.name=§ePyrite Pie
+item.breadLazurite.name=§1Lazurite Bread
+item.dripBloody.name=§4Bloody Drip
+
+item.scandiVote.name=§6ScandiVote Key
+item.scandiBox.name=§dScandiBox Key
