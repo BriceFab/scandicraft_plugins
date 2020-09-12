@@ -12,13 +12,6 @@ public class ColorsUtils {
         return new Color(r, g, b, (float) alpha).getRGB();
     }
 
-    public static Color rainbow(final long offset, final float fade) {
-        final float hue = (System.nanoTime() + offset) / 1.0E10f % 1.0f;
-        final long color = Long.parseLong(Integer.toHexString(Color.HSBtoRGB(hue, 1.0f, 1.0f)), 16);
-        final Color c = new Color((int) color);
-        return new Color(c.getRed() / 255.0f * fade, c.getGreen() / 255.0f * fade, c.getBlue() / 255.0f * fade, c.getAlpha() / 255.0f);
-    }
-
     public static float[] getRGBA(final int color) {
         final float a = (color >> 24 & 0xFF) / 255.0f;
         final float r = (color >> 16 & 0xFF) / 255.0f;
@@ -154,6 +147,58 @@ public class ColorsUtils {
         float g = ((float) 1 / 255) * c.getGreen();
         float b = ((float) 1 / 255) * c.getBlue();
         return new Color(r, g, b, alpha).getRGB();
+    }
+
+
+    public static String hsvToRgb(float hue, float saturation, float value) {
+        int h = (int) (hue * 6);
+        float f = hue * 6 - h;
+        float p = value * (1 - saturation);
+        float q = value * (1 - f * saturation);
+        float t = value * (1 - (1 - f) * saturation);
+
+        switch (h) {
+            case 0:
+                return rgbToString(value, t, p);
+            case 1:
+                return rgbToString(q, value, p);
+            case 2:
+                return rgbToString(p, value, t);
+            case 3:
+                return rgbToString(p, q, value);
+            case 4:
+                return rgbToString(t, p, value);
+            case 5:
+                return rgbToString(value, p, q);
+            default:
+                throw new RuntimeException("Something went wrong when converting from HSV to RGB. Input was " + hue + ", " + saturation + ", " + value);
+        }
+    }
+
+    public static String rgbToString(float r, float g, float b) {
+        String rs = Integer.toHexString((int) (r * 256));
+        String gs = Integer.toHexString((int) (g * 256));
+        String bs = Integer.toHexString((int) (b * 256));
+        return rs + gs + bs;
+    }
+
+    public static Color rainbow(final long offset, final float fade) {
+        final float hue = (System.nanoTime() + offset) / 1.0E10f % 1.0f;
+        final long color = Long.parseLong(Integer.toHexString(Color.HSBtoRGB(hue, 1.0f, 1.0f)), 16);
+        final Color c = new Color((int) color);
+        return new Color(c.getRed() / 255.0f * fade, c.getGreen() / 255.0f * fade, c.getBlue() / 255.0f * fade, c.getAlpha() / 255.0f);
+    }
+
+    public static Color rainbow() {
+        Color currentColor = new Color(Color.HSBtoRGB((System.nanoTime() + 400000L) / 10000000000F % 1, 1F, 1F));
+        return new Color(currentColor.getRed() / 255F * 1F, currentColor.getGreen() / 255f * 1F, currentColor.getBlue() / 255F * 1F, currentColor.getAlpha() / 255F);
+    }
+
+    public static Color rainbow(float fade) {
+        float hue = (float) (System.nanoTime() / 5000000000f) % 1;
+        long color = Long.parseLong(Integer.toHexString(Color.HSBtoRGB(hue, 1f, 1f)), 16);
+        Color c = new Color((int) color);
+        return new Color((c.getRed() / 255f) * fade, (c.getGreen() / 255f) * fade, (c.getBlue() / 255f) * fade, c.getAlpha() / 255f);
     }
 
 }

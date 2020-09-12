@@ -1,7 +1,6 @@
 package net.scandicraft.gui;
 
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiShareToLan;
 import net.minecraft.client.gui.achievement.GuiAchievements;
@@ -49,17 +48,11 @@ public class IngameMenu extends GuiScreen {
                 break;
 
             case 1:
-                boolean flag = this.mc.isIntegratedServerRunning();
                 button.enabled = false;
                 this.mc.theWorld.sendQuittingDisconnectingPacket();
                 this.mc.loadWorld(null);
 
-                if (flag) {
-                    this.mc.displayGuiScreen(new MainMenu());
-                } else {
-                    this.mc.displayGuiScreen(new GuiMultiplayer(new MainMenu()));
-                }
-
+                this.mc.displayGuiScreen(new MainMenu());
             case 2:
             case 3:
             default:

@@ -18,13 +18,16 @@ import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.config.Config;
 import net.scandicraft.config.SecurityConfig;
 import net.scandicraft.events.impl.ConnectServerEvent;
+import net.scandicraft.fonts.Fonts;
 import net.scandicraft.gui.buttons.helper.BaseButton;
 import net.scandicraft.logs.LogManagement;
 import net.scandicraft.packets.client.login.CPacketAuthToken;
 import net.scandicraft.security.jwt.VerifyToken;
+import net.scandicraft.utils.DrawUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -191,10 +194,12 @@ public class GuiConnecting extends GuiScreen {
         this.drawDefaultBackground();
 
         if (this.networkManager == null) {
-            this.drawCenteredString(this.fontRendererObj, I18n.format("connect.connecting", new Object[0]), this.width / 2, this.height / 2 - 50, 16777215);
+            this.drawCenteredString(Fonts.fontSemiBold, I18n.format("connect.connecting"), this.width / 2, this.height / 2 - 50, 16777215);
         } else {
-            this.drawCenteredString(this.fontRendererObj, I18n.format("connect.authorizing", new Object[0]), this.width / 2, this.height / 2 - 50, 16777215);
+            this.drawCenteredString(Fonts.fontSemiBold, I18n.format("connect.authorizing"), this.width / 2, this.height / 2 - 50, 16777215);
         }
+
+        DrawUtils.loader((float) this.width / 2, (float) this.height / 2, 15, Color.WHITE.getRGB());
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
