@@ -2586,6 +2586,10 @@ tile.light.name=§bLumière invisible
 tile.dungeon_spawner.name=§bSpawner des donjons
 
 #Items
+item.lazurite.name=§1Lazurite
+item.pyrite.name=§ePyrite
+item.scandium.name=§5Scandium
+
 item.scepterCreeper.name=§2Sceptre de creeper
 item.scepterRepair.name=§dSceptre de réparation
 item.scepterFalling.name=§fSceptre anti-chute

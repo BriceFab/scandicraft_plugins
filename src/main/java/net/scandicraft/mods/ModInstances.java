@@ -1,5 +1,6 @@
 package net.scandicraft.mods;
 
+import net.scandicraft.Environnement;
 import net.scandicraft.config.Config;
 import net.scandicraft.gui.hud.HUDManager;
 import net.scandicraft.mods.impl.*;
@@ -54,6 +55,11 @@ public class ModInstances {
         modCapacities = new ModCapacities();
         modCapacities.setEnabled(Config.DEMO_PLAYER_CLASSE);    //si démo, enabled sinon disabled
         api.register(modCapacities);
+
+        if (Config.ENV == Environnement.DEV) {
+            ModTests modTests = new ModTests();
+            api.register(modTests);
+        }
     }
 
     public static ModToggleSprintSneak getModToggleSprintSneak() {
