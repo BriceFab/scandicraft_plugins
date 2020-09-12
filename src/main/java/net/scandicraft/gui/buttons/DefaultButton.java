@@ -8,7 +8,7 @@ import net.scandicraft.config.Theme;
 import net.scandicraft.fonts.Fonts;
 import net.scandicraft.fonts.GameFontRenderer;
 import net.scandicraft.gui.buttons.helper.BaseButton;
-import net.scandicraft.render.RenderUtils;
+import net.scandicraft.utils.RenderUtils;
 
 import java.awt.*;
 

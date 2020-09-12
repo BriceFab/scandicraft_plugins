@@ -7,9 +7,9 @@ import net.minecraft.client.resources.IResourceManager
 import net.minecraft.util.ResourceLocation
 import net.scandicraft.client.ScandiCraftClient
 import net.scandicraft.events.ccbluex.TextEvent
-import net.scandicraft.render.RenderUtils
 import net.scandicraft.utils.ClassUtils
 import net.scandicraft.utils.ColorUtils
+import net.scandicraft.utils.RenderUtils
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.awt.Font

@@ -147,7 +147,11 @@ public class RadioAudioDevice extends JavaSoundAudioDevice {
     public boolean setLineGain(float gain) {
         if (source != null && source.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
             FloatControl floatControl = (FloatControl) source.getControl(FloatControl.Type.MASTER_GAIN);
-            floatControl.setValue((gain + 1.0F) / 2.0F * (floatControl.getMaximum() - floatControl.getMinimum()) + floatControl.getMinimum());
+
+            //(max - min) * x% + min
+//            float newVolume = (floatControl.getMaximum() - floatControl.getMinimum()) * (gain) + floatControl.getMinimum();
+            float newVolume = (gain + 1.0F) / 2.0F * (floatControl.getMaximum() - floatControl.getMinimum()) + floatControl.getMinimum();
+            floatControl.setValue(newVolume);
 
             return true;
         }

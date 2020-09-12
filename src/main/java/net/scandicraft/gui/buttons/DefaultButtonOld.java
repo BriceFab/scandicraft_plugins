@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.scandicraft.config.Theme;
 import net.scandicraft.fonts.Fonts;
 import net.scandicraft.fonts.GameFontRenderer;
-import net.scandicraft.render.RenderUtils;
+import net.scandicraft.utils.RenderUtils;
 
 import java.awt.*;
 

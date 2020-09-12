@@ -1,6 +1,8 @@
-package net.scandicraft.render;
+package net.scandicraft.utils;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -12,15 +14,14 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Timer;
+import net.minecraft.util.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.scandicraft.MinecraftInstance;
 import net.scandicraft.blocks.BlockUtils;
+import org.lwjgl.opengl.GL11;
 
+import javax.vecmath.Vector3d;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -524,5 +525,470 @@ public final class RenderUtils extends MinecraftInstance {
             glEnable(cap);
         else
             glDisable(cap);
+    }
+
+    public static void box(Entity e, int color) {
+        float var11 = (float) (color >> 24 & 255) / 255.0F;
+        float var6 = (float) (color >> 16 & 255) / 255.0F;
+        float var7 = (float) (color >> 8 & 255) / 255.0F;
+        float var8 = (float) (color & 255) / 255.0F;
+        Tessellator var9 = Tessellator.getInstance();
+        WorldRenderer t = var9.getWorldRenderer();
+
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+
+        GlStateManager.color(var6, var7, var8, var11);
+
+        double[] pos = entityRenderPos(e);
+
+        AxisAlignedBB bb = e.getEntityBoundingBox();
+        AxisAlignedBB aa = new AxisAlignedBB(bb.minX - e.posX + pos[0], bb.minY - e.posY + pos[1], bb.minZ - e.posZ + pos[2], bb.maxX - e.posX + pos[0], bb.maxY - e.posY + pos[1], bb.maxZ - e.posZ + pos[2]);
+
+        int draw = 7;
+        cubeFill(draw, aa.minX, aa.minY, aa.minZ, aa.maxX, aa.maxY, aa.maxZ, new float[]{0, -e.rotationYaw, 0}, new boolean[]{true, true, true, true, true, true});
+
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+    }
+
+    public static void boxOutline(Entity e, int color) {
+        float var11 = (float) (color >> 24 & 255) / 255.0F;
+        float var6 = (float) (color >> 16 & 255) / 255.0F;
+        float var7 = (float) (color >> 8 & 255) / 255.0F;
+        float var8 = (float) (color & 255) / 255.0F;
+        Tessellator var9 = Tessellator.getInstance();
+        WorldRenderer t = var9.getWorldRenderer();
+
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glLineWidth(1f);
+
+        GlStateManager.color(var6, var7, var8, var11);
+
+        double[] pos = entityRenderPos(e);
+
+        AxisAlignedBB bb = e.getEntityBoundingBox();
+        AxisAlignedBB aa = new AxisAlignedBB(bb.minX - e.posX + pos[0], bb.minY - e.posY + pos[1], bb.minZ - e.posZ + pos[2], bb.maxX - e.posX + pos[0], bb.maxY - e.posY + pos[1], bb.maxZ - e.posZ + pos[2]);
+
+        int draw = 1;
+        cubeOutline(draw, aa.minX, aa.minY, aa.minZ, aa.maxX, aa.maxY, aa.maxZ, new float[]{0, -e.rotationYaw, 0}, new boolean[]{true, true, true, true, true, true});
+
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+    }
+
+    public static void boxFilled(Entity e, int outline, int fill) {
+        box(e, outline);
+        boxOutline(e, fill);
+    }
+
+    public static void block(BlockPos bp, int color, int drawMode, boolean[] faces) {
+        float var11 = (float) (color >> 24 & 255) / 255.0F;
+        float var6 = (float) (color >> 16 & 255) / 255.0F;
+        float var7 = (float) (color >> 8 & 255) / 255.0F;
+        float var8 = (float) (color & 255) / 255.0F;
+
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glLineWidth(1f);
+
+        GlStateManager.color(var6, var7, var8, var11);
+
+        AxisAlignedBB aa = new AxisAlignedBB(bp, bp.offset(EnumFacing.SOUTH).offset(EnumFacing.EAST).offset(EnumFacing.UP)).offset(-mc.getRenderManager().viewerPosX, -mc.getRenderManager().viewerPosY, -mc.getRenderManager().viewerPosZ);
+
+        if (drawMode == 7) {
+            cubeFill(drawMode, aa.minX, aa.minY, aa.minZ, aa.maxX, aa.maxY, aa.maxZ, new float[]{0, 0, 0}, faces);
+        } else {
+            cubeOutline(drawMode, aa.minX, aa.minY, aa.minZ, aa.maxX, aa.maxY, aa.maxZ, new float[]{0, 0, 0}, faces);
+        }
+
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+    }
+
+    public static void blockBB(Block b, BlockPos bp, double expand, int color, int drawMode, boolean[] faces) {
+        float var11 = (float) (color >> 24 & 255) / 255.0F;
+        float var6 = (float) (color >> 16 & 255) / 255.0F;
+        float var7 = (float) (color >> 8 & 255) / 255.0F;
+        float var8 = (float) (color & 255) / 255.0F;
+
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glLineWidth(1f);
+
+        GlStateManager.color(var6, var7, var8, var11);
+
+        AxisAlignedBB aa = b.getSelectedBoundingBox(mc.theWorld, bp).offset(-mc.getRenderManager().viewerPosX, -mc.getRenderManager().viewerPosY, -mc.getRenderManager().viewerPosZ).expand(expand, expand, expand);
+
+        if (drawMode == 7) {
+            cubeFill(drawMode, aa.minX, aa.minY, aa.minZ, aa.maxX, aa.maxY, aa.maxZ, new float[]{0, 0, 0}, faces);
+        } else {
+            cubeOutline(drawMode, aa.minX, aa.minY, aa.minZ, aa.maxX, aa.maxY, aa.maxZ, new float[]{0, 0, 0}, faces);
+        }
+
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+    }
+
+    public static void blockBox(BlockPos bp, int outline, int fill, boolean[] faces) {
+        block(bp, fill, 1, faces);
+        block(bp, outline, 7, faces);
+    }
+
+    public static void blockBoxBB(Block b, BlockPos bp, double expand, int outline, int fill, boolean[] faces) {
+        blockBB(b, bp, expand, fill, 1, faces);
+        blockBB(b, bp, expand, outline, 7, faces);
+    }
+
+    public static void bbox(Vec3 pos1, Vec3 pos2, int outline, int fill) {
+        float ovar11 = (float) (outline >> 24 & 255) / 255.0F;
+        float ovar6 = (float) (outline >> 16 & 255) / 255.0F;
+        float ovar7 = (float) (outline >> 8 & 255) / 255.0F;
+        float ovar8 = (float) (outline & 255) / 255.0F;
+
+        float fvar11 = (float) (fill >> 24 & 255) / 255.0F;
+        float fvar6 = (float) (fill >> 16 & 255) / 255.0F;
+        float fvar7 = (float) (fill >> 8 & 255) / 255.0F;
+        float fvar8 = (float) (fill & 255) / 255.0F;
+
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glLineWidth(1f);
+
+        double[] p1 = renderPos(pos1);
+        double[] p2 = renderPos(pos2);
+
+        GlStateManager.color(fvar6, fvar7, fvar8, fvar11);
+        cubeFill(7, p1[0], p1[1], p1[2], p2[0] + 1, p2[1] + 1, p2[2] + 1, new float[]{0, 0, 0}, new boolean[]{true, true, true, true, true, true});
+
+        GlStateManager.color(ovar6, ovar7, ovar8, ovar11);
+        cubeOutline(1, p1[0], p1[1], p1[2], p2[0] + 1, p2[1] + 1, p2[2] + 1, new float[]{0, 0, 0}, new boolean[]{true, true, true, true, true, true});
+
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+    }
+
+    public static void tracer(Entity from, Entity to, int color) {
+        GlStateManager.loadIdentity();
+        mc.entityRenderer.orientCamera(mc.timer.renderPartialTicks);
+
+        float var11 = (float) (color >> 24 & 255) / 255.0F;
+        float var6 = (float) (color >> 16 & 255) / 255.0F;
+        float var7 = (float) (color >> 8 & 255) / 255.0F;
+        float var8 = (float) (color & 255) / 255.0F;
+        Tessellator var9 = Tessellator.getInstance();
+        WorldRenderer t = var9.getWorldRenderer();
+
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glLineWidth(1f);
+
+        GlStateManager.color(var6, var7, var8, var11);
+
+        double[] pos = entityRenderPos(to);
+
+        double x = pos[0];
+        double y = pos[1] + to.getEyeHeight();
+        double z = pos[2];
+
+        int draw = 1;
+        t.begin(draw, DefaultVertexFormats.POSITION);
+        t.pos(0, mc.thePlayer.getEyeHeight(), 0);
+        t.pos(x, y, z);
+        var9.draw();
+
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+    }
+
+    public static void line(Vec3 from, Vec3 to, int color, float width) {
+        GlStateManager.loadIdentity();
+        mc.entityRenderer.orientCamera(mc.timer.renderPartialTicks);
+
+        float var11 = (float) (color >> 24 & 255) / 255.0F;
+        float var6 = (float) (color >> 16 & 255) / 255.0F;
+        float var7 = (float) (color >> 8 & 255) / 255.0F;
+        float var8 = (float) (color & 255) / 255.0F;
+        Tessellator var9 = Tessellator.getInstance();
+        WorldRenderer t = var9.getWorldRenderer();
+
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glLineWidth(width);
+
+        GlStateManager.color(var6, var7, var8, var11);
+
+        Minecraft mc = Minecraft.getMinecraft();
+
+        double[] pf = renderPos(from);
+        double[] pt = renderPos(to);
+
+        int draw = 1;
+        t.begin(draw, DefaultVertexFormats.POSITION);
+        t.pos(pf[0], pf[1], pf[2]);
+        t.pos(pt[0], pt[1], pt[2]);
+        var9.draw();
+
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+    }
+
+    public static void renderTrail(double x, double y, double z, double mx, double my, double mz, float drag, float waterDrag, float grav, int color, boolean renderBlockHit) {
+        for (int j = 0; j < 200; j++) {
+            double oldX = x;
+            double oldY = y;
+            double oldZ = z;
+
+            GlStateManager.enableDepth();
+            GlStateManager.depthMask(true);
+            line(new Vec3(x, y, z), new Vec3(x + mx, y + my, z + mz), color, 2f);
+            GlStateManager.disableDepth();
+            GlStateManager.depthMask(false);
+
+            x += mx;
+            y += my;
+            z += mz;
+
+            Vec3 op = new Vec3(oldX, oldY, oldZ);
+            Vec3 np = new Vec3(x, y, z);
+
+            MovingObjectPosition mop = mc.theWorld.rayTraceBlocks(op, np, false, true, true);
+            if (mop != null) {
+                if (mop.typeOfHit.equals(MovingObjectPosition.MovingObjectType.BLOCK) && renderBlockHit) {
+                    float a = (float) (color >> 24 & 255) / 255.0F;
+                    blockBox(mop.getBlockPos(), ColorsUtils.reAlpha(color, a / 2), ColorsUtils.reAlpha(color, a), new boolean[]{true, true, true, true, true, true});
+                    break;
+                }
+            }
+
+            float var25 = drag;
+            float var13 = grav;
+
+            Vector3d pos = new Vector3d(x, y, z);
+            float size = 0.25f;
+            if (mc.theWorld.isAABBInMaterial(new AxisAlignedBB(pos.x + size, pos.y + size, pos.z + size, pos.x - size, pos.y - size, pos.z - size), Material.water)) {
+                if (waterDrag == 0f) {
+                    break;
+                }
+                var25 = waterDrag;
+            }
+
+            mx *= var25;
+            my *= var25;
+            mz *= var25;
+
+            my -= var13;
+        }
+    }
+
+    public static void cubeFill(int draw, double minX, double minY, double minZ, double maxX, double maxY, double maxZ, float[] rotation, boolean[] faces) {
+        Tessellator var9 = Tessellator.getInstance();
+        WorldRenderer t = var9.getWorldRenderer();
+
+        GlStateManager.pushMatrix();
+
+        GlStateManager.translate(minX + ((maxX - minX) / 2), minY, minZ + ((maxZ - minZ) / 2));
+        GlStateManager.rotate(rotation[0], 1, 0, 0);
+        GlStateManager.rotate(rotation[1], 0, 1, 0);
+        GlStateManager.rotate(rotation[2], 0, 0, 1);
+
+        maxX -= minX;
+        maxY -= minY;
+        maxZ -= minZ;
+
+        maxX /= 2;
+        maxZ /= 2;
+
+        minX = -maxX;
+        minY = 0;
+        minZ = -maxZ;
+
+        double[][][] array = new double[][][]{
+                {{minX, minY, minZ}, {minX, maxY, minZ}, {maxX, maxY, minZ}, {maxX, minY, minZ}},//north
+                {{minX, minY, maxZ}, {maxX, minY, maxZ}, {maxX, maxY, maxZ}, {minX, maxY, maxZ}},//south
+                {{maxX, minY, minZ}, {maxX, maxY, minZ}, {maxX, maxY, maxZ}, {maxX, minY, maxZ}},//east
+                {{minX, minY, minZ}, {minX, minY, maxZ}, {minX, maxY, maxZ}, {minX, maxY, minZ}},//west
+                {{minX, maxY, minZ}, {minX, maxY, maxZ}, {maxX, maxY, maxZ}, {maxX, maxY, minZ}},//up
+                {{minX, minY, minZ}, {maxX, minY, minZ}, {maxX, minY, maxZ}, {minX, minY, maxZ}},//down
+        };
+
+        t.begin(draw, DefaultVertexFormats.POSITION);
+        for (int i = 0; i < array.length; i++) {
+            if (faces[i]) {
+                for (int j = 0; j < array[i].length; j++) {
+                    t.pos(array[i][j][0], array[i][j][1], array[i][j][2]);
+                }
+                for (int j = array[i].length - 1; j >= 0; j--) {
+                    t.pos(array[i][j][0], array[i][j][1], array[i][j][2]);
+                }
+            }
+        }
+        var9.draw();
+
+        GlStateManager.popMatrix();
+    }
+
+    public static void cubeOutline(int draw, double minX, double minY, double minZ, double maxX, double maxY, double maxZ, float[] rotation, boolean[] faces) {
+        Tessellator var9 = Tessellator.getInstance();
+        WorldRenderer t = var9.getWorldRenderer();
+
+        GlStateManager.pushMatrix();
+
+        GlStateManager.translate(minX + ((maxX - minX) / 2), minY, minZ + ((maxZ - minZ) / 2));
+        GlStateManager.rotate(rotation[0], 1, 0, 0);
+        GlStateManager.rotate(rotation[1], 0, 1, 0);
+        GlStateManager.rotate(rotation[2], 0, 0, 1);
+
+        maxX -= minX;
+        maxY -= minY;
+        maxZ -= minZ;
+
+        maxX /= 2;
+        maxZ /= 2;
+
+        minX = -maxX;
+        minY = 0;
+        minZ = -maxZ;
+
+        //n s e w t b
+        boolean[] vertices = new boolean[]{
+                (!faces[0] || !faces[2] ? false : true),
+                (!faces[0] || !faces[3] ? false : true),
+                (!faces[1] || !faces[2] ? false : true),
+                (!faces[1] || !faces[3] ? false : true),
+                (!faces[0] || !faces[5] ? false : true),
+                (!faces[1] || !faces[5] ? false : true),
+                (!faces[2] || !faces[5] ? false : true),
+                (!faces[3] || !faces[5] ? false : true),
+                (!faces[0] || !faces[4] ? false : true),
+                (!faces[1] || !faces[4] ? false : true),
+                (!faces[2] || !faces[4] ? false : true),
+                (!faces[3] || !faces[4] ? false : true),
+        };
+
+        double[][][] array = new double[][][]{
+                {{maxX, minY, minZ}, {maxX, maxY, minZ}},//northeast bottom->top
+                {{minX, minY, minZ}, {minX, maxY, minZ}},//northwest bottom->top
+                {{maxX, minY, maxZ}, {maxX, maxY, maxZ}},//southeast bottom->top
+                {{minX, minY, maxZ}, {minX, maxY, maxZ}},//southwest bottom->top
+                {{minX, minY, minZ}, {maxX, minY, minZ}},//bottom north
+                {{minX, minY, maxZ}, {maxX, minY, maxZ}},//bottom south
+                {{maxX, minY, minZ}, {maxX, minY, maxZ}},//bottom east
+                {{minX, minY, minZ}, {minX, minY, maxZ}},//bottom west
+                {{minX, maxY, minZ}, {maxX, maxY, minZ}},//top north
+                {{minX, maxY, maxZ}, {maxX, maxY, maxZ}},//top south
+                {{maxX, maxY, minZ}, {maxX, maxY, maxZ}},//top east
+                {{minX, maxY, minZ}, {minX, maxY, maxZ}},//top west
+        };
+
+        t.begin(draw, DefaultVertexFormats.POSITION);
+        for (int i = 0; i < array.length; i++) {
+            if (vertices[i]) {
+                for (int j = 0; j < array[i].length; j++) {
+                    t.pos(array[i][j][0], array[i][j][1], array[i][j][2]);
+                }
+            }
+        }
+        var9.draw();
+
+        GlStateManager.popMatrix();
+    }
+
+    public static double[] entityRenderPos(Entity e) {
+        float p_147936_2_ = mc.timer.renderPartialTicks;
+
+        double x = (e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) p_147936_2_) - mc.getRenderManager().viewerPosX;
+        double y = (e.lastTickPosY + (e.posY - e.lastTickPosY) * (double) p_147936_2_) - mc.getRenderManager().viewerPosY;
+        double z = (e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double) p_147936_2_) - mc.getRenderManager().viewerPosZ;
+
+        return new double[]{x, y, z};
+    }
+
+    public static double[] entityWorldPos(Entity e) {
+        float p_147936_2_ = mc.timer.renderPartialTicks;
+
+        double x = (e.lastTickPosX + (e.posX - e.lastTickPosX) * (double) p_147936_2_);
+        double y = (e.lastTickPosY + (e.posY - e.lastTickPosY) * (double) p_147936_2_);
+        double z = (e.lastTickPosZ + (e.posZ - e.lastTickPosZ) * (double) p_147936_2_);
+
+        return new double[]{x, y, z};
+    }
+
+    public static double[] renderPos(Vec3 vec) {
+        float p_147936_2_ = mc.timer.renderPartialTicks;
+
+        double x = vec.xCoord - mc.getRenderManager().viewerPosX;
+        double y = vec.yCoord - mc.getRenderManager().viewerPosY;
+        double z = vec.zCoord - mc.getRenderManager().viewerPosZ;
+
+        return new double[]{x, y, z};
+    }
+
+    public static boolean transparentEntity(int id) {
+        return id == -1 || id == -2;
+    }
+
+    public static String hsvToRgb(float hue, float saturation, float value) {
+        int h = (int) (hue * 6);
+        float f = hue * 6 - h;
+        float p = value * (1 - saturation);
+        float q = value * (1 - f * saturation);
+        float t = value * (1 - (1 - f) * saturation);
+
+        switch (h) {
+            case 0:
+                return rgbToString(value, t, p);
+            case 1:
+                return rgbToString(q, value, p);
+            case 2:
+                return rgbToString(p, value, t);
+            case 3:
+                return rgbToString(p, q, value);
+            case 4:
+                return rgbToString(t, p, value);
+            case 5:
+                return rgbToString(value, p, q);
+            default:
+                throw new RuntimeException("Something went wrong when converting from HSV to RGB. Input was " + hue + ", " + saturation + ", " + value);
+        }
+    }
+
+    public static String rgbToString(float r, float g, float b) {
+        String rs = Integer.toHexString((int) (r * 256));
+        String gs = Integer.toHexString((int) (g * 256));
+        String bs = Integer.toHexString((int) (b * 256));
+        return rs + gs + bs;
+    }
+
+    public static Color getRainbow(float fade) {
+        float hue = (float) (System.nanoTime() / 5000000000f) % 1;
+        long color = Long.parseLong(Integer.toHexString(Color.HSBtoRGB(hue, 1f, 1f)), 16);
+        Color c = new Color((int) color);
+        return new Color((c.getRed() / 255f) * fade, (c.getGreen() / 255f) * fade, (c.getBlue() / 255f) * fade, c.getAlpha() / 255f);
+    }
+
+    public static void enableLighting() {
+        GlStateManager.enableLight(0);
+        GlStateManager.enableLight(1);
+    }
+
+    public static void disableLighting() {
+        GlStateManager.disableLight(0);
+        GlStateManager.disableLight(1);
     }
 }

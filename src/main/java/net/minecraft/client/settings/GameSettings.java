@@ -15,7 +15,6 @@ import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.network.play.client.C15PacketClientSettings;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumDifficulty;
-import net.scandicraft.logs.LogManagement;
 import net.scandicraft.radio.RadioPlayer;
 import net.scandicraft.settings.IOptionsSettings;
 import net.scandicraft.settings.KeyBindingType;
@@ -1019,7 +1018,6 @@ public class GameSettings {
         if (soundCategory.equals(SoundCategory.RADIO)) {
             RadioPlayer radioPlayer = RadioPlayer.getInstance();
             if (radioPlayer.isPlaying()) {
-                LogManagement.warn("Radio set volume " + volume);
                 if (volume > 0.0F) {
                     radioPlayer.setVolume(volume);
                 } else {
