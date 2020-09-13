@@ -2,11 +2,6 @@ package net.minecraft.client.gui;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -16,21 +11,21 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.FrameTimer;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.Chunk;
-import net.scandicraft.logs.LogManagement;
+import net.scandicraft.fonts.Fonts;
 import optifine.Reflector;
-
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
 
 public class GuiOverlayDebug extends Gui
 {
@@ -74,7 +69,7 @@ public class GuiOverlayDebug extends Gui
                 boolean flag = true;
                 int l = 2 + j * i;
                 drawRect(1, l - 1, 2 + k + 1, l + j - 1, -1873784752);
-                this.fontRenderer.drawString(s, 2, l, 14737632);
+                Fonts.fontNormal.drawString(s, 2, l, 14737632);
             }
         }
     }
@@ -94,7 +89,7 @@ public class GuiOverlayDebug extends Gui
                 int l = p_175239_1_.getScaledWidth() - 2 - k;
                 int i1 = 2 + j * i;
                 drawRect(l - 1, i1 - 1, l + k + 1, i1 + j - 1, -1873784752);
-                this.fontRenderer.drawString(s, l, i1, 14737632);
+                Fonts.fontNormal.drawString(s, l, i1, 14737632);
             }
         }
     }

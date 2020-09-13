@@ -42,4 +42,26 @@ public class GuiUtils {
         Gui.drawRect(x, startY + 1, x + width, endY, color);
     }
 
+    public static float[] getScaledImage(float wi, float hi, float ws, float hs) {
+        float ri = wi / hi;
+
+        float rs = ws / hs;
+
+        float dw = 0;
+        float dh = 0;
+
+        if (rs <= ri) {
+            dw = wi * hs / hi;
+            dh = hs;
+        } else {
+            dw = ws;
+            dh = hi * ws / wi;
+        }
+
+        float x = (ws - dw) / 2;
+        float y = (hs - dh) / 2;
+
+        return new float[]{x, y, dw, dh};
+    }
+
 }

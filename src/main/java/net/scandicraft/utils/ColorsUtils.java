@@ -201,4 +201,24 @@ public class ColorsUtils {
         return new Color((c.getRed() / 255f) * fade, (c.getGreen() / 255f) * fade, (c.getBlue() / 255f) * fade, c.getAlpha() / 255f);
     }
 
+    public static int blendColor(int color1, int color2, float perc) {
+        Color x = new Color(color1);
+        Color y = new Color(color2);
+
+        float inverse_blending = 1 - perc;
+
+        float red = x.getRed() * perc + y.getRed() * inverse_blending;
+        float green = x.getGreen() * perc + y.getGreen() * inverse_blending;
+        float blue = x.getBlue() * perc + y.getBlue() * inverse_blending;
+
+        Color blended;
+        try {
+            blended = new Color(red / 255, green / 255, blue / 255);
+        } catch (Exception e) {
+            blended = new Color(-1);
+        }
+
+        return blended.getRGB();
+    }
+
 }
