@@ -31,7 +31,6 @@ public class GuiOverlayDebug extends Gui
 {
     protected final Minecraft mc;
     protected final FontRenderer fontRenderer;
-    //private static final String __OBFID = "CL_00001956";
 
     public GuiOverlayDebug(Minecraft mc)
     {

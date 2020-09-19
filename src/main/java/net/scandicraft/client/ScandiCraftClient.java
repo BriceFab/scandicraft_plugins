@@ -74,7 +74,7 @@ public class ScandiCraftClient extends MinecraftInstance {
         Fonts.loadFonts();
 
         //Change MC Fonts
-        mc.fontRendererObj = Fonts.fontNormal;
+//        mc.fontRendererObj = Fonts.fontNormal;
 
         ModInstances.register(HUDManager.getInstance());
 

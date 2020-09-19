@@ -2,13 +2,9 @@ package net.scandicraft.mods.impl;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.GlStateManager;
-import net.scandicraft.events.EventManager;
-import net.scandicraft.events.EventTarget;
-import net.scandicraft.events.impl.ConnectServerEvent;
-import net.scandicraft.events.impl.DisconnectServerEvent;
 import net.scandicraft.gui.hud.ScreenPosition;
-import net.scandicraft.logs.LogManagement;
 import net.scandicraft.mods.ModDraggable;
 
 public class ModPing extends ModDraggable {
@@ -77,42 +73,44 @@ public class ModPing extends ModDraggable {
         */
 
         String sPing;
-        int ping = mc.getNetHandler().getPlayerInfo(mc.thePlayer.getUniqueID()).getResponseTime();
+        NetworkPlayerInfo networkPlayerInfo = mc.getNetHandler().getPlayerInfo(mc.thePlayer.getUniqueID());
+        if (networkPlayerInfo != null) {
+            int ping = networkPlayerInfo.getResponseTime();
 //        LogManagement.info("ping " + ping + " ms");
 
-        int k = 0;
-        int l;
+            int k = 0;
+            int l;
 
-        if (ping > 0L) {
-            if (ping < 0L) {
-                l = 5;
-            } else if (ping < 150L) {
-                l = 0;
-            } else if (ping < 300L) {
-                l = 1;
-            } else if (ping < 600L) {
-                l = 2;
-            } else if (ping < 1000L) {
-                l = 3;
+            if (ping > 0L) {
+                if (ping < 0L) {
+                    l = 5;
+                } else if (ping < 150L) {
+                    l = 0;
+                } else if (ping < 300L) {
+                    l = 1;
+                } else if (ping < 600L) {
+                    l = 2;
+                } else if (ping < 1000L) {
+                    l = 3;
+                } else {
+                    l = 4;
+                }
+
+                if (ping < 0L) {
+                    sPing = "(no connection)";
+                } else {
+                    sPing = ping + " ms";
+                }
             } else {
-                l = 4;
-            }
+                k = 1;
+                l = (int) (Minecraft.getSystemTime() / 100L + (long) (2) & 7L);
 
-            if (ping < 0L) {
-                sPing = "(no connection)";
-            } else {
-                sPing = ping + " ms";
-            }
-        } else {
-            k = 1;
-            l = (int) (Minecraft.getSystemTime() / 100L + (long) (2) & 7L);
+                if (l > 4) {
+                    l = 8 - l;
+                }
 
-            if (l > 4) {
-                l = 8 - l;
+                sPing = "Pinging...";
             }
-
-            sPing = "Pinging...";
-        }
 
         /*
         int k = 0;
@@ -146,9 +144,10 @@ public class ModPing extends ModDraggable {
         }
          */
 
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(Gui.icons);
-        Gui.drawModalRectWithCustomSizedTexture(pos.getAbsoluteX() - 15, pos.getAbsoluteY(), (float) (k * 10), (float) (176 + l * 8), pingIconWidth, pingIconHeight, 256.0F, 256.0F);
-        font.drawString(sPing, pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            this.mc.getTextureManager().bindTexture(Gui.icons);
+            Gui.drawModalRectWithCustomSizedTexture(pos.getAbsoluteX() - 15, pos.getAbsoluteY(), (float) (k * 10), (float) (176 + l * 8), pingIconWidth, pingIconHeight, 256.0F, 256.0F);
+            font.drawString(sPing, pos.getAbsoluteX(), pos.getAbsoluteY(), -1);
+        }
     }
 }

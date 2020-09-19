@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.scandicraft.client.ScandiCraftClient;
 import net.scandicraft.events.EventManager;
+import net.scandicraft.fonts.Fonts;
 
 public class Mod {
 
@@ -16,7 +17,7 @@ public class Mod {
 
     public Mod() {
         this.mc = Minecraft.getMinecraft();
-        this.font = mc.fontRendererObj;
+        this.font = Fonts.fontNormal;
         this.client = ScandiCraftClient.getInstance();
 
         //Active le mod
