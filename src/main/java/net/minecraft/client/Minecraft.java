@@ -1685,10 +1685,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                             }
                         }
                     }
-                }
 
-                //ScandiCraft Keybord input event
-                new KeybordEvent().call();
+                    //ScandiCraft Keybord input event
+                    new KeybordEvent().call();
+                }
             }
 
             for (int l = 0; l < 9; ++l) {

@@ -19,6 +19,9 @@ import java.util.zip.ZipInputStream;
 @SideOnly(Side.CLIENT)
 public class Fonts {
 
+    @FontDetails(fontName = "Signika-Light", fontSize = 30)
+    public static GameFontRenderer fontExtraSmall;
+
     @FontDetails(fontName = "Signika-Light", fontSize = 35)
     public static GameFontRenderer fontSmall;
 
@@ -43,6 +46,7 @@ public class Fonts {
 
         // downloadFonts();
 
+        fontExtraSmall = new GameFontRenderer(getFont("Signika-Light.ttf", 30));
         fontSmall = new GameFontRenderer(getFont("Signika-Light.ttf", 35));
         fontNormal = new GameFontRenderer(getFont("Signika-Regular.ttf", 40));
         fontSemiBold = new GameFontRenderer(getFont("Signika-Bold.ttf", 43));

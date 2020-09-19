@@ -1,4 +1,4 @@
-package net.scandicraft;
+package net.scandicraft.client;
 
 import net.minecraft.client.Minecraft;
 

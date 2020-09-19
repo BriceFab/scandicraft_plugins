@@ -7,7 +7,7 @@ import net.minecraft.init.Blocks
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
 import net.minecraft.util.MathHelper
-import net.scandicraft.MinecraftInstance
+import net.scandicraft.client.MinecraftInstance
 
 object BlockUtils : MinecraftInstance() {
 

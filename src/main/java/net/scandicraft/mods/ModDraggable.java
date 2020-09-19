@@ -59,4 +59,8 @@ public abstract class ModDraggable extends Mod implements IRenderer {
     public ScreenPosition getDefaultPos() {
         return ScreenPosition.fromRelativePosition(0.5, 0.5);
     }
+
+    public ScreenPosition getScreenPosition() {
+        return pos;
+    }
 }

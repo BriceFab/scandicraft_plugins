@@ -17,7 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.scandicraft.MinecraftInstance;
+import net.scandicraft.client.MinecraftInstance;
 import net.scandicraft.blocks.BlockUtils;
 import org.lwjgl.opengl.GL11;
 

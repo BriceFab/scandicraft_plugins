@@ -2,7 +2,6 @@ package net.scandicraft.client;
 
 import com.google.gson.JsonObject;
 import net.scandicraft.Environnement;
-import net.scandicraft.MinecraftInstance;
 import net.scandicraft.ScandiCraftSession;
 import net.scandicraft.capacities.listeners.CapacitiesListener;
 import net.scandicraft.classes.ClasseManager;
@@ -45,9 +44,9 @@ public class ScandiCraftClient extends MinecraftInstance {
 
         //Register des événements
         EventManager.register(this);
-        if (Config.DEMO_PLAYER_CLASSE) {
+//        if (Config.DEMO_PLAYER_CLASSE) {
             EventManager.register(new CapacitiesListener());
-        }
+//        }
         EventManager.register(new ModEventListeners());
 
         if (Config.ENV == Environnement.DEV) {

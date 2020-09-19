@@ -12,4 +12,11 @@ public class MathUtils {
         return TICK_SECONDS * 60 * minutes;
     }
 
+    /**
+     * Converti des miliseconds en secondes
+     */
+    public static float convertMsToSeconds(float ms) {
+        return ms / 1000F;
+    }
+
 }

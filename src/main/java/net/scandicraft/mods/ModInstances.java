@@ -5,6 +5,7 @@ import net.scandicraft.config.Config;
 import net.scandicraft.gui.hud.HUDManager;
 import net.scandicraft.mods.impl.*;
 import net.scandicraft.mods.impl.compass.ModCompass;
+import net.scandicraft.mods.impl.notifications.ModNotifications;
 import net.scandicraft.mods.impl.togglesprintsneak.ModToggleSprintSneak;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class ModInstances {
     private static ModFPS modFPS;
     private static ModArmorStatus modArmorStatus;
     private static ModCapacities modCapacities;
+    private static ModNotifications modNotifications;
 
     public static void register(HUDManager api) {
         modArmorStatus = new ModArmorStatus();
@@ -55,6 +57,9 @@ public class ModInstances {
         modCapacities = new ModCapacities();
         modCapacities.setEnabled(Config.DEMO_PLAYER_CLASSE);    //si démo, enabled sinon disabled
         api.register(modCapacities);
+
+        modNotifications = new ModNotifications();
+        api.register(modNotifications);
 
         if (Config.ENV == Environnement.DEV) {
             ModTests modTests = new ModTests();
@@ -96,6 +101,10 @@ public class ModInstances {
 
     public static ModCapacities getModCapacities() {
         return modCapacities;
+    }
+
+    public static ModNotifications getModNotifications() {
+        return modNotifications;
     }
 
 }

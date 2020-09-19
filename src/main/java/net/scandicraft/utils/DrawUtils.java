@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLivingBase;
 import net.scandicraft.fonts.GameFontRenderer;
 import net.scandicraft.gui.ui.inter.utils.Align;
@@ -275,47 +274,6 @@ public class DrawUtils {
             float yy = (float) Math.sin((i + rot) * Math.PI / 180) * gap;
             circle(x + xx, y + yy, gap / 4, color);
         }
-    }
-
-    public static void rect(float x1, float y1, float x2, float y2, int fill) {
-        GlStateManager.color(0, 0, 0);
-        GL11.glColor4f(0, 0, 0, 0);
-
-        float var5;
-
-        if (x1 < x2) {
-            var5 = x1;
-            x1 = x2;
-            x2 = var5;
-        }
-        if (y1 < y2) {
-            var5 = y1;
-            y1 = y2;
-            y2 = var5;
-        }
-
-        float var11 = (float) (fill >> 24 & 255) / 255.0F;
-        float var6 = (float) (fill >> 16 & 255) / 255.0F;
-        float var7 = (float) (fill >> 8 & 255) / 255.0F;
-        float var8 = (float) (fill & 255) / 255.0F;
-
-        Tessellator var9 = Tessellator.getInstance();
-        WorldRenderer var10 = var9.getWorldRenderer();
-
-        GlStateManager.enableBlend();
-        GlStateManager.disableTexture2D();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.color(var6, var7, var8, var11);
-
-        var10.begin(7, DefaultVertexFormats.POSITION);
-        var10.pos(x1, y2, 0.0D);
-        var10.pos(x2, y2, 0.0D);
-        var10.pos(x2, y1, 0.0D);
-        var10.pos(x1, y1, 0.0D);
-        var9.draw();
-
-        GlStateManager.enableTexture2D();
-        GlStateManager.disableBlend();
     }
 
     public static void string(GameFontRenderer font, float x, float y, String text, int color) {

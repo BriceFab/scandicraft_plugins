@@ -1,6 +1,6 @@
 package net.scandicraft.mods.impl.waypoints;
 
-import net.scandicraft.MinecraftInstance;
+import net.scandicraft.client.MinecraftInstance;
 
 import java.awt.*;
 
