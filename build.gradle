@@ -14,10 +14,9 @@ compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'ScandiCraft Client', 'Main-Class': 'net.minecraft.client.main.Main'
-    }
+configurations {
+    shade
+    compile.extendsFrom shade
 }
 
 repositories {
@@ -28,23 +27,33 @@ repositories {
 }
 
 dependencies {
-    // This dependency is used by the application.
+    // Dependences non includes sans le build
     implementation 'com.google.guava:guava:28.2-jre'
-
-    // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    implementation 'com.auth0:java-jwt:3.10.3'
 
     // Use all .jar files in lib dir as libraries
     compile fileTree(dir: 'run/libraries', include: ['*.jar'])
 
-    //Libraries implementation
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    implementation 'com.auth0:java-jwt:3.10.3'
+    // Dependences includes dans le build
+//    shade group: 'com.auth0', name: 'java-jwt', version: '3.10.3'
 }
 
 application {
     // Define the main class for the application.
     mainClassName = 'Start'
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'ScandiCraft Client', 'Main-Class': 'Start'
+    }
+
+    configurations.shade.each { dep ->
+        from(project.zipTree(dep)) {
+            exclude 'META-INF', 'META-INF/**'
+        }
+    }
 }
 
 task runclient(type: JavaExec) {

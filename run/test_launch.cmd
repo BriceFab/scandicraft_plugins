@@ -42,8 +42,14 @@ set main_jar=./build/out.jar
 %libs_path%\twitch-platform-6.5-natives-windows-64.jar;^
 %libs_path%\vecmath.jar;^
 %libs_path%\discord-rpc.jar;^
+%libs_path%\jlayer1.0.1.jar;^
+%libs_path%\slick.jar;^
 %extra_libs_path%\kotlin-stdlib-1.3.61.jar;^
 %extra_libs_path%\annotations-13.0.jar;^
+%extra_libs_path%\java-jwt-3.10.3.jar;^
+%extra_libs_path%\jackson-databind-2.10.3.jar;^
+%extra_libs_path%\jackson-core-2.10.3.jar;^
+%extra_libs_path%\jackson-annotations-2.10.3.jar;^
 %main_jar% net.scandicraft.client.Main --username=BriceFab123 --password=DguV9vq98fpASZvqCVd0 --accessToken null --version 1.8 --gameDir . --assetsDir ./assets --assetIndex 1.8 --userProperties {} --uuid null --userType legacy
 
 ::PAUSE
