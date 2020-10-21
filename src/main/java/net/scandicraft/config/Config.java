@@ -29,6 +29,6 @@ public class Config {
     public static final String SERVER_IP = "217.182.205.69";
     public static final String SERVER_IP_AND_PORT = String.format("%s:%d", SERVER_IP, SERVER_PORT);
     public static final String BASE_SC_BUTTONS_RESSOURCES = "scandicraft/buttons/";
-    public static final boolean DEMO_PLAYER_CLASSE = false;   //Si capacity and classe demo debug
+    public static final boolean DEMO_PLAYER_CLASSE = true;   //Si capacity and classe demo debug
 
 }
